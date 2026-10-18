@@ -175,3 +175,14 @@
 .ws-doc__actions .ws-btn-outline { margin-top: 0; }
 .ws-doc__delete button { width: 100%; padding: .4rem .8rem; background: none; border: 0; color: #a3222b; font-size: .8rem; cursor: pointer; text-decoration: underline; }
 @media (max-width: 600px) { .ws-doc { grid-template-columns: 44px 1fr; } .ws-doc__icon { width: 44px; height: 44px; } .ws-doc__actions { grid-column: 1 / -1; flex-direction: row; } }
+.ws-library-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin: 0 0 1.25rem; }
+.ws-library-bar .ws-doc-filter { margin: 0; }
+.ws-doc__date { margin: 0 0 .2rem; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ws-muted, #666); }
+.ws-doc--link .ws-doc__icon { background: var(--ws-gold-dark, #8a6d2c); color: #fff; }
+.ws-upload { margin-top: 2rem; }
+.ws-upload > summary { display: inline-block; cursor: pointer; padding: .7rem 1.2rem; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ws-gold-dark, #8a6d2c); list-style: none; }
+.ws-upload > summary::-webkit-details-marker { display: none; }
+.ws-upload[open] > summary { margin-bottom: 1rem; }
+.ws-upload .ws-form { margin-top: .5rem; }
+.ws-upload--js > summary { display: none; }
+.ws-upload--js { margin-top: 2.5rem; }
