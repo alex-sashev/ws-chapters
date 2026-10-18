@@ -60,11 +60,11 @@
   },
   {
    "step": "mkdir",
-   "path": "/tmp/ws-media"
+   "path": "/wordpress/wp-content/uploads/ws-demo-media"
   },
   {
    "step": "writeFile",
-   "path": "/tmp/ws-media/tour-01-group-service-station.jpg",
+   "path": "/wordpress/wp-content/uploads/ws-demo-media/tour-01-group-service-station.jpg",
    "data": {
     "resource": "url",
     "url": "https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/media/tour-01-group-service-station.jpg"
@@ -72,7 +72,7 @@
   },
   {
    "step": "writeFile",
-   "path": "/tmp/ws-media/tour-02-church-blessing.jpg",
+   "path": "/wordpress/wp-content/uploads/ws-demo-media/tour-02-church-blessing.jpg",
    "data": {
     "resource": "url",
     "url": "https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/media/tour-02-church-blessing.jpg"
@@ -80,7 +80,7 @@
   },
   {
    "step": "writeFile",
-   "path": "/tmp/ws-media/tour-03-evening-dinner.jpg",
+   "path": "/wordpress/wp-content/uploads/ws-demo-media/tour-03-evening-dinner.jpg",
    "data": {
     "resource": "url",
     "url": "https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/media/tour-03-evening-dinner.jpg"
@@ -88,7 +88,7 @@
   },
   {
    "step": "writeFile",
-   "path": "/tmp/ws-media/tour-04-three-men-bar.jpg",
+   "path": "/wordpress/wp-content/uploads/ws-demo-media/tour-04-three-men-bar.jpg",
    "data": {
     "resource": "url",
     "url": "https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/media/tour-04-three-men-bar.jpg"
@@ -96,7 +96,7 @@
   },
   {
    "step": "runPHP",
-   "code": "<?php\nrequire '/wordpress/wp-load.php';\nrequire_once ABSPATH . 'wp-admin/includes/image.php';\nwp_set_current_user(1);\n// Photos from Widows Sons Grand Chapter Bulgaria's 2025 National Tour.\n$titles = array(\n  'tour-01-group-service-station.jpg' => 'National Tour 2025: the group at the start',\n  'tour-02-church-blessing.jpg'       => 'National Tour 2025: blessing at the monastery',\n  'tour-03-evening-dinner.jpg'        => 'National Tour 2025: evening gathering',\n  'tour-04-three-men-bar.jpg'         => 'National Tour 2025: with friends on the road',\n);\n$ids = array();\n$up = wp_upload_dir();\nforeach ($titles as $file => $title) {\n  $src = '/tmp/ws-media/' . $file;\n  if (!file_exists($src) || filesize($src) < 1000) continue;\n  $dest = $up['path'] . '/' . $file;\n  copy($src, $dest);\n  $id = wp_insert_attachment(array('post_mime_type'=>'image/jpeg','post_title'=>$title,'post_status'=>'inherit'), $dest);\n  wp_update_attachment_metadata($id, wp_generate_attachment_metadata($id, $dest));\n  update_post_meta($id, '_wp_attachment_image_alt', $title);\n  $ids[$file] = $id;\n}\nif (!$ids) return;\n$g = function ($f) use ($ids) { return $ids[$f] ?? 0; };\n// Home hero = Home page featured image.\nset_post_thumbnail((int) get_option('page_on_front'), $g('tour-01-group-service-station.jpg'));\n// Bulgaria: country header photo, chapter header photo, galleries.\n$bg = (int) term_exists('Bulgaria', 'ws_country')['term_id'];\nupdate_term_meta($bg, 'hero_image', $g('tour-02-church-blessing.jpg'));\nupdate_term_meta($bg, 'gallery', implode(',', array_values($ids)));\n$ch = get_page_by_path('bulgaria', OBJECT, 'ws_chapter');\nif ($ch) {\n  set_post_thumbnail($ch->ID, $g('tour-04-three-men-bar.jpg'));\n  update_post_meta($ch->ID, 'gallery', implode(',', array_values($ids)));\n}\n// Featured images on the sample news.\n$news = get_posts(array('post_type'=>'post','numberposts'=>3,'orderby'=>'date','order'=>'DESC'));\nforeach ($news as $i => $n) {\n  set_post_thumbnail($n->ID, array_values($ids)[$i % count($ids)]);\n}\n"
+   "code": "<?php\nrequire '/wordpress/wp-load.php';\nrequire_once ABSPATH . 'wp-admin/includes/image.php';\nwp_set_current_user(1);\n// Photos from Widows Sons Grand Chapter Bulgaria's 2025 National Tour.\n$titles = array(\n  'tour-01-group-service-station.jpg' => 'National Tour 2025: the group at the start',\n  'tour-02-church-blessing.jpg'       => 'National Tour 2025: blessing at the monastery',\n  'tour-03-evening-dinner.jpg'        => 'National Tour 2025: evening gathering',\n  'tour-04-three-men-bar.jpg'         => 'National Tour 2025: with friends on the road',\n);\n$ids = array();\n$up = wp_upload_dir();\nforeach ($titles as $file => $title) {\n  $src = '/wordpress/wp-content/uploads/ws-demo-media/' . $file;\n  if (!file_exists($src) || filesize($src) < 1000) continue;\n  $dest = $up['path'] . '/' . $file;\n  rename($src, $dest);\n  $id = wp_insert_attachment(array('post_mime_type'=>'image/jpeg','post_title'=>$title,'post_status'=>'inherit'), $dest);\n  wp_update_attachment_metadata($id, wp_generate_attachment_metadata($id, $dest));\n  update_post_meta($id, '_wp_attachment_image_alt', $title);\n  $ids[$file] = $id;\n}\nif (!$ids) return;\n$g = function ($f) use ($ids) { return $ids[$f] ?? 0; };\n// Home hero = Home page featured image.\nset_post_thumbnail((int) get_option('page_on_front'), $g('tour-01-group-service-station.jpg'));\n// Bulgaria: country header photo, chapter header photo, galleries.\n$bg = (int) term_exists('Bulgaria', 'ws_country')['term_id'];\nupdate_term_meta($bg, 'hero_image', $g('tour-02-church-blessing.jpg'));\nupdate_term_meta($bg, 'gallery', implode(',', array_values($ids)));\n$ch = get_page_by_path('bulgaria', OBJECT, 'ws_chapter');\nif ($ch) {\n  set_post_thumbnail($ch->ID, $g('tour-04-three-men-bar.jpg'));\n  update_post_meta($ch->ID, 'gallery', implode(',', array_values($ids)));\n}\n// Featured images on the sample news.\n$news = get_posts(array('post_type'=>'post','numberposts'=>3,'orderby'=>'date','order'=>'DESC'));\nforeach ($news as $i => $n) {\n  set_post_thumbnail($n->ID, array_values($ids)[$i % count($ids)]);\n}\n"
   }
  ]
 }
