@@ -392,3 +392,50 @@ add_action( 'init', function () {
 	}
 	update_option( 'ws_bg_chapter_photos_cleared', gmdate( 'c' ), false );
 }, 40 );
+
+/*
+ * Bulgaria's insignia: the WS back patch is the chapter patch, and the Motorcycle Riders (MR) logo is the chapter logo.
+ * Their photos are removed from the chapter. Runs once.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'ws_bg_insignia_done' ) || ! post_type_exists( 'ws_chapter' ) ) {
+		return;
+	}
+	update_option( 'ws_bg_insignia_done', gmdate( 'c' ), false ); // Set first, so a failed run is not repeated on every page load.
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
+	if ( ! $ch ) {
+		return;
+	}
+	$term = get_term_by( 'slug', 'bulgaria', 'ws_country' );
+	$dir  = dirname( __DIR__ ) . '/playground/media/';
+	$up   = wp_upload_dir( null, false );
+	$sub  = $term ? trailingslashit( $up['basedir'] ) . 'countries/bulgaria' : $up['path'];
+	$set  = function ( $file, $title ) use ( $dir, $sub, $ch ) {
+		if ( ! is_file( $dir . $file ) || ! wp_mkdir_p( $sub ) ) {
+			return 0;
+		}
+		$dest = $sub . '/' . wp_unique_filename( $sub, $file );
+		if ( ! copy( $dir . $file, $dest ) ) {
+			return 0;
+		}
+		$id = wp_insert_attachment( array( 'post_mime_type' => 'image/png', 'post_title' => $title, 'post_status' => 'inherit' ), $dest, $ch->ID );
+		if ( ! $id || is_wp_error( $id ) ) {
+			return 0;
+		}
+		wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $dest ) );
+		update_post_meta( $id, '_wp_attachment_image_alt', $title );
+		return (int) $id;
+	};
+	$patch = $set( 'bulgaria-ws-patch.png', 'Bulgarian Grand Chapter: back patch' );
+	$logo  = $set( 'bulgaria-mr-logo.png', 'Bulgarian Grand Chapter: MR logo' );
+	if ( $patch ) {
+		update_post_meta( $ch->ID, 'back_patch', $patch );
+	}
+	if ( $logo ) {
+		update_post_meta( $ch->ID, 'chapter_logo', $logo );
+	}
+	// Remove the tour photos from the chapter.
+	delete_post_thumbnail( $ch->ID );
+	delete_post_meta( $ch->ID, 'gallery' );
+}, 41 );
