@@ -390,7 +390,9 @@ add_action( 'init', function () {
 		delete_post_thumbnail( $ch->ID );
 		delete_post_meta( $ch->ID, 'gallery' );
 	}
-	update_option( 'ws_bg_chapter_photos_cleared', gmdate( 'c' ), false );
+	if ( $ch ) {
+		update_option( 'ws_bg_chapter_photos_cleared', gmdate( 'c' ), false );
+	}
 }, 40 );
 
 /*
@@ -401,12 +403,12 @@ add_action( 'init', function () {
 	if ( get_option( 'ws_bg_insignia_done' ) || ! post_type_exists( 'ws_chapter' ) ) {
 		return;
 	}
-	update_option( 'ws_bg_insignia_done', gmdate( 'c' ), false ); // Set first, so a failed run is not repeated on every page load.
-	require_once ABSPATH . 'wp-admin/includes/image.php';
 	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
 	if ( ! $ch ) {
-		return;
+		return; // Not created yet (fresh install): try again on a later page load.
 	}
+	update_option( 'ws_bg_insignia_done', gmdate( 'c' ), false ); // Set before the work, so a failed run is not repeated on every page load.
+	require_once ABSPATH . 'wp-admin/includes/image.php';
 	$term = get_term_by( 'slug', 'bulgaria', 'ws_country' );
 	$dir  = dirname( __DIR__ ) . '/playground/media/';
 	$up   = wp_upload_dir( null, false );
