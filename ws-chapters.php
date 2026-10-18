@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.0.0
+ * Version:     2.1.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -176,7 +176,7 @@ function ws_default_grand_chapters() {
 		'Estonia' => 'ee', 'Finland' => 'fi', 'France' => 'fr', 'Germany' => 'de', 'Gibraltar' => 'gi',
 		'Greece' => 'gr', 'Hungary' => 'hu', 'Iceland' => 'is', 'Ireland' => 'ie', 'Italy' => 'it',
 		'Italy Military Traveler' => 'it', 'Latvia' => 'lv', 'Luxembourg' => 'lu', 'Malta' => 'mt',
-		'Netherlands' => 'nl', 'Portugal' => 'pt', 'Romania' => 'ro', 'Russia' => 'ru', 'Serbia' => 'rs',
+		'Netherlands' => 'nl', 'Portugal' => 'pt', 'Romania' => 'ro',
 		'Spain' => 'es', 'Sweden' => 'se', 'Switzerland' => 'ch', 'United Kingdom' => 'gb',
 	);
 }
