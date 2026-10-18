@@ -295,9 +295,25 @@ function ws_country_page() {
 		ws_display_name( $term->name )
 	) ) . '</p>';
 
+	// The circle shows the national logo; without one, the first chapter's patch (linking to that chapter), else the emblem.
+	$emblem      = ws_country_logo( $term->term_id );
+	$emblem_link = '';
+	if ( ! wp_attachment_is_image( (int) $get( 'national_logo' ) ) ) {
+		foreach ( $chapters as $c ) {
+			if ( wp_attachment_is_image( (int) get_post_meta( $c->ID, 'back_patch', true ) ) ) {
+				$emblem      = ws_chapter_back_patch( $c->ID );
+				$emblem_link = get_permalink( $c );
+				break;
+			}
+		}
+	}
+	$emblem = '<span class="ws-emblem__inner">' . $emblem . '</span>';
 	$hero = ws_page_hero(
 		(int) $get( 'hero_image' ),
-		'<div class="ws-emblem"><span class="ws-emblem__inner">' . ws_country_logo( $term->term_id ) . '</span></div>',
+		$emblem_link
+			/* translators: %s: chapter name */
+			? '<a class="ws-emblem" href="' . esc_url( $emblem_link ) . '" title="' . esc_attr( sprintf( __( 'Visit %s', 'ws-chapters' ), ws_display_name( get_the_title( $c ) ) ) ) . '">' . $emblem . '</a>'
+			: '<div class="ws-emblem">' . $emblem . '</div>',
 		ws_display_name( $term->name ),
 		'<p class="ws-page-hero__tagline">' . esc_html__( 'Brotherhood · Motorcycling · Service', 'ws-chapters' ) . '</p>'
 	);
