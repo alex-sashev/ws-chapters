@@ -10,4 +10,4 @@ License: GPL-2.0-or-later.
 
 ## Try it in WordPress Playground
 
-[Open the demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/blueprint.json) — WordPress in your browser with the plugin, two sample chapters and two test images. Nothing is saved; each visit starts fresh.
+[Open the demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/blueprint.json) — WordPress in your browser with this plugin, the [ws-europe theme](https://github.com/alex-sashev/ws-europe-theme), sample chapters across Europe and test images marked TEST. Nothing is saved; each visit starts fresh.
