@@ -15,17 +15,27 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'init', function () {
 	register_post_type( 'ws_event', array(
 		'labels'       => array(
-			'name'          => __( 'Events', 'ws-chapters' ),
-			'singular_name' => __( 'Event', 'ws-chapters' ),
-			'add_new_item'  => __( 'Add event', 'ws-chapters' ),
-			'edit_item'     => __( 'Edit event', 'ws-chapters' ),
-			'all_items'     => __( 'All events', 'ws-chapters' ),
+			'name'                  => __( 'Events', 'ws-chapters' ),
+			'singular_name'         => __( 'Event', 'ws-chapters' ),
+			'add_new'               => __( 'Add event', 'ws-chapters' ),
+			'add_new_item'          => __( 'Add event', 'ws-chapters' ),
+			'edit_item'             => __( 'Edit event', 'ws-chapters' ),
+			'view_item'             => __( 'View event', 'ws-chapters' ),
+			'all_items'             => __( 'All events', 'ws-chapters' ),
+			'search_items'          => __( 'Search events', 'ws-chapters' ),
+			'not_found'             => __( 'No events found.', 'ws-chapters' ),
+			'not_found_in_trash'    => __( 'No events in the Trash.', 'ws-chapters' ),
+			'featured_image'        => __( 'Event photo', 'ws-chapters' ),
+			'set_featured_image'    => __( 'Set event photo', 'ws-chapters' ),
+			'remove_featured_image' => __( 'Remove event photo', 'ws-chapters' ),
+			'item_published'        => __( 'Event published.', 'ws-chapters' ),
+			'item_updated'          => __( 'Event updated.', 'ws-chapters' ),
 		),
 		'public'       => true,
 		'has_archive'  => true,
 		'rewrite'      => array( 'slug' => 'events' ),
 		'menu_icon'    => 'dashicons-calendar-alt',
-		'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ),
+		'supports'     => array( 'title', 'thumbnail', 'custom-fields' ), // Fixed form; description in the "Description" box.
 		'show_in_rest' => true,
 	) );
 

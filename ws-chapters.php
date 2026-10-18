@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.2.0
+ * Version:     2.3.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -29,16 +29,31 @@ function ws_chapter_asset_fields() {
 add_action( 'init', function () {
 	register_post_type( 'ws_chapter', array(
 		'labels'       => array(
-			'name'          => __( 'Chapters', 'ws-chapters' ),
-			'singular_name' => __( 'Chapter', 'ws-chapters' ),
-			'add_new_item'  => __( 'Add chapter', 'ws-chapters' ),
-			'edit_item'     => __( 'Edit chapter', 'ws-chapters' ),
+			'name'                  => __( 'Chapters', 'ws-chapters' ),
+			'singular_name'         => __( 'Chapter', 'ws-chapters' ),
+			'add_new'               => __( 'Add chapter', 'ws-chapters' ),
+			'add_new_item'          => __( 'Add chapter', 'ws-chapters' ),
+			'edit_item'             => __( 'Edit chapter', 'ws-chapters' ),
+			'new_item'              => __( 'New chapter', 'ws-chapters' ),
+			'view_item'             => __( 'View chapter', 'ws-chapters' ),
+			'all_items'             => __( 'All chapters', 'ws-chapters' ),
+			'search_items'          => __( 'Search chapters', 'ws-chapters' ),
+			'not_found'             => __( 'No chapters found.', 'ws-chapters' ),
+			'not_found_in_trash'    => __( 'No chapters in the Trash.', 'ws-chapters' ),
+			'featured_image'        => __( 'Header photo', 'ws-chapters' ),
+			'set_featured_image'    => __( 'Set header photo', 'ws-chapters' ),
+			'remove_featured_image' => __( 'Remove header photo', 'ws-chapters' ),
+			'use_featured_image'    => __( 'Use as header photo', 'ws-chapters' ),
+			'item_published'        => __( 'Chapter published.', 'ws-chapters' ),
+			'item_updated'          => __( 'Chapter updated.', 'ws-chapters' ),
 		),
 		'public'       => true,
 		'has_archive'  => true,
 		'rewrite'      => array( 'slug' => 'chapters' ),
 		'menu_icon'    => 'dashicons-shield',
-		'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ), // Featured image = page hero photo.
+		// A fixed form, not the block editor: the page layout comes from the theme template and can't be changed
+		// here. Text goes in the "About" box (see includes/edit-form.php). Featured image = header photo.
+		'supports'     => array( 'title', 'thumbnail', 'custom-fields' ),
 		'show_in_rest' => true,
 		// Own capabilities so only administrators can add or remove chapters (see ws_chapter_role_caps()).
 		'capability_type' => array( 'ws_chapter', 'ws_chapters' ),
@@ -339,6 +354,7 @@ require __DIR__ . '/includes/profile-fields.php';
 require __DIR__ . '/includes/display.php';
 require __DIR__ . '/includes/events.php';
 require __DIR__ . '/includes/pages.php';
+require __DIR__ . '/includes/edit-form.php';
 
 /* -------------------------------------------------------------------------
  * Admin: independent upload / replace controls
