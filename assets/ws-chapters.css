@@ -154,3 +154,24 @@
 .ws-form-notice { max-width: 760px; margin: 0 0 1.5rem; padding: 1rem 1.25rem; border-radius: var(--ws-radius, 4px); border-left: 4px solid; }
 .ws-form-notice--success { background: #eef6ea; border-color: #3c7a2b; color: #1f3d16; }
 .ws-form-notice--error { background: #fbecec; border-color: #a3222b; color: #5c1418; }
+
+/* Members area */
+.ws-members__hello { margin: 0 0 1.5rem; }
+.ws-members-locked { max-width: 560px; padding: 2rem; border: 1px solid var(--ws-border, #ddd); border-top: 3px solid var(--ws-gold, #C9A24A); border-radius: var(--ws-radius, 4px); background: var(--ws-card, #fff); }
+.ws-members-locked h2 { margin-top: 0; }
+.ws-doc-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.25rem; }
+.ws-doc-filter a { padding: .35rem .9rem; border: 1px solid var(--ws-border-2, #ccc); border-radius: 999px; text-decoration: none; color: inherit; font-size: .9rem; }
+.ws-doc-filter a[aria-current="true"] { background: var(--ws-gold, #C9A24A); border-color: var(--ws-gold, #C9A24A); color: #0b0b0c; font-weight: 700; }
+.ws-doc-list { list-style: none; margin: 0 0 2.5rem; padding: 0; display: grid; gap: .75rem; }
+.ws-doc { display: grid; grid-template-columns: 56px 1fr auto; gap: 1rem; align-items: center; padding: 1rem; background: var(--ws-card, #fff); border: 1px solid var(--ws-border, #ddd); border-radius: var(--ws-radius, 4px); }
+.ws-doc__icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #0b0b0c; color: var(--ws-gold-light, #E3C77A); font-weight: 700; font-size: .75rem; letter-spacing: .05em; }
+.ws-doc__title { margin: 0 0 .25rem; font-size: 1.05rem; }
+.ws-doc__title a { color: inherit; text-decoration: none; }
+.ws-doc__title a:hover { text-decoration: underline; }
+.ws-doc__desc { margin: 0 0 .35rem; color: var(--ws-text, inherit); }
+.ws-doc__meta { margin: 0; font-size: .85rem; color: var(--ws-muted, #666); }
+.ws-doc__type { font-weight: 700; color: var(--ws-gold-dark, #8a6d2c); }
+.ws-doc__actions { display: flex; flex-direction: column; gap: .4rem; align-items: stretch; }
+.ws-doc__actions .ws-btn-outline { margin-top: 0; }
+.ws-doc__delete button { width: 100%; padding: .4rem .8rem; background: none; border: 0; color: #a3222b; font-size: .8rem; cursor: pointer; text-decoration: underline; }
+@media (max-width: 600px) { .ws-doc { grid-template-columns: 44px 1fr; } .ws-doc__icon { width: 44px; height: 44px; } .ws-doc__actions { grid-column: 1 / -1; flex-direction: row; } }
