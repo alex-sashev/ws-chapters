@@ -93,12 +93,9 @@ function ws_site_setup() {
 	$subev = $page('Submit an event', 'submit-event', '<!-- wp:pattern {"slug":"ws-europe/page-submit-event"} /-->');
 	$memb  = $page('Members', 'members', '<!-- wp:html -->[ws_members_area]<!-- /wp:html -->');
 	$ulnk  = $page('Useful links', 'useful-links', '<!-- wp:pattern {"slug":"ws-europe/page-useful-links"} /-->');
-	// Useful links: from the event details supplied by the chapters.
+	// Useful links (more are added by admins under Useful links).
 	foreach (array(
 	  array('Widows Sons Masonic Riders Association, Inc.', 'https://wsmrainc.org', 'Official website of the Widows Sons Masonic Riders Association, Inc. (WSMRA Inc.), the international association of Widows Sons chapters worldwide.', -1),
-	  array('Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0),
-	  array('Widows Sons Germany', 'https://widows-sons-germany.de', 'Website of Widows Sons Germany, including the 10th anniversary gathering.', 1),
-	  array('Masonic Biker Denmark', 'https://masonic-biker.dk', 'Masonic Biker Denmark, organisers of the International Rally Masonic Biker.', 2),
 	) as $l) {
 	  $lid = wp_insert_post(array('post_type'=>'ws_link','post_status'=>'publish','post_title'=>$l[0],'menu_order'=>$l[3]));
 	  update_post_meta($lid, '_ws_url', $l[1]); update_post_meta($lid, '_ws_desc', $l[2]);
@@ -346,7 +343,6 @@ add_action( 'init', function () {
 	}
 	$links = array(
 		array( 'Widows Sons Masonic Riders Association, Inc.', 'https://wsmrainc.org', 'Official website of the Widows Sons Masonic Riders Association, Inc. (WSMRA Inc.), the international association of Widows Sons chapters worldwide.', -1 ),
-		array( 'Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0 ),
 	);
 	$done = (array) get_option( 'ws_links_added', array() );
 	foreach ( $links as $l ) {
@@ -365,3 +361,26 @@ add_action( 'init', function () {
 	}
 	update_option( 'ws_links_added', $done, false );
 }, 20 );
+
+/*
+ * Useful links taken off the list after setup: moved to the bin once (an admin can restore them from there).
+ */
+add_action( 'init', function () {
+	if ( ! post_type_exists( 'ws_link' ) || ! get_option( 'ws_site_setup_done' ) ) {
+		return;
+	}
+	$remove = array( 'https://widowssons.bg', 'https://widows-sons-germany.de', 'https://masonic-biker.dk' );
+	$done   = (array) get_option( 'ws_links_removed', array() );
+	$todo   = array_diff( $remove, $done );
+	if ( ! $todo ) {
+		return;
+	}
+	foreach ( $todo as $url ) {
+		$ids = get_posts( array( 'post_type' => 'ws_link', 'post_status' => array( 'publish', 'draft', 'pending', 'private' ), 'meta_key' => '_ws_url', 'meta_value' => $url, 'fields' => 'ids', 'numberposts' => -1 ) );
+		foreach ( $ids as $id ) {
+			wp_trash_post( $id );
+		}
+		$done[] = $url;
+	}
+	update_option( 'ws_links_removed', $done, false );
+}, 30 );
