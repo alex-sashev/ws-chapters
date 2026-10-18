@@ -12,6 +12,8 @@ defined( 'ABSPATH' ) || exit;
 function ws_contact_fields() {
 	return array(
 		'email'     => array( __( 'Email', 'ws-chapters' ), 'email' ),
+		'phone'     => array( __( 'Phone', 'ws-chapters' ), 'tel' ),
+		'address'   => array( __( 'Address / meeting place', 'ws-chapters' ), 'text' ),
 		'website'   => array( __( 'Website', 'ws-chapters' ), 'url' ),
 		'facebook'  => array( __( 'Facebook page', 'ws-chapters' ), 'url' ),
 		'instagram' => array( __( 'Instagram', 'ws-chapters' ), 'url' ),
@@ -20,7 +22,16 @@ function ws_contact_fields() {
 
 function ws_sanitize_contact( $key, $value ) {
 	$value = trim( (string) $value );
-	return 'email' === $key ? sanitize_email( $value ) : esc_url_raw( $value );
+	if ( 'email' === $key ) {
+		return sanitize_email( $value );
+	}
+	if ( 'phone' === $key ) {
+		return preg_replace( '/[^0-9+()\s.\-\/]/', '', $value );
+	}
+	if ( 'address' === $key ) {
+		return sanitize_text_field( $value );
+	}
+	return esc_url_raw( $value );
 }
 
 /** Comma-separated list of image attachment IDs. */
@@ -82,7 +93,7 @@ function ws_contact_inputs( $values ) {
 			'<p style="margin:0"><label for="ws_%1$s"><strong>%2$s</strong></label><br><input type="%3$s" id="ws_%1$s" name="ws_%1$s" value="%4$s" class="widefat"></p>',
 			esc_attr( $key ),
 			esc_html( $field[0] ),
-			'email' === $field[1] ? 'email' : 'url',
+			$field[1],
 			esc_attr( $values[ $key ] ?? '' )
 		);
 	}

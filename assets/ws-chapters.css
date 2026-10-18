@@ -194,3 +194,5 @@
 .ws-link-card__url:hover { text-decoration: underline; }
 .ws-link-card p { flex: 1; }
 .ws-link-card .ws-link-arrow { margin-top: .9rem; }
+.ws-contact-list__text { display: flex; align-items: flex-start; gap: .6rem; font-size: .95rem; }
+.ws-contact-list__text .ws-icon { flex: 0 0 18px; margin-top: .15em; color: var(--ws-gold-dark, #8a6d2c); }
