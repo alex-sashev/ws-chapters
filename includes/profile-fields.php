@@ -181,17 +181,17 @@ add_action( 'edited_ws_country', function ( $term_id ) {
 
 /* News: link a post to a chapter. */
 add_action( 'add_meta_boxes_post', function () {
-	add_meta_box( 'ws_related_chapter', __( 'Chapter', 'ws-chapters' ), function ( $post ) {
+	add_meta_box( 'ws_related_chapter', __( 'Posted by', 'ws-chapters' ), function ( $post ) {
 		wp_nonce_field( 'ws_related_chapter', 'ws_related_chapter_nonce' );
 		$current  = (int) get_post_meta( $post->ID, 'related_chapter', true );
 		$chapters = get_posts( array( 'post_type' => 'ws_chapter', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ) );
-		echo '<select name="ws_related_chapter" style="width:100%"><option value="0">' . esc_html__( '— Country-wide / none —', 'ws-chapters' ) . '</option>';
+		echo '<select name="ws_related_chapter" style="width:100%"><option value="0">' . esc_html__( '— No chapter (country or Widows Sons Europe) —', 'ws-chapters' ) . '</option>';
 		foreach ( $chapters as $c ) {
 			if ( current_user_can( 'edit_post', $c->ID ) || $c->ID === $current ) {
 				printf( '<option value="%d"%s>%s</option>', $c->ID, selected( $current, $c->ID, false ), esc_html( $c->post_title ) );
 			}
 		}
-		echo '</select><p class="description">' . esc_html__( 'Shows this news on the chapter page too. Also pick the country under Countries.', 'ws-chapters' ) . '</p>';
+		echo '</select><p class="description">' . esc_html__( 'Pick a chapter to post as that chapter (it also shows on the chapter page). With no chapter, the country chosen under Countries is shown. With no chapter and no country, the news is posted by Widows Sons Europe.', 'ws-chapters' ) . '</p>';
 	}, 'post', 'side', 'default' );
 } );
 

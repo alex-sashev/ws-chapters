@@ -157,6 +157,32 @@ function ws_gallery_grid( $ids ) {
 }
 
 /** News cards for a country and/or chapter. */
+/**
+ * Who a news item is from: its chapter, else its country, else Widows Sons Europe itself.
+ * Returns linked HTML ("Posted by …").
+ */
+function ws_news_source( $post = null ) {
+	$post = get_post( $post );
+	if ( ! $post ) {
+		return '';
+	}
+	$chapter = (int) get_post_meta( $post->ID, 'related_chapter', true );
+	if ( $chapter && 'publish' === get_post_status( $chapter ) ) {
+		$name = ws_display_name( get_the_title( $chapter ) );
+		$url  = get_permalink( $chapter );
+	} else {
+		$terms = get_the_terms( $post, 'ws_country' );
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			$name = ws_display_name( $terms[0]->name );
+			$url  = get_term_link( $terms[0] );
+		} else {
+			$name = __( 'Widows Sons Europe', 'ws-chapters' );
+			$url  = home_url( '/' );
+		}
+	}
+	return '<span class="ws-news-source">' . esc_html__( 'Posted by', 'ws-chapters' ) . ' <a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a></span>';
+}
+
 function ws_news_cards( $country = 0, $chapter = 0, $limit = 3 ) {
 	$args = array( 'post_type' => 'post', 'post_status' => 'publish', 'posts_per_page' => $limit, 'no_found_rows' => true );
 	if ( $chapter ) {
@@ -171,12 +197,13 @@ function ws_news_cards( $country = 0, $chapter = 0, $limit = 3 ) {
 	$out = '<div class="ws-news-cards">';
 	foreach ( $posts as $p ) {
 		$out .= sprintf(
-			'<article class="ws-news-card"><time datetime="%1$s">%2$s</time><h3><a href="%3$s">%4$s</a></h3><p>%5$s</p></article>',
+			'<article class="ws-news-card"><time datetime="%1$s">%2$s</time><h3><a href="%3$s">%4$s</a></h3><p>%5$s</p><p class="ws-news-card__source">%6$s</p></article>',
 			esc_attr( get_the_date( 'c', $p ) ),
 			esc_html( get_the_date( '', $p ) ),
 			esc_url( get_permalink( $p ) ),
 			esc_html( get_the_title( $p ) ),
-			esc_html( wp_trim_words( get_the_excerpt( $p ), 24 ) )
+			esc_html( wp_trim_words( get_the_excerpt( $p ), 24 ) ),
+			ws_news_source( $p )
 		);
 	}
 	return $out . '</div>';
@@ -389,6 +416,9 @@ add_action( 'init', function () {
 	add_shortcode( 'ws_europe_map', 'ws_europe_map_panel' );
 	add_shortcode( 'ws_country_page', 'ws_country_page' );
 	add_shortcode( 'ws_chapter_profile', 'ws_chapter_profile' );
+	add_shortcode( 'ws_news_source', function () {
+		return ws_news_source();
+	} );
 	add_shortcode( 'ws_news', function ( $atts ) {
 		$atts = shortcode_atts( array( 'country' => '', 'chapter' => 0, 'limit' => 3 ), (array) $atts );
 		$term = $atts['country'] ? get_term_by( 'slug', sanitize_title( $atts['country'] ), 'ws_country' ) : null;
