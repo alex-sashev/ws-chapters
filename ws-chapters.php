@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, plus national logos per country.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -44,8 +44,19 @@ add_action( 'init', function () {
 
 	register_taxonomy( 'ws_country', 'ws_chapter', array(
 		'labels'            => array(
-			'name'          => __( 'Countries', 'ws-chapters' ),
-			'singular_name' => __( 'Country', 'ws-chapters' ),
+			'name'              => __( 'Countries', 'ws-chapters' ),
+			'singular_name'     => __( 'Country', 'ws-chapters' ),
+			'all_items'         => __( 'All countries', 'ws-chapters' ),
+			'edit_item'         => __( 'Edit country', 'ws-chapters' ),
+			'view_item'         => __( 'View country', 'ws-chapters' ),
+			'update_item'       => __( 'Update country', 'ws-chapters' ),
+			'add_new_item'      => __( 'Add country', 'ws-chapters' ),
+			'new_item_name'     => __( 'New country name', 'ws-chapters' ),
+			'search_items'      => __( 'Search countries', 'ws-chapters' ),
+			'parent_item'       => __( 'Parent country', 'ws-chapters' ),
+			'parent_item_colon' => __( 'Parent country:', 'ws-chapters' ),
+			'not_found'         => __( 'No countries found.', 'ws-chapters' ),
+			'back_to_items'     => __( '&larr; Go to countries', 'ws-chapters' ),
 		),
 		'hierarchical'      => true,
 		'show_admin_column' => true,
@@ -100,6 +111,30 @@ function ws_sanitize_asset_id( $value ) {
 	}
 	return 0;
 }
+
+/** Whether an attachment is in use as a back patch, chapter logo or national logo. */
+function ws_is_insignia_attachment( $attachment_id ) {
+	global $wpdb;
+	$id = (int) $attachment_id;
+	return (bool) $wpdb->get_var( $wpdb->prepare(
+		"SELECT 1 FROM {$wpdb->postmeta} WHERE meta_key IN ('back_patch','chapter_logo') AND meta_value = %d
+		 UNION SELECT 1 FROM {$wpdb->termmeta} WHERE meta_key = 'national_logo' AND meta_value = %d LIMIT 1",
+		$id,
+		$id
+	) );
+}
+
+/**
+ * Official insignia files can only be edited (e.g. cropped in the media editor) or deleted
+ * by users who manage insignia, so an Editor can't alter a patch through the media library.
+ */
+add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) {
+	if ( in_array( $cap, array( 'edit_post', 'delete_post' ), true ) && ! empty( $args[0] )
+		&& 'attachment' === get_post_type( $args[0] ) && ws_is_insignia_attachment( $args[0] ) ) {
+		$caps[] = WS_ASSET_CAP;
+	}
+	return $caps;
+}, 10, 4 );
 
 /* -------------------------------------------------------------------------
  * Front-end helpers
@@ -267,7 +302,7 @@ add_action( 'ws_country_add_form_fields', function () {
 add_action( 'ws_country_edit_form_fields', function ( $term ) {
 	wp_nonce_field( 'ws_country_logo', 'ws_country_logo_nonce' );
 	echo '<tr class="form-field"><th scope="row">' . esc_html__( 'National logo', 'ws-chapters' ) . '</th><td>';
-	ws_asset_control( 'ws_national_logo', __( 'Stored separately from chapter insignia', 'ws-chapters' ), (int) get_term_meta( $term->term_id, 'national_logo', true ), current_user_can( WS_ASSET_CAP ) );
+	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), (int) get_term_meta( $term->term_id, 'national_logo', true ), current_user_can( WS_ASSET_CAP ) );
 	echo '</td></tr>';
 } );
 
