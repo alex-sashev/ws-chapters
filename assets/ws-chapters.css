@@ -1,0 +1,75 @@
+/* ws-chapters — neutral defaults. Themes override via the --ws-* custom properties. */
+
+.ws-insignia { display: block; max-width: 100%; height: auto; object-fit: contain; background: transparent; }
+
+/* Neutral "official image pending" placeholder: no colour, no imitation insignia. */
+.ws-insignia--pending {
+	display: flex; align-items: center; justify-content: center; text-align: center;
+	aspect-ratio: 1; width: 100%; min-height: 120px; padding: 1rem; box-sizing: border-box;
+	border: 2px dashed var(--ws-border-2, rgba(127, 127, 127, .5));
+	border-radius: var(--ws-radius, 8px);
+	background: rgba(127, 127, 127, .06);
+	color: var(--ws-muted, inherit);
+	font-size: .875rem; line-height: 1.3;
+}
+
+/* Profile: back patch shown large, at its own proportions. */
+.ws-back-patch { max-width: 520px; margin-inline: auto; }
+.ws-back-patch .ws-insignia { margin-inline: auto; max-height: 80vh; width: auto; }
+.ws-back-patch .ws-insignia--pending { width: 100%; aspect-ratio: 3 / 4; }
+
+.ws-country-logo { max-width: 160px; }
+.ws-chapter-meta { margin: 0; color: var(--ws-muted, inherit); font-size: .95em; }
+
+/* Directory */
+.ws-chapter-group + .ws-chapter-group { margin-top: 3rem; }
+.ws-chapter-group__title a { color: inherit; text-decoration: none; }
+.ws-chapter-grid {
+	display: grid; gap: 1.25rem;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+}
+.ws-chapter-card {
+	display: flex; flex-direction: column; gap: .5rem;
+	padding: 1.25rem; box-sizing: border-box;
+	border: 1px solid var(--ws-border, rgba(127, 127, 127, .3));
+	border-radius: var(--ws-radius, 8px);
+	background: var(--ws-card, transparent);
+	transition: border-color .15s ease;
+}
+.ws-chapter-card:hover, .ws-chapter-card:focus-within { border-color: var(--ws-brass, currentColor); }
+.ws-chapter-card__link { display: flex; flex-direction: column; gap: .75rem; color: inherit; text-decoration: none; }
+.ws-chapter-card__logo { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+.ws-chapter-card__logo .ws-insignia { max-height: 100%; width: auto; }
+.ws-chapter-card__name { margin: 0; font-size: 1.15rem; }
+
+/* Map */
+.ws-chapter-map {
+	height: var(--ws-map-height, 560px); width: 100%;
+	border: 1px solid var(--ws-border, rgba(127, 127, 127, .3));
+	border-radius: var(--ws-radius, 8px);
+	background: var(--ws-bg-deep, #1a1a1a);
+	overflow: hidden; isolation: isolate;
+}
+/* Dark basemap from standard OSM tiles. Only the tile layer is filtered, never the logos. */
+.ws-chapter-map .ws-map-tiles { filter: invert(1) hue-rotate(180deg) grayscale(.7) brightness(.85) contrast(.9); }
+@media (max-width: 600px) { .ws-chapter-map { height: min(var(--ws-map-height, 560px), 70vh); } }
+
+.ws-map-pin {
+	display: flex; align-items: center; justify-content: center;
+	width: 48px; height: 48px; box-sizing: border-box;
+	border-radius: 50%;
+	background: rgba(14, 14, 15, .85);
+	border: 2px solid var(--ws-brass, #C9A45C);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+}
+.ws-map-pin img { width: 36px; height: 36px; object-fit: contain; }
+.ws-map-pin--pending { border-style: dashed; border-color: #8C867D; }
+.ws-map-pin--pending::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #8C867D; }
+
+.ws-map-popup { display: flex; gap: .75rem; align-items: center; min-width: 200px; font-family: var(--ws-body, inherit); }
+.ws-map-popup__logo { flex: 0 0 64px; height: 64px; display: flex; align-items: center; justify-content: center; }
+.ws-map-popup__logo img { max-width: 64px; max-height: 64px; object-fit: contain; }
+.ws-map-popup__logo .ws-insignia--pending { min-height: 0; height: 64px; padding: .25rem; font-size: .65rem; border-radius: 50%; }
+.ws-map-popup strong { display: block; font-size: 1rem; }
+.ws-map-popup span { display: block; color: #666; font-size: .85rem; }
+.ws-map-popup a { font-weight: 600; }

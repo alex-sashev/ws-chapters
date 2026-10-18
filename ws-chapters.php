@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, plus national logos per country.
- * Version:     1.0.1
+ * Version:     1.2.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -40,28 +40,40 @@ add_action( 'init', function () {
 		'menu_icon'    => 'dashicons-shield',
 		'supports'     => array( 'title', 'editor', 'excerpt', 'custom-fields' ),
 		'show_in_rest' => true,
+		// Own capabilities so only administrators can add or remove chapters (see ws_chapter_role_caps()).
+		'capability_type' => array( 'ws_chapter', 'ws_chapters' ),
+		'map_meta_cap'    => true,
+		'capabilities'    => array( 'create_posts' => 'create_ws_chapters' ),
 	) );
 
+	// National (country-level) Grand Chapters. Internal name stays ws_country; shown as "Grand Chapters".
 	register_taxonomy( 'ws_country', 'ws_chapter', array(
 		'labels'            => array(
-			'name'              => __( 'Countries', 'ws-chapters' ),
-			'singular_name'     => __( 'Country', 'ws-chapters' ),
-			'all_items'         => __( 'All countries', 'ws-chapters' ),
-			'edit_item'         => __( 'Edit country', 'ws-chapters' ),
-			'view_item'         => __( 'View country', 'ws-chapters' ),
-			'update_item'       => __( 'Update country', 'ws-chapters' ),
-			'add_new_item'      => __( 'Add country', 'ws-chapters' ),
-			'new_item_name'     => __( 'New country name', 'ws-chapters' ),
-			'search_items'      => __( 'Search countries', 'ws-chapters' ),
-			'parent_item'       => __( 'Parent country', 'ws-chapters' ),
-			'parent_item_colon' => __( 'Parent country:', 'ws-chapters' ),
-			'not_found'         => __( 'No countries found.', 'ws-chapters' ),
-			'back_to_items'     => __( '&larr; Go to countries', 'ws-chapters' ),
+			'name'              => __( 'Grand Chapters', 'ws-chapters' ),
+			'singular_name'     => __( 'Grand Chapter', 'ws-chapters' ),
+			'menu_name'         => __( 'Grand Chapters', 'ws-chapters' ),
+			'all_items'         => __( 'All Grand Chapters', 'ws-chapters' ),
+			'edit_item'         => __( 'Edit Grand Chapter', 'ws-chapters' ),
+			'view_item'         => __( 'View Grand Chapter', 'ws-chapters' ),
+			'update_item'       => __( 'Update Grand Chapter', 'ws-chapters' ),
+			'add_new_item'      => __( 'Add Grand Chapter', 'ws-chapters' ),
+			'new_item_name'     => __( 'New Grand Chapter name', 'ws-chapters' ),
+			'search_items'      => __( 'Search Grand Chapters', 'ws-chapters' ),
+			'parent_item'       => __( 'Parent Grand Chapter', 'ws-chapters' ),
+			'parent_item_colon' => __( 'Parent Grand Chapter:', 'ws-chapters' ),
+			'not_found'         => __( 'No Grand Chapters found.', 'ws-chapters' ),
+			'back_to_items'     => __( '&larr; Go to Grand Chapters', 'ws-chapters' ),
 		),
 		'hierarchical'      => true,
 		'show_admin_column' => true,
+		'capabilities'      => array(
+			'manage_terms' => 'manage_ws_countries',
+			'edit_terms'   => 'manage_ws_countries',
+			'delete_terms' => 'manage_ws_countries',
+			'assign_terms' => 'edit_ws_chapters',
+		),
 		'show_in_rest'      => true,
-		'rewrite'           => array( 'slug' => 'country' ),
+		'rewrite'           => array( 'slug' => 'grand-chapter' ),
 	) );
 
 	$auth = function () {
@@ -88,19 +100,79 @@ add_action( 'init', function () {
 		'auth_callback'     => $auth,
 	) );
 
+	// Location, used by the European map. Anyone who can edit the chapter can set it.
+	$can_edit_chapter = function ( $allowed, $meta_key, $post_id ) {
+		return current_user_can( 'edit_post', $post_id );
+	};
+	register_post_meta( 'ws_chapter', 'city', array(
+		'type'              => 'string',
+		'single'            => true,
+		'default'           => '',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback'     => $can_edit_chapter,
+	) );
+	foreach ( array( 'latitude' => 90, 'longitude' => 180 ) as $key => $limit ) {
+		register_post_meta( 'ws_chapter', $key, array(
+			'type'              => 'number',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => function ( $value ) use ( $limit ) {
+				return ws_sanitize_coordinate( $value, $limit );
+			},
+			'auth_callback'     => $can_edit_chapter,
+		) );
+	}
+
 	add_image_size( 'ws-chapter-card', 480, 480, false ); // Fit-inside, never cropped.
 
 	// One-time setup (works for mu-plugin installs too, which have no activation hook):
-	// grant the asset capability to Administrators and register the /chapters/ URLs.
-	if ( get_option( 'ws_chapters_setup_version' ) !== '1' ) {
-		$admin = get_role( 'administrator' );
-		if ( $admin ) {
-			$admin->add_cap( WS_ASSET_CAP );
+	// grant role capabilities and register the /chapters/ URLs.
+	if ( get_option( 'ws_chapters_setup_version' ) !== '3' ) {
+		foreach ( ws_chapter_role_caps() as $role_name => $caps ) {
+			$role = get_role( $role_name );
+			if ( $role ) {
+				foreach ( $caps as $cap ) {
+					$role->add_cap( $cap );
+				}
+			}
+		}
+		foreach ( ws_default_grand_chapters() as $name ) {
+			if ( ! term_exists( $name, 'ws_country' ) ) {
+				wp_insert_term( $name, 'ws_country' );
+			}
 		}
 		flush_rewrite_rules( false );
-		update_option( 'ws_chapters_setup_version', '1' );
+		update_option( 'ws_chapters_setup_version', '3' );
 	}
 }, 20 );
+
+/** Starting list of Widows Sons Grand Chapters in Europe (Oct 2026). Added once if missing; admins edit from there. */
+function ws_default_grand_chapters() {
+	return array(
+		'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Estonia', 'Finland', 'France', 'Germany',
+		'Gibraltar', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Italy Military Traveler', 'Latvia',
+		'Luxembourg', 'Malta', 'Netherlands', 'Portugal', 'Romania', 'Russia', 'Serbia', 'Spain', 'Sweden',
+		'Switzerland', 'United Kingdom',
+	);
+}
+
+/**
+ * Who may do what with chapters. On multisite the Super Admin has every capability anyway.
+ * - Administrators: add, publish, edit, delete chapters; manage Grand Chapters; set official insignia.
+ * - Editors: edit the text/location of existing chapters only. No adding, deleting or insignia.
+ */
+function ws_chapter_role_caps() {
+	$edit = array( 'edit_ws_chapters', 'edit_others_ws_chapters', 'edit_published_ws_chapters', 'edit_private_ws_chapters', 'read_private_ws_chapters' );
+	return array(
+		'administrator' => array_merge( $edit, array(
+			'create_ws_chapters', 'publish_ws_chapters',
+			'delete_ws_chapters', 'delete_others_ws_chapters', 'delete_published_ws_chapters', 'delete_private_ws_chapters',
+			'manage_ws_countries', WS_ASSET_CAP,
+		) ),
+		'editor'        => $edit,
+	);
+}
 
 /** Accept only image attachments in a format that keeps quality/transparency; anything else clears the field. */
 function ws_sanitize_asset_id( $value ) {
@@ -110,6 +182,15 @@ function ws_sanitize_asset_id( $value ) {
 		return $id;
 	}
 	return 0;
+}
+
+/** A latitude/longitude in range, or '' (unset). Accepts a comma as decimal separator. */
+function ws_sanitize_coordinate( $value, $limit ) {
+	$value = str_replace( ',', '.', trim( (string) $value ) );
+	if ( '' === $value || ! is_numeric( $value ) || abs( (float) $value ) > $limit ) {
+		return '';
+	}
+	return round( (float) $value, 6 );
 }
 
 /** Whether an attachment is in use as a back patch, chapter logo or national logo. */
@@ -221,19 +302,7 @@ add_action( 'rest_api_init', function () {
 	) );
 } );
 
-add_action( 'wp_head', function () {
-	?>
-	<style id="ws-insignia">
-		.ws-insignia { display: block; max-width: 100%; height: auto; object-fit: contain; background: transparent; }
-		.ws-insignia--pending {
-			display: flex; align-items: center; justify-content: center; text-align: center;
-			aspect-ratio: 1; min-height: 120px; padding: 1rem; box-sizing: border-box;
-			border: 2px dashed #b5b5b5; border-radius: 8px; color: #6b6b6b; background: #f4f4f4;
-			font-size: .875rem; line-height: 1.3;
-		}
-	</style>
-	<?php
-} );
+require __DIR__ . '/includes/display.php';
 
 /* -------------------------------------------------------------------------
  * Admin: independent upload / replace controls
@@ -272,6 +341,45 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 		}
 		echo '</div>';
 	}, 'ws_chapter', 'normal', 'high' );
+
+	add_meta_box( 'ws_chapter_location', __( 'Location (for the map)', 'ws-chapters' ), function ( $post ) {
+		wp_nonce_field( 'ws_chapter_location', 'ws_chapter_location_nonce' );
+		$fields = array(
+			'city'      => __( 'City', 'ws-chapters' ),
+			'latitude'  => __( 'Latitude (e.g. 42.6977)', 'ws-chapters' ),
+			'longitude' => __( 'Longitude (e.g. 23.3219)', 'ws-chapters' ),
+		);
+		echo '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">';
+		foreach ( $fields as $key => $label ) {
+			printf(
+				'<p><label for="ws_%1$s"><strong>%2$s</strong></label><br><input type="text" class="widefat" id="ws_%1$s" name="ws_%1$s" value="%3$s"></p>',
+				esc_attr( $key ),
+				esc_html( $label ),
+				esc_attr( get_post_meta( $post->ID, $key, true ) )
+			);
+		}
+		echo '</div><p class="description">' . esc_html__( 'Tip: right-click the meeting place in Google Maps or OpenStreetMap to copy its coordinates. Chapters without coordinates are listed in the directory but not shown on the map.', 'ws-chapters' ) . '</p>';
+	}, 'ws_chapter', 'normal', 'default' );
+} );
+
+add_action( 'save_post_ws_chapter', function ( $post_id ) {
+	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+	if ( ! isset( $_POST['ws_chapter_location_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['ws_chapter_location_nonce'] ), 'ws_chapter_location' ) ) {
+		return;
+	}
+	foreach ( array( 'city', 'latitude', 'longitude' ) as $key ) {
+		if ( ! isset( $_POST[ 'ws_' . $key ] ) ) {
+			continue;
+		}
+		$value = sanitize_meta( $key, wp_unslash( $_POST[ 'ws_' . $key ] ), 'post', 'ws_chapter' );
+		if ( '' === $value ) {
+			delete_post_meta( $post_id, $key );
+		} else {
+			update_post_meta( $post_id, $key, $value );
+		}
+	}
 } );
 
 add_action( 'save_post_ws_chapter', function ( $post_id ) {
