@@ -1,8 +1,22 @@
-/* ws-chapters — European chapter map (Leaflet). Markers use each chapter's official logo. */
+/* ws-chapters — map of Europe. Countries with chapters are filled gold; markers use official logos.
+ * mode "countries": one marker per country (national logo, name, chapter count) linking to the country page.
+ * mode "chapters":  one marker per chapter (chapter logo) linking to the chapter page.
+ * Country shapes come from world-atlas (Natural Earth); no map tiles are loaded. */
 (function () {
 	'use strict';
 
-	var EUROPE = [[34, -12], [71, 42]];
+	var EUROPE = [[35, -24], [70.5, 42]];
+	var cfg = window.wsMapConfig || {};
+	var atlasPromise = null;
+
+	function loadAtlas() {
+		if (!atlasPromise) {
+			atlasPromise = fetch(cfg.atlas, { integrity: cfg.atlasIntegrity, mode: 'cors' })
+				.then(function (r) { return r.json(); })
+				.then(function (topo) { return trimWrapped(window.topojson.feature(topo, topo.objects.countries)); });
+		}
+		return atlasPromise;
+	}
 
 	function el(tag, cls, text) {
 		var n = document.createElement(tag);
@@ -11,18 +25,57 @@
 		return n;
 	}
 
-	function pinHtml(p) {
-		var pin = el('span', 'ws-map-pin' + (p.logo ? '' : ' ws-map-pin--pending'));
-		if (p.logo) {
+	function emblem(logo, size) {
+		var pin = el('span', 'ws-map-pin' + (logo ? '' : ' ws-map-pin--pending'));
+		pin.style.width = pin.style.height = size + 'px';
+		if (logo) {
 			var img = el('img');
-			img.src = p.logo;
+			img.src = logo;
 			img.alt = '';
 			pin.appendChild(img);
 		}
-		return pin.outerHTML;
+		return pin;
 	}
 
-	function popup(p, labels) {
+	function countLabel(p, labels) {
+		return p.count + ' ' + (p.count === 1 ? labels.chapter : labels.chapters);
+	}
+
+	function countryIcon(p) {
+		var wrap = el('span', 'ws-map-country');
+		wrap.appendChild(emblem(p.logo, 34));
+		return L.divIcon({ className: '', html: wrap.outerHTML, iconSize: [34, 34], iconAnchor: [17, 17], tooltipAnchor: [16, 0] });
+	}
+
+	function countryTooltip(p, labels) {
+		var tag = el('span', 'ws-map-country__label');
+		tag.appendChild(el('strong', '', p.name));
+		tag.appendChild(el('span', '', countLabel(p, labels)));
+		return tag;
+	}
+
+	/* Shapes that cross the 180° meridian (Russia's far east, Fiji) would smear across the map as
+	 * horizontal bands. Shift their western-hemisphere points by +360° so each ring stays continuous. */
+	function trimWrapped(geo) {
+		var fixRing = function (ring) {
+			var east = ring.some(function (pt) { return pt[0] > 100; });
+			var west = ring.some(function (pt) { return pt[0] < -100; });
+			return east && west ? ring.map(function (pt) { return pt[0] < 0 ? [pt[0] + 360, pt[1]] : pt; }) : ring;
+		};
+		var fixPoly = function (poly) { return poly.map(fixRing); };
+		geo.features.forEach(function (f) {
+			var g = f.geometry;
+			if (!g) return;
+			if (g.type === 'MultiPolygon') {
+				g.coordinates = g.coordinates.map(fixPoly);
+			} else if (g.type === 'Polygon') {
+				g.coordinates = fixPoly(g.coordinates);
+			}
+		});
+		return geo;
+	}
+
+	function chapterPopup(p, labels) {
 		var box = el('div', 'ws-map-popup');
 		var logo = el('div', 'ws-map-popup__logo');
 		if (p.logo) {
@@ -43,7 +96,7 @@
 			where.appendChild(document.createTextNode(' '));
 		}
 		where.appendChild(document.createTextNode([p.city, p.country].filter(Boolean).join(' · ')));
-		if (where.textContent.trim()) text.appendChild(where);
+		text.appendChild(where);
 		var link = el('a', '', labels.profile + ' →');
 		link.href = p.url;
 		text.appendChild(link);
@@ -53,38 +106,65 @@
 	}
 
 	function init(node) {
+		var mode = node.dataset.mode || 'chapters';
 		var points = JSON.parse(node.dataset.points || '[]');
+		var highlight = JSON.parse(node.dataset.highlight || '[]');
+		var focus = JSON.parse(node.dataset.focus || 'null');
 		var labels = JSON.parse(node.dataset.labels || '{}');
-		var map = L.map(node, { scrollWheelZoom: false, worldCopyJump: true });
-
-		// Standard OpenStreetMap tiles (no API key); darkened in CSS via .ws-map-tiles, markers untouched.
-		L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			className: 'ws-map-tiles',
-			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map);
+		var map = L.map(node, {
+			scrollWheelZoom: false,
+			zoomSnap: 0.25,
+			maxBounds: [[20, -60], [80, 80]],
+			minZoom: 2.5
+		});
+		map.attributionControl.setPrefix(false).addAttribution('Countries: <a href="https://www.naturalearthdata.com/">Natural Earth</a>');
 
 		var bounds = [];
 		points.forEach(function (p) {
-			var marker = L.marker([p.lat, p.lng], {
-				title: p.name,
-				alt: p.name,
-				icon: L.divIcon({ className: '', html: pinHtml(p), iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18] })
-			}).addTo(map);
-			marker.bindPopup(popup(p, labels));
+			if (p.lat === null || p.lat === undefined || p.lng === null || p.lng === undefined) return;
+			if (mode === 'countries') {
+				L.marker([p.lat, p.lng], { icon: countryIcon(p), alt: p.name, riseOnHover: true })
+					.bindTooltip(countryTooltip(p, labels), { direction: 'right', className: 'ws-map-tip ws-map-tip--country', opacity: 1 })
+					.on('click keypress', function () { location.href = p.url; })
+					.addTo(map);
+			} else {
+				var icon = L.divIcon({ className: '', html: emblem(p.logo, 40).outerHTML, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -20] });
+				L.marker([p.lat, p.lng], { icon: icon, title: p.name, alt: p.name }).bindPopup(chapterPopup(p, labels)).addTo(map);
+			}
 			bounds.push([p.lat, p.lng]);
 		});
 
-		if (bounds.length > 1) {
-			map.fitBounds(bounds, { padding: [24, 24], maxZoom: 7 });
-		} else if (bounds.length === 1) {
+		if (focus) {
+			map.setView(focus, 7);
+		} else if (mode === 'chapters' && bounds.length > 1) {
+			map.fitBounds(bounds, { padding: [60, 60], maxZoom: 7 });
+		} else if (mode === 'chapters' && bounds.length === 1) {
 			map.setView(bounds[0], 6);
 		} else {
 			map.fitBounds(EUROPE);
 		}
 
-		// Scroll-zoom only after the visitor interacts, so the page still scrolls past the map.
+		// Country shapes under the markers; members in gold, clickable in "countries" mode.
+		var byShape = {};
+		points.forEach(function (p) { if (p.shape) byShape[p.shape] = p; });
+		loadAtlas().then(function (geo) {
+			L.geoJSON(geo, {
+				style: function (f) {
+					var on = highlight.indexOf(String(f.id)) !== -1;
+					return { className: on ? 'ws-map-land ws-map-land--member' : 'ws-map-land', weight: on ? 1 : 0.6 };
+				},
+				onEachFeature: function (f, l) {
+					var p = byShape[String(f.id)];
+					if (mode === 'countries' && p) {
+						l.on('click', function () { location.href = p.url; });
+						l.bindTooltip(countryTooltip(p, labels), { sticky: true, className: 'ws-map-tip ws-map-tip--country', opacity: 1 });
+					}
+				}
+			}).addTo(map).bringToBack();
+		}).catch(function () { node.classList.add('ws-chapter-map--no-shapes'); });
+
 		map.once('focus click', function () { map.scrollWheelZoom.enable(); });
+		window.addEventListener('resize', function () { map.invalidateSize(); });
 	}
 
 	function boot() {

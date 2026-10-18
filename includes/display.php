@@ -11,6 +11,8 @@
  * [ws_chapter_directory]     Chapter cards grouped by country (country="slug" to filter).
  * [ws_chapter_map]           Interactive map of Europe with each chapter's logo (height, country).
  * [ws_chapters_url]          URL of the all-chapters page (for links in templates).
+ * [ws_grand_chapters]        All countries (national Grand Chapters): flag, national logo, number of chapters.
+ * [ws_stats]                 Key numbers: countries, chapters, founding year.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -40,7 +42,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	$cdn = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/' . WS_LEAFLET_VERSION . '/';
 	wp_register_style( 'leaflet', $cdn . 'leaflet.min.css', array(), null );
 	wp_register_script( 'leaflet', $cdn . 'leaflet.min.js', array(), null, true );
-	wp_register_script( 'ws-chapter-map', $url . 'assets/ws-map.js', array( 'leaflet' ), filemtime( $dir . 'assets/ws-map.js' ), true );
+	wp_register_script( 'topojson-client', WS_TOPOJSON_URL, array(), null, true );
+	wp_register_script( 'ws-chapter-map', $url . 'assets/ws-map.js', array( 'leaflet', 'topojson-client' ), filemtime( $dir . 'assets/ws-map.js' ), true );
+	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI ) );
 } );
 
 /** Subresource integrity for the pinned Leaflet files. */
@@ -166,47 +170,78 @@ function ws_chapter_directory( $country = '' ) {
 	return $out;
 }
 
-/** Map markers: only chapters with coordinates. Logo is null while pending. */
-function ws_chapter_map_data( $country = '' ) {
-	$points = array();
-	foreach ( ws_get_chapters( $country ) as $chapter ) {
-		$lat = get_post_meta( $chapter->ID, 'latitude', true );
-		$lng = get_post_meta( $chapter->ID, 'longitude', true );
-		if ( ! is_numeric( $lat ) || ! is_numeric( $lng ) ) {
-			continue;
-		}
-		$logo_id = (int) get_post_meta( $chapter->ID, 'chapter_logo', true );
-		$term    = ws_chapter_country( $chapter->ID );
-		$points[] = array(
-			'name'    => get_the_title( $chapter->ID ),
-			'url'     => get_permalink( $chapter->ID ),
-			'city'    => (string) get_post_meta( $chapter->ID, 'city', true ),
-			'country' => $term ? $term->name : '',
-			'flag'    => ws_country_code( $term ),
-			'lat'     => (float) $lat,
-			'lng'     => (float) $lng,
-			'logo'    => $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'ws-chapter-card' ) : null,
-		);
+/** One chapter as a map marker, or null without coordinates. Logo is null while pending. */
+function ws_chapter_point( $chapter_id ) {
+	$lat = get_post_meta( $chapter_id, 'latitude', true );
+	$lng = get_post_meta( $chapter_id, 'longitude', true );
+	if ( ! is_numeric( $lat ) || ! is_numeric( $lng ) ) {
+		return null;
 	}
-	return $points;
+	$logo_id = (int) get_post_meta( $chapter_id, 'chapter_logo', true );
+	$term    = ws_chapter_country( $chapter_id );
+	return array(
+		'name'    => ws_display_name( get_the_title( $chapter_id ) ),
+		'url'     => get_permalink( $chapter_id ),
+		'city'    => (string) get_post_meta( $chapter_id, 'city', true ),
+		'country' => $term ? $term->name : '',
+		'flag'    => ws_country_code( $term ),
+		'lat'     => (float) $lat,
+		'lng'     => (float) $lng,
+		'logo'    => $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'ws-chapter-card' ) : null,
+	);
 }
 
+/** Map markers: only chapters with coordinates. */
+function ws_chapter_map_data( $country = '' ) {
+	return array_values( array_filter( array_map( 'ws_chapter_point', wp_list_pluck( ws_get_chapters( $country ), 'ID' ) ) ) );
+}
+
+/** Chapter map, with the chapters' countries highlighted in gold. */
 function ws_chapter_map( $country = '', $height = 560 ) {
-	wp_enqueue_style( 'leaflet' );
-	wp_enqueue_script( 'ws-chapter-map' );
 	$points = ws_chapter_map_data( $country );
-	$labels = array(
-		'pending' => __( 'Official chapter logo pending', 'ws-chapters' ),
-		'profile' => __( 'Chapter profile', 'ws-chapters' ),
+	if ( $country ) {
+		$term   = get_term_by( 'slug', $country, 'ws_country' );
+		$shapes = array( ws_iso_numeric( ws_country_code( $term ) ) );
+	} else {
+		$shapes = ws_member_shapes();
+	}
+	return ws_map_element( 'chapters', $points, $shapes, $height );
+}
+
+/** Country cards: flag, name, national logo (or placeholder) and number of chapters. */
+function ws_grand_chapter_directory() {
+	$terms = get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false, 'orderby' => 'name' ) );
+	if ( ! $terms || is_wp_error( $terms ) ) {
+		return '';
+	}
+	$out = '<div class="ws-chapter-grid ws-gc-grid">';
+	foreach ( $terms as $term ) {
+		$count = ws_chapter_count( $term );
+		$out  .= sprintf(
+			'<article class="ws-chapter-card ws-gc-card"><a class="ws-chapter-card__link" href="%1$s"><div class="ws-chapter-card__logo">%2$s</div><h3 class="ws-chapter-card__name">%3$s %4$s</h3></a><p class="ws-chapter-meta">%5$s</p></article>',
+			esc_url( get_term_link( $term ) ),
+			ws_country_logo( $term->term_id ),
+			ws_flag( $term ),
+			esc_html( $term->name ),
+			/* translators: %d: number of chapters */
+			esc_html( sprintf( _n( '%d chapter', '%d chapters', $count, 'ws-chapters' ), $count ) )
+		);
+	}
+	return $out . '</div>';
+}
+
+/** Key numbers strip. */
+function ws_stats() {
+	$items = array(
+		array( count( ws_country_map_data() ), __( 'Countries', 'ws-chapters' ) ),
+		array( (int) wp_count_posts( 'ws_chapter' )->publish, __( 'Chapters', 'ws-chapters' ) ),
+		array( '1998', __( 'Widows Sons founded, Illinois, USA', 'ws-chapters' ) ),
 	);
-	return sprintf(
-		'<div class="ws-chapter-map" style="--ws-map-height:%1$dpx" data-points="%2$s" data-labels="%3$s" role="region" aria-label="%4$s"><noscript>%5$s</noscript></div>',
-		max( 240, (int) $height ),
-		esc_attr( wp_json_encode( $points ) ),
-		esc_attr( wp_json_encode( $labels ) ),
-		esc_attr__( 'Map of Widows Sons chapters in Europe', 'ws-chapters' ),
-		esc_html__( 'The map needs JavaScript. All chapters are listed in the directory.', 'ws-chapters' )
-	);
+	$out = '<dl class="ws-stats">';
+	foreach ( $items as $item ) {
+		$out .= '<div><dt>' . esc_html( $item[1] ) . '</dt><dd>' . esc_html( $item[0] ) . '</dd></div>';
+	}
+	return $out . '</dl>';
 }
 
 /* -------------------------------------------------------------------------
@@ -261,6 +296,9 @@ add_action( 'init', function () {
 	add_shortcode( 'ws_chapter_directory', function ( $atts ) {
 		return ws_chapter_directory( ws_resolve_country( (array) $atts ) );
 	} );
+
+	add_shortcode( 'ws_grand_chapters', 'ws_grand_chapter_directory' );
+	add_shortcode( 'ws_stats', 'ws_stats' );
 
 	add_shortcode( 'ws_chapters_url', function () {
 		return esc_url( get_post_type_archive_link( 'ws_chapter' ) );

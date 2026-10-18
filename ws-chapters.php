@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Widows Sons Chapters
- * Description: Chapter records with separate official back patch and chapter logo, plus national logos per country.
- * Version:     1.3.0
+ * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
+ * Version:     2.0.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -38,7 +38,7 @@ add_action( 'init', function () {
 		'has_archive'  => true,
 		'rewrite'      => array( 'slug' => 'chapters' ),
 		'menu_icon'    => 'dashicons-shield',
-		'supports'     => array( 'title', 'editor', 'excerpt', 'custom-fields' ),
+		'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ), // Featured image = page hero photo.
 		'show_in_rest' => true,
 		// Own capabilities so only administrators can add or remove chapters (see ws_chapter_role_caps()).
 		'capability_type' => array( 'ws_chapter', 'ws_chapters' ),
@@ -46,38 +46,43 @@ add_action( 'init', function () {
 		'capabilities'    => array( 'create_posts' => 'create_ws_chapters' ),
 	) );
 
-	// National (country-level) Grand Chapters. Internal name stays ws_country; shown as "Grand Chapters".
-	register_taxonomy( 'ws_country', 'ws_chapter', array(
+	// Countries: the national Grand Chapters. Internal name stays ws_country.
+	// Chapters, events and news all belong to a country, which drives filtering and Country Admin permissions.
+	register_taxonomy( 'ws_country', array( 'ws_chapter', 'ws_event', 'post' ), array(
 		'labels'            => array(
-			'name'              => __( 'Grand Chapters', 'ws-chapters' ),
-			'singular_name'     => __( 'Grand Chapter', 'ws-chapters' ),
-			'menu_name'         => __( 'Grand Chapters', 'ws-chapters' ),
-			'all_items'         => __( 'All Grand Chapters', 'ws-chapters' ),
-			'edit_item'         => __( 'Edit Grand Chapter', 'ws-chapters' ),
-			'view_item'         => __( 'View Grand Chapter', 'ws-chapters' ),
-			'update_item'       => __( 'Update Grand Chapter', 'ws-chapters' ),
-			'add_new_item'      => __( 'Add Grand Chapter', 'ws-chapters' ),
-			'new_item_name'     => __( 'New Grand Chapter name', 'ws-chapters' ),
-			'search_items'      => __( 'Search Grand Chapters', 'ws-chapters' ),
-			'parent_item'       => __( 'Parent Grand Chapter', 'ws-chapters' ),
-			'parent_item_colon' => __( 'Parent Grand Chapter:', 'ws-chapters' ),
-			'not_found'         => __( 'No Grand Chapters found.', 'ws-chapters' ),
-			'back_to_items'     => __( '&larr; Go to Grand Chapters', 'ws-chapters' ),
+			'name'              => __( 'Countries', 'ws-chapters' ),
+			'singular_name'     => __( 'Country', 'ws-chapters' ),
+			'menu_name'         => __( 'Countries', 'ws-chapters' ),
+			'all_items'         => __( 'All countries', 'ws-chapters' ),
+			'edit_item'         => __( 'Edit country', 'ws-chapters' ),
+			'view_item'         => __( 'View country', 'ws-chapters' ),
+			'update_item'       => __( 'Update country', 'ws-chapters' ),
+			'add_new_item'      => __( 'Add country', 'ws-chapters' ),
+			'new_item_name'     => __( 'New country name', 'ws-chapters' ),
+			'search_items'      => __( 'Search countries', 'ws-chapters' ),
+			'parent_item'       => __( 'Parent country', 'ws-chapters' ),
+			'parent_item_colon' => __( 'Parent country:', 'ws-chapters' ),
+			'not_found'         => __( 'No countries found.', 'ws-chapters' ),
+			'back_to_items'     => __( '&larr; Go to countries', 'ws-chapters' ),
 		),
+		'description'       => __( 'National Grand Chapters', 'ws-chapters' ),
 		'hierarchical'      => true,
 		'show_admin_column' => true,
 		'capabilities'      => array(
-			'manage_terms' => 'manage_ws_countries',
-			'edit_terms'   => 'manage_ws_countries',
+			'manage_terms' => 'manage_ws_country_terms', // Admins and Country Admins can open the screen...
+			'edit_terms'   => 'manage_ws_countries',     // ...but only admins add countries; Country Admins edit their own (see access.php).
 			'delete_terms' => 'manage_ws_countries',
-			'assign_terms' => 'edit_ws_chapters',
+			'assign_terms' => 'edit_posts',
 		),
 		'show_in_rest'      => true,
-		'rewrite'           => array( 'slug' => 'grand-chapter' ),
+		'rewrite'           => array( 'slug' => 'country' ),
 	) );
 
-	$auth = function () {
-		return current_user_can( WS_ASSET_CAP );
+	$auth = function ( $allowed, $meta_key, $post_id ) {
+		return ws_can_set_insignia( 'post', $post_id );
+	};
+	$auth_term = function ( $allowed, $meta_key, $term_id ) {
+		return ws_can_set_insignia( 'term', $term_id );
 	};
 
 	foreach ( array_keys( ws_chapter_asset_fields() ) as $key ) {
@@ -97,7 +102,7 @@ add_action( 'init', function () {
 		'default'           => 0,
 		'show_in_rest'      => true,
 		'sanitize_callback' => 'ws_sanitize_asset_id',
-		'auth_callback'     => $auth,
+		'auth_callback'     => $auth_term,
 	) );
 
 	// Flag: two-letter ISO country code (e.g. "bg"). Set by whoever manages Grand Chapters.
@@ -140,7 +145,7 @@ add_action( 'init', function () {
 
 	// One-time setup (works for mu-plugin installs too, which have no activation hook):
 	// grant role capabilities and register the /chapters/ URLs.
-	if ( get_option( 'ws_chapters_setup_version' ) !== '4' ) {
+	if ( get_option( 'ws_chapters_setup_version' ) !== '6' ) {
 		foreach ( ws_chapter_role_caps() as $role_name => $caps ) {
 			$role = get_role( $role_name );
 			if ( $role ) {
@@ -159,7 +164,8 @@ add_action( 'init', function () {
 			}
 		}
 		flush_rewrite_rules( false );
-		update_option( 'ws_chapters_setup_version', '4' );
+		ws_install_scoped_roles();
+		update_option( 'ws_chapters_setup_version', '6' ); // 5: /events/ URLs. 6: Country Admin / Chapter Editor roles, /country/ URLs.
 	}
 }, 20 );
 
@@ -177,8 +183,9 @@ function ws_default_grand_chapters() {
 
 /**
  * Who may do what with chapters. On multisite the Super Admin has every capability anyway.
- * - Administrators: add, publish, edit, delete chapters; manage Grand Chapters; set official insignia.
+ * - Administrators: add, publish, edit, delete chapters; manage countries; set official insignia.
  * - Editors: edit the text/location of existing chapters only. No adding, deleting or insignia.
+ * - Country Admins and Chapter Editors: see includes/access.php.
  */
 function ws_chapter_role_caps() {
 	$edit = array( 'edit_ws_chapters', 'edit_others_ws_chapters', 'edit_published_ws_chapters', 'edit_private_ws_chapters', 'read_private_ws_chapters' );
@@ -186,7 +193,7 @@ function ws_chapter_role_caps() {
 		'administrator' => array_merge( $edit, array(
 			'create_ws_chapters', 'publish_ws_chapters',
 			'delete_ws_chapters', 'delete_others_ws_chapters', 'delete_published_ws_chapters', 'delete_private_ws_chapters',
-			'manage_ws_countries', WS_ASSET_CAP,
+			'manage_ws_countries', 'manage_ws_country_terms', WS_ASSET_CAP,
 		) ),
 		'editor'        => $edit,
 	);
@@ -327,7 +334,11 @@ add_action( 'rest_api_init', function () {
 	) );
 } );
 
+require __DIR__ . '/includes/access.php';
+require __DIR__ . '/includes/profile-fields.php';
 require __DIR__ . '/includes/display.php';
+require __DIR__ . '/includes/events.php';
+require __DIR__ . '/includes/pages.php';
 
 /* -------------------------------------------------------------------------
  * Admin: independent upload / replace controls
@@ -359,7 +370,7 @@ function ws_asset_control( $name, $label, $attachment_id, $can_edit ) {
 add_action( 'add_meta_boxes_ws_chapter', function () {
 	add_meta_box( 'ws_chapter_insignia', __( 'Official insignia', 'ws-chapters' ), function ( $post ) {
 		wp_nonce_field( 'ws_chapter_insignia', 'ws_chapter_insignia_nonce' );
-		$can = current_user_can( WS_ASSET_CAP );
+		$can = ws_can_set_insignia( 'post', $post->ID );
 		echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">';
 		foreach ( ws_chapter_asset_fields() as $key => $field ) {
 			ws_asset_control( 'ws_' . $key, $field[0], (int) get_post_meta( $post->ID, $key, true ), $can );
@@ -414,7 +425,7 @@ add_action( 'save_post_ws_chapter', function ( $post_id ) {
 	if ( ! isset( $_POST['ws_chapter_insignia_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['ws_chapter_insignia_nonce'] ), 'ws_chapter_insignia' ) ) {
 		return;
 	}
-	if ( ! current_user_can( WS_ASSET_CAP ) || ! current_user_can( 'edit_post', $post_id ) ) {
+	if ( ! ws_can_set_insignia( 'post', $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
 	foreach ( array_keys( ws_chapter_asset_fields() ) as $key ) {
@@ -437,7 +448,7 @@ add_action( 'ws_country_add_form_fields', function () {
 add_action( 'ws_country_edit_form_fields', function ( $term ) {
 	wp_nonce_field( 'ws_country_logo', 'ws_country_logo_nonce' );
 	echo '<tr class="form-field"><th scope="row">' . esc_html__( 'National logo', 'ws-chapters' ) . '</th><td>';
-	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), (int) get_term_meta( $term->term_id, 'national_logo', true ), current_user_can( WS_ASSET_CAP ) );
+	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), (int) get_term_meta( $term->term_id, 'national_logo', true ), ws_can_set_insignia( 'term', $term->term_id ) );
 	echo '</td></tr>';
 	$code = (string) get_term_meta( $term->term_id, 'country_code', true );
 	echo '<tr class="form-field"><th scope="row"><label for="ws_country_code">' . esc_html__( 'Flag (country code)', 'ws-chapters' ) . '</label></th><td>';
@@ -452,7 +463,7 @@ $ws_save_country_logo = function ( $term_id ) {
 	if ( isset( $_POST['ws_country_code'] ) && current_user_can( 'manage_ws_countries' ) ) {
 		update_term_meta( $term_id, 'country_code', ws_sanitize_country_code( wp_unslash( $_POST['ws_country_code'] ) ) );
 	}
-	if ( current_user_can( WS_ASSET_CAP ) && isset( $_POST['ws_national_logo'] ) ) {
+	if ( ws_can_set_insignia( 'term', $term_id ) && isset( $_POST['ws_national_logo'] ) ) {
 		update_term_meta( $term_id, 'national_logo', ws_sanitize_asset_id( wp_unslash( $_POST['ws_national_logo'] ) ) );
 	}
 };
@@ -462,7 +473,7 @@ add_action( 'edited_ws_country', $ws_save_country_logo );
 /* Media-library picker for every [data-ws-asset] control. */
 add_action( 'admin_enqueue_scripts', function () {
 	$screen = get_current_screen();
-	if ( ! $screen || ( 'ws_chapter' !== $screen->post_type && 'ws_country' !== $screen->taxonomy ) || ! current_user_can( WS_ASSET_CAP ) ) {
+	if ( ! $screen || ( 'ws_chapter' !== $screen->post_type && 'ws_country' !== $screen->taxonomy ) || ! current_user_can( 'upload_files' ) ) {
 		return;
 	}
 	wp_enqueue_media();
