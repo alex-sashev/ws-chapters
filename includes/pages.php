@@ -345,8 +345,8 @@ function ws_chapter_profile() {
 	);
 
 	$identity = '<div class="ws-identity">'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Patch', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Insignia worn by members)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_back_patch( $id ) . '<p>' . esc_html__( 'The chapter’s official patch, displayed as supplied by the chapter.', 'ws-chapters' ) . '</p></figure>'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Logo', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Chapter visual identity)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_logo( $id ) . '<p>' . esc_html__( 'The chapter’s official logo, separate from its back patch and displayed as supplied.', 'ws-chapters' ) . '</p></figure>'
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Patch', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_back_patch( $id ) . '</figure>'
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Logo', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_logo( $id ) . '</figure>'
 		. '<aside class="ws-identity__contact"><h3>' . esc_html__( 'Official Contact Information', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $has_map ? '<a class="ws-btn-gold" href="#chapter-map">' . esc_html__( 'Show on map', 'ws-chapters' ) . ' ' . ws_icon( 'arrow' ) . '</a>' : '' )
 		. ( ws_join_url( $id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( $id ) ) . '">' . esc_html__( 'Apply to join this chapter', 'ws-chapters' ) . '</a>' : '' )
