@@ -67,7 +67,7 @@ function ws_country_map_data() {
 			'count' => $count,
 			'flag'  => $code,
 			'shape' => ws_iso_numeric( $code ),
-			'logo'  => $logo && wp_attachment_is_image( $logo ) ? wp_get_attachment_image_url( $logo, 'ws-chapter-card' ) : null,
+			'logo'  => $logo && wp_attachment_is_image( $logo ) ? wp_get_attachment_image_url( $logo, 'ws-chapter-card' ) : ( ws_default_emblem_url() ?: null ),
 			'lat'   => $lat ? array_sum( $lat ) / count( $lat ) : null,
 			'lng'   => $lng ? array_sum( $lng ) / count( $lng ) : null,
 		);

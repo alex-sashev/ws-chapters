@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.3.0
+ * Version:     2.4.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -269,7 +269,15 @@ add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) {
  * ---------------------------------------------------------------------- */
 
 /**
- * Render an official asset or the neutral pending placeholder.
+ * Default image for missing insignia: the Widows Sons emblem (filterable; return '' for the neutral
+ * "pending" box instead).
+ */
+function ws_default_emblem_url() {
+	return (string) apply_filters( 'ws_default_emblem_url', plugin_dir_url( __FILE__ ) . 'assets/ws-emblem.png' );
+}
+
+/**
+ * Render an official asset, or the Widows Sons emblem / pending placeholder when none is set.
  *
  * @param int    $attachment_id Attachment ID (0 if not provided).
  * @param string $context       'profile' serves the original upload; 'card' serves the fit-inside thumbnail.
@@ -280,6 +288,17 @@ function ws_render_asset( $attachment_id, $context, $placeholder, $alt ) {
 	$class = 'ws-insignia ws-insignia--' . sanitize_html_class( $context );
 
 	if ( ! $attachment_id || ! wp_attachment_is_image( $attachment_id ) ) {
+		// Until a chapter or country uploads its own, the Widows Sons emblem stands in.
+		$emblem = ws_default_emblem_url();
+		if ( $emblem ) {
+			return sprintf(
+				'<img class="%1$s ws-insignia--default" src="%2$s" alt="%3$s" title="%4$s" loading="lazy" decoding="async">',
+				esc_attr( $class ),
+				esc_url( $emblem ),
+				esc_attr__( 'Widows Sons emblem', 'ws-chapters' ),
+				esc_attr( $placeholder )
+			);
+		}
 		return sprintf(
 			'<div class="%1$s ws-insignia--pending" role="img" aria-label="%2$s"><span>%2$s</span></div>',
 			esc_attr( $class ),
@@ -367,7 +386,7 @@ function ws_asset_control( $name, $label, $attachment_id, $can_edit ) {
 	<div class="ws-asset-control" data-ws-asset>
 		<p><strong><?php echo esc_html( $label ); ?></strong></p>
 		<div class="ws-asset-preview" style="background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/16px 16px;padding:8px;min-height:60px">
-			<?php echo $preview ? $preview : '<em>' . esc_html__( 'Not provided yet — placeholder will be shown.', 'ws-chapters' ) . '</em>'; ?>
+			<?php echo $preview ? $preview : '<em>' . esc_html__( 'Not provided yet — the Widows Sons emblem is shown until you upload your own.', 'ws-chapters' ) . '</em>'; ?>
 		</div>
 		<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo (int) $attachment_id; ?>">
 		<?php if ( $can_edit ) : ?>
@@ -517,7 +536,7 @@ jQuery(function ($) {
 		e.preventDefault();
 		var box = $(this).closest('[data-ws-asset]');
 		box.find('input[type=hidden]').val(0);
-		box.find('.ws-asset-preview').html('<em>Not provided yet — placeholder will be shown.</em>');
+		box.find('.ws-asset-preview').html('<em>Not provided yet — the Widows Sons emblem is shown until you upload your own.</em>');
 		$(this).prop('hidden', true);
 	});
 });

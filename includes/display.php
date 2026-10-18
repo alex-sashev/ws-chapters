@@ -187,7 +187,7 @@ function ws_chapter_point( $chapter_id ) {
 		'flag'    => ws_country_code( $term ),
 		'lat'     => (float) $lat,
 		'lng'     => (float) $lng,
-		'logo'    => $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'ws-chapter-card' ) : null,
+		'logo'    => $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'ws-chapter-card' ) : ( ws_default_emblem_url() ?: null ),
 	);
 }
 
