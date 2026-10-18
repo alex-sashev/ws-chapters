@@ -95,6 +95,7 @@ function ws_site_setup() {
 	$ulnk  = $page('Useful links', 'useful-links', '<!-- wp:pattern {"slug":"ws-europe/page-useful-links"} /-->');
 	// Useful links: from the event details supplied by the chapters.
 	foreach (array(
+	  array('Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0),
 	  array('Widows Sons Germany', 'https://widows-sons-germany.de', 'Website of Widows Sons Germany, including the 10th anniversary gathering.', 1),
 	  array('Masonic Biker Denmark', 'https://masonic-biker.dk', 'Masonic Biker Denmark, organisers of the International Rally Masonic Biker.', 2),
 	) as $l) {
@@ -333,3 +334,32 @@ add_action( 'init', function () {
 		update_option( $opt, set_url_scheme( (string) get_option( $opt ), 'https' ) );
 	}
 }, 1 );
+
+/*
+ * Useful links added after the one-time setup. Each is added once (remembered by address),
+ * so a link an admin later deletes does not come back.
+ */
+add_action( 'init', function () {
+	if ( ! post_type_exists( 'ws_link' ) || ! get_option( 'ws_site_setup_done' ) ) {
+		return;
+	}
+	$links = array(
+		array( 'Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0 ),
+	);
+	$done = (array) get_option( 'ws_links_added', array() );
+	foreach ( $links as $l ) {
+		if ( in_array( $l[1], $done, true ) ) {
+			continue;
+		}
+		$exists = get_posts( array( 'post_type' => 'ws_link', 'post_status' => 'any', 'meta_key' => '_ws_url', 'meta_value' => $l[1], 'fields' => 'ids', 'numberposts' => 1 ) );
+		if ( ! $exists ) {
+			$id = wp_insert_post( array( 'post_type' => 'ws_link', 'post_status' => 'publish', 'post_title' => $l[0], 'menu_order' => $l[3] ) );
+			if ( $id && ! is_wp_error( $id ) ) {
+				update_post_meta( $id, '_ws_url', $l[1] );
+				update_post_meta( $id, '_ws_desc', $l[2] );
+			}
+		}
+		$done[] = $l[1];
+	}
+	update_option( 'ws_links_added', $done, false );
+}, 20 );
