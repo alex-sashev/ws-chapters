@@ -26,7 +26,7 @@ function ws_sanitize_contact( $key, $value ) {
 		return sanitize_email( $value );
 	}
 	if ( 'phone' === $key ) {
-		return preg_replace( '/[^0-9+()\s.\-\/]/', '', $value );
+		return trim( preg_replace( '/[^0-9+()\s.\-\/]/', '', $value ) );
 	}
 	if ( 'address' === $key ) {
 		return sanitize_text_field( $value );
