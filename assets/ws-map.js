@@ -25,26 +25,17 @@
 		return n;
 	}
 
-	function emblem(logo, size) {
-		var pin = el('span', 'ws-map-pin' + (logo ? '' : ' ws-map-pin--pending'));
-		pin.style.width = pin.style.height = size + 'px';
-		if (logo) {
-			var img = el('img');
-			img.src = logo;
-			img.alt = '';
-			pin.appendChild(img);
-		}
-		return pin;
-	}
-
-	function countLabel(p, labels) {
-		return p.count + ' ' + (p.count === 1 ? labels.chapter : labels.chapters);
-	}
-
-	function countryIcon(p) {
-		var wrap = el('span', 'ws-map-country');
-		wrap.appendChild(emblem(p.logo, 34));
-		return L.divIcon({ className: '', html: wrap.outerHTML, iconSize: [34, 34], iconAnchor: [17, 17], tooltipAnchor: [16, 0] });
+	/* The Widows Sons pin; its tip sits exactly on the location. */
+	function pinIcon(width) {
+		var height = Math.round(width * 172 / 127);
+		return L.icon({
+			iconUrl: cfg.pin,
+			iconSize: [width, height],
+			iconAnchor: [width / 2, height],
+			popupAnchor: [0, -height + 6],
+			tooltipAnchor: [0, -height + 4],
+			className: 'ws-map-pin-icon'
+		});
 	}
 
 	function countryTooltip(p, labels) {
@@ -123,13 +114,12 @@
 		points.forEach(function (p) {
 			if (p.lat === null || p.lat === undefined || p.lng === null || p.lng === undefined) return;
 			if (mode === 'countries') {
-				L.marker([p.lat, p.lng], { icon: countryIcon(p), alt: p.name, riseOnHover: true })
-					.bindTooltip(countryTooltip(p, labels), { direction: 'right', className: 'ws-map-tip ws-map-tip--country', opacity: 1 })
+				L.marker([p.lat, p.lng], { icon: pinIcon(34), alt: p.name, riseOnHover: true })
+					.bindTooltip(countryTooltip(p, labels), { direction: 'top', className: 'ws-map-tip ws-map-tip--country', opacity: 1 })
 					.on('click keypress', function () { location.href = p.url; })
 					.addTo(map);
 			} else {
-				var icon = L.divIcon({ className: '', html: emblem(p.logo, 40).outerHTML, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -20] });
-				L.marker([p.lat, p.lng], { icon: icon, title: p.name, alt: p.name }).bindPopup(chapterPopup(p, labels)).addTo(map);
+				L.marker([p.lat, p.lng], { icon: pinIcon(30), title: p.name, alt: p.name, riseOnHover: true }).bindPopup(chapterPopup(p, labels)).addTo(map);
 			}
 			bounds.push([p.lat, p.lng]);
 		});

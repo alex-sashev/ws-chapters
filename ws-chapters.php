@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.4.1
+ * Version:     2.5.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -370,6 +370,7 @@ add_action( 'rest_api_init', function () {
 
 require __DIR__ . '/includes/access.php';
 require __DIR__ . '/includes/profile-fields.php';
+require __DIR__ . '/includes/location.php';
 require __DIR__ . '/includes/display.php';
 require __DIR__ . '/includes/events.php';
 require __DIR__ . '/includes/pages.php';
@@ -417,8 +418,8 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 		wp_nonce_field( 'ws_chapter_location', 'ws_chapter_location_nonce' );
 		$fields = array(
 			'city'      => __( 'City', 'ws-chapters' ),
-			'latitude'  => __( 'Latitude (e.g. 42.6977)', 'ws-chapters' ),
-			'longitude' => __( 'Longitude (e.g. 23.3219)', 'ws-chapters' ),
+			'latitude'  => __( 'Latitude (optional)', 'ws-chapters' ),
+			'longitude' => __( 'Longitude (optional)', 'ws-chapters' ),
 		);
 		echo '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">';
 		foreach ( $fields as $key => $label ) {
@@ -429,7 +430,16 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 				esc_attr( get_post_meta( $post->ID, $key, true ) )
 			);
 		}
-		echo '</div><p class="description">' . esc_html__( 'Tip: right-click the meeting place in Google Maps or OpenStreetMap to copy its coordinates. Chapters without coordinates are listed in the directory but not shown on the map.', 'ws-chapters' ) . '</p>';
+		$pos    = ws_chapter_position( $post->ID );
+		$source = array(
+			'manual'  => __( 'Pin is at the coordinates entered above.', 'ws-chapters' ),
+			'city'    => __( 'Pin is at the city, looked up automatically.', 'ws-chapters' ),
+			'capital' => __( 'No city yet: the pin is on the capital of the chapter\'s country.', 'ws-chapters' ),
+		);
+		echo '</div><p class="description">' . esc_html__( 'Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter\'s country.', 'ws-chapters' ) . '</p>';
+		if ( $pos ) {
+			echo '<p><strong>' . esc_html( $source[ $pos[2] ] ?? '' ) . '</strong></p>';
+		}
 	}, 'ws_chapter', 'normal', 'default' );
 } );
 

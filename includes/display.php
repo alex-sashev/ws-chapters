@@ -44,7 +44,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_register_script( 'leaflet', $cdn . 'leaflet.min.js', array(), null, true );
 	wp_register_script( 'topojson-client', WS_TOPOJSON_URL, array(), null, true );
 	wp_register_script( 'ws-chapter-map', $url . 'assets/ws-map.js', array( 'leaflet', 'topojson-client' ), filemtime( $dir . 'assets/ws-map.js' ), true );
-	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI ) );
+	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI, 'pin' => $url . 'assets/ws-pin.png' ) );
 } );
 
 /** Subresource integrity for the pinned Leaflet files. */
@@ -172,11 +172,11 @@ function ws_chapter_directory( $country = '' ) {
 
 /** One chapter as a map marker, or null without coordinates. Logo is null while pending. */
 function ws_chapter_point( $chapter_id ) {
-	$lat = get_post_meta( $chapter_id, 'latitude', true );
-	$lng = get_post_meta( $chapter_id, 'longitude', true );
-	if ( ! is_numeric( $lat ) || ! is_numeric( $lng ) ) {
+	$pos = ws_chapter_position( $chapter_id );
+	if ( ! $pos ) {
 		return null;
 	}
+	list( $lat, $lng ) = $pos;
 	$logo_id = (int) get_post_meta( $chapter_id, 'chapter_logo', true );
 	$term    = ws_chapter_country( $chapter_id );
 	return array(
@@ -191,7 +191,7 @@ function ws_chapter_point( $chapter_id ) {
 	);
 }
 
-/** Map markers: only chapters with coordinates. */
+/** Map markers: every chapter whose position is known (own coordinates, city, or country capital). */
 function ws_chapter_map_data( $country = '' ) {
 	return array_values( array_filter( array_map( 'ws_chapter_point', wp_list_pluck( ws_get_chapters( $country ), 'ID' ) ) ) );
 }

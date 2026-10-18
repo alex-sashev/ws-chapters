@@ -48,11 +48,10 @@ function ws_country_map_data() {
 		$lat = array();
 		$lng = array();
 		foreach ( ws_get_chapters( $term->slug ) as $c ) {
-			$a = get_post_meta( $c->ID, 'latitude', true );
-			$o = get_post_meta( $c->ID, 'longitude', true );
-			if ( is_numeric( $a ) && is_numeric( $o ) ) {
-				$lat[] = (float) $a;
-				$lng[] = (float) $o;
+			$pos = ws_chapter_position( $c->ID );
+			if ( $pos ) {
+				$lat[] = $pos[0];
+				$lng[] = $pos[1];
 			}
 		}
 		$logo   = (int) get_term_meta( $term->term_id, 'national_logo', true );
@@ -325,9 +324,9 @@ function ws_chapter_profile() {
 	$city    = $get( 'city' );
 	$where   = implode( ', ', array_filter( array( $city, $country ? $country->name : '' ) ) );
 	$gallery = ws_gallery_ids( $get( 'gallery' ) );
-	$lat     = $get( 'latitude' );
-	$lng     = $get( 'longitude' );
-	$has_map = is_numeric( $lat ) && is_numeric( $lng );
+	$pos     = ws_chapter_position( $id );
+	$has_map = (bool) $pos;
+	list( $lat, $lng ) = $pos ?: array( 0, 0 );
 
 	$hero = ws_page_hero(
 		(int) get_post_thumbnail_id( $id ),

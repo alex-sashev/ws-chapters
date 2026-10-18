@@ -68,6 +68,8 @@
 .ws-map-country__label span { font-size: 10px; color: #cfc9bf; }
 .ws-map-tip { background: #0b0b0c; color: #fff; border: 1px solid var(--ws-gold, #C9A24A); }
 .leaflet-tooltip.ws-map-tip--country { padding: 0; border: 0; background: transparent; box-shadow: none; }
+.ws-map-pin-icon { filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .55)); }
+.ws-map-pin-icon:hover { filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .7)) brightness(1.08); }
 .leaflet-tooltip.ws-map-tip--country::before { display: none; }
 @media (max-width: 600px) { .ws-chapter-map { height: min(var(--ws-map-height, 560px), 70vh); } }
 
