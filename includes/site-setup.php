@@ -95,6 +95,7 @@ function ws_site_setup() {
 	$ulnk  = $page('Useful links', 'useful-links', '<!-- wp:pattern {"slug":"ws-europe/page-useful-links"} /-->');
 	// Useful links: from the event details supplied by the chapters.
 	foreach (array(
+	  array('Widows Sons Masonic Riders Association, Inc.', 'https://wsmrainc.org', 'Official website of the Widows Sons Masonic Riders Association, Inc. (WSMRA Inc.), the international association of Widows Sons chapters worldwide.', -1),
 	  array('Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0),
 	  array('Widows Sons Germany', 'https://widows-sons-germany.de', 'Website of Widows Sons Germany, including the 10th anniversary gathering.', 1),
 	  array('Masonic Biker Denmark', 'https://masonic-biker.dk', 'Masonic Biker Denmark, organisers of the International Rally Masonic Biker.', 2),
@@ -344,6 +345,7 @@ add_action( 'init', function () {
 		return;
 	}
 	$links = array(
+		array( 'Widows Sons Masonic Riders Association, Inc.', 'https://wsmrainc.org', 'Official website of the Widows Sons Masonic Riders Association, Inc. (WSMRA Inc.), the international association of Widows Sons chapters worldwide.', -1 ),
 		array( 'Widows Sons Bulgaria', 'https://widowssons.bg', 'Website of Widows Sons Bulgaria, the Bulgarian Grand Chapter.', 0 ),
 	);
 	$done = (array) get_option( 'ws_links_added', array() );
