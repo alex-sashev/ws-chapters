@@ -153,10 +153,10 @@ function ws_handle_event_submission() {
 		'start'       => ws_sanitize_date( ws_post_field( 'ws_start_date' ) ),
 		'end'         => ws_sanitize_date( ws_post_field( 'ws_end_date' ) ),
 		'time'        => ws_sanitize_time( ws_post_field( 'ws_start_time' ) ),
-		'country'     => (int) ws_post_field( 'ws_country' ),
+		'country'     => (int) ws_post_field( 'ws_form_country' ),
 		'city'        => ws_post_field( 'ws_city' ),
 		'venue'       => ws_post_field( 'ws_venue' ),
-		'chapter'     => (int) ws_post_field( 'ws_chapter' ),
+		'chapter'     => (int) ws_post_field( 'ws_form_chapter' ),
 		'organiser'   => ws_post_field( 'ws_organiser' ),
 		'description' => ws_post_field( 'ws_description', true ),
 		'contact'     => ws_post_field( 'ws_contact', true ),
@@ -261,12 +261,12 @@ function ws_event_submit_form() {
 	$out .= ws_field( 'ws_end_date', __( 'End date', 'ws-chapters' ), 'date', array( 'value' => $v( 'ws_end_date' ), 'help' => __( 'If it runs over several days.', 'ws-chapters' ) ) );
 	$out .= ws_field( 'ws_start_time', __( 'Start time', 'ws-chapters' ), 'time', array( 'value' => $v( 'ws_start_time' ) ) );
 	$out .= '</div><div class="ws-field-row">';
-	$out .= ws_field( 'ws_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) $v( 'ws_country' ) ), 'attrs' => 'data-ws-country' ) );
+	$out .= ws_field( 'ws_form_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) $v( 'ws_form_country' ) ), 'attrs' => 'data-ws-country' ) );
 	$out .= ws_field( 'ws_city', __( 'City', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_city' ) ) );
 	$out .= '</div>';
 	$out .= ws_field( 'ws_venue', __( 'Venue or meeting point', 'ws-chapters' ), 'text', array( 'value' => $v( 'ws_venue' ), 'help' => __( 'Address, or a website for the venue.', 'ws-chapters' ) ) );
 	$out .= '<div class="ws-field-row">';
-	$out .= ws_field( 'ws_chapter', __( 'Organising chapter', 'ws-chapters' ), 'select', array( 'options' => ws_chapter_options( (int) $v( 'ws_chapter' ), __( '— Not a listed chapter —', 'ws-chapters' ) ), 'attrs' => 'data-ws-chapter' ) );
+	$out .= ws_field( 'ws_form_chapter', __( 'Organising chapter', 'ws-chapters' ), 'select', array( 'options' => ws_chapter_options( (int) $v( 'ws_form_chapter' ), __( '— Not a listed chapter —', 'ws-chapters' ) ), 'attrs' => 'data-ws-chapter' ) );
 	$out .= ws_field( 'ws_organiser', __( 'Or organiser name', 'ws-chapters' ), 'text', array( 'value' => $v( 'ws_organiser' ), 'help' => __( 'Club, lodge or group, if not a chapter above.', 'ws-chapters' ) ) );
 	$out .= '</div>';
 	$out .= ws_field( 'ws_description', __( 'Description', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_description' ), 'help' => __( 'Programme, route, costs, how to register.', 'ws-chapters' ) ) );
@@ -381,8 +381,8 @@ function ws_handle_application() {
 		'phone'      => ws_post_field( 'ws_phone' ),
 		'email'      => sanitize_email( ws_post_field( 'ws_email' ) ),
 		'lodge'      => ws_post_field( 'ws_lodge' ),
-		'country'    => (int) ws_post_field( 'ws_country' ),
-		'chapter'    => (int) ws_post_field( 'ws_chapter' ),
+		'country'    => (int) ws_post_field( 'ws_form_country' ),
+		'chapter'    => (int) ws_post_field( 'ws_form_chapter' ),
 		'message'    => ws_post_field( 'ws_message', true ),
 	);
 	$missing = array();
@@ -533,8 +533,8 @@ function ws_join_form() {
 	$out .= '</div>';
 	$out .= ws_field( 'ws_lodge', __( 'Your lodge', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_lodge' ), 'help' => __( 'Lodge name and number, and its Grand Lodge.', 'ws-chapters' ) ) );
 	$out .= '</fieldset><fieldset><legend>' . esc_html__( 'The chapter you would like to join', 'ws-chapters' ) . '</legend><div class="ws-field-row">';
-	$out .= ws_field( 'ws_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) ( $v( 'ws_country' ) ?: $preset_country ), true ), 'attrs' => 'data-ws-country' ) );
-	$out .= ws_field( 'ws_chapter', __( 'Chapter', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_chapter_options( (int) ( $v( 'ws_chapter' ) ?: $preset_chapter ) ), 'attrs' => 'data-ws-chapter', 'help' => __( 'Choose the chapter closest to you. Your application goes straight to that chapter.', 'ws-chapters' ) ) );
+	$out .= ws_field( 'ws_form_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) ( $v( 'ws_form_country' ) ?: $preset_country ), true ), 'attrs' => 'data-ws-country' ) );
+	$out .= ws_field( 'ws_form_chapter', __( 'Chapter', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_chapter_options( (int) ( $v( 'ws_form_chapter' ) ?: $preset_chapter ) ), 'attrs' => 'data-ws-chapter', 'help' => __( 'Choose the chapter closest to you. Your application goes straight to that chapter.', 'ws-chapters' ) ) );
 	$out .= '</div>';
 	$out .= ws_field( 'ws_message', __( 'Anything you would like to tell the chapter', 'ws-chapters' ), 'textarea', array( 'value' => $v( 'ws_message' ), 'attrs' => 'rows="4"' ) );
 	$out .= '</fieldset>';
@@ -575,22 +575,4 @@ add_action( 'add_meta_boxes_ws_application', function () {
 add_action( 'init', function () {
 	add_shortcode( 'ws_event_submit', 'ws_event_submit_form' );
 	add_shortcode( 'ws_join_form', 'ws_join_form' );
-} );
-
-/*
- * The forms post fields named ws_country and ws_chapter, which are also WordPress's own address
- * variables for countries and chapters. WordPress reads those from posted forms too, so sending
- * a form made it look for a chapter called "7" and show "Page not found". Ignore them when they
- * come only from a posted form.
- */
-add_filter( 'request', function ( $vars ) {
-	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || empty( $_POST['ws_form'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-		return $vars;
-	}
-	foreach ( array( 'ws_country', 'ws_chapter' ) as $k ) {
-		if ( isset( $vars[ $k ] ) && ! isset( $_GET[ $k ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-			unset( $vars[ $k ] );
-		}
-	}
-	return $vars;
 } );
