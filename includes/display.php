@@ -6,7 +6,8 @@
  * [ws_back_patch]            Official back patch of the current chapter (profile pages).
  * [ws_chapter_logo]          Official chapter logo of the current chapter.
  * [ws_country_logo]          National logo: current country archive, else the chapter's country.
- * [ws_chapter_meta]          "City · Country" line for the current chapter.
+ * [ws_chapter_meta]          "City · Country" line for the current chapter, with flag.
+ * [ws_country_flag]          Flag of the Grand Chapter being viewed (or the chapter's).
  * [ws_chapter_directory]     Chapter cards grouped by country (country="slug" to filter).
  * [ws_chapter_map]           Interactive map of Europe with each chapter's logo (height, country).
  * [ws_chapters_url]          URL of the all-chapters page (for links in templates).
@@ -15,11 +16,26 @@
 defined( 'ABSPATH' ) || exit;
 
 const WS_LEAFLET_VERSION = '1.9.4';
+const WS_FLAG_ICONS_URL  = 'https://cdn.jsdelivr.net/npm/flag-icons@7.5.0/css/flag-icons.min.css';
+const WS_FLAG_ICONS_SRI  = 'sha384-8olrmTcwXL3OYMeB+2ok8jx9/U/FZxeLnoRWdu1Pyi+lakrkqoI7hfysfQF5Q1Xx';
+
+/** Flag stylesheet (SVG flags, which unlike emoji flags also show on Windows). Used on the site and the Grand Chapter admin screens. */
+function ws_register_flag_style() {
+	wp_register_style( 'flag-icons', WS_FLAG_ICONS_URL, array(), null );
+}
+add_action( 'admin_enqueue_scripts', function () {
+	ws_register_flag_style();
+	$screen = get_current_screen();
+	if ( $screen && 'ws_country' === $screen->taxonomy ) {
+		wp_enqueue_style( 'flag-icons' );
+	}
+} );
 
 add_action( 'wp_enqueue_scripts', function () {
 	$url = plugin_dir_url( __DIR__ );
 	$dir = plugin_dir_path( __DIR__ );
-	wp_enqueue_style( 'ws-chapters', $url . 'assets/ws-chapters.css', array(), filemtime( $dir . 'assets/ws-chapters.css' ) );
+	ws_register_flag_style();
+	wp_enqueue_style( 'ws-chapters', $url . 'assets/ws-chapters.css', array( 'flag-icons' ), filemtime( $dir . 'assets/ws-chapters.css' ) );
 
 	$cdn = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/' . WS_LEAFLET_VERSION . '/';
 	wp_register_style( 'leaflet', $cdn . 'leaflet.min.css', array(), null );
@@ -36,7 +52,8 @@ add_filter( 'script_loader_tag', function ( $tag, $handle ) use ( $ws_leaflet_sr
 	return 'leaflet' === $handle ? str_replace( ' src=', ' integrity="' . $ws_leaflet_sri['leaflet'] . '" crossorigin="anonymous" src=', $tag ) : $tag;
 }, 10, 2 );
 add_filter( 'style_loader_tag', function ( $tag, $handle ) use ( $ws_leaflet_sri ) {
-	return 'leaflet' === $handle ? str_replace( ' href=', ' integrity="' . $ws_leaflet_sri['leaflet-css'] . '" crossorigin="anonymous" href=', $tag ) : $tag;
+	$sri = array( 'leaflet' => $ws_leaflet_sri['leaflet-css'], 'flag-icons' => WS_FLAG_ICONS_SRI );
+	return isset( $sri[ $handle ] ) ? str_replace( ' href=', ' integrity="' . $sri[ $handle ] . '" crossorigin="anonymous" href=', $tag ) : $tag;
 }, 10, 2 );
 
 /* -------------------------------------------------------------------------
@@ -49,6 +66,24 @@ function ws_chapter_country( $chapter_id ) {
 	return $terms && ! is_wp_error( $terms ) ? $terms[0] : null;
 }
 
+/** Flag code for a Grand Chapter term, or ''. */
+function ws_country_code( $term ) {
+	return $term ? (string) get_term_meta( $term->term_id, 'country_code', true ) : '';
+}
+
+/** Flag of a Grand Chapter, or '' if it has no country code. Decorative next to the name, labelled when alone. */
+function ws_flag( $term, $labelled = false ) {
+	$code = ws_country_code( $term );
+	if ( ! $code ) {
+		return '';
+	}
+	$a11y = $labelled
+		/* translators: %s: Grand Chapter / country name */
+		? sprintf( ' role="img" aria-label="%s"', esc_attr( sprintf( __( 'Flag of %s', 'ws-chapters' ), $term->name ) ) )
+		: ' aria-hidden="true"';
+	return sprintf( '<span class="ws-flag fi fi-%s"%s></span>', esc_attr( $code ), $a11y );
+}
+
 /** "City · Country" for a chapter, country linked to its archive. */
 function ws_chapter_meta_line( $chapter_id, $link_country = true ) {
 	$parts = array();
@@ -58,9 +93,10 @@ function ws_chapter_meta_line( $chapter_id, $link_country = true ) {
 	}
 	$country = ws_chapter_country( $chapter_id );
 	if ( $country ) {
+		$label   = ws_flag( $country ) . ' ' . esc_html( $country->name );
 		$parts[] = $link_country
-			? sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $country ) ), esc_html( $country->name ) )
-			: esc_html( $country->name );
+			? sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $country ) ), $label )
+			: $label;
 	}
 	return $parts ? '<p class="ws-chapter-meta">' . implode( ' <span aria-hidden="true">·</span> ', $parts ) . '</p>' : '';
 }
@@ -123,7 +159,7 @@ function ws_chapter_directory( $country = '' ) {
 	$out = '';
 	foreach ( $groups as $group ) {
 		$term   = $group['term'];
-		$title  = $term ? sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term ) ), esc_html( $term->name ) ) : esc_html__( 'Other', 'ws-chapters' );
+		$title  = $term ? sprintf( '<a href="%s">%s %s</a>', esc_url( get_term_link( $term ) ), ws_flag( $term ), esc_html( $term->name ) ) : esc_html__( 'Other', 'ws-chapters' );
 		$out   .= '<section class="ws-chapter-group"><h2 class="ws-chapter-group__title">' . $title . '</h2>';
 		$out   .= '<div class="ws-chapter-grid">' . implode( '', array_map( 'ws_chapter_card', $group['ids'] ) ) . '</div></section>';
 	}
@@ -146,6 +182,7 @@ function ws_chapter_map_data( $country = '' ) {
 			'url'     => get_permalink( $chapter->ID ),
 			'city'    => (string) get_post_meta( $chapter->ID, 'city', true ),
 			'country' => $term ? $term->name : '',
+			'flag'    => ws_country_code( $term ),
 			'lat'     => (float) $lat,
 			'lng'     => (float) $lng,
 			'logo'    => $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'ws-chapter-card' ) : null,
@@ -209,6 +246,16 @@ add_action( 'init', function () {
 			$term = ws_chapter_country( ws_shortcode_chapter_id( $atts ) );
 		}
 		return $term ? '<div class="ws-country-logo">' . ws_country_logo( $term->term_id ) . '</div>' : '';
+	} );
+
+	// Flag of the Grand Chapter being viewed, or of the current chapter's Grand Chapter.
+	add_shortcode( 'ws_country_flag', function ( $atts ) {
+		$atts = (array) $atts;
+		$term = is_tax( 'ws_country' ) ? get_queried_object() : null;
+		if ( ! $term && ws_shortcode_chapter_id( $atts ) ) {
+			$term = ws_chapter_country( ws_shortcode_chapter_id( $atts ) );
+		}
+		return ws_flag( $term, true );
 	} );
 
 	add_shortcode( 'ws_chapter_directory', function ( $atts ) {

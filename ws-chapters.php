@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, plus national logos per country.
- * Version:     1.2.0
+ * Version:     1.3.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -100,6 +100,18 @@ add_action( 'init', function () {
 		'auth_callback'     => $auth,
 	) );
 
+	// Flag: two-letter ISO country code (e.g. "bg"). Set by whoever manages Grand Chapters.
+	register_term_meta( 'ws_country', 'country_code', array(
+		'type'              => 'string',
+		'single'            => true,
+		'default'           => '',
+		'show_in_rest'      => true,
+		'sanitize_callback' => 'ws_sanitize_country_code',
+		'auth_callback'     => function () {
+			return current_user_can( 'manage_ws_countries' );
+		},
+	) );
+
 	// Location, used by the European map. Anyone who can edit the chapter can set it.
 	$can_edit_chapter = function ( $allowed, $meta_key, $post_id ) {
 		return current_user_can( 'edit_post', $post_id );
@@ -128,7 +140,7 @@ add_action( 'init', function () {
 
 	// One-time setup (works for mu-plugin installs too, which have no activation hook):
 	// grant role capabilities and register the /chapters/ URLs.
-	if ( get_option( 'ws_chapters_setup_version' ) !== '3' ) {
+	if ( get_option( 'ws_chapters_setup_version' ) !== '4' ) {
 		foreach ( ws_chapter_role_caps() as $role_name => $caps ) {
 			$role = get_role( $role_name );
 			if ( $role ) {
@@ -137,23 +149,29 @@ add_action( 'init', function () {
 				}
 			}
 		}
-		foreach ( ws_default_grand_chapters() as $name ) {
-			if ( ! term_exists( $name, 'ws_country' ) ) {
-				wp_insert_term( $name, 'ws_country' );
+		foreach ( ws_default_grand_chapters() as $name => $code ) {
+			$term = term_exists( $name, 'ws_country' );
+			if ( ! $term ) {
+				$term = wp_insert_term( $name, 'ws_country' );
+			}
+			if ( ! is_wp_error( $term ) && '' === (string) get_term_meta( (int) $term['term_id'], 'country_code', true ) ) {
+				update_term_meta( (int) $term['term_id'], 'country_code', $code );
 			}
 		}
 		flush_rewrite_rules( false );
-		update_option( 'ws_chapters_setup_version', '3' );
+		update_option( 'ws_chapters_setup_version', '4' );
 	}
 }, 20 );
 
-/** Starting list of Widows Sons Grand Chapters in Europe (Oct 2026). Added once if missing; admins edit from there. */
+/** Starting list of Widows Sons Grand Chapters in Europe (Oct 2026) => flag code. Added once if missing; admins edit from there. */
 function ws_default_grand_chapters() {
 	return array(
-		'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Estonia', 'Finland', 'France', 'Germany',
-		'Gibraltar', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Italy Military Traveler', 'Latvia',
-		'Luxembourg', 'Malta', 'Netherlands', 'Portugal', 'Romania', 'Russia', 'Serbia', 'Spain', 'Sweden',
-		'Switzerland', 'United Kingdom',
+		'Austria' => 'at', 'Belgium' => 'be', 'Bulgaria' => 'bg', 'Croatia' => 'hr', 'Cyprus' => 'cy',
+		'Estonia' => 'ee', 'Finland' => 'fi', 'France' => 'fr', 'Germany' => 'de', 'Gibraltar' => 'gi',
+		'Greece' => 'gr', 'Hungary' => 'hu', 'Iceland' => 'is', 'Ireland' => 'ie', 'Italy' => 'it',
+		'Italy Military Traveler' => 'it', 'Latvia' => 'lv', 'Luxembourg' => 'lu', 'Malta' => 'mt',
+		'Netherlands' => 'nl', 'Portugal' => 'pt', 'Romania' => 'ro', 'Russia' => 'ru', 'Serbia' => 'rs',
+		'Spain' => 'es', 'Sweden' => 'se', 'Switzerland' => 'ch', 'United Kingdom' => 'gb',
 	);
 }
 
@@ -182,6 +200,13 @@ function ws_sanitize_asset_id( $value ) {
 		return $id;
 	}
 	return 0;
+}
+
+/** Two lowercase letters (ISO 3166-1 alpha-2, e.g. "bg"), or ''. "uk" is accepted as "gb". */
+function ws_sanitize_country_code( $value ) {
+	$code = strtolower( trim( (string) $value ) );
+	$code = 'uk' === $code ? 'gb' : $code;
+	return preg_match( '/^[a-z]{2}$/', $code ) ? $code : '';
 }
 
 /** A latitude/longitude in range, or '' (unset). Accepts a comma as decimal separator. */
@@ -399,12 +424,14 @@ add_action( 'save_post_ws_chapter', function ( $post_id ) {
 	}
 } );
 
-/* National logo on the country term screens. */
+/* National logo and flag on the Grand Chapter screens. */
 add_action( 'ws_country_add_form_fields', function () {
 	wp_nonce_field( 'ws_country_logo', 'ws_country_logo_nonce' );
 	echo '<div class="form-field">';
 	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), 0, current_user_can( WS_ASSET_CAP ) );
-	echo '</div>';
+	echo '</div><div class="form-field"><label for="ws_country_code">' . esc_html__( 'Flag (country code)', 'ws-chapters' ) . '</label>';
+	echo '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="2" style="width:5em" placeholder="bg">';
+	echo '<p>' . esc_html__( 'Two-letter country code, e.g. bg, de, gb. Used to show the flag.', 'ws-chapters' ) . '</p></div>';
 } );
 
 add_action( 'ws_country_edit_form_fields', function ( $term ) {
@@ -412,16 +439,22 @@ add_action( 'ws_country_edit_form_fields', function ( $term ) {
 	echo '<tr class="form-field"><th scope="row">' . esc_html__( 'National logo', 'ws-chapters' ) . '</th><td>';
 	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), (int) get_term_meta( $term->term_id, 'national_logo', true ), current_user_can( WS_ASSET_CAP ) );
 	echo '</td></tr>';
+	$code = (string) get_term_meta( $term->term_id, 'country_code', true );
+	echo '<tr class="form-field"><th scope="row"><label for="ws_country_code">' . esc_html__( 'Flag (country code)', 'ws-chapters' ) . '</label></th><td>';
+	printf( '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="2" style="width:5em" value="%s"> %s', esc_attr( $code ), ws_flag( $term ) );
+	echo '<p class="description">' . esc_html__( 'Two-letter country code, e.g. bg, de, gb. Used to show the flag.', 'ws-chapters' ) . '</p></td></tr>';
 } );
 
 $ws_save_country_logo = function ( $term_id ) {
 	if ( ! isset( $_POST['ws_country_logo_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['ws_country_logo_nonce'] ), 'ws_country_logo' ) ) {
 		return;
 	}
-	if ( ! current_user_can( WS_ASSET_CAP ) || ! isset( $_POST['ws_national_logo'] ) ) {
-		return;
+	if ( isset( $_POST['ws_country_code'] ) && current_user_can( 'manage_ws_countries' ) ) {
+		update_term_meta( $term_id, 'country_code', ws_sanitize_country_code( wp_unslash( $_POST['ws_country_code'] ) ) );
 	}
-	update_term_meta( $term_id, 'national_logo', ws_sanitize_asset_id( wp_unslash( $_POST['ws_national_logo'] ) ) );
+	if ( current_user_can( WS_ASSET_CAP ) && isset( $_POST['ws_national_logo'] ) ) {
+		update_term_meta( $term_id, 'national_logo', ws_sanitize_asset_id( wp_unslash( $_POST['ws_national_logo'] ) ) );
+	}
 };
 add_action( 'created_ws_country', $ws_save_country_logo );
 add_action( 'edited_ws_country', $ws_save_country_logo );

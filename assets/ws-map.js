@@ -35,8 +35,15 @@
 		}
 		var text = el('div');
 		text.appendChild(el('strong', '', p.name));
-		var where = [p.city, p.country].filter(Boolean).join(' · ');
-		if (where) text.appendChild(el('span', '', where));
+		var where = el('span');
+		if (p.flag) {
+			var flag = el('span', 'ws-flag fi fi-' + p.flag);
+			flag.setAttribute('aria-hidden', 'true');
+			where.appendChild(flag);
+			where.appendChild(document.createTextNode(' '));
+		}
+		where.appendChild(document.createTextNode([p.city, p.country].filter(Boolean).join(' · ')));
+		if (where.textContent.trim()) text.appendChild(where);
 		var link = el('a', '', labels.profile + ' →');
 		link.href = p.url;
 		text.appendChild(link);
@@ -62,14 +69,14 @@
 			var marker = L.marker([p.lat, p.lng], {
 				title: p.name,
 				alt: p.name,
-				icon: L.divIcon({ className: '', html: pinHtml(p), iconSize: [48, 48], iconAnchor: [24, 24], popupAnchor: [0, -24] })
+				icon: L.divIcon({ className: '', html: pinHtml(p), iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18] })
 			}).addTo(map);
 			marker.bindPopup(popup(p, labels));
 			bounds.push([p.lat, p.lng]);
 		});
 
 		if (bounds.length > 1) {
-			map.fitBounds(bounds, { padding: [48, 48], maxZoom: 7 });
+			map.fitBounds(bounds, { padding: [24, 24], maxZoom: 7 });
 		} else if (bounds.length === 1) {
 			map.setView(bounds[0], 6);
 		} else {

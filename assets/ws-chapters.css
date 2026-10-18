@@ -21,6 +21,9 @@
 .ws-country-logo { max-width: 160px; }
 .ws-chapter-meta { margin: 0; color: var(--ws-muted, inherit); font-size: .95em; }
 
+/* Flags: rectangular, with a hairline so white flags stay visible on dark backgrounds. */
+.ws-flag { width: 1.33em; line-height: 1em; border-radius: 2px; box-shadow: 0 0 0 1px rgba(127, 127, 127, .35); vertical-align: -0.1em; }
+
 /* Directory */
 .ws-chapter-group + .ws-chapter-group { margin-top: 3rem; }
 .ws-chapter-group__title a { color: inherit; text-decoration: none; }
@@ -56,15 +59,15 @@
 
 .ws-map-pin {
 	display: flex; align-items: center; justify-content: center;
-	width: 48px; height: 48px; box-sizing: border-box;
+	width: 36px; height: 36px; box-sizing: border-box;
 	border-radius: 50%;
 	background: rgba(14, 14, 15, .85);
 	border: 2px solid var(--ws-brass, #C9A45C);
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
 }
-.ws-map-pin img { width: 36px; height: 36px; object-fit: contain; }
+.ws-map-pin img { width: 28px; height: 28px; object-fit: contain; }
 .ws-map-pin--pending { border-style: dashed; border-color: #8C867D; }
-.ws-map-pin--pending::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #8C867D; }
+.ws-map-pin--pending::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #8C867D; }
 
 .ws-map-popup { display: flex; gap: .75rem; align-items: center; min-width: 200px; font-family: var(--ws-body, inherit); }
 .ws-map-popup__logo { flex: 0 0 64px; height: 64px; display: flex; align-items: center; justify-content: center; }
