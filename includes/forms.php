@@ -539,7 +539,7 @@ function ws_join_form() {
 	$out .= ws_field( 'ws_message', __( 'Anything you would like to tell the chapter', 'ws-chapters' ), 'textarea', array( 'value' => $v( 'ws_message' ), 'attrs' => 'rows="4"' ) );
 	$out .= '</fieldset>';
 	/* translators: %s: link to the privacy policy */
-	$out .= ws_consent_field( sprintf( __( 'I am a Master Mason and agree that my details are sent to the chosen chapter and the Widows Sons Europe admins to handle my application. See our %s.', 'ws-chapters' ), ws_privacy_link() ) );
+	$out .= ws_consent_field( sprintf( __( 'I am a Mason in good standing with my lodge and agree that my details are sent to the chosen chapter and the Widows Sons Europe admins to handle my application. See our %s.', 'ws-chapters' ), ws_privacy_link() ) );
 	$out .= '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Send application', 'ws-chapters' ) . '</button></p></form>';
 	return $out;
 }

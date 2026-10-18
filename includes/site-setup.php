@@ -313,11 +313,6 @@ function ws_site_setup_photos() {
 	}
 	update_term_meta( (int) $bg['term_id'], 'hero_image', $ids['tour-02-church-blessing.jpg'] ?? $tour[0] );
 	update_term_meta( (int) $bg['term_id'], 'gallery', implode( ',', $tour ) );
-	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
-	if ( $ch ) {
-		set_post_thumbnail( $ch->ID, $ids['tour-04-three-men-bar.jpg'] ?? $tour[0] );
-		update_post_meta( $ch->ID, 'gallery', implode( ',', $tour ) );
-	}
 }
 
 /*
@@ -384,3 +379,16 @@ add_action( 'init', function () {
 	}
 	update_option( 'ws_links_removed', $done, false );
 }, 30 );
+
+/* The Bulgaria chapter page shows no photos (header photo and gallery) until the chapter adds its own. Runs once. */
+add_action( 'init', function () {
+	if ( get_option( 'ws_bg_chapter_photos_cleared' ) || ! post_type_exists( 'ws_chapter' ) ) {
+		return;
+	}
+	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
+	if ( $ch ) {
+		delete_post_thumbnail( $ch->ID );
+		delete_post_meta( $ch->ID, 'gallery' );
+	}
+	update_option( 'ws_bg_chapter_photos_cleared', gmdate( 'c' ), false );
+}, 40 );
