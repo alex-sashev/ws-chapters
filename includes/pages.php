@@ -322,7 +322,9 @@ function ws_country_page() {
 	$chapters_title = sprintf( __( 'Chapters in %1$s (%2$d)', 'ws-chapters' ), $term->name, count( $chapters ) );
 	$overview       = '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( $term->name ) ) ) . '</h3><div class="ws-prose">' . $about . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' )
-		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get ) . '</aside></div>'
+		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
+		. ( $chapters && ws_join_url( 0, $term->term_id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( 0, $term->term_id ) ) . '">' . esc_html__( 'Apply to join', 'ws-chapters' ) . '</a>' : '' )
+		. '</aside></div>'
 		. '<h3 class="ws-subhead">' . esc_html( $chapters_title ) . '</h3>' . ws_chapter_rows( $chapters );
 
 	$map = $chapters ? ws_map_element( 'chapters', ws_chapter_map_data( $term->slug ), array( ws_iso_numeric( ws_country_code( $term ) ) ), 440 ) : '';

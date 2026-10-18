@@ -8,7 +8,7 @@
 		var needCountry = form.hasAttribute('data-ws-require-country');
 		var groups = Array.prototype.slice.call(chapter.querySelectorAll('optgroup'));
 
-		function apply() {
+		function apply(e) {
 			var c = country.value;
 			groups.forEach(function (g) {
 				var show = !c || g.getAttribute('data-country') === c;
@@ -18,8 +18,9 @@
 			var opt = chapter.options[chapter.selectedIndex];
 			if (opt && opt.value && c && opt.getAttribute('data-country') !== c) chapter.value = '';
 			if (needCountry) chapter.disabled = !c;
-			// One chapter in the country: choose it straight away.
-			if (c && !chapter.value) {
+			// One chapter in the country: choose it straight away, but only when the visitor picks the country
+			// (a country pre-selected by a link leaves the chapter for the applicant to choose).
+			if (e && c && !chapter.value) {
 				var visible = chapter.querySelectorAll('optgroup[data-country="' + c + '"] option');
 				if (visible.length === 1) chapter.value = visible[0].value;
 			}

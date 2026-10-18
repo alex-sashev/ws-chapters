@@ -309,13 +309,16 @@ add_action( 'admin_menu', function () {
 	}
 }, 99 );
 
-/** Link to the Join page, with a chapter pre-selected. '' if there is no Join page. */
-function ws_join_url( $chapter_id = 0 ) {
+/** Link to the Join page, with a chapter (or only a country) pre-selected. '' if there is no Join page. */
+function ws_join_url( $chapter_id = 0, $country_id = 0 ) {
 	$page = get_page_by_path( 'join' );
 	if ( ! $page || 'publish' !== $page->post_status ) {
 		return '';
 	}
-	return $chapter_id ? add_query_arg( 'chapter', (int) $chapter_id, get_permalink( $page ) ) . '#ws-join-form' : get_permalink( $page );
+	if ( $chapter_id ) {
+		return add_query_arg( 'chapter', (int) $chapter_id, get_permalink( $page ) ) . '#ws-join-form';
+	}
+	return $country_id ? add_query_arg( 'country', (int) $country_id, get_permalink( $page ) ) . '#ws-join-form' : get_permalink( $page );
 }
 
 /* -------------------------------------------------------------------------
@@ -485,11 +488,14 @@ function ws_join_form() {
 	$v = function ( $k ) use ( $result ) {
 		return $result ? ws_post_field( $k, 'ws_message' === $k ) : '';
 	};
-	$preset_chapter = isset( $_GET['chapter'] ) ? absint( $_GET['chapter'] ) : 0; // "Apply to this chapter" links.
-	$preset_country = 0;
+	$preset_chapter = isset( $_GET['chapter'] ) ? absint( $_GET['chapter'] ) : 0; // "Apply to join this chapter" links.
+	$preset_country = isset( $_GET['country'] ) ? absint( $_GET['country'] ) : 0; // "Apply to join" on a country page: the applicant still picks the chapter.
+	if ( $preset_country && ! term_exists( $preset_country, 'ws_country' ) ) {
+		$preset_country = 0;
+	}
 	if ( $preset_chapter && 'ws_chapter' === get_post_type( $preset_chapter ) ) {
 		$c              = ws_chapter_country( $preset_chapter );
-		$preset_country = $c ? $c->term_id : 0;
+		$preset_country = $c ? $c->term_id : $preset_country;
 	}
 	$out  = $result ? ws_form_notice( 'error', $result['message'] ) : '';
 	$out .= '<form class="ws-form" method="post" action="#ws-join-form" id="ws-join-form" data-ws-chapter-filter data-ws-require-country novalidate>';
