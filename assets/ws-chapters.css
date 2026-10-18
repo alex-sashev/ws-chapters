@@ -186,3 +186,11 @@
 .ws-upload .ws-form { margin-top: .5rem; }
 .ws-upload--js > summary { display: none; }
 .ws-upload--js { margin-top: 2.5rem; }
+
+/* Useful links */
+.ws-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+.ws-link-card { display: flex; flex-direction: column; }
+.ws-link-card__url { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ws-gold-dark, #8a6d2c); text-decoration: none; word-break: break-all; }
+.ws-link-card__url:hover { text-decoration: underline; }
+.ws-link-card p { flex: 1; }
+.ws-link-card .ws-link-arrow { margin-top: .9rem; }
