@@ -473,7 +473,31 @@ function ws_handle_application() {
 		'ok'      => true,
 		/* translators: %s: chapter name */
 		'message' => sprintf( __( 'Thank you, Brother. Your application has been sent to %s. The chapter will contact you.', 'ws-chapters' ), $chapter_name ),
+		'chapter' => $chapter_name,
 	);
+}
+
+/** Thank-you panel shown after an application is sent, with ways to carry on browsing. */
+function ws_join_thank_you( $chapter_name ) {
+	$links = array(
+		array( get_post_type_archive_link( 'ws_chapter' ), __( 'Explore the chapters', 'ws-chapters' ), 'ws-btn-gold' ),
+		array( get_post_type_archive_link( 'ws_event' ), __( 'See upcoming events', 'ws-chapters' ), 'ws-btn-outline' ),
+		array( home_url( '/' ), __( 'Back to the home page', 'ws-chapters' ), 'ws-btn-outline' ),
+	);
+	$buttons = '';
+	foreach ( $links as $l ) {
+		if ( $l[0] ) {
+			$buttons .= '<a class="' . esc_attr( $l[2] ) . '" href="' . esc_url( $l[0] ) . '">' . esc_html( $l[1] ) . '</a>';
+		}
+	}
+	return '<section class="ws-thank-you" id="ws-join-form" role="status" tabindex="-1">'
+		. '<p class="ws-thank-you__kicker">' . esc_html__( 'Application sent', 'ws-chapters' ) . '</p>'
+		. '<h2 class="ws-thank-you__title">' . esc_html__( 'Thank you, Brother', 'ws-chapters' ) . '</h2>'
+		/* translators: %s: chapter name */
+		. '<p>' . esc_html( sprintf( __( 'Your application has been sent to %s. The chapter will get in touch with you soon by email or phone.', 'ws-chapters' ), $chapter_name ) ) . '</p>'
+		. '<p>' . esc_html__( 'A copy has also gone to the Widows Sons Europe team. While you wait, take a look around:', 'ws-chapters' ) . '</p>'
+		. '<div class="ws-thank-you__actions">' . $buttons . '</div>'
+		. '</section>';
 }
 
 function ws_join_form() {
@@ -482,7 +506,7 @@ function ws_join_form() {
 		$result = ws_handle_application();
 	}
 	if ( $result && $result['ok'] ) {
-		return ws_form_notice( 'success', esc_html( $result['message'] ) );
+		return ws_join_thank_you( $result['chapter'] );
 	}
 	ws_enqueue_form_script();
 	$v = function ( $k ) use ( $result ) {
@@ -551,4 +575,22 @@ add_action( 'add_meta_boxes_ws_application', function () {
 add_action( 'init', function () {
 	add_shortcode( 'ws_event_submit', 'ws_event_submit_form' );
 	add_shortcode( 'ws_join_form', 'ws_join_form' );
+} );
+
+/*
+ * The forms post fields named ws_country and ws_chapter, which are also WordPress's own address
+ * variables for countries and chapters. WordPress reads those from posted forms too, so sending
+ * a form made it look for a chapter called "7" and show "Page not found". Ignore them when they
+ * come only from a posted form.
+ */
+add_filter( 'request', function ( $vars ) {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || empty( $_POST['ws_form'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return $vars;
+	}
+	foreach ( array( 'ws_country', 'ws_chapter' ) as $k ) {
+		if ( isset( $vars[ $k ] ) && ! isset( $_GET[ $k ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			unset( $vars[ $k ] );
+		}
+	}
+	return $vars;
 } );
