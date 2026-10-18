@@ -183,6 +183,20 @@ function ws_news_source( $post = null ) {
 	return '<span class="ws-news-source">' . esc_html__( 'Posted by', 'ws-chapters' ) . ' <a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a></span>';
 }
 
+/*
+ * Templates mark the spot with data-ws-news-source. It is filled per block, so inside a news list each card
+ * gets its own post (a shortcode would run once for the whole template, before the list loops).
+ */
+add_filter( 'render_block_core/html', function ( $html ) {
+	if ( false === strpos( $html, 'data-ws-news-source' ) || ! get_the_ID() ) {
+		return $html;
+	}
+	$source = ws_news_source( get_the_ID() );
+	return preg_replace_callback( '/(<[a-z]+[^>]*data-ws-news-source[^>]*>)\s*(<\/[a-z]+>)/i', function ( $m ) use ( $source ) {
+		return $m[1] . $source . $m[2];
+	}, $html, 1 );
+} );
+
 function ws_news_cards( $country = 0, $chapter = 0, $limit = 3 ) {
 	$args = array( 'post_type' => 'post', 'post_status' => 'publish', 'posts_per_page' => $limit, 'no_found_rows' => true );
 	if ( $chapter ) {
@@ -416,9 +430,6 @@ add_action( 'init', function () {
 	add_shortcode( 'ws_europe_map', 'ws_europe_map_panel' );
 	add_shortcode( 'ws_country_page', 'ws_country_page' );
 	add_shortcode( 'ws_chapter_profile', 'ws_chapter_profile' );
-	add_shortcode( 'ws_news_source', function () {
-		return ws_news_source();
-	} );
 	add_shortcode( 'ws_news', function ( $atts ) {
 		$atts = shortcode_atts( array( 'country' => '', 'chapter' => 0, 'limit' => 3 ), (array) $atts );
 		$term = $atts['country'] ? get_term_by( 'slug', sanitize_title( $atts['country'] ), 'ws_country' ) : null;
