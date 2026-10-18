@@ -79,3 +79,18 @@ add_action( 'user_register', function ( $user_id ) {
 		wp_update_user( array( 'ID' => $user_id, 'display_name' => $user->user_login, 'nickname' => $user->user_login ) );
 	}
 } );
+
+/*
+ * Privacy: no third-party calls the privacy policy doesn't list. Avatars would load from Gravatar
+ * (sending a hash of each user's email); emoji images would load from WordPress.org's CDN.
+ */
+add_filter( 'pre_option_show_avatars', '__return_zero' );
+add_action( 'init', function () {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+} );
