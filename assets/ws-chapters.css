@@ -132,3 +132,25 @@
 .ws-event-organiser { margin: 0; font-size: .9rem; color: var(--ws-muted, inherit); }
 .ws-events-note { margin: 0 0 .75rem; font-size: .9rem; }
 .ws-event-details dd a { word-break: break-word; }
+
+/* Forms */
+.ws-form { max-width: 760px; }
+.ws-form fieldset { margin: 0 0 1.5rem; padding: 1.25rem 1.25rem .25rem; border: 1px solid var(--ws-border, #ddd); border-radius: var(--ws-radius, 4px); background: var(--ws-card, #fff); }
+.ws-form legend { padding: 0 .5rem; font-family: var(--ws-display, inherit); font-weight: 700; font-size: 1.05rem; }
+.ws-field { margin: 0 0 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.ws-field label { font-weight: 600; font-size: .95rem; }
+.ws-field input, .ws-field select, .ws-field textarea {
+	width: 100%; box-sizing: border-box; padding: .65rem .75rem; font: inherit; font-size: 1rem;
+	border: 1px solid var(--ws-border-2, #bbb); border-radius: 3px; background: #fff; color: inherit;
+}
+.ws-field input:focus, .ws-field select:focus, .ws-field textarea:focus { outline: 2px solid var(--ws-gold, #C9A24A); outline-offset: 1px; border-color: var(--ws-gold-dark, #8a6d2c); }
+.ws-field select:disabled { background: #f3f1ec; color: #888; }
+.ws-field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 0 1rem; }
+.ws-help { font-size: .85rem; color: var(--ws-muted, #666); }
+.ws-req { color: #a3222b; }
+.ws-field--check label { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
+.ws-field--check input { width: auto; margin-top: .3rem; }
+.ws-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ws-form-notice { max-width: 760px; margin: 0 0 1.5rem; padding: 1rem 1.25rem; border-radius: var(--ws-radius, 4px); border-left: 4px solid; }
+.ws-form-notice--success { background: #eef6ea; border-color: #3c7a2b; color: #1f3d16; }
+.ws-form-notice--error { background: #fbecec; border-color: #a3222b; color: #5c1418; }

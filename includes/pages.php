@@ -340,6 +340,7 @@ function ws_chapter_profile() {
 		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Chapter logo', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Used on map, directory and events)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_logo( $id ) . '<p>' . esc_html__( 'This logo is used for the map, chapter directory and events.', 'ws-chapters' ) . '</p></figure>'
 		. '<aside class="ws-identity__contact"><h3>' . esc_html__( 'Contact details', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $has_map ? '<a class="ws-btn-gold" href="#chapter-map">' . esc_html__( 'Visit on map', 'ws-chapters' ) . ' ' . ws_icon( 'arrow' ) . '</a>' : '' )
+		. ( ws_join_url( $id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( $id ) ) . '">' . esc_html__( 'Apply to join this chapter', 'ws-chapters' ) . '</a>' : '' )
 		. ( $country ? '<p class="ws-identity__country">' . ws_flag( $country ) . ' <a href="' . esc_url( get_term_link( $country ) ) . '">' . esc_html( ws_display_name( $country->name ) ) . '</a></p>' : '' )
 		. '</aside></div>';
 
