@@ -320,3 +320,16 @@ function ws_site_setup_photos() {
 		update_post_meta( $ch->ID, 'gallery', implode( ',', $tour ) );
 	}
 }
+
+/*
+ * Switch the site address to https:// the first time the site is reached over HTTPS
+ * (i.e. once the host's SSL certificate works), so links, images and logins all use HTTPS.
+ */
+add_action( 'init', function () {
+	if ( ! is_ssl() || 0 !== strpos( (string) get_option( 'home' ), 'http://' ) ) {
+		return;
+	}
+	foreach ( array( 'home', 'siteurl' ) as $opt ) {
+		update_option( $opt, set_url_scheme( (string) get_option( $opt ), 'https' ) );
+	}
+}, 1 );
