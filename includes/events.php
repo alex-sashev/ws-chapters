@@ -205,11 +205,11 @@ add_action( 'init', function () {
 		if ( ! $events && ! $past && $atts['recent'] ) {
 			$recent = ws_get_events( true, (int) $atts['limit'] );
 			if ( $recent ) {
-				return '<p class="ws-muted ws-events-note">' . esc_html__( 'No upcoming events announced yet. Recent events:', 'ws-chapters' ) . '</p><div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $recent, 'ID' ) ) ) . '</div>';
+				return '<p class="ws-muted ws-events-note">' . esc_html__( 'No upcoming events have been published yet. Explore past gatherings below:', 'ws-chapters' ) . '</p><div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $recent, 'ID' ) ) ) . '</div>';
 			}
 		}
 		if ( ! $events ) {
-			return '<p class="ws-chapter-empty">' . ( $past ? esc_html__( 'No past events yet.', 'ws-chapters' ) : esc_html__( 'No upcoming events announced yet.', 'ws-chapters' ) ) . '</p>';
+			return '<p class="ws-chapter-empty">' . ( $past ? esc_html__( 'No past events are listed yet.', 'ws-chapters' ) : esc_html__( 'No upcoming events have been published yet.', 'ws-chapters' ) ) . '</p>';
 		}
 		return '<div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $events, 'ID' ) ) ) . '</div>';
 	} );

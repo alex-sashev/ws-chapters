@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.8.0
+ * Version:     2.8.1
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -17,8 +17,8 @@ const WS_ASSET_CAP = 'manage_ws_chapter_assets';
 /** Chapter image fields: meta key => [label, placeholder text]. */
 function ws_chapter_asset_fields() {
 	return array(
-		'back_patch'   => array( __( 'Back patch', 'ws-chapters' ), __( 'Official back patch pending', 'ws-chapters' ) ),
-		'chapter_logo' => array( __( 'Chapter logo', 'ws-chapters' ), __( 'Official chapter logo pending', 'ws-chapters' ) ),
+		'back_patch'   => array( __( 'Back patch', 'ws-chapters' ), __( 'Official chapter patch not yet provided', 'ws-chapters' ) ),
+		'chapter_logo' => array( __( 'Chapter logo', 'ws-chapters' ), __( 'Official chapter logo not yet provided', 'ws-chapters' ) ),
 	);
 }
 
@@ -331,7 +331,7 @@ function ws_chapter_back_patch( $chapter_id = null ) {
 	$chapter_id = $chapter_id ?: get_the_ID();
 	$fields     = ws_chapter_asset_fields();
 	/* translators: %s: chapter name */
-	$alt = sprintf( __( 'Official back patch of %s', 'ws-chapters' ), get_the_title( $chapter_id ) );
+	$alt = sprintf( __( 'Official patch of %s', 'ws-chapters' ), get_the_title( $chapter_id ) );
 	return ws_render_asset( (int) get_post_meta( $chapter_id, 'back_patch', true ), 'profile', $fields['back_patch'][1], $alt );
 }
 
@@ -391,7 +391,7 @@ function ws_asset_control( $name, $label, $attachment_id, $can_edit ) {
 	<div class="ws-asset-control" data-ws-asset>
 		<p><strong><?php echo esc_html( $label ); ?></strong></p>
 		<div class="ws-asset-preview" style="background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/16px 16px;padding:8px;min-height:60px">
-			<?php echo $preview ? $preview : '<em>' . esc_html__( 'Not provided yet — the Widows Sons emblem is shown until you upload your own.', 'ws-chapters' ) . '</em>'; ?>
+			<?php echo $preview ? $preview : '<em>' . esc_html__( 'No official file uploaded. A neutral placeholder will be displayed.', 'ws-chapters' ) . '</em>'; ?>
 		</div>
 		<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo (int) $attachment_id; ?>">
 		<?php if ( $can_edit ) : ?>
@@ -399,9 +399,9 @@ function ws_asset_control( $name, $label, $attachment_id, $can_edit ) {
 				<button type="button" class="button ws-asset-select"><?php echo $attachment_id ? esc_html__( 'Replace', 'ws-chapters' ) : esc_html__( 'Upload / select', 'ws-chapters' ); ?></button>
 				<button type="button" class="button-link-delete ws-asset-remove" <?php echo $attachment_id ? '' : 'hidden'; ?>><?php esc_html_e( 'Remove', 'ws-chapters' ); ?></button>
 			</p>
-			<p class="description"><?php esc_html_e( 'Upload the official file as received (PNG or WebP for transparency, high resolution). Do not crop or edit it.', 'ws-chapters' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Upload the official chapter-supplied insignia at high resolution (prefer PNG or WebP with transparency). Do not edit, recolour or crop official artwork.', 'ws-chapters' ); ?></p>
 		<?php else : ?>
-			<p class="description"><?php esc_html_e( 'Only authorised administrators can change official insignia.', 'ws-chapters' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Only administrators with the relevant permissions may modify official insignia.', 'ws-chapters' ); ?></p>
 		<?php endif; ?>
 	</div>
 	<?php
@@ -422,8 +422,8 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 		wp_nonce_field( 'ws_chapter_location', 'ws_chapter_location_nonce' );
 		$fields = array(
 			'city'      => __( 'City', 'ws-chapters' ),
-			'latitude'  => __( 'Latitude (optional)', 'ws-chapters' ),
-			'longitude' => __( 'Longitude (optional)', 'ws-chapters' ),
+			'latitude'  => __( 'Latitude (e.g. 42.6977)', 'ws-chapters' ),
+			'longitude' => __( 'Longitude (e.g. 23.3219)', 'ws-chapters' ),
 		);
 		echo '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">';
 		foreach ( $fields as $key => $label ) {
@@ -440,7 +440,7 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 			'city'    => __( 'Pin is at the city, looked up automatically.', 'ws-chapters' ),
 			'capital' => __( 'No city yet: the pin is on the capital of the chapter\'s country.', 'ws-chapters' ),
 		);
-		echo '</div><p class="description">' . esc_html__( 'Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter\'s country.', 'ws-chapters' ) . '</p>';
+		echo '</div><p class="description">' . esc_html__( 'Tip: right-click the meeting place in Google Maps or OpenStreetMap to copy its coordinates. Chapters without coordinates are listed in the directory but not shown on the map.', 'ws-chapters' ) . '</p>';
 		if ( $pos ) {
 			echo '<p><strong>' . esc_html( $source[ $pos[2] ] ?? '' ) . '</strong></p>';
 		}
@@ -550,7 +550,7 @@ jQuery(function ($) {
 		e.preventDefault();
 		var box = $(this).closest('[data-ws-asset]');
 		box.find('input[type=hidden]').val(0);
-		box.find('.ws-asset-preview').html('<em>Not provided yet — the Widows Sons emblem is shown until you upload your own.</em>');
+		box.find('.ws-asset-preview').html('<em>No official file uploaded. A neutral placeholder will be displayed.</em>');
 		$(this).prop('hidden', true);
 	});
 });

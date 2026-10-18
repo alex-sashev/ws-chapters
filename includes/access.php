@@ -226,7 +226,7 @@ function ws_scope_fields( $user ) {
 	$mine_ch   = array_map( 'intval', (array) get_user_meta( $user->ID, 'ws_scope_chapters', true ) );
 	wp_nonce_field( 'ws_scope', 'ws_scope_nonce' );
 	echo '<h2>' . esc_html__( 'Widows Sons access', 'ws-chapters' ) . '</h2>';
-	echo '<p class="description">' . esc_html__( 'Used when the user\'s role is Country Admin (countries) or Chapter Editor (chapters).', 'ws-chapters' ) . '</p>';
+	echo '<p class="description">' . esc_html__( 'Widows Sons access — assign allowed countries to Country Admins and allowed chapters to Chapter Editors.', 'ws-chapters' ) . '</p>';
 	echo '<table class="form-table" role="presentation"><tr><th>' . esc_html__( 'Countries', 'ws-chapters' ) . '</th><td><div style="columns:3;max-width:640px">';
 	foreach ( (array) $countries as $t ) {
 		printf( '<label style="display:block"><input type="checkbox" name="ws_scope_countries[]" value="%d"%s> %s</label>', $t->term_id, checked( in_array( $t->term_id, $mine_c, true ), true, false ), esc_html( $t->name ) );

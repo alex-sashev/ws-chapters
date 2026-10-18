@@ -80,7 +80,7 @@ function ws_map_element( $mode, $points, $highlight, $height = 560, $focus = nul
 	wp_enqueue_script( 'ws-chapter-map' );
 	$labels = array(
 		'pending'  => __( 'Official logo pending', 'ws-chapters' ),
-		'profile'  => __( 'Chapter page', 'ws-chapters' ),
+		'profile'  => __( 'Explore chapter', 'ws-chapters' ),
 		'country'  => __( 'View country', 'ws-chapters' ),
 		/* translators: used as "4 chapters" */
 		'chapters' => __( 'chapters', 'ws-chapters' ),
@@ -242,8 +242,8 @@ function ws_europe_map_panel() {
 			esc_html( sprintf( _n( '%d chapter', '%d chapters', $c['count'], 'ws-chapters' ), $c['count'] ) )
 		);
 	}
-	return '<div class="ws-europe-map"><div class="ws-europe-map__side"><h2 class="ws-europe-map__title">' . esc_html__( 'Find Widows Sons across Europe', 'ws-chapters' ) . '</h2>'
-		. '<p>' . esc_html__( 'Explore our countries and chapters. Click a country to view its chapters, rides and upcoming events.', 'ws-chapters' ) . '</p>'
+	return '<div class="ws-europe-map"><div class="ws-europe-map__side"><h2 class="ws-europe-map__title">' . esc_html__( 'Our Brotherhood Across Europe', 'ws-chapters' ) . '</h2>'
+		. '<p>' . esc_html__( 'Explore participating countries and their chapters. Select a country to find chapter information, news and events.', 'ws-chapters' ) . '</p>'
 		. '<ul class="ws-country-list">' . $list . '</ul></div>'
 		. '<div class="ws-europe-map__map">' . ws_map_element( 'countries', $countries, array_column( $countries, 'shape' ), 620 ) . '</div></div>';
 }
@@ -262,7 +262,7 @@ function ws_chapter_rows( $chapters ) {
 			esc_url( get_permalink( $c ) ),
 			esc_html( ws_display_name( get_the_title( $c ) ) ),
 			esc_html( get_post_meta( $c->ID, 'city', true ) ),
-			esc_html__( 'View chapter', 'ws-chapters' ),
+			esc_html__( 'Explore chapter', 'ws-chapters' ),
 			ws_icon( 'arrow' ),
 			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : ''
 		);
@@ -290,14 +290,14 @@ function ws_country_page() {
 		(int) $get( 'hero_image' ),
 		'<div class="ws-emblem"><span class="ws-emblem__inner">' . ws_country_logo( $term->term_id ) . '</span></div>',
 		ws_display_name( $term->name ),
-		'<p class="ws-page-hero__tagline">' . esc_html__( 'Brotherhood · Friendship · Service', 'ws-chapters' ) . '</p>'
+		'<p class="ws-page-hero__tagline">' . esc_html__( 'Brotherhood · Motorcycling · Service', 'ws-chapters' ) . '</p>'
 	);
 
 	/* translators: 1: country name, 2: number of chapters */
 	$chapters_title = sprintf( __( 'Chapters in %1$s (%2$d)', 'ws-chapters' ), $term->name, count( $chapters ) );
 	$overview       = '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( $term->name ) ) ) . '</h3><div class="ws-prose">' . $about . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' )
-		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Contact information', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get ) . '</aside></div>'
+		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get ) . '</aside></div>'
 		. '<h3 class="ws-subhead">' . esc_html( $chapters_title ) . '</h3>' . ws_chapter_rows( $chapters );
 
 	$map = $chapters ? ws_map_element( 'chapters', ws_chapter_map_data( $term->slug ), array( ws_iso_numeric( ws_country_code( $term ) ) ), 440 ) : '';
@@ -336,10 +336,10 @@ function ws_chapter_profile() {
 	);
 
 	$identity = '<div class="ws-identity">'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official back patch', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Chapter identity)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_back_patch( $id ) . '<p>' . esc_html__( 'This is the official chapter back patch worn by our members.', 'ws-chapters' ) . '</p></figure>'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Chapter logo', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Used on map, directory and events)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_logo( $id ) . '<p>' . esc_html__( 'This logo is used for the map, chapter directory and events.', 'ws-chapters' ) . '</p></figure>'
-		. '<aside class="ws-identity__contact"><h3>' . esc_html__( 'Contact details', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
-		. ( $has_map ? '<a class="ws-btn-gold" href="#chapter-map">' . esc_html__( 'Visit on map', 'ws-chapters' ) . ' ' . ws_icon( 'arrow' ) . '</a>' : '' )
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Patch', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Insignia worn by members)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_back_patch( $id ) . '<p>' . esc_html__( 'The chapter’s official patch, displayed as supplied by the chapter.', 'ws-chapters' ) . '</p></figure>'
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Logo', 'ws-chapters' ) . '</strong><span>' . esc_html__( '(Chapter visual identity)', 'ws-chapters' ) . '</span></figcaption>' . ws_chapter_logo( $id ) . '<p>' . esc_html__( 'The chapter’s official logo, separate from its back patch and displayed as supplied.', 'ws-chapters' ) . '</p></figure>'
+		. '<aside class="ws-identity__contact"><h3>' . esc_html__( 'Official Contact Information', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
+		. ( $has_map ? '<a class="ws-btn-gold" href="#chapter-map">' . esc_html__( 'Show on map', 'ws-chapters' ) . ' ' . ws_icon( 'arrow' ) . '</a>' : '' )
 		. ( ws_join_url( $id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( $id ) ) . '">' . esc_html__( 'Apply to join this chapter', 'ws-chapters' ) . '</a>' : '' )
 		. ( $country ? '<p class="ws-identity__country">' . ws_flag( $country ) . ' <a href="' . esc_url( get_term_link( $country ) ) . '">' . esc_html( ws_display_name( $country->name ) ) . '</a></p>' : '' )
 		. '</aside></div>';
@@ -352,7 +352,7 @@ function ws_chapter_profile() {
 	return $hero . '<div class="ws-page-body">' . $identity . ws_tabs( 'chapter', array(
 		'about'   => array( __( 'About', 'ws-chapters' ), $about ),
 		'events'  => array( __( 'Events', 'ws-chapters' ), ws_event_cards_for( 0, $id ) ),
-		'news'    => array( __( 'News & activities', 'ws-chapters' ), ws_news_cards( 0, $id, 6 ) ),
+		'news'    => array( __( 'News & Activities', 'ws-chapters' ), ws_news_cards( 0, $id, 6 ) ),
 		'gallery' => array( __( 'Gallery', 'ws-chapters' ), ws_gallery_grid( $gallery ) ),
 		'contact' => array( __( 'Contact', 'ws-chapters' ), ws_contact_list( $get ) ),
 	) ) . '</div>';

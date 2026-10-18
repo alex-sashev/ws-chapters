@@ -120,7 +120,7 @@ add_action( 'add_meta_boxes_ws_chapter', function () {
 		ws_contact_inputs( $values );
 		echo '<p><strong>' . esc_html__( 'Photo gallery', 'ws-chapters' ) . '</strong></p>';
 		ws_gallery_control( 'ws_gallery', get_post_meta( $post->ID, 'gallery', true ) );
-		echo '<p class="description">' . esc_html__( 'The page header photo is the Featured image (in the sidebar).', 'ws-chapters' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Featured image: used as the chapter page header.', 'ws-chapters' ) . '</p>';
 	}, 'ws_chapter', 'normal', 'default' );
 } );
 
