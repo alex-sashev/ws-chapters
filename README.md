@@ -7,3 +7,7 @@ Accepts PNG, WebP and JPEG. SVG is intentionally not supported.
 Template helpers: `ws_chapter_back_patch()`, `ws_chapter_logo()`, `ws_country_logo( $term_id )`. REST: `/wp-json/wp/v2/ws_chapter` includes an `insignia` field with image URLs.
 
 License: GPL-2.0-or-later.
+
+## Try it in WordPress Playground
+
+[Open the demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/alex-sashev/ws-chapters/main/playground/blueprint.json) — WordPress in your browser with the plugin, two sample chapters and two test images. Nothing is saved; each visit starts fresh.

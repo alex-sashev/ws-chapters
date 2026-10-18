@@ -1,0 +1,51 @@
+{
+ "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+ "meta": {
+  "title": "ws-chapters demo",
+  "description": "Widows Sons chapters plugin with sample chapters and test images.",
+  "author": "alex-sashev"
+ },
+ "preferredVersions": {
+  "php": "8.2",
+  "wp": "latest"
+ },
+ "landingPage": "/wp-admin/edit.php?post_type=ws_chapter",
+ "steps": [
+  {
+   "step": "login",
+   "username": "admin",
+   "password": "password"
+  },
+  {
+   "step": "installPlugin",
+   "pluginData": {
+    "resource": "git:directory",
+    "url": "https://github.com/alex-sashev/ws-chapters",
+    "ref": "main",
+    "refType": "branch",
+    "path": "/"
+   },
+   "options": {
+    "activate": true,
+    "targetFolderName": "ws-chapters"
+   }
+  },
+  {
+   "step": "mkdir",
+   "path": "/wordpress/wp-content/mu-plugins"
+  },
+  {
+   "step": "writeFile",
+   "path": "/wordpress/wp-content/mu-plugins/ws-demo-display.php",
+   "data": "<?php\n// Playground demo only (not part of the plugin): show the helper output on each chapter page.\nadd_filter('the_content', function ($c) {\n  if (!is_singular('ws_chapter')) return $c;\n  $t = wp_get_post_terms(get_the_ID(), 'ws_country', array('fields'=>'ids'));\n  return '<div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:16px\">'\n    . '<div><b>back_patch</b>' . ws_chapter_back_patch() . '</div>'\n    . '<div><b>chapter_logo</b>' . ws_chapter_logo() . '</div>'\n    . '<div><b>national_logo</b>' . ($t ? ws_country_logo($t[0]) : '-') . '</div></div>' . $c;\n});\n"
+  },
+  {
+   "step": "runPHP",
+   "code": "<?php\nrequire '/wordpress/wp-load.php';\n$t = wp_insert_term('Bulgaria', 'ws_country');\n$tid = is_wp_error($t) ? $t->get_error_data() : $t['term_id'];\nforeach (array('Test Chapter Sofia', 'Test Chapter Plovdiv') as $name) {\n  $id = wp_insert_post(array('post_type'=>'ws_chapter','post_title'=>$name,'post_status'=>'publish','post_content'=>'Test chapter.'));\n  wp_set_object_terms($id, array((int)$tid), 'ws_country');\n}\n"
+  },
+  {
+   "step": "runPHP",
+   "code": "<?php\nrequire '/wordpress/wp-load.php';\nrequire_once ABSPATH . 'wp-admin/includes/image.php';\n$dir = wp_upload_dir();\nforeach (array('test-image-a' => array(30,90,200), 'test-image-b' => array(200,60,30)) as $n => $c) {\n  $im = imagecreatetruecolor(1200, 1600); imagesavealpha($im, true);\n  imagefill($im, 0, 0, imagecolorallocatealpha($im, 0,0,0,127));\n  imagefilledellipse($im, 600, 800, 1000, 1400, imagecolorallocate($im, $c[0],$c[1],$c[2]));\n  imagestring($im, 5, 560, 790, 'TEST', imagecolorallocate($im,255,255,255));\n  $f = $dir['path'] . \"/$n.png\"; imagepng($im, $f);\n  $id = wp_insert_attachment(array('post_mime_type'=>'image/png','post_title'=>$n,'post_status'=>'inherit'), $f);\n  wp_update_attachment_metadata($id, wp_generate_attachment_metadata($id, $f));\n}\n"
+  }
+ ]
+}
