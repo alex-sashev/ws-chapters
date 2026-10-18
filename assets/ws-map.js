@@ -25,6 +25,10 @@
 		return n;
 	}
 
+	function countLabel(p, labels) {
+		return p.count + ' ' + (p.count === 1 ? labels.chapter : labels.chapters);
+	}
+
 	/* The Widows Sons pin; its tip sits exactly on the location. */
 	function pinIcon(width) {
 		var height = Math.round(width * 172 / 127);
