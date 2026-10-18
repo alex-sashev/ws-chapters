@@ -58,6 +58,10 @@
 .ws-map-land--member { fill: var(--ws-gold, #C9A24A); stroke: var(--ws-gold-dark, #8a6d2c); fill-opacity: .92; }
 .ws-chapter-map--countries .ws-map-land--member { cursor: pointer; }
 .ws-chapter-map--countries .ws-map-land--member:hover { fill: var(--ws-gold-light, #E3C77A); }
+.ws-map-land:hover { fill: #34353a; }
+.ws-map-land--member:hover { fill: var(--ws-gold-light, #E3C77A); }
+.leaflet-tooltip.ws-map-tip--name { padding: 3px 8px; background: rgba(11, 11, 12, .9); color: #d8d2c6; border: 1px solid #3d3d42; border-radius: 3px; box-shadow: none; font-size: 12px; letter-spacing: .04em; }
+.leaflet-tooltip.ws-map-tip--name::before { display: none; }
 .ws-map-country { display: flex; align-items: center; gap: 6px; white-space: nowrap; cursor: pointer; }
 .ws-map-country__label { display: flex; flex-direction: column; padding: 3px 8px; background: rgba(11, 11, 12, .88); border: 1px solid var(--ws-gold, #C9A24A); border-radius: 3px; color: #fff; line-height: 1.15; }
 .ws-map-country__label strong { font-family: var(--ws-display, inherit); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ws-gold-light, #E3C77A); }
@@ -123,3 +127,6 @@
 .ws-event-details dt { color: var(--ws-muted, inherit); text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; padding-top: .2em; }
 .ws-event-details dd { margin: 0; }
 @media (max-width: 520px) { .ws-event-card { grid-template-columns: 64px 1fr; gap: .9rem; } .ws-event-card__date span { font-size: 1.5rem; } }
+.ws-event-organiser { margin: 0; font-size: .9rem; color: var(--ws-muted, inherit); }
+.ws-events-note { margin: 0 0 .75rem; font-size: .9rem; }
+.ws-event-details dd a { word-break: break-word; }

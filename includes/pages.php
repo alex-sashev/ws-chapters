@@ -174,15 +174,22 @@ function ws_news_cards( $country = 0, $chapter = 0, $limit = 3 ) {
 	return $out . '</div>';
 }
 
-/** Events for a country (term ID) or a chapter (post ID). */
+/** Events for a country (term ID) or a chapter (post ID): upcoming first, then past. */
 function ws_event_cards_for( $country = 0, $chapter = 0 ) {
-	$events = array_filter( ws_get_events(), function ( $e ) use ( $country, $chapter ) {
+	$match = function ( $e ) use ( $country, $chapter ) {
 		$scope = ws_item_scope( $e );
 		return $chapter ? $scope['chapter'] === (int) $chapter : in_array( (int) $country, $scope['countries'], true );
-	} );
-	return $events
-		? '<div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $events, 'ID' ) ) ) . '</div>'
-		: '<p class="ws-muted">' . esc_html__( 'No upcoming events announced yet.', 'ws-chapters' ) . '</p>';
+	};
+	$cards    = function ( $events ) {
+		return '<div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $events, 'ID' ) ) ) . '</div>';
+	};
+	$upcoming = array_filter( ws_get_events(), $match );
+	$past     = array_filter( ws_get_events( true ), $match );
+	$out      = $upcoming ? $cards( $upcoming ) : '<p class="ws-muted">' . esc_html__( 'No upcoming events announced yet.', 'ws-chapters' ) . '</p>';
+	if ( $past ) {
+		$out .= '<h3 class="ws-subhead">' . esc_html__( 'Past events', 'ws-chapters' ) . '</h3>' . $cards( $past );
+	}
+	return $out;
 }
 
 /** Tabs: a nav plus sections. Without JavaScript every section simply shows in order. */

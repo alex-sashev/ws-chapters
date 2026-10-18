@@ -158,6 +158,9 @@
 					if (mode === 'countries' && p) {
 						l.on('click', function () { location.href = p.url; });
 						l.bindTooltip(countryTooltip(p, labels), { sticky: true, className: 'ws-map-tip ws-map-tip--country', opacity: 1 });
+					} else if (f.properties && f.properties.name) {
+						// Every other country still shows its name on hover.
+						l.bindTooltip(f.properties.name, { sticky: true, className: 'ws-map-tip ws-map-tip--name', opacity: 1 });
 					}
 				}
 			}).addTo(map).bringToBack();

@@ -2,7 +2,8 @@
 /**
  * Events: dates, place and the hosting chapter. Listings show the host chapter's official logo.
  *
- * [ws_events]                 Upcoming events (limit="3", past="1" for past events, newest first).
+ * [ws_events]                 Upcoming events (limit="3", past="1" for past events, newest first,
+ *                             recent="1" to show the latest past events when nothing is upcoming).
  * [ws_event_details]          Date, place and host chapter of the current event (single event page).
  * [ws_events_url]             URL of the events page.
  *
@@ -37,12 +38,20 @@ add_action( 'init', function () {
 			'sanitize_callback' => 'ws_sanitize_date', 'auth_callback' => $auth,
 		) );
 	}
-	foreach ( array( 'venue', 'city' ) as $key ) {
+	foreach ( array( 'venue', 'city', 'organiser' ) as $key ) {
 		register_post_meta( 'ws_event', $key, array(
 			'type' => 'string', 'single' => true, 'default' => '', 'show_in_rest' => true,
 			'sanitize_callback' => 'sanitize_text_field', 'auth_callback' => $auth,
 		) );
 	}
+	register_post_meta( 'ws_event', 'start_time', array(
+		'type' => 'string', 'single' => true, 'default' => '', 'show_in_rest' => true,
+		'sanitize_callback' => 'ws_sanitize_time', 'auth_callback' => $auth,
+	) );
+	register_post_meta( 'ws_event', 'contact', array(
+		'type' => 'string', 'single' => true, 'default' => '', 'show_in_rest' => true,
+		'sanitize_callback' => 'sanitize_textarea_field', 'auth_callback' => $auth,
+	) );
 	register_post_meta( 'ws_event', 'host_chapter', array(
 		'type' => 'integer', 'single' => true, 'default' => 0, 'show_in_rest' => true,
 		'sanitize_callback' => function ( $id ) {
@@ -52,6 +61,12 @@ add_action( 'init', function () {
 		'auth_callback' => $auth,
 	) );
 } );
+
+/** A 24-hour H:i time, or ''. */
+function ws_sanitize_time( $value ) {
+	$value = trim( (string) $value );
+	return preg_match( '/^([01]\d|2[0-3]):[0-5]\d$/', $value ) ? $value : '';
+}
 
 /** A Y-m-d date, or ''. */
 function ws_sanitize_date( $value ) {
@@ -95,11 +110,28 @@ function ws_event_date_range( $event_id ) {
 	return date_i18n( 'j F Y', $s ) . ' – ' . date_i18n( 'j F Y', $e );
 }
 
+/** Venue and city as plain text (a venue given as a web address is left out). */
 function ws_event_place( $event_id ) {
+	$venue = get_post_meta( $event_id, 'venue', true );
 	return implode( ', ', array_filter( array(
-		get_post_meta( $event_id, 'venue', true ),
+		wp_http_validate_url( $venue ) ? '' : $venue,
 		get_post_meta( $event_id, 'city', true ),
 	) ) );
+}
+
+/** "Hosted by" line for the host chapter, or "Organised by" when the organiser is not a listed chapter. */
+function ws_event_organiser( $event_id ) {
+	$name = get_post_meta( $event_id, 'organiser', true );
+	return $name ? '<p class="ws-event-organiser">' . esc_html__( 'Organised by', 'ws-chapters' ) . ' <strong>' . esc_html( $name ) . '</strong></p>' : '';
+}
+
+/** Contact text with email addresses, web addresses and phone numbers made clickable. */
+function ws_event_contact_html( $text ) {
+	$html = make_clickable( esc_html( $text ) );
+	$html = preg_replace_callback( '/(?<![\w\/=])\+\d[\d\s]{6,}\d/', function ( $m ) {
+		return '<a href="tel:' . preg_replace( '/\s+/', '', $m[0] ) . '">' . $m[0] . '</a>';
+	}, $html );
+	return nl2br( str_replace( '; ', "\n", $html ) );
 }
 
 /** "Hosted by" line: the host chapter's official logo (or pending placeholder), name and flag. */
@@ -113,7 +145,7 @@ function ws_event_host( $event_id ) {
 		esc_url( get_permalink( $host ) ),
 		ws_chapter_logo( $host ),
 		esc_html__( 'Hosted by', 'ws-chapters' ),
-		esc_html( get_the_title( $host ) ),
+		esc_html( ws_display_name( get_the_title( $host ) ) ),
 		ws_flag( ws_chapter_country( $host ) )
 	);
 }
@@ -123,7 +155,8 @@ function ws_event_card( $event_id ) {
 	$date  = $start
 		? sprintf( '<time class="ws-event-card__date" datetime="%s"><span>%s</span>%s</time>', esc_attr( $start ), esc_html( date_i18n( 'j', strtotime( $start ) ) ), esc_html( date_i18n( 'M Y', strtotime( $start ) ) ) )
 		: '<span class="ws-event-card__date"><span>—</span></span>';
-	$place = ws_event_place( $event_id );
+	$place = get_post_meta( $event_id, 'city', true ) ?: ws_event_place( $event_id );
+	$host  = ws_event_host( $event_id );
 	return sprintf(
 		'<article class="ws-event-card">%1$s<div class="ws-event-card__body"><h3 class="ws-event-card__title"><a href="%2$s">%3$s</a></h3><p class="ws-event-card__meta">%4$s%5$s</p>%6$s</div></article>',
 		$date,
@@ -131,7 +164,7 @@ function ws_event_card( $event_id ) {
 		esc_html( get_the_title( $event_id ) ),
 		esc_html( ws_event_date_range( $event_id ) ),
 		$place ? ' <span aria-hidden="true">·</span> ' . esc_html( $place ) : '',
-		ws_event_host( $event_id )
+		$host ?: ws_event_organiser( $event_id )
 	);
 }
 
@@ -156,9 +189,15 @@ function ws_get_events( $past = false, $limit = -1 ) {
 
 add_action( 'init', function () {
 	add_shortcode( 'ws_events', function ( $atts ) {
-		$atts   = shortcode_atts( array( 'limit' => -1, 'past' => 0 ), (array) $atts );
+		$atts   = shortcode_atts( array( 'limit' => -1, 'past' => 0, 'recent' => 0 ), (array) $atts );
 		$past   = (bool) $atts['past'];
 		$events = ws_get_events( $past, (int) $atts['limit'] );
+		if ( ! $events && ! $past && $atts['recent'] ) {
+			$recent = ws_get_events( true, (int) $atts['limit'] );
+			if ( $recent ) {
+				return '<p class="ws-muted ws-events-note">' . esc_html__( 'No upcoming events announced yet. Recent events:', 'ws-chapters' ) . '</p><div class="ws-event-list">' . implode( '', array_map( 'ws_event_card', wp_list_pluck( $recent, 'ID' ) ) ) . '</div>';
+			}
+		}
 		if ( ! $events ) {
 			return '<p class="ws-chapter-empty">' . ( $past ? esc_html__( 'No past events yet.', 'ws-chapters' ) : esc_html__( 'No upcoming events announced yet.', 'ws-chapters' ) ) . '</p>';
 		}
@@ -174,9 +213,17 @@ add_action( 'init', function () {
 		if ( ! $id || 'ws_event' !== get_post_type( $id ) ) {
 			return '';
 		}
+		$time  = get_post_meta( $id, 'start_time', true );
+		$venue = get_post_meta( $id, 'venue', true );
+		$where = esc_html( ws_event_place( $id ) );
+		if ( wp_http_validate_url( $venue ) ) {
+			$where .= ( $where ? '<br>' : '' ) . '<a href="' . esc_url( $venue ) . '" target="_blank" rel="noopener">' . esc_html( preg_replace( '#^https?://(www\.)?#', '', untrailingslashit( $venue ) ) ) . '</a>';
+		}
 		$rows = array_filter( array(
-			__( 'When', 'ws-chapters' )  => esc_html( ws_event_date_range( $id ) ),
-			__( 'Where', 'ws-chapters' ) => esc_html( ws_event_place( $id ) ),
+			__( 'When', 'ws-chapters' )         => esc_html( ws_event_date_range( $id ) ) . ( $time ? ' · ' . esc_html( sprintf( __( 'from %s', 'ws-chapters' ), $time ) ) : '' ),
+			__( 'Where', 'ws-chapters' )        => $where,
+			__( 'Organised by', 'ws-chapters' ) => esc_html( get_post_meta( $id, 'organiser', true ) ),
+			__( 'Contact', 'ws-chapters' )      => ws_event_contact_html( get_post_meta( $id, 'contact', true ) ),
 		) );
 		$out = '<dl class="ws-event-details">';
 		foreach ( $rows as $label => $value ) {
@@ -199,9 +246,12 @@ add_action( 'add_meta_boxes_ws_event', function () {
 		echo '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">';
 		printf( '<p><label for="ws_start_date"><strong>%s</strong></label><br><input type="date" id="ws_start_date" name="ws_start_date" value="%s" class="widefat"></p>', esc_html__( 'Start date', 'ws-chapters' ), $v( 'start_date' ) );
 		printf( '<p><label for="ws_end_date"><strong>%s</strong></label><br><input type="date" id="ws_end_date" name="ws_end_date" value="%s" class="widefat"></p>', esc_html__( 'End date (optional)', 'ws-chapters' ), $v( 'end_date' ) );
-		printf( '<p><label for="ws_venue"><strong>%s</strong></label><br><input type="text" id="ws_venue" name="ws_venue" value="%s" class="widefat"></p>', esc_html__( 'Venue', 'ws-chapters' ), $v( 'venue' ) );
+		printf( '<p><label for="ws_start_time"><strong>%s</strong></label><br><input type="time" id="ws_start_time" name="ws_start_time" value="%s" class="widefat"></p>', esc_html__( 'Start time (optional)', 'ws-chapters' ), $v( 'start_time' ) );
+		printf( '<p><label for="ws_organiser"><strong>%s</strong></label><br><input type="text" id="ws_organiser" name="ws_organiser" value="%s" class="widefat"></p>', esc_html__( 'Organising chapter / club', 'ws-chapters' ), $v( 'organiser' ) );
+		printf( '<p><label for="ws_venue"><strong>%s</strong></label><br><input type="text" id="ws_venue" name="ws_venue" value="%s" class="widefat"></p>', esc_html__( 'Venue (address or website)', 'ws-chapters' ), $v( 'venue' ) );
 		printf( '<p><label for="ws_city"><strong>%s</strong></label><br><input type="text" id="ws_city" name="ws_city" value="%s" class="widefat"></p>', esc_html__( 'City, country', 'ws-chapters' ), $v( 'city' ) );
 		echo '</div>';
+		printf( '<p><label for="ws_contact"><strong>%s</strong></label><br><textarea id="ws_contact" name="ws_contact" rows="3" class="widefat">%s</textarea></p>', esc_html__( 'Contact details', 'ws-chapters' ), esc_textarea( get_post_meta( $post->ID, 'contact', true ) ) );
 
 		$host     = (int) get_post_meta( $post->ID, 'host_chapter', true );
 		$chapters = get_posts( array( 'post_type' => 'ws_chapter', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ) );
@@ -220,7 +270,7 @@ add_action( 'save_post_ws_event', function ( $post_id ) {
 	if ( ! isset( $_POST['ws_event_details_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['ws_event_details_nonce'] ), 'ws_event_details' ) ) {
 		return;
 	}
-	foreach ( array( 'start_date', 'end_date', 'venue', 'city', 'host_chapter' ) as $key ) {
+	foreach ( array( 'start_date', 'end_date', 'start_time', 'venue', 'city', 'organiser', 'contact', 'host_chapter' ) as $key ) {
 		if ( isset( $_POST[ 'ws_' . $key ] ) ) {
 			update_post_meta( $post_id, $key, wp_unslash( $_POST[ 'ws_' . $key ] ) ); // Sanitized by register_post_meta.
 		}
