@@ -388,7 +388,7 @@ function ws_event_submit_form() {
 	$out .= ws_field( 'ws_description', __( 'Description', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_description' ), 'help' => __( 'Programme, route, costs, how to register.', 'ws-chapters' ) ) );
 	$out .= ws_field( 'ws_contact', __( 'Contact details for riders', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_contact' ), 'help' => __( 'Shown on the event page: who to contact, email and/or phone.', 'ws-chapters' ), 'attrs' => 'rows="3"' ) );
 	$out .= '<p class="ws-field ws-field--file"><label for="ws_event_images">' . esc_html__( 'Poster and photos', 'ws-chapters' ) . '</label>'
-		. '<input type="file" id="ws_event_images" name="ws_event_images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple aria-describedby="ws_event_images-help">'
+		. '<input type="file" id="ws_event_images" name="ws_event_images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple data-ws-max="' . WS_EVENT_MAX_IMAGES . '" data-ws-max-mb="' . WS_EVENT_MAX_IMAGE_MB . '" data-ws-main aria-describedby="ws_event_images-help">'
 		/* translators: 1: number of images, 2: size in MB */
 		. '<span class="ws-help" id="ws_event_images-help">' . esc_html( sprintf( __( 'Optional. Up to %1$d images (JPG, PNG, WebP or GIF), %2$d MB each. The first image is shown as the event poster.', 'ws-chapters' ), WS_EVENT_MAX_IMAGES, WS_EVENT_MAX_IMAGE_MB ) ) . '</span></p>';
 	$out .= '</fieldset>';

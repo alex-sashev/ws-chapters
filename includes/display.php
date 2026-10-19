@@ -45,6 +45,28 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_register_script( 'topojson-client', WS_TOPOJSON_URL, array(), null, true );
 	wp_register_script( 'ws-chapter-map', $url . 'assets/ws-map.js', array( 'leaflet', 'topojson-client' ), filemtime( $dir . 'assets/ws-map.js' ), true );
 	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI, 'pin' => $url . 'assets/ws-pin.png' ) );
+
+	// Photo picker for the "several photos" fields (small; only acts where such a field is on the page).
+	wp_enqueue_script( 'ws-images', $url . 'assets/ws-images.js', array(), filemtime( $dir . 'assets/ws-images.js' ), true );
+	wp_localize_script( 'ws-images', 'wsImagesText', array(
+		'choose'   => __( '+ Choose photos', 'ws-chapters' ),
+		'more'     => __( '+ Add more photos', 'ws-chapters' ),
+		'drag'     => __( 'or drag them here', 'ws-chapters' ),
+		/* translators: 1: photos chosen, 2: most allowed */
+		'count'    => __( '%1$s of %2$s', 'ws-chapters' ),
+		'main'     => __( 'Main image', 'ws-chapters' ),
+		'makeMain' => __( 'Make main', 'ws-chapters' ),
+		/* translators: %s: file name */
+		'remove'   => __( 'Remove %s', 'ws-chapters' ),
+		'isFull'   => __( 'Photo limit reached', 'ws-chapters' ),
+		'noRoom'   => __( 'No room for more photos: remove one first', 'ws-chapters' ),
+		/* translators: %s: most allowed */
+		'full'     => __( 'You can add up to %s photos here; the rest were left out.', 'ws-chapters' ),
+		/* translators: %s: file name */
+		'notImage' => __( '%s is not a JPG, PNG, WebP or GIF image and was left out.', 'ws-chapters' ),
+		/* translators: 1: file name, 2: size in MB */
+		'tooBig'   => __( '%1$s is larger than %2$s MB and was left out.', 'ws-chapters' ),
+	) );
 } );
 
 /** Subresource integrity for the pinned Leaflet files. */

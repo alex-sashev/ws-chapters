@@ -162,14 +162,15 @@ function ws_cx_save_images( $type, $id ) {
 
 /** The image list with position boxes and Remove tick boxes, plus the box for new images. */
 function ws_cx_image_fields( $type, $id ) {
-	$out = '<fieldset class="ws-cx-images"><legend>' . esc_html__( 'Images (up to 5: the first is the main image, the rest are the gallery)', 'ws-chapters' ) . '</legend><ul class="ws-cx-images__list">';
-	foreach ( ws_cx_images( $type, $id ) as $i => $img ) {
+	$have = ws_cx_images( $type, $id );
+	$out  = '<fieldset class="ws-cx-images"><legend>' . esc_html__( 'Images (up to 5: the first is the main image, the rest are the gallery)', 'ws-chapters' ) . '</legend><ul class="ws-cx-images__list">';
+	foreach ( $have as $i => $img ) {
 		$out .= '<li class="ws-cx-img"><figure>' . wp_get_attachment_image( $img, 'thumbnail' ) . '</figure>'
 			. '<label>' . esc_html__( 'Position', 'ws-chapters' ) . ' <input type="number" min="1" max="' . WS_CX_MAX_IMAGES . '" name="ws_img_order[' . (int) $img . ']" value="' . ( $i + 1 ) . '" class="ws-mm__input ws-cx-img__pos"></label>'
 			. '<label class="ws-cx-img__remove"><input type="checkbox" name="ws_img_remove[]" value="' . (int) $img . '"> ' . esc_html__( 'Remove', 'ws-chapters' ) . '</label></li>';
 	}
 	$out .= '</ul><label class="ws-cx-images__add">' . esc_html__( 'Add images', 'ws-chapters' )
-		. '<input type="file" name="ws_cx_new[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label></fieldset>';
+		. '<input type="file" name="ws_cx_new[]" multiple data-ws-max="' . max( 0, WS_CX_MAX_IMAGES - count( $have ) ) . '" data-ws-max-mb="8"' . ( $have ? '' : ' data-ws-main' ) . ' accept="image/jpeg,image/png,image/webp,image/gif"></label></fieldset>';
 	return $out;
 }
 
