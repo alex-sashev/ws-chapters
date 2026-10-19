@@ -148,8 +148,9 @@
 .ws-field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 0 1rem; }
 .ws-help { font-size: .85rem; color: var(--ws-muted, #666); }
 .ws-req { color: #a3222b; }
-.ws-field--check label { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
-.ws-field--check input { width: auto; margin-top: .3rem; }
+/* Consent tick boxes: the sentence flows as normal text (links and the asterisk stay with their words); the box hangs to the left. */
+.ws-field--check label { display: block; position: relative; padding-left: 1.7rem; font-weight: 400; line-height: 1.5; }
+.ws-field--check input { position: absolute; left: 0; top: .3rem; width: 1.05rem; height: 1.05rem; margin: 0; }
 .ws-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .ws-form-notice { max-width: 760px; margin: 0 0 1.5rem; padding: 1rem 1.25rem; border-radius: var(--ws-radius, 4px); border-left: 4px solid; }
 .ws-form-notice--success { background: #eef6ea; border-color: #3c7a2b; color: #1f3d16; }
