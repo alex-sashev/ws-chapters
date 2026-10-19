@@ -349,12 +349,15 @@ function ws_country_page() {
 		}
 	}
 	$emblem = '<span class="ws-emblem__inner">' . $emblem . '</span>';
-	$hero = ws_page_hero(
-		(int) $get( 'hero_image' ),
-		$emblem_link
+	// The pencil sits beside the circle (not inside the link), so it can be used whether or not the circle links.
+	$emblem_block = ( $emblem_link
 			/* translators: %s: chapter name */
 			? '<a class="ws-emblem" href="' . esc_url( $emblem_link ) . '" title="' . esc_attr( sprintf( __( 'Visit %s', 'ws-chapters' ), ws_display_name( get_the_title( $c ) ) ) ) . '">' . $emblem . '</a>'
-			: '<div class="ws-emblem">' . $emblem . '</div>',
+			: '<div class="ws-emblem">' . $emblem . '</div>' )
+		. ws_fe_image_box( 'term', $term->term_id, 'national_logo' );
+	$hero = ws_page_hero(
+		(int) $get( 'hero_image' ),
+		'<div class="ws-emblem-wrap">' . $emblem_block . '</div>',
 		ws_display_name( $term->name ),
 		'<p class="ws-page-hero__tagline">' . esc_html__( 'Brotherhood · Motorcycling · Service', 'ws-chapters' ) . '</p>'
 	);

@@ -199,7 +199,7 @@
 .ws-contact-list__text .ws-icon { flex: 0 0 18px; margin-top: .15em; color: var(--ws-gold-dark, #8a6d2c); }
 
 /* Editing from the site (includes/front-edit.php): pencils, the small forms and the notice. */
-.ws-page-hero, .ws-identity__item, .ws-identity__contact, .ws-overview__contact, .ws-emblem, .ws-fe-toolbar { position: relative; }
+.ws-page-hero, .ws-identity__item, .ws-identity__contact, .ws-overview__contact, .ws-fe-toolbar { position: relative; }
 .ws-fedit { position: absolute; right: 10px; bottom: 10px; z-index: 30; font-size: .9rem; }
 .ws-fedit--button { position: relative; right: auto; bottom: auto; display: inline-block; margin: 0 0 .75rem; }
 .ws-fedit summary { list-style: none; }
@@ -218,3 +218,6 @@
 .ws-fe-page-edit { text-align: right; margin: 1.5rem 0 0; }
 .ws-fe-notice { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 100; max-width: min(520px, 90vw); padding: .8rem 1.1rem; border-radius: 4px; background: #14120c; color: #f4efe2; border-left: 4px solid var(--ws-gold, #C9A24A); box-shadow: 0 10px 30px rgba(0, 0, 0, .4); }
 .ws-fe-notice--error { border-left-color: #a3222b; }
+.ws-emblem-wrap { position: relative; display: inline-block; flex: none; line-height: 0; }
+.ws-emblem-wrap .ws-fedit { right: 2px; bottom: 2px; }
+.ws-emblem-wrap .ws-fedit[open] .ws-fedit__form { line-height: 1.5; }
