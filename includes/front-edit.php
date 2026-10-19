@@ -358,14 +358,7 @@ add_action( 'init', function () {
 	update_option( 'ws_about_migrated', gmdate( 'c' ), false );
 }, 30 );
 
-/** Under the About page text: an edit link for people who may edit the page (Super Admins). */
-add_filter( 'the_content', function ( $content ) {
-	$id = get_the_ID();
-	if ( ! $id || ! is_main_query() || ! in_the_loop() || ! is_page( 'about' ) || ! current_user_can( 'edit_post', $id ) ) {
-		return $content;
-	}
-	return $content . '<p class="ws-fe-page-edit"><a class="ws-fedit__btn ws-fedit__btn--link" href="' . esc_url( get_edit_post_link( $id ) ) . '" title="' . esc_attr__( 'Edit this page', 'ws-chapters' ) . '" aria-label="' . esc_attr__( 'Edit this page', 'ws-chapters' ) . '">' . ws_fe_pencil() . ' <span>' . esc_html__( 'Edit this page', 'ws-chapters' ) . '</span></a></p>';
-} );
+
 
 /* -------------------------------------------------------------------------
  * Chapter page: About text, Submit an event, Submit news or activity
