@@ -23,7 +23,10 @@ function ws_purge_visible_cache() {
 		return;
 	}
 	$done = true;
-	do_action( 'litespeed_purge_all' );
+	// Clear the page cache when the request ends, so the save itself is not slowed down.
+	add_action( 'shutdown', function () {
+		do_action( 'litespeed_purge_all' );
+	}, 1 );
 }
 
 // Theme changes: the logo and site icon from the Customizer, and the theme's own settings.

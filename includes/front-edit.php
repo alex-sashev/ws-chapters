@@ -292,12 +292,21 @@ add_action( 'template_redirect', function () {
 	exit;
 }, 1 );
 
+/* A page showing a saved message must not be kept in the page cache, or the message comes back on refresh.
+   Headers have to be set before the page is output, so this runs at the start of the request. */
+add_action( 'template_redirect', function () {
+	if ( empty( $_GET['ws_fe'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	nocache_headers();
+	do_action( 'litespeed_control_set_nocache', 'saved message' ); // LiteSpeed: do not cache this page.
+}, 0 );
+
 /** A short notice after saving or failing (one-off, from the transient above). */
 add_action( 'wp_footer', function () {
 	if ( empty( $_GET['ws_fe'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
-	nocache_headers(); // The message must not be kept in the page cache and shown on other pages.
 	$msg = get_transient( 'ws_fe_msg_' . get_current_user_id() );
 	delete_transient( 'ws_fe_msg_' . get_current_user_id() );
 	if ( ! $msg ) {
