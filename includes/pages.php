@@ -43,19 +43,30 @@ function ws_chapter_count( $term ) {
 
 /** Countries that have chapters: name, flag, shape id, chapter count, national logo, marker position. */
 function ws_country_map_data() {
-	$out = array();
+	$out           = array();
+	$capital_taken = array();
 	foreach ( get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => true, 'orderby' => 'name' ) ) as $term ) {
-		$lat = array();
-		$lng = array();
-		foreach ( ws_get_chapters( $term->slug ) as $c ) {
-			$pos = ws_chapter_position( $c->ID );
-			if ( $pos ) {
-				$lat[] = $pos[0];
-				$lng[] = $pos[1];
-			}
-		}
 		$logo   = (int) get_term_meta( $term->term_id, 'national_logo', true );
 		$code   = ws_country_code( $term );
+		// The country's pin stands on its capital: it represents the country and does not move when chapters are
+		// added. Its chapters each have their own pin on the country's page. Without a known capital: the average
+		// of its chapters' positions.
+		$lat = array();
+		$lng = array();
+		$cap = isset( $capital_taken[ $code ] ) ? null : ws_capital_coords( $code ); // Two countries, one flag (Italy, Italy Military Traveler): the second uses its chapters.
+		if ( $cap ) {
+			$capital_taken[ $code ] = true;
+			$lat[] = $cap[0];
+			$lng[] = $cap[1];
+		} else {
+			foreach ( ws_get_chapters( $term->slug ) as $c ) {
+				$pos = ws_chapter_position( $c->ID );
+				if ( $pos ) {
+					$lat[] = $pos[0];
+					$lng[] = $pos[1];
+				}
+			}
+		}
 		$count  = ws_chapter_count( $term );
 		if ( ! $count ) {
 			continue;
