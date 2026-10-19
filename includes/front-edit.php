@@ -421,7 +421,7 @@ function ws_fe_news_form( $chapter_id ) {
 /** A public button that opens a form (not tied to a chapter edit permission). */
 function ws_fe_form_box( $inner, $label, $note ) {
 	return '<details class="ws-fedit ws-fedit--button ws-fe-news"><summary class="ws-fedit__btn" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</summary>'
-		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
+		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><button type="button" class="ws-fedit__close" aria-label="' . esc_attr__( 'Close', 'ws-chapters' ) . '" onclick="this.closest(\'details\').removeAttribute(\'open\')">&times;</button><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
 		. '<p class="ws-help">' . esc_html( $note ) . '</p>' . $inner
 		. '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Send', 'ws-chapters' ) . '</button></p></form></details>';
 }
