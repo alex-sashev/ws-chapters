@@ -489,33 +489,25 @@ add_filter( 'render_block_core/navigation-link', function ( $html, $block ) {
 	return false !== strpos( $class, 'ws-mm-admin-only' ) && ! ws_mm_can_manage() ? '' : $html;
 }, 11, 2 );
 
+/* One-time cleanup: the header menu keeps only "Members". The two member sub-pages are reached from the sub-row on the Members page, so their header links are removed (the pages stay). Never re-added. */
 add_action( 'init', function () {
-	if ( get_option( 'ws_mm_menu_done' ) ) {
+	if ( get_option( 'ws_mm_menu_cleared' ) ) {
 		return;
 	}
 	$nav = get_posts( array( 'post_type' => 'wp_navigation', 'post_status' => 'publish', 'numberposts' => 1, 'title' => 'Main menu' ) );
-	$dir = ws_mm_page( 'member-directory' );
-	$man = ws_mm_page( 'member-management' );
-	if ( ! $nav || ! $dir || ! $man ) {
+	if ( ! $nav ) {
 		return; // Try again on a later page load.
 	}
-	update_option( 'ws_mm_menu_done', gmdate( 'c' ), false );
-	$links = '<!-- wp:navigation-link ' . wp_json_encode( array( 'label' => __( 'Member directory', 'ws-chapters' ), 'url' => get_permalink( $dir ), 'kind' => 'post-type', 'type' => 'page', 'id' => $dir->ID, 'isTopLevelLink' => true, 'className' => 'ws-members-only' ) ) . ' /-->'
-		. "\n<!-- wp:navigation-link " . wp_json_encode( array( 'label' => __( 'Member management', 'ws-chapters' ), 'url' => get_permalink( $man ), 'kind' => 'post-type', 'type' => 'page', 'id' => $man->ID, 'isTopLevelLink' => true, 'className' => 'ws-members-only ws-mm-admin-only' ) ) . ' /-->';
-	$content = $nav[0]->post_content;
-	if ( false !== strpos( $content, 'ws-mm-admin-only' ) || false !== strpos( $content, 'Member directory' ) ) {
-		return;
-	}
-	$lines = explode( "\n", $content );
-	$out   = array();
+	update_option( 'ws_mm_menu_cleared', gmdate( 'c' ), false );
+	$lines = explode( "\n", $nav[0]->post_content );
+	$keep  = array();
 	foreach ( $lines as $line ) {
-		$out[] = $line;
-		if ( false !== strpos( $line, 'Members' ) && false !== strpos( $line, 'wp:navigation-link' ) ) {
-			$out[] = $links;
+		if ( false !== strpos( $line, 'wp:navigation-link' ) && preg_match( '/"label":\s*"Member (directory|management)"/', $line ) ) {
+			continue;
 		}
+		$keep[] = $line;
 	}
-	if ( count( $out ) === count( $lines ) ) {
-		$out[] = $links; // No Members link found: add the entries at the end.
+	if ( count( $keep ) !== count( $lines ) ) {
+		wp_update_post( array( 'ID' => $nav[0]->ID, 'post_content' => implode( "\n", $keep ) ) );
 	}
-	wp_update_post( array( 'ID' => $nav[0]->ID, 'post_content' => implode( "\n", $out ) ) );
 }, 46 );
