@@ -304,8 +304,19 @@ add_shortcode( 'ws_member_directory', function () {
 			continue;
 		}
 		++$count;
+		// Click the name: a one-page profile with a larger photo and a single Close button.
+		$profile = '<dialog class="ws-mm__profile" aria-labelledby="ws-mm-p' . $u->ID . '"><div class="ws-mm__profile-photo">' . ws_mm_avatar_html( $u->ID, $name ) . '</div>'
+			. '<h3 id="ws-mm-p' . $u->ID . '" class="ws-mm__profile-name">' . esc_html( $name ) . '</h3>'
+			. '<dl class="ws-mm__profile-list">'
+			. '<dt>' . esc_html__( 'Road name', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( $road ) . '</dd>'
+			. '<dt>' . esc_html__( 'Title', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( $t ) . '</dd>'
+			. '<dt>' . esc_html__( 'Country', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( ws_mm_country_names( $u->ID ) ) . '</dd>'
+			. '<dt>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( ws_mm_chapter_names( $u->ID ) ) . '</dd>'
+			. '<dt>' . esc_html__( 'Email', 'ws-chapters' ) . '</dt><dd><a href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a></dd>'
+			. '<dt>' . esc_html__( 'Phone', 'ws-chapters' ) . '</dt><dd>' . ( $phone ? '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>' : ws_mm_cell( '' ) ) . '</dd>'
+			. '</dl><form method="dialog" class="ws-mm__profile-actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Close', 'ws-chapters' ) . '</button></form></dialog>';
 		$rows .= '<tr>'
-			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<strong>' . esc_html( $name ) . '</strong></div></td>'
+			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<button type="button" class="ws-mm__name-btn" aria-haspopup="dialog" onclick="this.parentNode.querySelector(\'dialog\').showModal()"><strong>' . esc_html( $name ) . '</strong></button>' . $profile . '</div></td>'
 			. '<td data-label="' . esc_attr__( 'Road name', 'ws-chapters' ) . '">' . ( $road ? '<span class="ws-mm__road">' . esc_html( $road ) . '</span>' : ws_mm_cell( '' ) ) . '</td>'
 			. '<td data-label="' . esc_attr__( 'Title', 'ws-chapters' ) . '">' . ws_mm_cell( $t ) . '</td>'
 			. '<td data-label="' . esc_attr__( 'Country', 'ws-chapters' ) . '">' . ws_mm_cell( ws_mm_country_names( $u->ID ) ) . '</td>'

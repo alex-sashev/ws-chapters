@@ -120,25 +120,44 @@ function ws_add_link_form() {
 	return '<div class="ws-fe-create-chapter ws-fe-add-link">' . ws_fe_form_box( $inner, __( '+ Add a link', 'ws-chapters' ), __( 'The link is shown on this page straight away.', 'ws-chapters' ), __( 'Post the link', 'ws-chapters' ) ) . '</div>';
 }
 
-/* Save "+ Add a link" (Super Admins and Country Admins only, checked again here). */
+/** "Edit" on a card: the same three fields, filled in, saved straight away. Super Admins and Country Admins only. */
+function ws_link_edit_form( $link ) {
+	if ( ! ws_can_add_link() ) {
+		return '';
+	}
+	$inner = ws_form_guard_fields( 'useful_link' )
+		. '<input type="hidden" name="ws_link_id" value="' . (int) $link->ID . '">'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Name', 'ws-chapters' ) . '<input type="text" name="ws_link_title" maxlength="120" value="' . esc_attr( $link->post_title ) . '" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Web address', 'ws-chapters' ) . '<input type="url" name="ws_link_url" placeholder="https://" value="' . esc_attr( get_post_meta( $link->ID, '_ws_url', true ) ) . '" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Description (what visitors find there)', 'ws-chapters' ) . '<textarea name="ws_link_desc" rows="4" maxlength="400">' . esc_textarea( get_post_meta( $link->ID, '_ws_desc', true ) ) . '</textarea></label>';
+	return '<div class="ws-link-edit">' . ws_fe_form_box( $inner, __( 'Edit', 'ws-chapters' ), __( 'Change the name, web address or description. The change shows straight away.', 'ws-chapters' ), __( 'Save changes', 'ws-chapters' ) ) . '</div>';
+}
+
+/* Save "+ Add a link" and "Edit" (Super Admins and Country Admins only, checked again here). */
 add_action( 'template_redirect', function () {
 	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'useful_link' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
-	$guard = ws_form_guard_check( 'useful_link' );
-	$title = ws_post_field( 'ws_link_title' );
-	$url   = esc_url_raw( ws_post_field( 'ws_link_url' ), array( 'http', 'https' ) );
-	$error = null;
+	$guard   = ws_form_guard_check( 'useful_link' );
+	$title   = ws_post_field( 'ws_link_title' );
+	$url     = esc_url_raw( ws_post_field( 'ws_link_url' ), array( 'http', 'https' ) );
+	$edit_id = absint( $_POST['ws_link_id'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+	$edit    = $edit_id && 'ws_link' === get_post_type( $edit_id );
+	$error   = null;
 	if ( ! ws_can_add_link() ) {
-		$error = __( 'Only Super Admins and Country Admins can add links.', 'ws-chapters' );
+		$error = __( 'Only Super Admins and Country Admins can add or edit links.', 'ws-chapters' );
 	} elseif ( true !== $guard ) {
 		$error = $guard;
+	} elseif ( $edit_id && ! $edit ) {
+		$error = __( 'That link no longer exists.', 'ws-chapters' );
 	} elseif ( '' === $title || ! wp_http_validate_url( $url ) ) {
 		$error = __( 'Please add a name and a web address starting with https://', 'ws-chapters' );
 	}
 	$ok = null === $error;
 	if ( $ok ) {
-		$id = wp_insert_post( array( 'post_type' => 'ws_link', 'post_status' => 'publish', 'post_title' => $title, 'post_author' => get_current_user_id() ), true );
+		$id = $edit
+			? wp_update_post( array( 'ID' => $edit_id, 'post_title' => $title ), true )
+			: wp_insert_post( array( 'post_type' => 'ws_link', 'post_status' => 'publish', 'post_title' => $title, 'post_author' => get_current_user_id() ), true );
 		if ( is_wp_error( $id ) ) {
 			$ok    = false;
 			$error = __( 'Sorry, something went wrong. Please try again later.', 'ws-chapters' );
@@ -149,7 +168,7 @@ add_action( 'template_redirect', function () {
 		}
 	}
 	/* translators: %s: link name */
-	$msg = $ok ? sprintf( __( 'The link "%s" is posted.', 'ws-chapters' ), $title ) : $error;
+	$msg = $ok ? sprintf( $edit ? __( 'The link "%s" is saved.', 'ws-chapters' ) : __( 'The link "%s" is posted.', 'ws-chapters' ), $title ) : $error;
 	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), MINUTE_IN_SECONDS );
 	$back = get_queried_object_id() ? get_permalink( get_queried_object_id() ) : home_url( '/' );
 	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', $back ) ) );
@@ -174,7 +193,7 @@ function ws_useful_links() {
 		if ( ! $url ) {
 			continue;
 		}
-		$out .= sprintf(
+		$card = sprintf(
 			'<article class="ws-news-card ws-link-card"><a class="ws-link-card__url" href="%1$s" target="_blank" rel="noopener">%2$s</a><h3><a href="%1$s" target="_blank" rel="noopener">%3$s</a></h3><p>%4$s</p><a class="ws-link-arrow" href="%1$s" target="_blank" rel="noopener">%5$s <span class="screen-reader-text">%6$s</span></a></article>',
 			esc_url( $url ),
 			esc_html( ws_link_display( $url ) ),
@@ -183,6 +202,7 @@ function ws_useful_links() {
 			esc_html__( 'Visit website →', 'ws-chapters' ),
 			esc_html__( '(opens in a new tab)', 'ws-chapters' )
 		);
+		$out .= str_replace( '</article>', ws_link_edit_form( $l ) . '</article>', $card );
 	}
 	return $out . '</div>';
 }

@@ -308,6 +308,17 @@ select.ws-mm__input { appearance: none; -webkit-appearance: none; padding-right:
 }
 .ws-mm__road { font-style: italic; color: var(--ws-gold-dark, #8a6d2c); font-weight: 600; }
 .ws-mm__person .ws-mm__road { font-size: .9rem; }
+.ws-mm__name-btn { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; text-decoration: underline; text-decoration-color: var(--ws-gold-dark, #8a6d2c); }
+.ws-mm__name-btn:focus-visible { outline: 2px solid var(--ws-gold, #C9A24A); outline-offset: 2px; }
+.ws-mm__profile { width: min(460px, 92vw); margin: auto; padding: 1.5rem 1.6rem; border: 1px solid var(--ws-gold, #C9A24A); border-radius: 6px; background: #fff; color: #111; text-align: left; box-shadow: 0 12px 30px rgba(0, 0, 0, .35); }
+.ws-mm__profile::backdrop { background: rgba(0, 0, 0, .6); }
+.ws-mm__profile-photo { text-align: center; }
+.ws-mm__profile-photo .ws-mm__avatar { width: 160px; height: 160px; font-size: 3rem; }
+.ws-mm__profile-name { margin: .9rem 0 .6rem; text-align: center; font-size: 1.4rem; }
+.ws-mm__profile-list { display: grid; grid-template-columns: max-content 1fr; gap: .45rem 1rem; margin: 0; }
+.ws-mm__profile-list dt { font-weight: 700; color: var(--ws-gold-dark, #8a6d2c); }
+.ws-mm__profile-list dd { margin: 0; overflow-wrap: anywhere; }
+.ws-mm__profile-actions { margin-top: 1.2rem; text-align: right; }
 .ws-mm__missing { color: #a3222b; font-size: .85rem; font-weight: 600; }
 .ws-mm__table--manage { min-width: 1000px; }
 .ws-mm__table--manage [data-ws-mm-chapter] { min-width: 210px; }
@@ -326,7 +337,9 @@ select.ws-mm__input { appearance: none; -webkit-appearance: none; padding-right:
 /* Library in the member-page look. */
 .ws-library-bar { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto auto; justify-content: initial; }
 .ws-library-bar__upload { justify-content: flex-end; }
-.ws-mm__table--library { min-width: 960px; }
+.ws-mm__table--library { min-width: 1080px; }
+.ws-mm__table--library th:nth-child(3), .ws-mm__table--library td:nth-child(3) { min-width: 10rem; }
+.ws-mm__table--library th:nth-child(4), .ws-mm__table--library td:nth-child(4) { min-width: 12rem; }
 .ws-doc__when { white-space: nowrap; font-weight: 600; color: var(--ws-muted, #6b655c); }
 .ws-doc__cell { display: flex; gap: .8rem; align-items: flex-start; }
 .ws-doc__cell .ws-doc__icon { flex: none; width: 46px; height: 46px; font-size: .7rem; }
@@ -406,3 +419,8 @@ a.ws-doc__title:hover { text-decoration: underline; }
 /* Library: Edit and Download line up on the same right edge. */
 .ws-mm__table--library .ws-mm__row-actions { align-items: flex-end; padding-right: .6rem; }
 .ws-mm__table--library .ws-doc-icon-btn { margin-left: auto; }
+
+/* Edit pop-up on a useful link card: top right, like the news pencil; the form opens as a centred pop-up. */
+.ws-link-card .ws-link-edit { position: absolute; top: .6rem; right: .6rem; z-index: 2; }
+.ws-link-card .ws-link-edit:has(details[open]) { z-index: 1000; }
+.ws-link-card .ws-link-edit .ws-fedit--button[open] .ws-fedit__form { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(560px, 92vw); max-height: 85vh; }
