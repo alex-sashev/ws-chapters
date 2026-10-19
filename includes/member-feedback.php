@@ -24,7 +24,12 @@ add_action( 'template_redirect', function () {
 	$guard = ws_form_guard_check( 'member_feedback' );
 	$subject  = ws_post_field( 'ws_fb_subject' );
 	$comments = ws_post_field( 'ws_fb_comments', true );
-	$link     = esc_url_raw( ws_post_field( 'ws_fb_page' ), array( 'http', 'https' ) );
+	// The page address may be typed without https:// (for example wseurope.org/events/).
+	$raw      = trim( ws_post_field( 'ws_fb_page' ) );
+	if ( '' !== $raw && ! preg_match( '#^https?://#i', $raw ) ) {
+		$raw = 'https://' . ltrim( $raw, '/' );
+	}
+	$link     = esc_url_raw( $raw, array( 'http', 'https' ) );
 	$error    = null;
 	if ( ! is_user_logged_in() ) {
 		$error = __( 'Please sign in to send feedback.', 'ws-chapters' );
@@ -32,8 +37,8 @@ add_action( 'template_redirect', function () {
 		$error = $guard;
 	} elseif ( '' === $subject || '' === $comments ) {
 		$error = __( 'Please add a subject and your comments.', 'ws-chapters' );
-	} elseif ( '' !== ws_post_field( 'ws_fb_page' ) && ! wp_http_validate_url( $link ) ) {
-		$error = __( 'The page address must start with https:// (or leave it empty).', 'ws-chapters' );
+	} elseif ( '' !== $raw && ! wp_http_validate_url( $link ) ) {
+		$error = __( 'Please check the page address (for example wseurope.org/events/), or leave it empty.', 'ws-chapters' );
 	}
 	$ok = null === $error;
 	if ( $ok ) {
@@ -75,7 +80,7 @@ add_shortcode( 'ws_member_feedback', function () {
 		. '<input type="hidden" name="ws_form" value="member_feedback">'
 		. ws_mm_field( __( 'Subject', 'ws-chapters' ), '<input type="text" name="ws_fb_subject" class="ws-mm__input" maxlength="120" required placeholder="' . esc_attr__( 'For example: Chapter page photos', 'ws-chapters' ) . '">', 'ws-mm__field--wide' )
 		. ws_mm_field( __( 'Your comments', 'ws-chapters' ), '<textarea name="ws_fb_comments" class="ws-mm__input ws-mm__textarea" rows="6" maxlength="4000" required></textarea>', 'ws-mm__field--wide' )
-		. ws_mm_field( __( 'Page address (optional)', 'ws-chapters' ), '<input type="url" name="ws_fb_page" class="ws-mm__input" placeholder="https://">', 'ws-mm__field--wide' )
+		. ws_mm_field( __( 'Page address (optional)', 'ws-chapters' ), '<input type="text" name="ws_fb_page" class="ws-mm__input" placeholder="' . esc_attr__( 'For example wseurope.org/events/', 'ws-chapters' ) . '">', 'ws-mm__field--wide' )
 		. '<div class="ws-mm__actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Send feedback', 'ws-chapters' ) . '</button></div>'
 		. '</form></section></div>';
 	return $out;
