@@ -407,11 +407,13 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 	$out = '<div class="ws-chapter-rows">';
 	foreach ( $chapters as $c ) {
 		// Rename and Delete for the people who manage this country's chapters (empty for everyone else).
-		$tools = $manage_term ? ws_fe_rename_box( $c->ID, __( 'Rename', 'ws-chapters' ) ) . ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
-		$trash = '' !== $tools ? '<div class="ws-chapter-row__actions">' . $tools . '</div>' : '';
+		// Rename (under the name) and Close chapter (top-right corner) for the people who manage this country's chapters.
+		$rename = $manage_term ? ws_fe_rename_box( $c->ID, __( 'Rename', 'ws-chapters' ) ) : '';
+		$trash  = '' !== $rename ? '<div class="ws-chapter-row__actions">' . $rename . '</div>' : '';
+		$close  = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
 		$photo = get_post_thumbnail_id( $c );
 		$out  .= sprintf(
-			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a>%8$s</div>%7$s</article>',
+			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a>%8$s</div>%7$s%9$s</article>',
 			ws_chapter_logo( $c->ID ),
 			esc_url( get_permalink( $c ) ),
 			esc_html( ws_chapter_name( $c ) ),
@@ -419,7 +421,8 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 			esc_html__( 'Explore chapter', 'ws-chapters' ),
 			ws_icon( 'arrow' ),
 			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : '',
-			$trash
+			$trash,
+			$close
 		);
 	}
 	return $out . '</div>';

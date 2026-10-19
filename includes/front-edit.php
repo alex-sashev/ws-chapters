@@ -732,14 +732,14 @@ function ws_chapter_in_country( $chapter_id, $term_id ) {
 	return in_array( (int) $term_id, $item['countries'], true );
 }
 
-/** "Delete" button on one chapter row (inside the chapter lists). Asks for confirmation first. */
+/** "Close chapter" button in the top-right corner of a chapter row. Asks for confirmation first; the chapter goes to the Trash. */
 function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 	if ( ! ws_can_manage_country_chapters( $term_id ) || ! ws_chapter_in_country( $chapter_id, $term_id ) ) {
 		return '';
 	}
 	$name    = ws_chapter_name( $chapter_id );
 	/* translators: %s: chapter name */
-	$confirm = sprintf( __( 'Delete %s? It goes to the Trash and can be restored from the WordPress admin.', 'ws-chapters' ), $name );
+	$confirm = sprintf( __( 'Close %s? It is removed from the site and goes to the Trash, where it can be restored from the WordPress admin.', 'ws-chapters' ), $name );
 	$return  = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
 	$base    = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
 	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
@@ -753,8 +753,7 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 		. '<input type="hidden" name="ws_fe_return" value="' . esc_attr( $return ) . '">'
 		. '<input type="hidden" name="ws_chapter" value="' . (int) $chapter_id . '">'
 		/* translators: %s: chapter name */
-		. '<button type="submit" class="ws-fe-delete-btn" aria-label="' . esc_attr( sprintf( __( 'Delete %s', 'ws-chapters' ), $name ) ) . '">'
-		. '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg> ' . esc_html__( 'Delete', 'ws-chapters' ) . '</button></form>';
+		. '<button type="submit" class="ws-fe-delete-btn" aria-label="' . esc_attr( sprintf( __( 'Close %s', 'ws-chapters' ), $name ) ) . '">' . esc_html__( 'Close chapter', 'ws-chapters' ) . '</button></form>';
 }
 
 /**
