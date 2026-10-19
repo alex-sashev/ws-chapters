@@ -905,3 +905,12 @@ add_filter( 'the_content', function ( $content ) {
 	return $content . ws_fe_delete_news_form( $id, true );
 } );
 
+/* News cards from the block templates (the News page and Latest news on the home page): add the button under each excerpt. */
+add_filter( 'render_block_core/post-excerpt', function ( $html ) {
+	$id = get_the_ID();
+	if ( ! $id || 'post' !== get_post_type( $id ) || is_single() ) {
+		return $html;
+	}
+	return $html . ws_fe_delete_news_form( $id );
+} );
+
