@@ -426,8 +426,7 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 			esc_html( get_post_meta( $c->ID, 'city', true ) ),
 			esc_html__( 'Explore chapter', 'ws-chapters' ),
 			ws_icon( 'arrow' ),
-			( $photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : '' )
-				. ( $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term, ws_fe_here(), true ) : '' )
+			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : ''
 		);
 	}
 	return $out . '</div>';

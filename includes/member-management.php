@@ -258,6 +258,63 @@ function ws_mm_title_matches( $title, $filter ) {
 	return '' === $filter || $title === $filter;
 }
 
+/**
+ * The member profile pop-up: the full photo on the left (country name and logo at the bottom), and on the right
+ * the road name, full name, title, chapter and contact rows, with the Widows Sons emblem faint in the corner.
+ */
+function ws_mm_profile_card( $u, $name, $road, $title, $phone ) {
+	$terms   = array_filter( array_map( function ( $tid ) {
+		$term = get_term( $tid, 'ws_country' );
+		return $term && ! is_wp_error( $term ) ? $term : null;
+	}, ws_mm_user_ids( $u->ID ) ) );
+	$country = $terms ? reset( $terms ) : null;
+	$emblem  = ws_default_emblem_url();
+	$logo_id = $country ? (int) get_term_meta( $country->term_id, 'national_logo', true ) : 0;
+	$logo    = $logo_id && wp_attachment_is_image( $logo_id ) ? wp_get_attachment_image_url( $logo_id, 'medium' ) : $emblem;
+	$att     = (int) get_user_meta( $u->ID, 'ws_avatar', true );
+	if ( $att && wp_attachment_is_image( $att ) ) {
+		$photo = wp_get_attachment_image( $att, 'large', false, array( 'class' => 'ws-mmp__img', 'alt' => '' ) );
+	} else {
+		$initials = '';
+		foreach ( preg_split( '/\s+/', trim( $name ) ) as $part ) {
+			$initials .= mb_strtoupper( mb_substr( $part, 0, 1 ) );
+		}
+		$photo = '<span class="ws-mmp__initials" aria-hidden="true">' . esc_html( mb_substr( $initials, 0, 2 ) ) . '</span>';
+	}
+	$icon = function ( $paths ) {
+		return '<span class="ws-mmp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $paths . '</svg></span>';
+	};
+	$row = function ( $icon_html, $label, $value ) {
+		return '<div class="ws-mmp__row">' . $icon_html . '<dt>' . esc_html( $label ) . '</dt><dd>' . $value . '</dd></div>';
+	};
+	$countries = ws_mm_country_names( $u->ID );
+	$chapters  = ws_mm_chapter_names( $u->ID );
+	$tel       = preg_replace( '/[^0-9+]/', '', $phone );
+	$id        = 'ws-mm-p' . $u->ID;
+
+	$out = '<dialog class="ws-mm__profile" aria-labelledby="' . $id . '"><div class="ws-mmp">'
+		. '<div class="ws-mmp__photo">' . $photo
+		. ( $country ? '<div class="ws-mmp__country"><span>' . esc_html( ws_display_name( $country->name ) ) . '</span><img src="' . esc_url( $logo ) . '" alt=""></div>' : '' )
+		. '</div><div class="ws-mmp__body">'
+		. '<img class="ws-mmp__mark" src="' . esc_url( $emblem ) . '" alt="" aria-hidden="true">'
+		. '<form method="dialog" class="ws-mmp__close-form"><button type="submit" class="ws-mmp__close" aria-label="' . esc_attr__( 'Close', 'ws-chapters' ) . '">&times;</button></form>'
+		. ( '' !== $road ? '<p class="ws-mmp__label"><span>' . esc_html__( 'Road name', 'ws-chapters' ) . '</span></p><p class="ws-mmp__road">' . esc_html( $road ) . '</p>' : '' )
+		. '<h3 id="' . $id . '" class="ws-mmp__name">' . esc_html( $name ) . '</h3>'
+		. '<div class="ws-mmp__rule" aria-hidden="true"><span></span></div>'
+		. ( '' !== $title ? '<p class="ws-mmp__title">' . esc_html( $title ) . '</p>' : '' )
+		. ( '' !== $chapters ? '<p class="ws-mmp__sub">' . esc_html( $chapters ) . '</p>' : '' )
+		. '<dl class="ws-mmp__rows">'
+		. $row( $icon( '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/>' ), __( 'Country', 'ws-chapters' ), ( '' !== $countries ? ( $country ? ws_flag( $country ) . ' ' : '' ) . esc_html( $countries ) : ws_mm_cell( '' ) ) )
+		. $row( $icon( '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M15 14.2c3 .1 6 1.5 6 4.8"/>' ), __( 'Chapter', 'ws-chapters' ), ws_mm_cell( $chapters ) )
+		. $row( $icon( '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>' ), __( 'Email', 'ws-chapters' ), '<a href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a>' )
+		. $row( $icon( '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>' ), __( 'Phone', 'ws-chapters' ), ( '' !== $phone ? '<a href="tel:' . esc_attr( $tel ) . '">' . esc_html( $phone ) . '</a>' : ws_mm_cell( '' ) ) )
+		. '</dl><div class="ws-mmp__actions">'
+		. '<a class="ws-mmp__btn ws-mmp__btn--gold" href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html__( 'Send email', 'ws-chapters' ) . '</a>'
+		. ( '' !== $phone ? '<a class="ws-mmp__btn" href="tel:' . esc_attr( $tel ) . '">' . esc_html__( 'Call', 'ws-chapters' ) . '</a>' : '' )
+		. '</div></div></div></dialog>';
+	return $out;
+}
+
 /** Small script for the member pages: chapter list follows the country, "Other" title box, busy buttons. Printed once. */
 function ws_mm_script() {
 	static $done = false;
@@ -304,17 +361,8 @@ add_shortcode( 'ws_member_directory', function () {
 			continue;
 		}
 		++$count;
-		// Click the name: a one-page profile with a larger photo and a single Close button.
-		$profile = '<dialog class="ws-mm__profile" aria-labelledby="ws-mm-p' . $u->ID . '"><div class="ws-mm__profile-photo">' . ws_mm_avatar_html( $u->ID, $name ) . '</div>'
-			. '<h3 id="ws-mm-p' . $u->ID . '" class="ws-mm__profile-name">' . esc_html( $name ) . '</h3>'
-			. '<dl class="ws-mm__profile-list">'
-			. '<dt>' . esc_html__( 'Road name', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( $road ) . '</dd>'
-			. '<dt>' . esc_html__( 'Title', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( $t ) . '</dd>'
-			. '<dt>' . esc_html__( 'Country', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( ws_mm_country_names( $u->ID ) ) . '</dd>'
-			. '<dt>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</dt><dd>' . ws_mm_cell( ws_mm_chapter_names( $u->ID ) ) . '</dd>'
-			. '<dt>' . esc_html__( 'Email', 'ws-chapters' ) . '</dt><dd><a href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a></dd>'
-			. '<dt>' . esc_html__( 'Phone', 'ws-chapters' ) . '</dt><dd>' . ( $phone ? '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>' : ws_mm_cell( '' ) ) . '</dd>'
-			. '</dl><form method="dialog" class="ws-mm__profile-actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Close', 'ws-chapters' ) . '</button></form></dialog>';
+		// Click the name: a one-page profile (photo, road name, title, contacts).
+		$profile = ws_mm_profile_card( $u, $name, $road, $t, $phone );
 		$rows .= '<tr>'
 			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<button type="button" class="ws-mm__name-btn" aria-haspopup="dialog" onclick="this.parentNode.querySelector(\'dialog\').showModal()"><strong>' . esc_html( $name ) . '</strong></button>' . $profile . '</div></td>'
 			. '<td data-label="' . esc_attr__( 'Road name', 'ws-chapters' ) . '">' . ( $road ? '<span class="ws-mm__road">' . esc_html( $road ) . '</span>' : ws_mm_cell( '' ) ) . '</td>'

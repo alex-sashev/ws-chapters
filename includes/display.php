@@ -130,12 +130,11 @@ function ws_chapter_meta_line( $chapter_id, $link_country = true ) {
 /** Directory card: chapter logo (never the back patch), name, location. */
 function ws_chapter_card( $chapter_id ) {
 	return sprintf(
-		'<article class="ws-chapter-card"><a class="ws-chapter-card__link" href="%1$s"><div class="ws-chapter-card__logo">%2$s</div><h3 class="ws-chapter-card__name">%3$s</h3></a>%4$s%5$s</article>',
+		'<article class="ws-chapter-card"><a class="ws-chapter-card__link" href="%1$s"><div class="ws-chapter-card__logo">%2$s</div><h3 class="ws-chapter-card__name">%3$s</h3></a>%4$s</article>',
 		esc_url( get_permalink( $chapter_id ) ),
 		ws_chapter_logo( $chapter_id ),
 		esc_html( get_the_title( $chapter_id ) ),
-		ws_chapter_meta_line( $chapter_id, false ),
-		function_exists( 'ws_fe_trash_chapter_form' ) ? ws_fe_trash_chapter_form( $chapter_id, ( $t = ws_chapter_country( $chapter_id ) ) ? $t->term_id : 0, ws_fe_here(), true ) : ''
+		ws_chapter_meta_line( $chapter_id, false )
 	);
 }
 

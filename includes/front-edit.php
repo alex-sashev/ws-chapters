@@ -724,12 +724,11 @@ function ws_chapter_in_country( $chapter_id, $term_id ) {
 }
 
 /**
- * Red "Close chapter" button: on the chapter's own page, and (compact) on each chapter in the chapter lists.
- * Super Admins for every chapter, Country Admins for the chapters of their country.
- * Asks for confirmation first; the chapter goes to the Trash. $return: the path to land on afterwards
- * (default: the country page, or the all-chapters page for a chapter without a country).
+ * Red "Close chapter" button on the chapter's own page: Super Admins for every chapter (also one without a
+ * country), Country Admins for the chapters of their country. Asks for confirmation first; the chapter goes to
+ * the Trash and the person lands on the country page (or the all-chapters page for a chapter without a country).
  */
-function ws_fe_trash_chapter_form( $chapter_id, $term_id, $return = '', $compact = false ) {
+function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 	$chapter_id = (int) $chapter_id;
 	$term_id    = (int) $term_id;
 	$super      = is_user_logged_in() && ( current_user_can( 'manage_options' ) || current_user_can( WS_ASSET_CAP ) );
@@ -740,19 +739,17 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id, $return = '', $compact
 	$name    = ws_chapter_name( $chapter_id );
 	/* translators: %s: chapter name */
 	$confirm = sprintf( __( 'Close %s? It is removed from the site and goes to the Trash, where it can be restored from the WordPress admin.', 'ws-chapters' ), $name );
-	if ( '' === $return ) {
-		// After closing, back to the country page (the chapter's own page is gone).
-		$back   = $in_country ? get_term_link( $term_id, 'ws_country' ) : get_post_type_archive_link( 'ws_chapter' );
-		$return = ( ! $back || is_wp_error( $back ) ) ? '/' : (string) wp_parse_url( $back, PHP_URL_PATH );
-	}
-	$base = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
+	// After closing, back to the country page (the chapter's own page is gone).
+	$back   = $in_country ? get_term_link( $term_id, 'ws_country' ) : get_post_type_archive_link( 'ws_chapter' );
+	$return = ( ! $back || is_wp_error( $back ) ) ? '/' : (string) wp_parse_url( $back, PHP_URL_PATH );
+	$base   = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
 	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
 		$return = substr( $return, strlen( $base ) );
 	}
 	// A chapter in a country is closed through its country; one without a country through itself (Super Admins only).
 	$type = $in_country ? 'term' : 'chapter';
 	$id   = $in_country ? $term_id : $chapter_id;
-	return '<form method="post" class="ws-fe-trash ' . ( $compact ? 'ws-fe-trash--row' : 'ws-fe-trash--page' ) . '" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
+	return '<form method="post" class="ws-fe-trash ws-fe-trash--page" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
 		. '<input type="hidden" name="ws_fe_action" value="trash_chapter">'
 		. '<input type="hidden" name="ws_fe_type" value="' . $type . '">'
 		. '<input type="hidden" name="ws_fe_id" value="' . $id . '">'
@@ -761,12 +758,6 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id, $return = '', $compact
 		. '<input type="hidden" name="ws_chapter" value="' . $chapter_id . '">'
 		/* translators: %s: chapter name */
 		. '<button type="submit" class="ws-fe-delete-btn" aria-label="' . esc_attr( sprintf( __( 'Close %s', 'ws-chapters' ), $name ) ) . '">' . esc_html__( 'Close chapter', 'ws-chapters' ) . '</button></form>';
-}
-
-/** The current page's path, for forms that come back to where they were sent from. */
-function ws_fe_here() {
-	$path = (string) wp_parse_url( wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) ), PHP_URL_PATH );
-	return '' !== $path ? $path : '/';
 }
 
 /**
@@ -794,15 +785,31 @@ function ws_fe_create_chapter_form( $term_id = 0 ) {
 		$country = '<input type="hidden" name="ws_country" value="' . (int) $term_id . '">';
 	} else {
 		$options = '';
+		$used    = array();
 		foreach ( (array) get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false ) ) as $t ) {
-			if ( $t instanceof WP_Term && ws_can_manage_country_chapters( $t->term_id ) ) {
+			if ( ! $t instanceof WP_Term ) {
+				continue;
+			}
+			$used[] = ws_country_code( $t );
+			if ( ws_can_manage_country_chapters( $t->term_id ) ) {
 				$options .= '<option value="' . (int) $t->term_id . '">' . esc_html( ws_display_name( $t->name ) ) . '</option>';
 			}
 		}
 		if ( '' === $options ) {
 			return '';
 		}
-		$country = '<label class="ws-fedit__label">' . esc_html__( 'Country', 'ws-chapters' ) . '<select name="ws_country" required><option value="">' . esc_html__( '— Choose the country —', 'ws-chapters' ) . '</option>' . $options . '</select></label>';
+		// Super Admins: every other country in the world too; it is added to the site with the chapter.
+		$world = '';
+		if ( current_user_can( 'manage_options' ) || current_user_can( WS_ASSET_CAP ) ) {
+			foreach ( ws_world_countries() as $code => $name ) {
+				if ( ! in_array( $code, $used, true ) ) {
+					$world .= '<option value="new:' . esc_attr( $code ) . '">' . esc_html( $name ) . '</option>';
+				}
+			}
+		}
+		$country = '<label class="ws-fedit__label">' . esc_html__( 'Country', 'ws-chapters' ) . '<select name="ws_country" required><option value="">' . esc_html__( '— Choose the country —', 'ws-chapters' ) . '</option>'
+			. ( '' !== $world ? '<optgroup label="' . esc_attr__( 'On the site', 'ws-chapters' ) . '">' . $options . '</optgroup><optgroup label="' . esc_attr__( 'Other countries (added with the chapter)', 'ws-chapters' ) . '">' . $world . '</optgroup>' : $options )
+			. '</select></label>';
 	}
 	$inner = ws_form_guard_fields( 'country_chapter' )
 		. $country
@@ -816,16 +823,21 @@ add_action( 'template_redirect', function () {
 	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'country_chapter' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
-	$term_id = absint( $_POST['ws_country'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
-	$term    = $term_id ? get_term( $term_id, 'ws_country' ) : null;
 	$guard   = ws_form_guard_check( 'country_chapter' );
+	$term_id = 0;
+	$term    = null;
 	$error   = null;
-	if ( ! ws_can_manage_country_chapters( $term_id ) || ! $term || is_wp_error( $term ) ) {
-		$error = __( 'You can only add chapters to your own country.', 'ws-chapters' );
-	} elseif ( true !== $guard ) {
+	if ( true !== $guard ) {
 		$error = $guard;
 	} elseif ( '' === ws_post_field( 'ws_chapter_name' ) || '' === ws_post_field( 'ws_chapter_city' ) ) {
 		$error = __( 'Please add the chapter name and the city.', 'ws-chapters' );
+	} else {
+		// A country not yet on the site ("new:us") is added here, for Super Admins only.
+		$term_id = ws_resolve_new_chapter_country( sanitize_text_field( wp_unslash( $_POST['ws_country'] ?? '' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+		$term    = $term_id ? get_term( $term_id, 'ws_country' ) : null;
+		if ( ! ws_can_manage_country_chapters( $term_id ) || ! $term || is_wp_error( $term ) ) {
+			$error = __( 'You can only add chapters to your own country.', 'ws-chapters' );
+		}
 	}
 	$ok = null === $error;
 	if ( $ok ) {
