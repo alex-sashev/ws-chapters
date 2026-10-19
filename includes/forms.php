@@ -2,8 +2,9 @@
 /**
  * Public forms.
  *
- * [ws_event_submit]  Anyone can propose an event. It is saved as "Pending review"; admins and the
- *                    Country Admins of that country get an email. Publishing it is the approval.
+ * [ws_event_submit]  Signed-in members' events are published straight away under their account.
+ *                    A visitor's event is saved as "Pending review"; admins and the Country Admins
+ *                    of that country get an email. Publishing it is the approval.
  * [ws_join_form]     Application to join, sent to the chosen chapter. A Master Mason picks a country
  *                    and then a chapter ("Chapter — City"). One copy goes to the site admin, one to
  *                    the chapter's contact email. Every application is also kept in the admin.
@@ -142,12 +143,16 @@ function ws_enqueue_form_script() {
  * Event submission
  * ---------------------------------------------------------------------- */
 
-/** Handle a posted event; returns array( 'ok' => bool, 'message' => string ). */
+/**
+ * Handle a posted event; returns array( 'ok' => bool, 'message' => string ).
+ * Signed-in members: published straight away under their account. Visitors: saved as pending for review.
+ */
 function ws_handle_event_submission() {
 	$guard = ws_form_guard_check( 'event' );
 	if ( true !== $guard ) {
 		return array( 'ok' => false, 'message' => $guard );
 	}
+	$member = is_user_logged_in();
 	$f = array(
 		'title'       => ws_post_field( 'ws_title' ),
 		'start'       => ws_sanitize_date( ws_post_field( 'ws_start_date' ) ),
@@ -163,6 +168,10 @@ function ws_handle_event_submission() {
 		'name'        => ws_post_field( 'ws_name' ),
 		'email'       => sanitize_email( ws_post_field( 'ws_email' ) ),
 	);
+	if ( $member ) { // Known from the account.
+		$f['name']  = ws_mm_person_name( wp_get_current_user() );
+		$f['email'] = wp_get_current_user()->user_email;
+	}
 	$missing = array();
 	foreach ( array( 'title' => __( 'Event name', 'ws-chapters' ), 'start' => __( 'Start date', 'ws-chapters' ), 'country' => __( 'Country', 'ws-chapters' ), 'city' => __( 'City', 'ws-chapters' ), 'description' => __( 'Description', 'ws-chapters' ), 'contact' => __( 'Contact details for riders', 'ws-chapters' ), 'name' => __( 'Your name', 'ws-chapters' ) ) as $k => $label ) {
 		if ( empty( $f[ $k ] ) ) {
@@ -195,10 +204,10 @@ function ws_handle_event_submission() {
 
 	$id = wp_insert_post( array(
 		'post_type'    => 'ws_event',
-		'post_status'  => 'pending',
+		'post_status'  => $member ? 'publish' : 'pending',
 		'post_title'   => $f['title'],
 		'post_content' => $f['description'],
-		'post_author'  => 0,
+		'post_author'  => $member ? get_current_user_id() : 0,
 	), true );
 	if ( is_wp_error( $id ) ) {
 		return array( 'ok' => false, 'message' => __( 'Sorry, something went wrong saving your event. Please try again later.', 'ws-chapters' ) );
@@ -211,12 +220,22 @@ function ws_handle_event_submission() {
 	if ( $f['chapter'] ) {
 		update_post_meta( $id, 'host_chapter', $f['chapter'] );
 	}
-	update_post_meta( $id, '_ws_submitted_by', $f['name'] );
-	update_post_meta( $id, '_ws_submitted_email', $f['email'] );
+	if ( ! $member ) { // A member is the event's author; a visitor's name and email are kept privately for the review.
+		update_post_meta( $id, '_ws_submitted_by', $f['name'] );
+		update_post_meta( $id, '_ws_submitted_email', $f['email'] );
+	}
 	wp_set_object_terms( $id, array( $f['country'] ), 'ws_country' );
 
 	// Images: stored in the event's country folder (uploads/countries/{country}/), the first one becomes the poster.
 	$image_ids = ws_save_event_images( $images, $id );
+
+	if ( $member ) {
+		do_action( 'litespeed_purge_all' ); // The calendar, country and chapter pages show it now.
+		return array(
+			'ok'      => true,
+			'message' => esc_html__( 'Your event is published in the event calendar.', 'ws-chapters' ) . ' <a href="' . esc_url( get_permalink( $id ) ) . '">' . esc_html__( 'See the event', 'ws-chapters' ) . '</a>',
+		);
+	}
 
 	// Tell the reviewers: site admins, plus Country Admins for this country.
 	$to = array( get_option( 'admin_email' ) );
@@ -339,7 +358,7 @@ function ws_event_submit_form() {
 		$result = ws_handle_event_submission();
 	}
 	if ( $result && $result['ok'] ) {
-		return ws_form_notice( 'success', esc_html( $result['message'] ) );
+		return ws_form_notice( 'success', $result['message'] ); // Built from escaped parts (and a link for members).
 	}
 	ws_enqueue_form_script();
 	$v = function ( $k ) use ( $result ) {
@@ -372,7 +391,16 @@ function ws_event_submit_form() {
 		. '<input type="file" id="ws_event_images" name="ws_event_images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple aria-describedby="ws_event_images-help">'
 		/* translators: 1: number of images, 2: size in MB */
 		. '<span class="ws-help" id="ws_event_images-help">' . esc_html( sprintf( __( 'Optional. Up to %1$d images (JPG, PNG, WebP or GIF), %2$d MB each. The first image is shown as the event poster.', 'ws-chapters' ), WS_EVENT_MAX_IMAGES, WS_EVENT_MAX_IMAGE_MB ) ) . '</span></p>';
-	$out .= '</fieldset><fieldset><legend>' . esc_html__( 'About you (not published)', 'ws-chapters' ) . '</legend><div class="ws-field-row">';
+	$out .= '</fieldset>';
+	if ( is_user_logged_in() ) {
+		// Signed-in members: no name or email to type, and the event is published straight away.
+		/* translators: %s: the member's name */
+		$out .= '<p class="ws-muted">' . esc_html( sprintf( __( 'Posting as %s. Your event is published as soon as you send it.', 'ws-chapters' ), ws_mm_person_name( wp_get_current_user() ) ) ) . '</p>';
+		$out .= ws_consent_field( esc_html__( 'I acknowledge that this event and its contact details will be shared on the website.', 'ws-chapters' ) );
+		$out .= '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Publish the event', 'ws-chapters' ) . '</button></p></form>';
+		return $out;
+	}
+	$out .= '<fieldset><legend>' . esc_html__( 'About you (not published)', 'ws-chapters' ) . '</legend><div class="ws-field-row">';
 	$out .= ws_field( 'ws_name', __( 'Your name', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_name' ), 'attrs' => 'autocomplete="name"' ) );
 	$out .= ws_field( 'ws_email', __( 'Your email', 'ws-chapters' ), 'email', array( 'required' => true, 'value' => $v( 'ws_email' ), 'attrs' => 'autocomplete="email"', 'help' => __( 'In case the admins have questions.', 'ws-chapters' ) ) );
 	$out .= '</div></fieldset>';
