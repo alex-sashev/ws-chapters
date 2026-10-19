@@ -374,7 +374,8 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-cx-edit:hover, .ws-cx-edit:focus-visible { background: rgba(201, 162, 74, .12); }
 .ws-cx__form .ws-mm__field { display: block; margin: 0 0 1rem; }
 .ws-cx__buttons { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
-.ws-cx__delete { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ws-line, #e3dccd); }
+.ws-cx__delete-form { margin: 0; }
+.ws-cx__buttons .ws-cx__delete-btn { margin-left: auto; }
 .ws-cx__delete-btn { padding: .7em 1.1em; border: 1px solid #a3222b; border-radius: 3px; background: #a3222b; color: #fff; font: inherit; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
 .ws-cx__delete-btn:hover, .ws-cx__delete-btn:focus-visible { background: #7e1a21; border-color: #7e1a21; }
 .ws-cx-images { border: 1px solid var(--ws-line, #e3dccd); border-radius: 6px; padding: 1rem; margin: 0 0 1rem; }
