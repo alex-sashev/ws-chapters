@@ -75,7 +75,12 @@ function ws_fe_box( $type, $id, $action, $inner, $label, $button = false ) {
 		return '';
 	}
 	$id     = (int) $id;
-	$return = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) ); // Back to this page after saving.
+	// Back to this page after saving: the path relative to the site's home (the handler adds it back).
+	$return = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
+	$base   = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
+	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
+		$return = substr( $return, strlen( $base ) );
+	}
 	$hidden = '<input type="hidden" name="ws_fe_action" value="' . esc_attr( $action ) . '">'
 		. '<input type="hidden" name="ws_fe_type" value="' . esc_attr( $type ) . '">'
 		. '<input type="hidden" name="ws_fe_id" value="' . $id . '">'
