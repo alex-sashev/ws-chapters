@@ -192,7 +192,7 @@
 .ws-fedit__title { margin: 0 0 .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: .8rem; }
 .ws-fedit__label { display: block; margin: .4rem 0; font-size: .85rem; font-weight: 600; }
 .ws-fedit__form textarea { display: block; width: 100%; box-sizing: border-box; min-height: 260px; margin-top: .25rem; padding: .6rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-size: 1rem; line-height: 1.5; resize: vertical; }
-.ws-fedit__label input { display: block; width: 100%; box-sizing: border-box; margin-top: .25rem; padding: .45rem .5rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-weight: 400; }
+.ws-fedit__label input, .ws-fedit__label select { display: block; width: 100%; box-sizing: border-box; margin-top: .25rem; padding: .45rem .5rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-weight: 400; }
 .ws-fedit__grid { display: grid; grid-template-columns: 1fr; gap: .2rem .6rem; }
 .ws-fedit .ws-btn-gold { cursor: pointer; }
 .ws-fe-notice { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 100; max-width: min(520px, 90vw); padding: .8rem 1.1rem; border-radius: 4px; background: #14120c; color: #f4efe2; border-left: 4px solid var(--ws-gold, #C9A24A); box-shadow: 0 10px 30px rgba(0, 0, 0, .4); }
@@ -347,7 +347,6 @@ select.ws-mm__input { appearance: none; -webkit-appearance: none; padding-right:
 a.ws-doc__title { color: var(--ws-text, #1c1a17) !important; font-weight: 700; text-decoration: none; }
 a.ws-doc__title:hover { text-decoration: underline; }
 .ws-doc__desc { font-size: .9rem; color: var(--ws-muted, #6b655c); }
-.ws-mm__table--library .ws-mm__row-actions { flex-direction: column; align-items: stretch; }
 .ws-mm__table--library .ws-mm__row-actions .ws-mm__btn { width: 100%; }
 .ws-members .ws-upload.ws-mm__card { margin-top: 2rem; }
 @media (max-width: 900px) { .ws-library-bar { grid-template-columns: 1fr 1fr; } .ws-library-bar .ws-mm__field--wide { grid-column: 1 / -1; } }
@@ -408,7 +407,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 /* The Edit pencil sits in the top-right corner of each card, and the title stays clear of it. */
 .ws-news-card, .ws-event-card, .wp-block-post, .ws-mm__table--library tbody td:last-child { position: relative; }
 .ws-news-card:has(.ws-cx-edit) h3, .wp-block-post:has(.ws-cx-edit) .wp-block-post-title, .ws-event-card:has(.ws-cx-edit) .ws-event-card__title { padding-right: 7.5rem; }
-.ws-mm__table--library .ws-mm__row-actions { margin-top: 2.4rem; }
 /* The Edit pencil on a single news article sits in the top-right corner of the article. */
 .wp-block-post-content:has(.ws-cx-edit) { position: relative; }
 .wp-block-post-content > .ws-cx-edit, .ws-news-gallery + .ws-cx-edit { top: 0; right: 0; }
@@ -417,8 +415,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-doc-icon-btn svg { width: 15px; height: 15px; }
 .ws-doc-icon-btn:hover, .ws-doc-icon-btn:focus-visible { background: rgba(201, 162, 74, .12); }
 /* Library: Edit and Download line up on the same right edge. */
-.ws-mm__table--library .ws-mm__row-actions { align-items: flex-end; padding-right: .6rem; }
-.ws-mm__table--library .ws-doc-icon-btn { margin-left: auto; }
 
 /* Edit pop-up on a useful link card: top right, like the news pencil; the form opens as a centred pop-up. */
 .ws-link-card .ws-link-edit { position: absolute; top: .6rem; right: .6rem; z-index: 2; }
@@ -443,3 +439,12 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-pick__drop:disabled { cursor: default; border-style: solid; opacity: .7; }
 .ws-pick__note { margin: .4rem 0 0; color: #a12622; font-size: .85rem; }
 .ws-pick__note:empty { display: none; }
+
+/* Library actions: Edit and Download side by side, same size, at the right of the row. */
+.ws-mm__table--library .ws-mm__row-actions { flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: .4rem; margin: 0; }
+.ws-mm__table--library .ws-mm__row-actions .ws-cx-edit { position: static; order: -1; }
+
+/* Close chapter in the chapter lists: a small red button under the card, or at the end of the row. */
+.ws-fe-trash--row { position: static; margin: .6rem 0 0; }
+.ws-fe-trash--row .ws-fe-delete-btn { padding: .4em .8em; font-size: .7rem; white-space: nowrap; }
+.ws-chapter-row > .ws-fe-trash--row { align-self: center; margin: 0 .75rem; flex: none; }
