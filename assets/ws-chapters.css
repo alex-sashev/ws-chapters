@@ -365,3 +365,28 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-fe-trash--page { position: static; margin: 0 0 .75rem auto; }
 .ws-fe-delete-btn { display: inline-flex; align-items: center; padding: .7em 1em; border: 1px solid #a3222b; border-radius: 3px; background: #a3222b; color: #fff; font-family: inherit; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1; cursor: pointer; }
 .ws-fe-delete-btn:hover, .ws-fe-delete-btn:focus-visible { background: #7e1a21; border-color: #7e1a21; }
+/* Website feedback: a larger comments box. */
+.ws-mm__textarea { height: auto; min-height: 140px; padding: .6rem .75rem; resize: vertical; line-height: 1.5; }
+.ws-mm__grid .ws-mm__field--wide { grid-column: 1 / -1; }
+/* Edit and delete (content-edit.php): pencil on listings, the edit screen, the 2 x 2 news gallery. */
+.ws-cx-edit { display: inline-flex; align-items: center; gap: .35rem; margin-top: .5rem; padding: .3em .7em; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; color: var(--ws-gold-dark, #8a6d2c); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.ws-cx-edit svg { width: 14px; height: 14px; }
+.ws-cx-edit:hover, .ws-cx-edit:focus-visible { background: rgba(201, 162, 74, .12); }
+.ws-cx__form .ws-mm__field { display: block; margin: 0 0 1rem; }
+.ws-cx__buttons { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.ws-cx__delete { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ws-line, #e3dccd); }
+.ws-cx__delete-btn { padding: .7em 1.1em; border: 1px solid #a3222b; border-radius: 3px; background: #a3222b; color: #fff; font: inherit; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.ws-cx__delete-btn:hover, .ws-cx__delete-btn:focus-visible { background: #7e1a21; border-color: #7e1a21; }
+.ws-cx-images { border: 1px solid var(--ws-line, #e3dccd); border-radius: 6px; padding: 1rem; margin: 0 0 1rem; }
+.ws-cx-images legend { font-weight: 700; padding: 0 .4rem; }
+.ws-cx-images__list { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
+.ws-cx-img { width: 140px; }
+.ws-cx-img figure { margin: 0 0 .4rem; }
+.ws-cx-img img { width: 100%; height: auto; border-radius: 3px; display: block; }
+.ws-cx-img label { display: block; font-size: .85rem; margin-top: .3rem; }
+.ws-cx-img__pos { width: 80px; height: 36px; margin-left: .3rem; }
+.ws-cx-images__add { display: block; font-weight: 600; }
+.ws-cx-images__add input { display: block; margin-top: .4rem; }
+.ws-news-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.5rem 0 0; }
+.ws-news-gallery__item { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; }
+.ws-news-gallery__img { width: 100%; height: 100%; object-fit: cover; display: block; }

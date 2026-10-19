@@ -309,13 +309,7 @@ function ws_doc_item( $doc ) {
 	$target = $is_url ? ' target="_blank" rel="noopener"' : '';
 	$badge  = $is_url ? __( 'LINK', 'ws-chapters' ) : ( strtoupper( pathinfo( (string) $name, PATHINFO_EXTENSION ) ) ?: 'FILE' );
 	$extra  = $is_url ? preg_replace( '#^www\.#', '', (string) ( wp_parse_url( $url, PHP_URL_HOST ) ?: $url ) ) : size_format( (int) get_post_meta( $doc->ID, '_ws_size', true ) );
-	$delete = ws_can_delete_doc( $doc ) ? sprintf(
-		'<form method="post" class="ws-mm__inline" onsubmit="return confirm(%1$s)"><input type="hidden" name="ws_doc_delete" value="%2$d"><input type="hidden" name="ws_doc_nonce" value="%3$s"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--danger">%4$s</button></form>',
-		esc_attr( wp_json_encode( __( 'Delete this document for everyone?', 'ws-chapters' ) ) ),
-		$doc->ID,
-		esc_attr( wp_create_nonce( 'ws_doc_delete_' . $doc->ID ) ),
-		esc_html__( 'Delete', 'ws-chapters' )
-	) : '';
+	$delete = ws_cx_edit_link( 'doc', $doc->ID ); // Pencil "Edit"; delete is on the edit screen.
 	return '<tr class="ws-doc--' . esc_attr( $type ) . '">'
 		. '<td class="ws-doc__when"><time datetime="' . esc_attr( $date ) . '">' . esc_html( date_i18n( 'j M Y', strtotime( $date ) ) ) . '</time></td>'
 		. '<td><div class="ws-doc__cell"><span class="ws-doc__icon" aria-hidden="true">' . esc_html( $badge ) . '</span><span><a class="ws-doc__title" href="' . esc_url( $href ) . '"' . $target . '>' . esc_html( $doc->post_title ) . '</a>'

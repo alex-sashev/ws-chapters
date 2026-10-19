@@ -507,11 +507,7 @@ add_action( 'template_redirect', function () {
 			unset( $_REQUEST['ws_country'] );
 			if ( $images ) {
 				set_post_thumbnail( $post_id, $images[0] );
-				$extra = '';
-				foreach ( array_slice( $images, 1 ) as $img ) {
-					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
-				}
-				wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
+				update_post_meta( $post_id, 'ws_news_gallery', implode( ',', array_slice( $images, 1 ) ) ); // Gallery: shown under the text in a 2 x 2 grid.
 			}
 		}
 	}
@@ -578,13 +574,7 @@ add_action( 'template_redirect', function () {
 			unset( $_REQUEST['post_id'] );
 			if ( $images ) {
 				set_post_thumbnail( $post_id, $images[0] );
-				$extra = '';
-				foreach ( array_slice( $images, 1 ) as $img ) {
-					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
-				}
-				if ( $extra ) {
-					wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
-				}
+				update_post_meta( $post_id, 'ws_news_gallery', implode( ',', array_slice( $images, 1 ) ) ); // Gallery: shown under the text in a 2 x 2 grid.
 			}
 			if ( ! $publish ) {
 				ws_send_mail( get_option( 'admin_email' ), sprintf( /* translators: %s: chapter name */ __( 'News to review: %s', 'ws-chapters' ), $chapter->post_title ), array(
@@ -677,11 +667,7 @@ add_action( 'template_redirect', function () {
 			unset( $_REQUEST['ws_country'] );
 			if ( $images ) {
 				set_post_thumbnail( $post_id, $images[0] );
-				$extra = '';
-				foreach ( array_slice( $images, 1 ) as $img ) {
-					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
-				}
-				wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
+				update_post_meta( $post_id, 'ws_news_gallery', implode( ',', array_slice( $images, 1 ) ) ); // Gallery: shown under the text in a 2 x 2 grid.
 			}
 			if ( ! $publish ) {
 				ws_send_mail( get_option( 'admin_email' ), sprintf( /* translators: %s: country name */ __( 'News to review: %s', 'ws-chapters' ), $term->name ), array(
@@ -908,7 +894,7 @@ add_filter( 'the_content', function ( $content ) {
 	if ( ! $id || ! is_main_query() || ! in_the_loop() || ! is_single() || 'post' !== get_post_type( $id ) ) {
 		return $content;
 	}
-	return $content . ws_fe_delete_news_form( $id, true );
+	return $content;
 } );
 
 /* News cards from the block templates (the News page and Latest news on the home page): add the button under each excerpt. */
@@ -917,6 +903,6 @@ add_filter( 'render_block_core/post-excerpt', function ( $html ) {
 	if ( ! $id || 'post' !== get_post_type( $id ) || is_single() ) {
 		return $html;
 	}
-	return $html . ws_fe_delete_news_form( $id );
+	return $html . ws_cx_edit_link( 'news', $id ); // Pencil "Edit" (edit screen has Save, Cancel and Delete).
 } );
 

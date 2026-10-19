@@ -168,13 +168,14 @@ function ws_event_card( $event_id ) {
 	$place = get_post_meta( $event_id, 'city', true ) ?: ws_event_place( $event_id );
 	$host  = ws_event_host( $event_id );
 	return sprintf(
-		'<article class="ws-event-card">%1$s<div class="ws-event-card__body"><h3 class="ws-event-card__title"><a href="%2$s">%3$s</a></h3><p class="ws-event-card__meta">%4$s%5$s</p>%6$s</div></article>',
+		'<article class="ws-event-card">%1$s<div class="ws-event-card__body"><h3 class="ws-event-card__title"><a href="%2$s">%3$s</a></h3><p class="ws-event-card__meta">%4$s%5$s</p>%6$s%7$s</div></article>',
 		$date,
 		esc_url( get_permalink( $event_id ) ),
 		esc_html( get_the_title( $event_id ) ),
 		esc_html( ws_event_date_range( $event_id ) ),
 		$place ? ' <span aria-hidden="true">·</span> ' . esc_html( $place ) : '',
-		$host ?: ws_event_organiser( $event_id )
+		$host ?: ws_event_organiser( $event_id ),
+		ws_cx_edit_link( 'event', $event_id )
 	);
 }
 

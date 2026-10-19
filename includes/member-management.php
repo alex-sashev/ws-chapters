@@ -36,6 +36,7 @@ function ws_mm_subnav( $current, $wide = false ) {
 	if ( ws_mm_can_manage() ) {
 		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), ws_mm_page( 'member-management' ) );
 	}
+	$items['feedback'] = array( __( 'Website feedback', 'ws-chapters' ), ws_mm_page( 'member-feedback' ) ); // Last, on the right, for everyone.
 	$out = '<nav class="ws-subnav' . ( $wide ? ' alignwide' : '' ) . '" aria-label="' . esc_attr__( 'Members', 'ws-chapters' ) . '">';
 	foreach ( $items as $key => $item ) {
 		if ( ! $item[1] ) {
@@ -451,7 +452,7 @@ function ws_mm_flash_notice() {
 
 /* The member pages are never served from a page cache: they differ per person and carry fresh form keys. */
 function ws_mm_is_member_page() {
-	foreach ( array( 'members', 'member-directory', 'member-management', 'member-account' ) as $slug ) {
+	foreach ( array( 'members', 'member-directory', 'member-management', 'member-account', 'member-feedback', 'edit-content' ) as $slug ) {
 		$p = ws_mm_page( $slug );
 		if ( $p && is_page( $p->ID ) ) {
 			return true;
@@ -747,7 +748,7 @@ add_action( 'edit_user_profile_update', 'ws_mm_save_profile_fields' );
  * The member pages under Members: member list, member management and My profile. Added on install and whenever
  * one is missing after a WS_MM_PAGES change; an existing page is never changed.
  */
-const WS_MM_PAGES = '1.0';
+const WS_MM_PAGES = '1.2';
 add_action( 'init', function () {
 	if ( WS_MM_PAGES === get_option( 'ws_mm_pages' ) || ! post_type_exists( 'page' ) ) {
 		return;
@@ -761,6 +762,8 @@ add_action( 'init', function () {
 		'member-directory'  => array( __( 'Member directory', 'ws-chapters' ), '[ws_member_directory]' ),
 		'member-management' => array( __( 'Member management', 'ws-chapters' ), '[ws_member_manage]' ),
 		'member-account'    => array( __( 'My profile', 'ws-chapters' ), '[ws_member_account]' ),
+		'member-feedback'   => array( __( 'Website feedback', 'ws-chapters' ), '[ws_member_feedback]' ),
+		'edit-content'      => array( __( 'Edit', 'ws-chapters' ), '[ws_content_edit]' ),
 	);
 	foreach ( $pages as $slug => $def ) {
 		if ( ws_mm_page( $slug ) ) {
