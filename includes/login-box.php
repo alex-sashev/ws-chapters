@@ -18,10 +18,12 @@ add_action( 'wp_footer', function () {
 		$user  = wp_get_current_user();
 		$inner = '<p class="ws-login__hello">' . sprintf( /* translators: %s: name */ esc_html__( 'Signed in as %s.', 'ws-chapters' ), esc_html( $user->display_name ) ) . '</p>'
 			. '<p><a class="ws-btn-gold" href="' . esc_url( home_url( '/members/' ) ) . '">' . esc_html__( 'Members area', 'ws-chapters' ) . '</a></p>'
+			. ( function_exists( 'ws_ma_url' ) ? '<p><a href="' . esc_url( ws_ma_url() ) . '">' . esc_html__( 'My profile', 'ws-chapters' ) . '</a></p>' : '' )
 			. '<p><a class="ws-login__logout" href="' . esc_url( wp_logout_url( home_url( '/' ) ) ) . '">' . esc_html__( 'Log out', 'ws-chapters' ) . '</a></p>';
 	} else {
-		$inner = '<form method="post" action="' . esc_url( wp_login_url() ) . '" class="ws-login__form">'
-			. '<label>' . esc_html__( 'Email or road name', 'ws-chapters' ) . '<input type="text" name="log" autocomplete="username" required></label>'
+		$action = function_exists( 'ws_ma_url' ) && ws_mm_page( 'member-account' ) ? ws_ma_url() : wp_login_url();
+		$inner  = '<form method="post" action="' . esc_url( $action ) . '" class="ws-login__form"><input type="hidden" name="ws_ma_action" value="login">'
+			. '<label>' . esc_html__( 'Email', 'ws-chapters' ) . '<input type="email" name="log" autocomplete="username" required></label>'
 			. '<label>' . esc_html__( 'Password', 'ws-chapters' ) . '<input type="password" name="pwd" autocomplete="current-password" required></label>'
 			. '<label class="ws-login__remember"><input type="checkbox" name="rememberme" value="forever"> ' . esc_html__( 'Remember me', 'ws-chapters' ) . '</label>'
 			. '<input type="hidden" name="redirect_to" value="' . esc_url( $back ) . '">'

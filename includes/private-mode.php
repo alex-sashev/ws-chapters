@@ -31,7 +31,8 @@ add_action( 'init', function () {
 add_action( 'update_option_ws_private_mode', 'ws_purge_page_cache' );
 
 add_action( 'template_redirect', function () {
-	if ( ! ws_private_mode() || is_user_logged_in() ) {
+	// The member account page (sign in, set a password) stays open.
+	if ( ! ws_private_mode() || is_user_logged_in() || apply_filters( 'ws_private_mode_open', false ) ) {
 		return;
 	}
 	nocache_headers();

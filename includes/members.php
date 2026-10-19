@@ -296,7 +296,7 @@ function ws_members_handle_post() {
 	return array( 'success', sprintf( __( 'Added "%s". It is now visible to all members.', 'ws-chapters' ), $title ) );
 }
 
-/** One library entry. */
+/** One library entry: a table row. */
 function ws_doc_item( $doc ) {
 	$types  = ws_doc_types();
 	$type   = get_post_meta( $doc->ID, '_ws_doc_type', true );
@@ -310,33 +310,25 @@ function ws_doc_item( $doc ) {
 	$badge  = $is_url ? __( 'LINK', 'ws-chapters' ) : ( strtoupper( pathinfo( (string) $name, PATHINFO_EXTENSION ) ) ?: 'FILE' );
 	$extra  = $is_url ? preg_replace( '#^www\.#', '', (string) ( wp_parse_url( $url, PHP_URL_HOST ) ?: $url ) ) : size_format( (int) get_post_meta( $doc->ID, '_ws_size', true ) );
 	$delete = ws_can_delete_doc( $doc ) ? sprintf(
-		'<form method="post" class="ws-doc__delete" onsubmit="return confirm(%1$s)"><input type="hidden" name="ws_doc_delete" value="%2$d"><input type="hidden" name="ws_doc_nonce" value="%3$s"><button type="submit">%4$s</button></form>',
+		'<form method="post" class="ws-mm__inline" onsubmit="return confirm(%1$s)"><input type="hidden" name="ws_doc_delete" value="%2$d"><input type="hidden" name="ws_doc_nonce" value="%3$s"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--danger">%4$s</button></form>',
 		esc_attr( wp_json_encode( __( 'Delete this document for everyone?', 'ws-chapters' ) ) ),
 		$doc->ID,
 		esc_attr( wp_create_nonce( 'ws_doc_delete_' . $doc->ID ) ),
 		esc_html__( 'Delete', 'ws-chapters' )
 	) : '';
-	return sprintf(
-		'<li class="ws-doc ws-doc--%1$s"><div class="ws-doc__icon" aria-hidden="true">%2$s</div><div class="ws-doc__body"><p class="ws-doc__date"><time datetime="%3$s">%4$s</time> · <span class="ws-doc__type">%5$s</span></p><h3 class="ws-doc__title"><a href="%6$s"%7$s>%8$s</a></h3><p class="ws-doc__desc">%9$s</p><p class="ws-doc__meta">%10$s · %11$s</p></div><div class="ws-doc__actions"><a class="ws-btn-outline" href="%6$s"%7$s>%12$s</a>%13$s</div></li>',
-		esc_attr( $type ),
-		esc_html( $badge ),
-		esc_attr( $date ),
-		esc_html( date_i18n( 'j F Y', strtotime( $date ) ) ),
-		esc_html( $types[ $type ] ?? '' ),
-		esc_url( $href ),
-		$target,
-		esc_html( $doc->post_title ),
-		nl2br( esc_html( $doc->post_content ) ),
-		/* translators: %s: road name */
-		esc_html( sprintf( __( 'Added by %s', 'ws-chapters' ), $author ? $author->display_name : '—' ) ),
-		esc_html( $extra ),
-		$is_url ? esc_html__( 'Open link', 'ws-chapters' ) : esc_html__( 'Download', 'ws-chapters' ),
-		$delete
-	);
+	return '<tr class="ws-doc--' . esc_attr( $type ) . '">'
+		. '<td class="ws-doc__when"><time datetime="' . esc_attr( $date ) . '">' . esc_html( date_i18n( 'j M Y', strtotime( $date ) ) ) . '</time></td>'
+		. '<td><div class="ws-doc__cell"><span class="ws-doc__icon" aria-hidden="true">' . esc_html( $badge ) . '</span><span><a class="ws-doc__title" href="' . esc_url( $href ) . '"' . $target . '>' . esc_html( $doc->post_title ) . '</a>'
+		. ( '' !== trim( $doc->post_content ) ? '<span class="ws-doc__desc">' . nl2br( esc_html( $doc->post_content ) ) . '</span>' : '' ) . '</span></div></td>'
+		. '<td data-label="' . esc_attr__( 'Type', 'ws-chapters' ) . '"><span class="ws-doc__type">' . esc_html( $types[ $type ] ?? '' ) . '</span></td>'
+		. '<td data-label="' . esc_attr__( 'Added by', 'ws-chapters' ) . '">' . esc_html( $author ? ( function_exists( 'ws_mm_person_name' ) ? ws_mm_person_name( $author ) : $author->display_name ) : '—' ) . '</td>'
+		. '<td data-label="' . esc_attr__( 'Size', 'ws-chapters' ) . '" class="ws-muted">' . esc_html( $extra ) . '</td>'
+		. '<td><div class="ws-mm__row-actions"><a class="ws-mm__btn ws-mm__btn--small ws-mm__btn--ghost" href="' . esc_url( $href ) . '"' . $target . '>' . ( $is_url ? esc_html__( 'Open link', 'ws-chapters' ) : esc_html__( 'Download', 'ws-chapters' ) ) . '</a>' . $delete . '</div></td>'
+		. '</tr>';
 }
 
 function ws_members_area() {
-	$nav = is_user_logged_in() && function_exists( 'ws_mm_subnav' ) ? ws_mm_subnav( 'library' ) : '';
+	$nav = is_user_logged_in() && function_exists( 'ws_mm_subnav' ) ? ws_mm_subnav( 'library', true ) : '';
 	return $nav . ws_members_area_body();
 }
 
@@ -346,16 +338,13 @@ function ws_members_area_body() {
 	}
 	$notice = ws_members_handle_post();
 	$types  = ws_doc_types();
+	// phpcs:disable WordPress.Security.NonceVerification -- read-only filters.
 	$filter = isset( $_GET['type'] ) && isset( $types[ $_GET['type'] ] ) ? sanitize_key( $_GET['type'] ) : '';
-	$user   = wp_get_current_user();
-	$failed = $notice && 'error' === $notice[0] && isset( $_POST['ws_doc_upload'] );
+	$search = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
+	// phpcs:enable
+	$failed = $notice && 'error' === $notice[0] && isset( $_POST['ws_doc_upload'] ); // phpcs:ignore WordPress.Security.NonceVerification
 
-	$out  = '<div class="ws-members">';
-	$out .= '<p class="ws-members__hello">' . sprintf(
-		/* translators: %s: road name */
-		esc_html__( 'Welcome, %s.', 'ws-chapters' ),
-		'<strong>' . esc_html( $user->display_name ) . '</strong>'
-	) . ' <a href="' . esc_url( wp_logout_url( home_url( '/' ) ) ) . '">' . esc_html__( 'Log out', 'ws-chapters' ) . '</a></p>';
+	$out = '<div class="ws-mm alignwide ws-members">';
 	if ( $notice ) {
 		$out .= ws_form_notice( $notice[0], esc_html( $notice[1] ) );
 	}
@@ -363,25 +352,36 @@ function ws_members_area_body() {
 	// 1. The library.
 	$args = array( 'post_type' => 'ws_member_doc', 'post_status' => 'private', 'posts_per_page' => 500 );
 	if ( $filter ) {
-		$args['meta_query'] = array( array( 'key' => '_ws_doc_type', 'value' => $filter ) );
+		$args['meta_query'] = array( array( 'key' => '_ws_doc_type', 'value' => $filter ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
 	}
 	$docs = get_posts( $args );
+	if ( '' !== $search ) {
+		$docs = array_values( array_filter( $docs, function ( $d ) use ( $search ) {
+			return false !== mb_stripos( $d->post_title . ' ' . $d->post_content, $search );
+		} ) );
+	}
 	// Newest document date first (falls back to when it was added).
 	usort( $docs, function ( $a, $b ) {
 		$da = ( get_post_meta( $a->ID, '_ws_doc_date', true ) ?: get_the_date( 'Y-m-d', $a ) ) . $a->post_date;
 		$db = ( get_post_meta( $b->ID, '_ws_doc_date', true ) ?: get_the_date( 'Y-m-d', $b ) ) . $b->post_date;
 		return strcmp( $db, $da );
 	} );
-	$base = remove_query_arg( 'type' );
-	$out .= '<div class="ws-section-head ws-library-head"><h2>' . esc_html__( 'Library', 'ws-chapters' ) . '</h2></div>';
-	$out .= '<div class="ws-library-bar"><nav class="ws-doc-filter" aria-label="' . esc_attr__( 'Document types', 'ws-chapters' ) . '"><a href="' . esc_url( $base ) . '"' . ( $filter ? '' : ' aria-current="true"' ) . '>' . esc_html__( 'All', 'ws-chapters' ) . '</a>';
+	$type_select = '<select name="type" class="ws-mm__input"><option value="">' . esc_html__( 'All types', 'ws-chapters' ) . '</option>';
 	foreach ( $types as $k => $label ) {
-		$out .= '<a href="' . esc_url( add_query_arg( 'type', $k, $base ) ) . '"' . ( $filter === $k ? ' aria-current="true"' : '' ) . '>' . esc_html( $label ) . '</a>';
+		$type_select .= '<option value="' . esc_attr( $k ) . '"' . selected( $filter, $k, false ) . '>' . esc_html( $label ) . '</option>';
 	}
-	$out .= '</nav><a class="ws-btn-gold ws-upload-toggle" href="#ws-doc-upload" data-ws-upload-toggle>' . esc_html__( 'Upload a document', 'ws-chapters' ) . '</a></div>';
-	$out .= $docs
-		? '<ul class="ws-doc-list">' . implode( '', array_map( 'ws_doc_item', $docs ) ) . '</ul>'
-		: '<p class="ws-muted ws-doc-empty">' . esc_html__( 'No documents yet.', 'ws-chapters' ) . '</p>';
+	$type_select .= '</select>';
+	$out .= '<form method="get" class="ws-mm__bar ws-library-bar">'
+		. ws_mm_field( __( 'Search', 'ws-chapters' ), '<input type="search" name="q" class="ws-mm__input" value="' . esc_attr( $search ) . '" placeholder="' . esc_attr__( 'Title or description', 'ws-chapters' ) . '">', 'ws-mm__field--wide' )
+		. ws_mm_field( __( 'Type', 'ws-chapters' ), $type_select )
+		. '<div class="ws-mm__actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Filter', 'ws-chapters' ) . '</button>'
+		. ( $filter || '' !== $search ? '<a class="ws-mm__clear" href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Clear', 'ws-chapters' ) . '</a>' : '' ) . '</div>'
+		. '<div class="ws-mm__actions ws-library-bar__upload"><a class="ws-mm__btn ws-mm__btn--ghost ws-upload-toggle" href="#ws-doc-upload" data-ws-upload-toggle>' . esc_html__( 'Upload a document', 'ws-chapters' ) . '</a></div></form>';
+	/* translators: %d: number of documents */
+	$out .= '<p class="ws-mm__count">' . esc_html( sprintf( _n( '%d document', '%d documents', count( $docs ), 'ws-chapters' ), count( $docs ) ) ) . '</p>';
+	$out .= '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--library"><thead><tr><th>' . esc_html__( 'Date', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Document', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Type', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Added by', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Size', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Actions', 'ws-chapters' ) . '</th></tr></thead><tbody>'
+		. ( $docs ? implode( '', array_map( 'ws_doc_item', $docs ) ) : '<tr><td colspan="6" class="ws-mm__empty">' . esc_html__( 'No documents yet.', 'ws-chapters' ) . '</td></tr>' )
+		. '</tbody></table></div>';
 
 	// 2. The upload form, opened by the button (and kept open after an error).
 	$v    = function ( $k ) use ( $failed ) {
@@ -391,7 +391,7 @@ function ws_members_area_body() {
 	foreach ( $types as $k => $label ) {
 		$opts .= '<option value="' . esc_attr( $k ) . '"' . selected( $v( 'ws_doc_type' ), $k, false ) . '>' . esc_html( $label ) . '</option>';
 	}
-	$out .= '<details class="ws-upload" id="ws-doc-upload"' . ( $failed ? ' open' : '' ) . '><summary>' . esc_html__( 'Upload a document', 'ws-chapters' ) . '</summary>';
+	$out .= '<details class="ws-upload ws-mm__card" id="ws-doc-upload"' . ( $failed ? ' open' : '' ) . '><summary>' . esc_html__( 'Upload a document', 'ws-chapters' ) . '</summary>';
 	$out .= '<form class="ws-form ws-doc-upload" method="post" enctype="multipart/form-data" action="#ws-doc-upload" data-ws-doc-form><fieldset><legend>' . esc_html__( 'Upload a document', 'ws-chapters' ) . '</legend>';
 	$out .= '<input type="hidden" name="ws_doc_upload" value="1"><input type="hidden" name="ws_doc_nonce" value="' . esc_attr( wp_create_nonce( 'ws_doc_upload' ) ) . '">';
 	$out .= ws_field( 'ws_doc_title', __( 'Title', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_doc_title' ) ) );

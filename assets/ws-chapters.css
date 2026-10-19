@@ -334,3 +334,46 @@ select.ws-mm__input { appearance: none; -webkit-appearance: none; padding-right:
 .ws-mm__table--manage { min-width: 1000px; }
 .ws-mm__table--manage [data-ws-mm-chapter] { min-width: 210px; }
 .ws-mm__email { font-size: .85rem; }
+.ws-mm [hidden] { display: none !important; }
+.ws-mm__field [data-ws-mm-other] { margin-top: .4rem; }
+/* Members list: room for the phone number. */
+.ws-mm__table--directory { min-width: 1080px; }
+.ws-mm__table--directory td:last-child, .ws-mm__table--directory th:last-child { min-width: 160px; white-space: nowrap; }
+/* Recent activity (Super Admins): folded until opened. */
+.ws-mm__fold > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem; padding: .6rem 0; }
+.ws-mm__fold > summary::-webkit-details-marker { display: none; }
+.ws-mm__fold > summary::before { content: "▸"; color: var(--ws-gold-dark, #8a6d2c); transition: transform .15s; }
+.ws-mm__fold[open] > summary::before { transform: rotate(90deg); }
+.ws-mm__fold > summary .ws-muted { font-size: .85rem; text-transform: none; letter-spacing: 0; }
+/* Library in the member-page look. */
+.ws-library-bar { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto auto; justify-content: initial; }
+.ws-library-bar__upload { justify-content: flex-end; }
+.ws-mm__table--library { min-width: 960px; }
+.ws-doc__when { white-space: nowrap; font-weight: 600; color: var(--ws-muted, #6b655c); }
+.ws-doc__cell { display: flex; gap: .8rem; align-items: flex-start; }
+.ws-doc__cell .ws-doc__icon { flex: none; width: 46px; height: 46px; font-size: .7rem; }
+.ws-doc__cell > span:last-child { display: flex; flex-direction: column; gap: .2rem; }
+a.ws-doc__title { color: var(--ws-text, #1c1a17) !important; font-weight: 700; text-decoration: none; }
+a.ws-doc__title:hover { text-decoration: underline; }
+.ws-doc__desc { font-size: .9rem; color: var(--ws-muted, #6b655c); }
+.ws-mm__table--library .ws-mm__row-actions { flex-direction: column; align-items: stretch; }
+.ws-mm__table--library .ws-mm__row-actions .ws-mm__btn { width: 100%; }
+.ws-members .ws-upload.ws-mm__card { margin-top: 2rem; }
+@media (max-width: 900px) { .ws-library-bar { grid-template-columns: 1fr 1fr; } .ws-library-bar .ws-mm__field--wide { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .ws-library-bar { grid-template-columns: 1fr; } }
+/* My profile, sign in and new password (includes/member-account.php). */
+.ws-ma__card { max-width: 520px; margin-left: auto; margin-right: auto; }
+.ws-ma__form { display: grid; gap: 1rem; }
+.ws-ma__remember { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
+.ws-ma__switch { margin: 1rem 0 0; }
+.ws-ma__switch a, .ws-ma__logout a { color: var(--ws-gold-dark, #8a6d2c); font-weight: 600; }
+.ws-ma__photo { grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; }
+.ws-ma__photo .ws-mm__avatar { width: 72px; height: 72px; font-size: 1.3rem; }
+.ws-ma__photo .ws-mm__field { flex: 1; }
+.ws-ma__file { height: auto; padding: .55rem .75rem; }
+.ws-mm__input:disabled { background: #f4efe2; color: var(--ws-muted, #6b655c); cursor: not-allowed; }
+.ws-ma__password { grid-column: 1 / -1; }
+.ws-ma__password > summary { cursor: pointer; color: var(--ws-gold-dark, #8a6d2c); font-weight: 600; margin-bottom: .8rem; }
+.ws-ma__logout { margin: 0; text-align: right; }
+.ws-mm__btn { box-sizing: border-box; text-decoration: none; }
+.ws-members .ws-upload--js:not([open]) { display: none; }

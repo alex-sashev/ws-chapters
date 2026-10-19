@@ -17,7 +17,7 @@ function ws_mm_role_labels() {
 }
 
 function ws_mm_titles() {
-	return array( 'President', 'Chapter President', 'Vice President', 'Sergeant of Arms', 'Secretary', 'Treasurer', 'Road Captain', 'Other' );
+	return array( 'Member', 'President', 'Chapter President', 'Vice President', 'Sergeant of Arms', 'Secretary', 'Treasurer', 'Road Captain', 'Other' );
 }
 
 /** A page by its name, wherever it sits (get_page_by_path misses pages under a parent page). */
@@ -26,11 +26,12 @@ function ws_mm_page( $slug ) {
 	return $found ? $found[0] : null;
 }
 
-/** The row of links between the three member pages. $current is 'library', 'directory' or 'manage'; $wide matches the wide member pages. */
+/** The row of links between the member pages. $current is 'library', 'directory', 'account' or 'manage'; $wide matches the wide member pages. */
 function ws_mm_subnav( $current, $wide = false ) {
 	$items = array(
 		'library'   => array( __( 'Library', 'ws-chapters' ), ws_mm_page( 'members' ) ),
 		'directory' => array( __( 'Members', 'ws-chapters' ), ws_mm_page( 'member-directory' ) ),
+		'account'   => array( __( 'My profile', 'ws-chapters' ), ws_mm_page( 'member-account' ) ),
 	);
 	if ( ws_mm_can_manage() ) {
 		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), ws_mm_page( 'member-management' ) );
@@ -203,24 +204,52 @@ function ws_mm_chapter_select( $name, array $chapters, $selected, $first ) {
 	return $html . '</select>';
 }
 
-/** Title drop-down; a title that is not in the list shows as "Other". */
+/** Title drop-down. A title of their own (typed under "Other") shows as itself, e.g. "Guardian of Membership". */
 function ws_mm_title_select( $name, $selected, $first ) {
 	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-title><option value="">' . esc_html( $first ) . '</option>';
 	foreach ( ws_mm_titles() as $tt ) {
-		$html .= '<option value="' . esc_attr( $tt ) . '"' . selected( $selected, $tt, false ) . '>' . esc_html( $tt ) . '</option>';
+		if ( 'Other' === $tt && '' !== $selected && ! in_array( $selected, ws_mm_titles(), true ) ) {
+			$html .= '<option value="' . esc_attr( $selected ) . '" selected>' . esc_html( $selected ) . '</option>';
+		}
+		$html .= '<option value="' . esc_attr( $tt ) . '"' . selected( $selected, $tt, false ) . '>' . esc_html( 'Other' === $tt ? __( 'Other (type it)', 'ws-chapters' ) : $tt ) . '</option>';
 	}
 	return $html . '</select>';
 }
 
-/** Whether a stored title matches a filter choice ("Other" matches any title outside the list). */
+/** The text box for "Other", shown only while "Other" is chosen. */
+function ws_mm_title_other_input( $name ) {
+	return '<input type="text" name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-other maxlength="60" placeholder="' . esc_attr__( 'e.g. Guardian of Membership', 'ws-chapters' ) . '" aria-label="' . esc_attr__( 'Your own title', 'ws-chapters' ) . '">';
+}
+
+/**
+ * The title to store from a posted choice: a listed title, the typed text for "Other", or the person's
+ * current title kept as it is. '' clears it. Returns false when the choice is not allowed.
+ */
+function ws_mm_resolve_title( $choice, $other, $current ) {
+	if ( '' === $choice || ( in_array( $choice, ws_mm_titles(), true ) && 'Other' !== $choice ) || ( '' !== $current && $choice === $current ) ) {
+		return $choice;
+	}
+	if ( 'Other' === $choice ) {
+		$other = trim( $other );
+		return '' !== $other && mb_strlen( $other ) <= 60 ? $other : false;
+	}
+	return false;
+}
+
+/** Titles to filter by: the list, plus the people's own titles in use. */
+function ws_mm_title_choices( array $people ) {
+	$list = array_values( array_diff( ws_mm_titles(), array( 'Other' ) ) );
+	foreach ( $people as $u ) {
+		$t = (string) get_user_meta( $u->ID, 'ws_title', true );
+		if ( '' !== $t && ! in_array( $t, $list, true ) ) {
+			$list[] = $t;
+		}
+	}
+	return $list;
+}
+
 function ws_mm_title_matches( $title, $filter ) {
-	if ( '' === $filter ) {
-		return true;
-	}
-	if ( 'Other' === $filter ) {
-		return '' !== $title && ( 'Other' === $title || ! in_array( $title, ws_mm_titles(), true ) );
-	}
-	return $title === $filter;
+	return '' === $filter || $title === $filter;
 }
 
 /** Small script for the member pages: chapter list follows the country, "Other" title box, busy buttons. Printed once. */
@@ -279,6 +308,11 @@ add_shortcode( 'ws_member_directory', function () {
 			. '<td data-label="' . esc_attr__( 'Phone', 'ws-chapters' ) . '">' . ( $phone ? '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>' : '' ) . '</td>'
 			. '</tr>';
 	}
+	$title_filter = '<select name="ws_mm_title" class="ws-mm__input"><option value="">' . esc_html__( 'All titles', 'ws-chapters' ) . '</option>';
+	foreach ( ws_mm_title_choices( ws_mm_people() ) as $tt ) {
+		$title_filter .= '<option value="' . esc_attr( $tt ) . '"' . selected( $title, $tt, false ) . '>' . esc_html( $tt ) . '</option>';
+	}
+	$title_filter .= '</select>';
 	$terms    = (array) get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false ) );
 	$chapters = ws_mm_chapters_in( array_map( 'intval', wp_list_pluck( $terms, 'term_id' ) ) );
 	$filtered = $country || $chapter || '' !== $title || '' !== $search;
@@ -286,7 +320,7 @@ add_shortcode( 'ws_member_directory', function () {
 		. ws_mm_field( __( 'Search', 'ws-chapters' ), '<input type="search" name="ws_mm_q" class="ws-mm__input" value="' . esc_attr( $search ) . '" placeholder="' . esc_attr__( 'Name, road name or email', 'ws-chapters' ) . '">', 'ws-mm__field--wide' )
 		. ws_mm_field( __( 'Country', 'ws-chapters' ), ws_mm_country_select( 'ws_mm_country', $terms, $country, __( 'All countries', 'ws-chapters' ) ) )
 		. ws_mm_field( __( 'Chapter', 'ws-chapters' ), ws_mm_chapter_select( 'ws_mm_chapter', $chapters, $chapter, __( 'All chapters', 'ws-chapters' ) ) )
-		. ws_mm_field( __( 'Title', 'ws-chapters' ), ws_mm_title_select( 'ws_mm_title', $title, __( 'All titles', 'ws-chapters' ) ) )
+		. ws_mm_field( __( 'Title', 'ws-chapters' ), $title_filter )
 		. '<div class="ws-mm__actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Filter', 'ws-chapters' ) . '</button>'
 		. ( $filtered ? '<a class="ws-mm__clear" href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Clear', 'ws-chapters' ) . '</a>' : '' ) . '</div></form>';
 	/* translators: %d: number of members */
@@ -321,7 +355,8 @@ add_action( 'template_redirect', function () {
 			}
 			ws_mm_log( 'removed', $uid );
 			$ok  = true;
-			$msg = __( 'Access removed. The account is kept and can be added back later.', 'ws-chapters' );
+			/* translators: %s: person's name */
+			$msg = sprintf( __( 'Access removed for %s. The account is kept and can be added back later.', 'ws-chapters' ), ws_mm_person_name( $u ) );
 		}
 	} elseif ( 'resend' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -353,37 +388,77 @@ add_action( 'template_redirect', function () {
 		}
 	} elseif ( 'title' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid   = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
-		$title = sanitize_text_field( wp_unslash( $_POST['ws_mm_title'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
-		if ( ! ws_mm_may_set_title( $uid ) || ( '' !== $title && ! in_array( $title, ws_mm_titles(), true ) ) ) {
+		$title = ws_mm_resolve_title(
+			sanitize_text_field( wp_unslash( $_POST['ws_mm_title'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification
+			sanitize_text_field( wp_unslash( $_POST['ws_mm_title_other'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification
+			(string) get_user_meta( $uid, 'ws_title', true )
+		);
+		if ( ! ws_mm_may_set_title( $uid ) ) {
 			$msg = __( 'You cannot set this title.', 'ws-chapters' );
+		} elseif ( false === $title ) {
+			$msg = __( 'For "Other", please type the title.', 'ws-chapters' );
 		} elseif ( '' === $title ) {
 			delete_user_meta( $uid, 'ws_title' );
 			ws_mm_log( 'title', $uid, '-' );
 			$ok  = true;
 			$msg = __( 'Title removed.', 'ws-chapters' );
 		} else {
-			$other = $title === 'Other' ? sanitize_text_field( wp_unslash( $_POST['ws_mm_title_other'] ?? '' ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-			update_user_meta( $uid, 'ws_title', $title === 'Other' && $other ? $other : $title );
-			ws_mm_log( 'title', $uid, $title === 'Other' && $other ? $other : $title );
+			update_user_meta( $uid, 'ws_title', $title );
+			ws_mm_log( 'title', $uid, $title );
 			$ok  = true;
 			/* translators: %s: person's name */
 			$msg = sprintf( __( 'Title saved for %s.', 'ws-chapters' ), ws_mm_person_name( get_userdata( $uid ) ) );
 		}
 	}
-	set_transient( 'ws_mm_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), 5 * MINUTE_IN_SECONDS );
+	if ( $ok ) {
+		do_action( 'litespeed_purge_all' ); // Lists of people may be cached anywhere on the site.
+	}
 	// Back to the page the form was on. (wp_get_referer() is empty when the form posts to its own page, which sent people to the home page.)
 	$back = get_queried_object_id() ? get_permalink( get_queried_object_id() ) : '';
-	wp_safe_redirect( $back ? $back : ( wp_get_referer() ?: home_url( '/' ) ) );
+	wp_safe_redirect( ws_mm_flash_url( $back ? $back : ( wp_get_referer() ?: home_url( '/' ) ), $ok, (string) $msg ) );
 	exit;
 }, 3 );
 
-/* The page that shows a result message is never served from the page cache. */
-add_action( 'template_redirect', function () {
-	if ( is_user_logged_in() && get_transient( 'ws_mm_msg_' . get_current_user_id() ) ) {
-		nocache_headers();
-		do_action( 'litespeed_control_set_nocache', 'member management message' );
+/**
+ * The address to come back to with a result message. The message is kept for a few minutes under a one-off
+ * key that is part of the address, so it shows even where pages are cached and never shows twice.
+ */
+function ws_mm_flash_url( $url, $ok, $text ) {
+	$key = strtolower( wp_generate_password( 12, false, false ) );
+	set_transient( 'ws_flash_' . $key, array( 'ok' => (bool) $ok, 'text' => $text, 'user' => get_current_user_id() ), 10 * MINUTE_IN_SECONDS );
+	return add_query_arg( 'ws_done', $key, remove_query_arg( 'ws_done', $url ) );
+}
+
+/** The result message for this page view (as a notice), once. */
+function ws_mm_flash_notice() {
+	$key = isset( $_GET['ws_done'] ) ? sanitize_key( wp_unslash( $_GET['ws_done'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+	$msg = '' !== $key ? get_transient( 'ws_flash_' . $key ) : false;
+	if ( ! $msg || (int) $msg['user'] !== get_current_user_id() ) {
+		return '';
 	}
-}, 4 );
+	delete_transient( 'ws_flash_' . $key );
+	return ws_form_notice( $msg['ok'] ? 'success' : 'error', esc_html( $msg['text'] ) );
+}
+
+/* The member pages are never served from a page cache: they differ per person and carry fresh form keys. */
+function ws_mm_is_member_page() {
+	foreach ( array( 'members', 'member-directory', 'member-management', 'member-account' ) as $slug ) {
+		$p = ws_mm_page( $slug );
+		if ( $p && is_page( $p->ID ) ) {
+			return true;
+		}
+	}
+	return false;
+}
+add_action( 'template_redirect', function () {
+	if ( isset( $_GET['ws_done'] ) || ws_mm_is_member_page() ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+		nocache_headers();
+		do_action( 'litespeed_control_set_nocache', 'member page' );
+	}
+}, 1 );
 
 /* People who have signed in at least once are no longer shown as "Invited". */
 function ws_mm_mark_joined( $user ) {
@@ -443,6 +518,7 @@ function ws_mm_invite() {
 	update_user_meta( $uid, 'ws_scope_countries', array( $cid ) );
 	update_user_meta( $uid, 'ws_scope_chapters', $chaps );
 	update_user_meta( $uid, 'ws_invited', gmdate( 'c' ) );
+	update_user_meta( $uid, 'ws_title', 'Member' ); // They can change it on their profile.
 	$err = ws_mm_send_invite( get_userdata( $uid ) );
 	ws_mm_log( 'invited', $uid, $role );
 	if ( $err ) {
@@ -461,10 +537,10 @@ function ws_mm_send_invite( $user ) {
 	if ( is_wp_error( $key ) ) {
 		return __( 'The invitation could not be created. Please try again.', 'ws-chapters' );
 	}
-	$link = network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
+	$link = function_exists( 'ws_ma_url' ) ? ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) ) : network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
 	$sent = wp_mail( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), sprintf(
 		/* translators: 1: link, 2: days */
-		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter signing in, add your first and last name, your road name (the Nickname field) and your phone on your profile.", 'ws-chapters' ),
+		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter that you land on your profile: add your first and last name, road name, phone and title.", 'ws-chapters' ),
 		$link,
 		WS_MM_INVITE_DAYS
 	) );
@@ -481,11 +557,7 @@ add_shortcode( 'ws_member_manage', function () {
 		return '';
 	}
 	$out   = ws_mm_subnav( 'manage', true ) . '<div class="ws-mm alignwide">';
-	$flash = get_transient( 'ws_mm_msg_' . get_current_user_id() );
-	if ( $flash ) {
-		delete_transient( 'ws_mm_msg_' . get_current_user_id() );
-		$out .= ws_form_notice( $flash['ok'] ? 'success' : 'error', esc_html( $flash['text'] ) );
-	}
+	$out  .= ws_mm_flash_notice();
 	$nonce = '<input type="hidden" name="ws_mm_nonce" value="' . esc_attr( wp_create_nonce( 'ws_mm' ) ) . '">';
 	$super = ws_mm_is_super();
 	$mine  = ws_mm_manageable_countries();
@@ -520,7 +592,6 @@ add_shortcode( 'ws_member_manage', function () {
 		$name    = ws_mm_person_name( $u );
 		$road    = ws_mm_road_name( $u );
 		$title   = (string) get_user_meta( $u->ID, 'ws_title', true );
-		$custom  = '' !== $title && ! in_array( $title, ws_mm_titles(), true );
 		$role    = '';
 		foreach ( (array) $u->roles as $r ) {
 			$role = $labels[ $r ] ?? $role;
@@ -530,8 +601,8 @@ add_shortcode( 'ws_member_manage', function () {
 		$tcell   = esc_html( $title );
 		if ( $can_title ) {
 			$tcell = '<form method="post" class="ws-mm__inline">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="title">'
-				. ws_mm_title_select( 'ws_mm_title', $custom ? 'Other' : $title, __( 'No title', 'ws-chapters' ) )
-				. '<input type="text" name="ws_mm_title_other" class="ws-mm__input" data-ws-mm-other value="' . esc_attr( $custom ? $title : '' ) . '" placeholder="' . esc_attr__( 'Title', 'ws-chapters' ) . '" aria-label="' . esc_attr__( 'Other title', 'ws-chapters' ) . '">'
+				. ws_mm_title_select( 'ws_mm_title', $title, __( 'No title', 'ws-chapters' ) )
+				. ws_mm_title_other_input( 'ws_mm_title_other' )
 				. '<button type="submit" class="ws-mm__btn ws-mm__btn--small">' . esc_html__( 'Save', 'ws-chapters' ) . '</button></form>';
 		}
 		$my_chaps = array_values( array_filter( array_map( 'intval', (array) get_user_meta( $u->ID, 'ws_scope_chapters', true ) ) ) );
@@ -562,14 +633,17 @@ add_shortcode( 'ws_member_manage', function () {
 	$out .= '<section class="ws-mm__section"><h3 class="ws-mm__heading">' . esc_html__( 'People you manage', 'ws-chapters' ) . '</h3>'
 		. '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--manage">' . $head . '<tbody>' . ( $rows ?: '<tr><td colspan="6" class="ws-mm__empty">' . esc_html__( 'Nobody yet. Invite someone above.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></section>';
 	if ( $super ) {
-		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -20 ) );
+		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -50 ) );
 		$lrow = '';
+		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Access removed', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ) );
 		foreach ( $log as $e ) {
 			$by     = get_userdata( (int) $e['by'] );
 			$target = get_userdata( (int) $e['target'] );
-			$lrow  .= '<tr><td>' . esc_html( mysql2date( 'j M Y H:i', $e['time'] ) ) . '</td><td>' . esc_html( $by ? $by->display_name : '?' ) . '</td><td>' . esc_html( $e['action'] ) . ( $e['detail'] ? ' <span class="ws-muted">(' . esc_html( $e['detail'] ) . ')</span>' : '' ) . '</td><td>' . esc_html( $target ? ws_mm_person_name( $target ) : '?' ) . '</td></tr>';
+			$detail = '-' === $e['detail'] ? __( 'removed', 'ws-chapters' ) : $e['detail'];
+			$lrow  .= '<tr><td>' . esc_html( mysql2date( 'j M Y H:i', $e['time'] ) ) . '</td><td>' . esc_html( $by ? ws_mm_person_name( $by ) : '?' ) . '</td><td>' . esc_html( $acts[ $e['action'] ] ?? $e['action'] ) . ( $detail ? ' <span class="ws-muted">(' . esc_html( $detail ) . ')</span>' : '' ) . '</td><td>' . esc_html( $target ? ws_mm_person_name( $target ) : '?' ) . '</td><td>' . ( $target ? '<a href="mailto:' . esc_attr( $target->user_email ) . '">' . esc_html( $target->user_email ) . '</a>' : '' ) . '</td></tr>';
 		}
-		$out .= '<section class="ws-mm__section"><h3 class="ws-mm__heading">' . esc_html__( 'Recent activity', 'ws-chapters' ) . '</h3><div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--log"><thead><tr><th>' . esc_html__( 'When', 'ws-chapters' ) . '</th><th>' . esc_html__( 'By', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Action', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Person', 'ws-chapters' ) . '</th></tr></thead><tbody>' . ( $lrow ?: '<tr><td colspan="4" class="ws-mm__empty">' . esc_html__( 'No activity yet.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></section>';
+		// Super Admins only; folded away until opened.
+		$out .= '<details class="ws-mm__section ws-mm__fold"><summary class="ws-mm__heading">' . esc_html__( 'Recent activity', 'ws-chapters' ) . ' <span class="ws-muted">(' . count( $log ) . ')</span></summary><div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--log"><thead><tr><th>' . esc_html__( 'When', 'ws-chapters' ) . '</th><th>' . esc_html__( 'By', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Action', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Person', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email', 'ws-chapters' ) . '</th></tr></thead><tbody>' . ( $lrow ?: '<tr><td colspan="5" class="ws-mm__empty">' . esc_html__( 'No activity yet.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></details>';
 	}
 	return $out . '</div>' . ws_mm_script();
 } );
