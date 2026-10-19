@@ -346,6 +346,9 @@ function ws_event_submit_form() {
 		return $result ? ws_post_field( $k, in_array( $k, array( 'ws_description', 'ws_contact' ), true ) ) : '';
 	};
 	$out  = $result ? ws_form_notice( 'error', $result['message'] ) : '';
+	// Back to the page the person came from (or the events page if there is no earlier page).
+	$out .= '<p class="ws-back"><a href="' . esc_url( get_post_type_archive_link( 'ws_event' ) ) . '" class="ws-link-arrow" data-ws-back>&larr; ' . esc_html__( 'Back', 'ws-chapters' ) . '</a></p>'
+		. '<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-ws-back]");if(!a)return;if(document.referrer&&new URL(document.referrer).host===location.host&&history.length>1){e.preventDefault();history.back();}});})();</script>';
 	$out .= '<form class="ws-form" method="post" action="#ws-event-form" id="ws-event-form" enctype="multipart/form-data" data-ws-chapter-filter novalidate>';
 	$out .= ws_form_guard_fields( 'event' );
 	$out .= '<fieldset><legend>' . esc_html__( 'The event', 'ws-chapters' ) . '</legend>';
