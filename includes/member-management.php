@@ -356,15 +356,19 @@ add_action( 'template_redirect', function () {
 		if ( ! ws_mm_may_manage_user( $uid ) ) {
 			$msg = __( 'You cannot remove this person.', 'ws-chapters' );
 		} else {
-			$u = get_userdata( $uid );
-			$u->set_role( '' ); // Removes access; the account and its content are kept.
-			foreach ( array( 'ws_scope_countries', 'ws_scope_chapters' ) as $k ) {
-				delete_user_meta( $uid, $k );
+			// Permanent: the account, email and profile are deleted. Everything they added (news, events,
+			// documents, photos) stays on the site and is credited to the person who removed them.
+			$u    = get_userdata( $uid );
+			$name = ws_mm_person_name( $u );
+			ws_mm_log( 'removed', $uid, $name . ' <' . $u->user_email . '>' );
+			$photo = (int) get_user_meta( $uid, 'ws_avatar', true );
+			if ( $photo ) {
+				wp_delete_attachment( $photo, true ); // Their profile photo is personal: it goes too.
 			}
-			ws_mm_log( 'removed', $uid );
-			$ok  = true;
+			require_once ABSPATH . 'wp-admin/includes/user.php';
+			$ok = wp_delete_user( $uid, get_current_user_id() );
 			/* translators: %s: person's name */
-			$msg = sprintf( __( 'Access removed for %s. The account is kept and can be added back later.', 'ws-chapters' ), ws_mm_person_name( $u ) );
+			$msg = $ok ? sprintf( __( '%s has been removed permanently. What they added to the site stays, now credited to you.', 'ws-chapters' ), $name ) : __( 'Sorry, this person could not be removed. Please try again.', 'ws-chapters' );
 		}
 	} elseif ( 'resend' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -638,7 +642,7 @@ add_shortcode( 'ws_member_manage', function () {
 			$actions .= '<form method="post" class="ws-mm__inline">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="resend"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--ghost">' . esc_html__( 'Resend invitation', 'ws-chapters' ) . '</button></form>';
 		}
 		if ( $can_manage ) {
-			$actions .= '<form method="post" class="ws-mm__inline" onsubmit="return confirm(\'' . esc_js( __( 'Remove access for this person? Their account and posts are kept.', 'ws-chapters' ) ) . '\')">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="remove"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--danger">' . esc_html__( 'Remove access', 'ws-chapters' ) . '</button></form>';
+			$actions .= '<form method="post" class="ws-mm__inline" onsubmit="return confirm(\'' . esc_js( __( 'Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you.', 'ws-chapters' ) ) . '\')">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="remove"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--danger">' . esc_html__( 'Remove member', 'ws-chapters' ) . '</button></form>';
 		}
 		$rows .= '<tr>'
 			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<span><strong>' . esc_html( $name ) . '</strong>' . ( $road ? '<span class="ws-mm__road">' . esc_html( $road ) . '</span>' : '' ) . '<a class="ws-mm__email" href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a><span class="ws-muted">' . esc_html( $role ) . '</span></span></div></td>'
@@ -655,12 +659,12 @@ add_shortcode( 'ws_member_manage', function () {
 	if ( $super ) {
 		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -50 ) );
 		$lrow = '';
-		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Access removed', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ), 'mail_failed' => __( 'Email NOT sent', 'ws-chapters' ) );
+		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Removed permanently', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ), 'mail_failed' => __( 'Email NOT sent', 'ws-chapters' ) );
 		foreach ( $log as $e ) {
 			$by     = get_userdata( (int) $e['by'] );
 			$target = get_userdata( (int) $e['target'] );
 			$detail = '-' === $e['detail'] ? __( 'removed', 'ws-chapters' ) : $e['detail'];
-			$lrow  .= '<tr><td>' . esc_html( mysql2date( 'j M Y H:i', $e['time'] ) ) . '</td><td>' . esc_html( $by ? ws_mm_person_name( $by ) : '?' ) . '</td><td>' . esc_html( $acts[ $e['action'] ] ?? $e['action'] ) . ( $detail ? ' <span class="ws-muted">(' . esc_html( $detail ) . ')</span>' : '' ) . '</td><td>' . esc_html( $target ? ws_mm_person_name( $target ) : '?' ) . '</td><td>' . ( $target ? '<a href="mailto:' . esc_attr( $target->user_email ) . '">' . esc_html( $target->user_email ) . '</a>' : '' ) . '</td></tr>';
+			$lrow  .= '<tr><td>' . esc_html( mysql2date( 'j M Y H:i', $e['time'] ) ) . '</td><td>' . esc_html( $by ? ws_mm_person_name( $by ) : '?' ) . '</td><td>' . esc_html( $acts[ $e['action'] ] ?? $e['action'] ) . ( $detail ? ' <span class="ws-muted">(' . esc_html( $detail ) . ')</span>' : '' ) . '</td><td>' . esc_html( $target ? ws_mm_person_name( $target ) : __( '(deleted)', 'ws-chapters' ) ) . '</td><td>' . ( $target ? '<a href="mailto:' . esc_attr( $target->user_email ) . '">' . esc_html( $target->user_email ) . '</a>' : '' ) . '</td></tr>';
 		}
 		// Super Admins only; folded away until opened.
 		$out .= '<details class="ws-mm__section ws-mm__fold"><summary class="ws-mm__heading">' . esc_html__( 'Recent activity', 'ws-chapters' ) . ' <span class="ws-muted">(' . count( $log ) . ')</span></summary><div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--log"><thead><tr><th>' . esc_html__( 'When', 'ws-chapters' ) . '</th><th>' . esc_html__( 'By', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Action', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Person', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email', 'ws-chapters' ) . '</th></tr></thead><tbody>' . ( $lrow ?: '<tr><td colspan="5" class="ws-mm__empty">' . esc_html__( 'No activity yet.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></details>';
