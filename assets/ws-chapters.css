@@ -369,7 +369,7 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-mm__textarea { height: auto; min-height: 140px; padding: .6rem .75rem; resize: vertical; line-height: 1.5; }
 .ws-mm__grid .ws-mm__field--wide { grid-column: 1 / -1; }
 /* Edit and delete (content-edit.php): pencil on listings, the edit screen, the 2 x 2 news gallery. */
-.ws-cx-edit { position: absolute; top: .6rem; right: .6rem; z-index: 2; display: inline-flex; align-items: center; gap: .35rem; margin: 0; padding: .3em .7em; background: #fff; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; color: var(--ws-gold-dark, #8a6d2c); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.ws-cx-edit { position: absolute; top: .6rem; right: .6rem; z-index: 2; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 4.5rem; height: 2rem; gap: .35rem; margin: 0; padding: 0 .5rem; background: #fff; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; color: var(--ws-gold-dark, #8a6d2c); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
 .ws-cx-edit svg { width: 14px; height: 14px; }
 .ws-cx-edit:hover, .ws-cx-edit:focus-visible { background: rgba(201, 162, 74, .12); }
 .ws-cx__form .ws-mm__field { display: block; margin: 0 0 1rem; }
@@ -400,6 +400,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .wp-block-post-content:has(.ws-cx-edit) { position: relative; }
 .wp-block-post-content > .ws-cx-edit, .ws-news-gallery + .ws-cx-edit { top: 0; right: 0; }
 /* Library: Download and Open link as icon-only buttons, the same look as the Edit button. */
-.ws-doc-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin: 0; padding: 0; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: #fff; color: var(--ws-gold-dark, #8a6d2c); text-decoration: none; }
+.ws-doc-icon-btn { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 4.5rem; height: 2rem; margin: 0; padding: 0; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: #fff; color: var(--ws-gold-dark, #8a6d2c); text-decoration: none; }
 .ws-doc-icon-btn svg { width: 15px; height: 15px; }
 .ws-doc-icon-btn:hover, .ws-doc-icon-btn:focus-visible { background: rgba(201, 162, 74, .12); }
