@@ -24,6 +24,11 @@ function ws_mm_is_super() {
 	return is_super_admin() || current_user_can( 'manage_options' );
 }
 
+/** Super Admins and Country Admins manage people. */
+function ws_mm_can_manage() {
+	return ws_mm_is_super() || ws_mm_is_country_admin();
+}
+
 function ws_mm_is_country_admin() {
 	return in_array( 'ws_country_admin', (array) wp_get_current_user()->roles, true );
 }
