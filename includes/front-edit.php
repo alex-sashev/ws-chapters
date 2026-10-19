@@ -390,34 +390,32 @@ function ws_fe_country_about_box( $term_id ) {
 
 /** "Submit news" on a country page: a news form for this country (no chapter, so posted by the country). */
 function ws_fe_country_news_form( $term_id ) {
-	$logged = is_user_logged_in();
+	if ( ! is_user_logged_in() ) {
+		return ''; // Visitors can read news but cannot submit it: sign in first.
+	}
+	$logged = true;
 	$inner  = ws_form_guard_fields( 'country_news' )
 		. '<input type="hidden" name="ws_country" value="' . (int) $term_id . '">'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'The news', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
-	if ( ! $logged ) {
-		$inner .= '<label class="ws-fedit__label">' . esc_html__( 'Your name', 'ws-chapters' ) . '<input type="text" name="ws_news_name" required></label>'
-			. '<label class="ws-fedit__label">' . esc_html__( 'Your email (not published)', 'ws-chapters' ) . '<input type="email" name="ws_news_email" required></label>';
-	}
 	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
-	return ws_fe_form_box( $inner, __( 'Submit news', 'ws-chapters' ), $logged ? 'Published straight away if you can edit this country, otherwise sent for review.' : 'Sent to the country team for review before it appears.' );
+	return ws_fe_form_box( $inner, __( 'Submit news', 'ws-chapters' ), 'Published straight away.' );
 }
 
 /** "Submit news or activity" form on the chapter's News tab. Posts to the same page. */
 function ws_fe_news_form( $chapter_id ) {
-	$logged = is_user_logged_in();
+	if ( ! is_user_logged_in() ) {
+		return ''; // Visitors can read news but cannot submit it: sign in first.
+	}
+	$logged = true;
 	$inner  = ws_form_guard_fields( 'chapter_news' )
 		. '<input type="hidden" name="ws_chapter" value="' . (int) $chapter_id . '">'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'What happened or what is coming up', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
-	if ( ! $logged ) {
-		$inner .= '<label class="ws-fedit__label">' . esc_html__( 'Your name', 'ws-chapters' ) . '<input type="text" name="ws_news_name" required></label>'
-			. '<label class="ws-fedit__label">' . esc_html__( 'Your email (not published)', 'ws-chapters' ) . '<input type="email" name="ws_news_email" required></label>';
-	}
 	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
-	return ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), $logged ? 'Published straight away if you can edit this chapter, otherwise sent for review.' : 'Sent to the chapter team for review before it appears.' );
+	return ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), 'Published straight away.' );
 }
 
 /** A public button that opens a form (not tied to a chapter edit permission). */
@@ -443,16 +441,16 @@ add_action( 'template_redirect', function () {
 		$error = __( 'Chapter not found.', 'ws-chapters' );
 	} elseif ( '' === ws_post_field( 'ws_news_title' ) || '' === ws_post_field( 'ws_news_body', true ) || empty( $_POST['ws_consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$error = __( 'Please fill in the title, the text and the agreement.', 'ws-chapters' );
-	} elseif ( ! is_user_logged_in() && ( '' === ws_post_field( 'ws_news_name' ) || ! is_email( ws_post_field( 'ws_news_email' ) ) ) ) {
-		$error = __( 'Please add your name and a valid email address.', 'ws-chapters' );
+	} elseif ( ! is_user_logged_in() ) {
+		$error = __( 'Please sign in to submit news.', 'ws-chapters' );
 	}
 
 	$ok = null === $error;
 	if ( $ok ) {
-		$publish = ws_front_can_edit( 'chapter', $chapter_id );
+		$publish = true; // Signed-in users' news is published straight away, with no approval step.
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'post',
-			'post_status'  => $publish ? 'publish' : 'pending',
+			'post_status'  => 'publish',
 			'post_title'   => ws_post_field( 'ws_news_title' ),
 			'post_content' => wpautop( ws_post_field( 'ws_news_body', true ) ),
 			'post_author'  => get_current_user_id(),
@@ -545,17 +543,17 @@ add_action( 'template_redirect', function () {
 		$error = __( 'Country not found.', 'ws-chapters' );
 	} elseif ( '' === ws_post_field( 'ws_news_title' ) || '' === ws_post_field( 'ws_news_body', true ) || empty( $_POST['ws_consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$error = __( 'Please fill in the title, the text and the agreement.', 'ws-chapters' );
-	} elseif ( ! is_user_logged_in() && ( '' === ws_post_field( 'ws_news_name' ) || ! is_email( ws_post_field( 'ws_news_email' ) ) ) ) {
-		$error = __( 'Please add your name and a valid email address.', 'ws-chapters' );
+	} elseif ( ! is_user_logged_in() ) {
+		$error = __( 'Please sign in to submit news.', 'ws-chapters' );
 	}
 
 	$ok      = null === $error;
 	$publish = false;
 	if ( $ok ) {
-		$publish = ws_front_can_edit( 'term', $term_id );
+		$publish = true; // Signed-in users' news is published straight away, with no approval step.
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'post',
-			'post_status'  => $publish ? 'publish' : 'pending',
+			'post_status'  => 'publish',
 			'post_title'   => ws_post_field( 'ws_news_title' ),
 			'post_content' => wpautop( ws_post_field( 'ws_news_body', true ) ),
 			'post_author'  => get_current_user_id(),
