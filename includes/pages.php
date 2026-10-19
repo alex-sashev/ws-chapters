@@ -155,16 +155,19 @@ function ws_gallery_grid( $ids ) {
 		$out .= sprintf( '<a href="%s" data-ws-full="%s">%s</a>', esc_url( wp_get_attachment_image_url( $id, 'large' ) ), esc_url( wp_get_attachment_image_url( $id, 'full' ) ), wp_get_attachment_image( $id, 'medium_large', false, array( 'loading' => 'lazy' ) ) );
 	}
 	$out .= '</div>';
-	return $out . ws_gallery_viewer_script();
+	$GLOBALS['ws_gallery_used'] = true; // The viewer script is printed once, at the bottom of the page.
+	return $out;
 }
 
-/** The viewer script: once per page, however many galleries it has. */
-function ws_gallery_viewer_script() {
-	static $done = false;
-	if ( $done ) {
-		return '';
+/** The viewer script, printed once at the bottom of any page that shows a gallery (works across tabs). */
+add_action( 'wp_footer', function () {
+	if ( empty( $GLOBALS['ws_gallery_used'] ) ) {
+		return;
 	}
-	$done = true;
+	echo ws_gallery_viewer_script(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed script text.
+} );
+
+function ws_gallery_viewer_script() {
 	return <<<'HTML'
 <script>
 (function () {
@@ -218,6 +221,7 @@ function ws_gallery_viewer_script() {
 	}
 	document.addEventListener('click', function (e) {
 		var a = e.target.closest && e.target.closest('[data-ws-gallery] > a');
+		if (a && a.closest('.ws-gallery-grid') === null) { return; }
 		if (!a || e.ctrlKey || e.metaKey || e.shiftKey) { return; }
 		var grid = a.parentNode, links = [].slice.call(grid.querySelectorAll(':scope > a'));
 		e.preventDefault();
