@@ -90,6 +90,9 @@ function ws_mm_may_manage_user( $target_id ) {
 	if ( ! $target || (int) $target_id === get_current_user_id() ) {
 		return false;
 	}
+	if ( in_array( 'administrator', (array) $target->roles, true ) ) {
+		return false; // Super Admins are never removed from here (only title and chapter, below).
+	}
 	if ( ws_mm_is_super() ) {
 		return true;
 	}
@@ -103,9 +106,14 @@ function ws_mm_may_manage_user( $target_id ) {
 	return (bool) array_intersect( ws_mm_user_ids( $target_id ), ws_mm_manageable_countries() );
 }
 
-/** Who may set a title: Super Admin, Country Admin of the person's country, Chapter Editor of the person's chapter. */
+/** Who may set someone's chapter (and so country): a Super Admin for anyone, themselves included; a Country Admin for their people. */
+function ws_mm_may_place( $target_id ) {
+	return ( ws_mm_is_super() && get_userdata( $target_id ) ) || ws_mm_may_manage_user( $target_id );
+}
+
+/** Who may set a title: Super Admin (anyone, themselves included), Country Admin of the person's country, Chapter Editor of the person's chapter. */
 function ws_mm_may_set_title( $target_id ) {
-	if ( ws_mm_may_manage_user( $target_id ) ) {
+	if ( ws_mm_may_place( $target_id ) ) {
 		return true;
 	}
 	$scope = ws_user_scope( get_current_user_id() );
@@ -177,7 +185,7 @@ function ws_mm_chapter_names( $uid ) {
 
 /** Everyone with a Widows Sons role: the contact book. */
 function ws_mm_people() {
-	return get_users( array( 'role__in' => array( 'ws_member', 'ws_chapter_editor', 'ws_country_admin' ), 'orderby' => 'display_name', 'order' => 'ASC' ) );
+	return get_users( array( 'role__in' => array( 'ws_member', 'ws_chapter_editor', 'ws_country_admin', 'administrator' ), 'orderby' => 'display_name', 'order' => 'ASC' ) );
 }
 
 /** A labelled field for the member pages: label above, the control below, all the same size. */
@@ -342,7 +350,7 @@ add_action( 'template_redirect', function () {
 		$msg = ws_mm_invite();
 		$ok  = null === $msg;
 		/* translators: %s: email address */
-		$msg = $ok ? sprintf( __( 'Invitation sent to %s.', 'ws-chapters' ), sanitize_email( wp_unslash( $_POST['ws_mm_email'] ?? '' ) ) ) : $msg; // phpcs:ignore WordPress.Security.NonceVerification
+		$msg = $ok ? sprintf( __( 'Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use "Resend invitation".', 'ws-chapters' ), sanitize_email( wp_unslash( $_POST['ws_mm_email'] ?? '' ) ) ) : $msg; // phpcs:ignore WordPress.Security.NonceVerification
 	} elseif ( 'remove' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
 		if ( ! ws_mm_may_manage_user( $uid ) ) {
@@ -372,7 +380,7 @@ add_action( 'template_redirect', function () {
 		$uid  = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
 		$chap = absint( $_POST['ws_mm_chapter'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
 		$t    = $chap ? ws_chapter_country( $chap ) : null;
-		if ( ! ws_mm_may_manage_user( $uid ) || ! $t || ! array_key_exists( $chap, ws_mm_chapters_in( ws_mm_manageable_countries() ) ) ) {
+		if ( ! ws_mm_may_place( $uid ) || ! $t || ! array_key_exists( $chap, ws_mm_chapters_in( ws_mm_manageable_countries() ) ) ) {
 			$msg = __( 'You cannot set this chapter.', 'ws-chapters' );
 		} else {
 			update_user_meta( $uid, 'ws_scope_chapters', array( $chap ) );
@@ -547,6 +555,14 @@ function ws_mm_send_invite( $user ) {
 	return $sent ? null : __( 'The invitation email could not be sent. Check the mail settings, then resend.', 'ws-chapters' );
 }
 
+/* Any email the site could not hand over to the mail service (Brevo) shows in Recent activity, with the reason. */
+add_action( 'wp_mail_failed', function ( $error ) {
+	$data = $error->get_error_data();
+	$to   = is_array( $data ) && ! empty( $data['to'] ) ? (array) $data['to'] : array();
+	$user = $to ? get_user_by( 'email', $to[0] ) : null;
+	ws_mm_log( 'mail_failed', $user ? $user->ID : 0, trim( implode( ', ', $to ) . ' — ' . $error->get_error_message(), ' —' ) );
+} );
+
 // Invitation links last WS_MM_INVITE_DAYS days (WordPress default is one day). Applies to all password reset links.
 add_filter( 'password_reset_expiration', function () {
 	return WS_MM_INVITE_DAYS * DAY_IN_SECONDS;
@@ -586,7 +602,8 @@ add_shortcode( 'ws_member_manage', function () {
 	foreach ( ws_mm_people() as $u ) {
 		$can_title  = ws_mm_may_set_title( $u->ID );
 		$can_manage = ws_mm_may_manage_user( $u->ID );
-		if ( ! $can_title && ! $can_manage ) {
+		$can_place  = ws_mm_may_place( $u->ID );
+		if ( ! $can_title && ! $can_manage && ! $can_place ) {
 			continue;
 		}
 		$name    = ws_mm_person_name( $u );
@@ -594,7 +611,10 @@ add_shortcode( 'ws_member_manage', function () {
 		$title   = (string) get_user_meta( $u->ID, 'ws_title', true );
 		$role    = '';
 		foreach ( (array) $u->roles as $r ) {
-			$role = $labels[ $r ] ?? $role;
+			$role = 'administrator' === $r ? __( 'Super Admin', 'ws-chapters' ) : ( $labels[ $r ] ?? $role );
+		}
+		if ( get_current_user_id() === $u->ID ) {
+			$role .= ' · ' . __( 'you', 'ws-chapters' );
 		}
 		$pending = ws_mm_is_pending( $u->ID );
 		$hidden  = '<input type="hidden" name="ws_mm_user" value="' . (int) $u->ID . '">';
@@ -607,7 +627,7 @@ add_shortcode( 'ws_member_manage', function () {
 		}
 		$my_chaps = array_values( array_filter( array_map( 'intval', (array) get_user_meta( $u->ID, 'ws_scope_chapters', true ) ) ) );
 		$ccell    = ws_mm_cell( ws_mm_chapter_names( $u->ID ), __( 'Missing', 'ws-chapters' ) );
-		if ( $can_manage && count( $my_chaps ) <= 1 ) {
+		if ( $can_place && count( $my_chaps ) <= 1 ) {
 			// The chapter sets the country too.
 			$ccell = '<form method="post" class="ws-mm__inline">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="place">'
 				. str_replace( '<select ', '<select required aria-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '" ', ws_mm_chapter_select( 'ws_mm_chapter', $chapter_choices, $my_chaps ? $my_chaps[0] : 0, __( 'Choose a chapter', 'ws-chapters' ) ) )
@@ -635,7 +655,7 @@ add_shortcode( 'ws_member_manage', function () {
 	if ( $super ) {
 		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -50 ) );
 		$lrow = '';
-		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Access removed', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ) );
+		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Access removed', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ), 'mail_failed' => __( 'Email NOT sent', 'ws-chapters' ) );
 		foreach ( $log as $e ) {
 			$by     = get_userdata( (int) $e['by'] );
 			$target = get_userdata( (int) $e['target'] );
