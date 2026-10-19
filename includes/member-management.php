@@ -426,3 +426,29 @@ function ws_mm_save_avatar( $user_id ) {
 add_action( 'personal_options_update', 'ws_mm_save_avatar' );
 add_action( 'edit_user_profile_update', 'ws_mm_save_avatar' );
 add_action( 'edit_user_profile_update', 'ws_mm_save_profile_fields' );
+
+/* One-time: the two member pages, under the Members page. Existing pages are never changed. */
+add_action( 'init', function () {
+	if ( get_option( 'ws_mm_pages_done' ) || ! post_type_exists( 'page' ) ) {
+		return;
+	}
+	update_option( 'ws_mm_pages_done', gmdate( 'c' ), false );
+	$parent = get_page_by_path( 'members' );
+	$pages  = array(
+		'member-directory'  => array( __( 'Member directory', 'ws-chapters' ), '[ws_member_directory]' ),
+		'member-management' => array( __( 'Member management', 'ws-chapters' ), '[ws_member_manage]' ),
+	);
+	foreach ( $pages as $slug => $def ) {
+		if ( get_page_by_path( $slug ) ) {
+			continue;
+		}
+		wp_insert_post( array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_title'   => $def[0],
+			'post_name'    => $slug,
+			'post_parent'  => $parent ? $parent->ID : 0,
+			'post_content' => '<!-- wp:html -->' . $def[1] . '<!-- /wp:html -->',
+		) );
+	}
+}, 45 );
