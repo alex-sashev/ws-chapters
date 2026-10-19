@@ -396,3 +396,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-news-card, .ws-event-card, .wp-block-post, .ws-mm__table--library tbody td:last-child { position: relative; }
 .ws-news-card:has(.ws-cx-edit) h3, .wp-block-post:has(.ws-cx-edit) .wp-block-post-title, .ws-event-card:has(.ws-cx-edit) .ws-event-card__title { padding-right: 7.5rem; }
 .ws-mm__table--library .ws-mm__row-actions { margin-top: 2.4rem; }
+/* The Edit pencil on a single news article sits in the top-right corner of the article. */
+.wp-block-post-content:has(.ws-cx-edit) { position: relative; }
+.wp-block-post-content > .ws-cx-edit, .ws-news-gallery + .ws-cx-edit { top: 0; right: 0; }

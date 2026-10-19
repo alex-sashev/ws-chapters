@@ -343,7 +343,7 @@ add_shortcode( 'ws_content_edit', function () {
 		. '<input type="hidden" name="ws_cx_form" value="save"><input type="hidden" name="ws_cx_type" value="' . esc_attr( $type ) . '"><input type="hidden" name="ws_cx_id" value="' . $id . '"><input type="hidden" name="ws_cx_nonce" value="' . esc_attr( $nonce ) . '">'
 		. $fields
 		. '<div class="ws-mm__actions ws-cx__buttons"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Save changes', 'ws-chapters' ) . '</button>'
-		. '<a class="ws-mm__btn ws-mm__btn--ghost" href="' . esc_url( $back ) . '">' . esc_html__( 'Close', 'ws-chapters' ) . '</a>'
+		. '<a class="ws-mm__btn ws-mm__btn--ghost" href="' . esc_url( $back ) . '">' . esc_html__( 'Go back', 'ws-chapters' ) . '</a>'
 		. '<button type="submit" form="ws-cx-delete-form" class="ws-cx__delete-btn">' . esc_html__( 'Delete', 'ws-chapters' ) . '</button></div>'
 		. '</form>';
 	$out .= '<form method="post" id="ws-cx-delete-form" class="ws-cx__delete-form" onsubmit="return confirm(' . esc_attr( wp_json_encode( __( 'Delete this for everyone? It moves to the Trash and can be restored from the WordPress admin.', 'ws-chapters' ) ) ) . ');">'
