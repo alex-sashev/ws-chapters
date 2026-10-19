@@ -5,6 +5,7 @@
  *
  * [ws_useful_links]  Cards like the news cards: the website address where the date would be, then the
  *                    title, the description and a "Visit website" link. Order: the Order number, then title.
+ *                    Super Admins and Country Admins also get "+ Add a link" above the cards.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -99,7 +100,64 @@ function ws_link_display( $url ) {
 	return preg_replace( '#^www\.#', '', $host ) . ( strlen( $path ) > 1 ? $path : '' );
 }
 
+/** Who may add a useful link from the site: Super Admins and Country Admins. */
+function ws_can_add_link() {
+	if ( ! is_user_logged_in() ) {
+		return false;
+	}
+	return current_user_can( 'manage_options' ) || current_user_can( WS_ASSET_CAP ) || in_array( 'ws_country_admin', (array) wp_get_current_user()->roles, true );
+}
+
+/** "+ Add a link": a pop-up form with name, web address and description; posted straight away. */
+function ws_add_link_form() {
+	if ( ! ws_can_add_link() ) {
+		return '';
+	}
+	$inner = ws_form_guard_fields( 'useful_link' )
+		. '<label class="ws-fedit__label">' . esc_html__( 'Name', 'ws-chapters' ) . '<input type="text" name="ws_link_title" maxlength="120" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Web address', 'ws-chapters' ) . '<input type="url" name="ws_link_url" placeholder="https://" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Description (what visitors find there)', 'ws-chapters' ) . '<textarea name="ws_link_desc" rows="4" maxlength="400"></textarea></label>';
+	return '<div class="ws-fe-create-chapter ws-fe-add-link">' . ws_fe_form_box( $inner, __( '+ Add a link', 'ws-chapters' ), __( 'The link is shown on this page straight away.', 'ws-chapters' ), __( 'Post the link', 'ws-chapters' ) ) . '</div>';
+}
+
+/* Save "+ Add a link" (Super Admins and Country Admins only, checked again here). */
+add_action( 'template_redirect', function () {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'useful_link' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$guard = ws_form_guard_check( 'useful_link' );
+	$title = ws_post_field( 'ws_link_title' );
+	$url   = esc_url_raw( ws_post_field( 'ws_link_url' ), array( 'http', 'https' ) );
+	$error = null;
+	if ( ! ws_can_add_link() ) {
+		$error = __( 'Only Super Admins and Country Admins can add links.', 'ws-chapters' );
+	} elseif ( true !== $guard ) {
+		$error = $guard;
+	} elseif ( '' === $title || ! wp_http_validate_url( $url ) ) {
+		$error = __( 'Please add a name and a web address starting with https://', 'ws-chapters' );
+	}
+	$ok = null === $error;
+	if ( $ok ) {
+		$id = wp_insert_post( array( 'post_type' => 'ws_link', 'post_status' => 'publish', 'post_title' => $title, 'post_author' => get_current_user_id() ), true );
+		if ( is_wp_error( $id ) ) {
+			$ok    = false;
+			$error = __( 'Sorry, something went wrong. Please try again later.', 'ws-chapters' );
+		} else {
+			update_post_meta( $id, '_ws_url', $url );
+			update_post_meta( $id, '_ws_desc', sanitize_textarea_field( ws_post_field( 'ws_link_desc', true ) ) );
+			do_action( 'litespeed_purge_all' );
+		}
+	}
+	/* translators: %s: link name */
+	$msg = $ok ? sprintf( __( 'The link "%s" is posted.', 'ws-chapters' ), $title ) : $error;
+	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), MINUTE_IN_SECONDS );
+	$back = get_queried_object_id() ? get_permalink( get_queried_object_id() ) : home_url( '/' );
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', $back ) ) );
+	exit;
+}, 2 );
+
 function ws_useful_links() {
+	$add   = ws_add_link_form();
 	$links = get_posts( array(
 		'post_type'      => 'ws_link',
 		'post_status'    => 'publish',
@@ -108,9 +166,9 @@ function ws_useful_links() {
 		'no_found_rows'  => true,
 	) );
 	if ( ! $links ) {
-		return '<p class="ws-muted">' . esc_html__( 'No links yet.', 'ws-chapters' ) . '</p>';
+		return $add . '<p class="ws-muted">' . esc_html__( 'No links yet.', 'ws-chapters' ) . '</p>';
 	}
-	$out = '<div class="ws-link-grid">';
+	$out = $add . '<div class="ws-link-grid">';
 	foreach ( $links as $l ) {
 		$url = get_post_meta( $l->ID, '_ws_url', true );
 		if ( ! $url ) {
