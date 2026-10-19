@@ -155,7 +155,7 @@ function ws_event_host( $event_id ) {
 		esc_url( get_permalink( $host ) ),
 		ws_chapter_logo( $host ),
 		esc_html__( 'Hosted by', 'ws-chapters' ),
-		esc_html( ws_display_name( get_the_title( $host ) ) ),
+		esc_html( ws_chapter_name( $host ) ),
 		ws_flag( ws_chapter_country( $host ) )
 	);
 }

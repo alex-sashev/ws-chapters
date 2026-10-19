@@ -69,7 +69,7 @@ function ws_site_setup() {
 	  array('United Kingdom', 'United Kingdom', '', null, null, -1, -1),
 	);
 	foreach ($chapters as $c) {
-	  $id = wp_insert_post(array('post_type'=>'ws_chapter','post_title'=>$c[0],'post_status'=>'publish',
+	  $id = wp_insert_post(array('post_type'=>'ws_chapter','post_title'=>'Widows Sons ' . $c[0],'post_name'=>sanitize_title($c[0]),'post_status'=>'publish',
 	    'post_content'=>'<!-- wp:paragraph --><p>This chapter profile is being prepared. Its history, riding activities and charitable initiatives will appear when confirmed by its representatives.</p><!-- /wp:paragraph -->'));
 	  wp_set_object_terms($id, array($gc($c[1])), 'ws_country');
 	  if ($c[2]) update_post_meta($id, 'city', $c[2]);

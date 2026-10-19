@@ -219,7 +219,7 @@ function ws_fe_save( $type, $id, $action ) {
 		}
 		$GLOBALS['ws_fe_return_override'] = get_permalink( $id );
 		/* translators: %s: chapter name */
-		return sprintf( __( 'The chapter is now called %s.', 'ws-chapters' ), ws_display_name( $name ) );
+		return sprintf( __( 'The chapter is now called %s.', 'ws-chapters' ), $name );
 	}
 
 	if ( 'trash_chapter' === $action ) {
@@ -432,7 +432,7 @@ function ws_fe_site_news_form() {
 	}
 	$options .= '</optgroup><optgroup label="' . esc_attr__( 'Chapters', 'ws-chapters' ) . '">';
 	foreach ( get_posts( array( 'post_type' => 'ws_chapter', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'no_found_rows' => true ) ) as $c ) {
-		$options .= '<option value="h' . (int) $c->ID . '">' . esc_html( ws_display_name( $c->post_title ) ) . '</option>';
+		$options .= '<option value="h' . (int) $c->ID . '">' . esc_html( ws_chapter_name( $c ) ) . '</option>';
 	}
 	$options .= '</optgroup>';
 	$inner = ws_form_guard_fields( 'site_news' )
@@ -523,11 +523,11 @@ add_action( 'template_redirect', function () {
 }, 2 );
 
 /** A public button that opens a form (not tied to a chapter edit permission). */
-function ws_fe_form_box( $inner, $label, $note ) {
+function ws_fe_form_box( $inner, $label, $note, $submit = '' ) {
 	return '<details class="ws-fedit ws-fedit--button ws-fe-news"><summary class="ws-fedit__btn" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</summary>'
 		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><button type="button" class="ws-fedit__close" aria-label="' . esc_attr__( 'Close', 'ws-chapters' ) . '" onclick="this.closest(\'details\').removeAttribute(\'open\')">&times;</button><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
 		. '<p class="ws-help">' . esc_html( $note ) . '</p>' . $inner
-		. '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Send', 'ws-chapters' ) . '</button></p></form></details>';
+		. '<p><button type="submit" class="ws-btn-gold">' . esc_html( '' !== $submit ? $submit : __( 'Send', 'ws-chapters' ) ) . '</button></p></form></details>';
 }
 
 /** Handle the news form: create the post, its country and chapter, and its images. */
@@ -732,28 +732,29 @@ function ws_chapter_in_country( $chapter_id, $term_id ) {
 	return in_array( (int) $term_id, $item['countries'], true );
 }
 
-/** Small trash button on one chapter row (inside the Chapters list). Asks for confirmation first. */
+/** "Delete" button on one chapter row (inside the chapter lists). Asks for confirmation first. */
 function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 	if ( ! ws_can_manage_country_chapters( $term_id ) || ! ws_chapter_in_country( $chapter_id, $term_id ) ) {
 		return '';
 	}
-	$name    = ws_display_name( get_the_title( $chapter_id ) );
+	$name    = ws_chapter_name( $chapter_id );
 	/* translators: %s: chapter name */
-	$confirm = sprintf( __( 'Move %s to the Trash? You can restore it from the WordPress admin.', 'ws-chapters' ), $name );
+	$confirm = sprintf( __( 'Delete %s? It goes to the Trash and can be restored from the WordPress admin.', 'ws-chapters' ), $name );
 	$return  = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
 	$base    = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
 	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
 		$return = substr( $return, strlen( $base ) );
 	}
-	return '<form method="post" class="ws-fe-trash" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
+	return '<form method="post" class="ws-fe-trash ws-fe-trash--inline" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
 		. '<input type="hidden" name="ws_fe_action" value="trash_chapter">'
 		. '<input type="hidden" name="ws_fe_type" value="term">'
 		. '<input type="hidden" name="ws_fe_id" value="' . (int) $term_id . '">'
 		. '<input type="hidden" name="ws_fe_nonce" value="' . esc_attr( wp_create_nonce( 'ws_fe_term_' . (int) $term_id ) ) . '">'
 		. '<input type="hidden" name="ws_fe_return" value="' . esc_attr( $return ) . '">'
 		. '<input type="hidden" name="ws_chapter" value="' . (int) $chapter_id . '">'
-		. '<button type="submit" class="ws-fe-trash__btn" title="' . esc_attr( sprintf( __( 'Move %s to the Trash', 'ws-chapters' ), $name ) ) . '" aria-label="' . esc_attr( sprintf( __( 'Move %s to the Trash', 'ws-chapters' ), $name ) ) . '">'
-		. '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></button></form>';
+		/* translators: %s: chapter name */
+		. '<button type="submit" class="ws-fe-delete-btn" aria-label="' . esc_attr( sprintf( __( 'Delete %s', 'ws-chapters' ), $name ) ) . '">'
+		. '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg> ' . esc_html__( 'Delete', 'ws-chapters' ) . '</button></form>';
 }
 
 /**
@@ -761,13 +762,11 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
  * Same people as every other chapter edit (ws_front_can_edit): Super Admins, the country's Country Admins,
  * the chapter's Chapter Editors.
  */
-function ws_fe_rename_box( $chapter_id, $button = true ) {
+function ws_fe_rename_box( $chapter_id, $label = '' ) {
 	$inner = '<label class="ws-fedit__label">' . esc_html__( 'Chapter name', 'ws-chapters' )
 		. '<input type="text" name="ws_chapter_name" value="' . esc_attr( get_the_title( $chapter_id ) ) . '" maxlength="80" required></label>'
-		. '<p class="ws-muted">' . esc_html__( 'Shown as "Widows Sons" followed by the name, unless the name already includes "Widows Sons". For example Sofia becomes Widows Sons Sofia.', 'ws-chapters' ) . '</p>';
-	/* translators: %s: chapter name */
-	$label = $button ? __( 'Rename the chapter', 'ws-chapters' ) : sprintf( __( 'Rename %s', 'ws-chapters' ), ws_display_name( get_the_title( $chapter_id ) ) );
-	return ws_fe_box( 'chapter', $chapter_id, 'rename', $inner, $label, $button );
+		. '<p class="ws-muted">' . esc_html__( 'Type the full name; it is shown exactly as typed.', 'ws-chapters' ) . '</p>';
+	return ws_fe_box( 'chapter', $chapter_id, 'rename', $inner, '' !== $label ? $label : __( 'Rename the chapter', 'ws-chapters' ), true );
 }
 
 /** "Create chapter" for Country Admins of this country (and Super Admins); empty for everyone else. */
@@ -777,9 +776,9 @@ function ws_fe_create_chapter_form( $term_id ) {
 	}
 	$inner = ws_form_guard_fields( 'country_chapter' )
 		. '<input type="hidden" name="ws_country" value="' . (int) $term_id . '">'
-		. '<label class="ws-fedit__label">' . esc_html__( 'Chapter name (for example Sofia)', 'ws-chapters' ) . '<input type="text" name="ws_chapter_name" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Full chapter name, shown exactly as typed (for example Widows Sons Sofia)', 'ws-chapters' ) . '<input type="text" name="ws_chapter_name" maxlength="80" required></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'City', 'ws-chapters' ) . '<input type="text" name="ws_chapter_city" required></label>';
-	return ws_fe_form_box( $inner, __( 'Create chapter', 'ws-chapters' ), __( 'The chapter is added to this country. Its details, patch and logo can then be added from its page.', 'ws-chapters' ) );
+	return '<div class="ws-fe-create-chapter">' . ws_fe_form_box( $inner, __( '+ Create new chapter', 'ws-chapters' ), __( 'The chapter is added to this country. Its details, patch and logo can then be added from its page.', 'ws-chapters' ), __( 'Create chapter', 'ws-chapters' ) ) . '</div>';
 }
 
 /** Handle the Create chapter form: the chapter belongs to this country only. */

@@ -180,7 +180,7 @@ function ws_chapter_point( $chapter_id ) {
 	$logo_id = (int) get_post_meta( $chapter_id, 'chapter_logo', true );
 	$term    = ws_chapter_country( $chapter_id );
 	return array(
-		'name'    => ws_display_name( get_the_title( $chapter_id ) ),
+		'name'    => ws_chapter_name( $chapter_id ),
 		'url'     => get_permalink( $chapter_id ),
 		'city'    => (string) get_post_meta( $chapter_id, 'city', true ),
 		'country' => $term ? $term->name : '',

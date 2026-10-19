@@ -174,7 +174,7 @@ function ws_mm_chapter_names( $uid ) {
 	$names = array();
 	foreach ( (array) get_user_meta( $uid, 'ws_scope_chapters', true ) as $cid ) {
 		if ( 'ws_chapter' === get_post_type( (int) $cid ) ) {
-			$names[] = ws_display_name( get_the_title( (int) $cid ) );
+			$names[] = ws_chapter_name( (int) $cid );
 		}
 	}
 	return implode( ', ', $names );
@@ -204,7 +204,7 @@ function ws_mm_chapter_select( $name, array $chapters, $selected, $first ) {
 	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-chapter><option value="">' . esc_html( $first ) . '</option>';
 	foreach ( $chapters as $c ) {
 		$t     = ws_chapter_country( $c->ID );
-		$html .= '<option value="' . (int) $c->ID . '" data-country="' . ( $t ? (int) $t->term_id : 0 ) . '"' . selected( (int) $selected, (int) $c->ID, false ) . '>' . esc_html( ws_display_name( $c->post_title ) ) . '</option>';
+		$html .= '<option value="' . (int) $c->ID . '" data-country="' . ( $t ? (int) $t->term_id : 0 ) . '"' . selected( (int) $selected, (int) $c->ID, false ) . '>' . esc_html( ws_chapter_name( $c ) ) . '</option>';
 	}
 	return $html . '</select>';
 }
@@ -393,7 +393,7 @@ add_action( 'template_redirect', function () {
 			ws_mm_log( 'chapter', $uid, get_the_title( $chap ) );
 			$ok = true;
 			/* translators: 1: person's name, 2: chapter */
-			$msg = sprintf( __( '%1$s is now in %2$s.', 'ws-chapters' ), ws_mm_person_name( get_userdata( $uid ) ), ws_display_name( get_the_title( $chap ) ) );
+			$msg = sprintf( __( '%1$s is now in %2$s.', 'ws-chapters' ), ws_mm_person_name( get_userdata( $uid ) ), ws_chapter_name( $chap ) );
 		}
 	} elseif ( 'title' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid   = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification

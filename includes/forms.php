@@ -113,7 +113,7 @@ function ws_chapter_options( $selected = 0, $placeholder = '' ) {
 		$out .= '<optgroup label="' . esc_attr( $t->name ) . '" data-country="' . (int) $t->term_id . '">';
 		foreach ( $chapters as $c ) {
 			$city  = get_post_meta( $c->ID, 'city', true );
-			$label = ws_display_name( $c->post_title ) . ( $city ? ' — ' . $city : '' );
+			$label = ws_chapter_name( $c ) . ( $city ? ' — ' . $city : '' );
 			$out  .= sprintf( '<option value="%1$d" data-country="%2$d"%3$s>%4$s</option>', $c->ID, $t->term_id, selected( (int) $selected, $c->ID, false ), esc_html( $label ) );
 		}
 		$out .= '</optgroup>';
@@ -213,7 +213,7 @@ function ws_handle_event_submission() {
 		return array( 'ok' => false, 'message' => __( 'Sorry, something went wrong saving your event. Please try again later.', 'ws-chapters' ) );
 	}
 	$meta = array( 'start_date' => $f['start'], 'end_date' => $f['end'], 'start_time' => $f['time'], 'city' => $f['city'] . ( $term ? ', ' . $term->name : '' ), 'venue' => $f['venue'], 'contact' => $f['contact'] );
-	$meta['organiser'] = $f['organiser'] ?: ( $f['chapter'] ? ws_display_name( get_the_title( $f['chapter'] ) ) : '' );
+	$meta['organiser'] = $f['organiser'] ?: ( $f['chapter'] ? ws_chapter_name( $f['chapter'] ) : '' );
 	foreach ( array_filter( $meta ) as $k => $v ) {
 		update_post_meta( $id, $k, $v );
 	}
@@ -540,7 +540,7 @@ function ws_handle_application() {
 		return array( 'ok' => false, 'message' => __( 'Please fill in:', 'ws-chapters' ) . ' ' . esc_html( implode( ', ', array_unique( $missing ) ) ) . '.' );
 	}
 
-	$chapter_name  = ws_display_name( $chapter->post_title );
+	$chapter_name  = ws_chapter_name( $chapter );
 	$city          = get_post_meta( $chapter->ID, 'city', true );
 	$chapter_email = sanitize_email( get_post_meta( $chapter->ID, 'email', true ) );
 	$full_name     = $f['first_name'] . ' ' . $f['last_name'];
@@ -683,7 +683,7 @@ add_action( 'add_meta_boxes_ws_application', function () {
 				$t   = get_term( (int) $val, 'ws_country' );
 				$val = $t && ! is_wp_error( $t ) ? $t->name : $val;
 			} elseif ( 'chapter' === $k && $val ) {
-				$val = ws_display_name( get_the_title( (int) $val ) );
+				$val = ws_chapter_name( (int) $val );
 			}
 			$html = esc_html( $val );
 			if ( 'email' === $k && $val ) {

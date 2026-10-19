@@ -245,7 +245,7 @@ function ws_news_source( $post = null ) {
 	}
 	$chapter = (int) get_post_meta( $post->ID, 'related_chapter', true );
 	if ( $chapter && 'publish' === get_post_status( $chapter ) ) {
-		$name = ws_display_name( get_the_title( $chapter ) );
+		$name = ws_chapter_name( $chapter );
 		$url  = get_permalink( $chapter );
 	} else {
 		$terms = get_the_terms( $post, 'ws_country' );
@@ -348,10 +348,32 @@ function ws_page_hero( $photo_id, $emblem_html, $title, $sub_html ) {
 	);
 }
 
-/** "Widows Sons Cyprus" unless the name already says Widows Sons (anywhere, e.g. "Phoenix Widows Sons"). */
+/** A country's name as shown: "Widows Sons Cyprus" unless the name already says Widows Sons. */
 function ws_display_name( $name ) {
 	return false !== stripos( $name, 'widows sons' ) ? $name : 'Widows Sons ' . $name;
 }
+
+/** A chapter's name as shown: exactly as its admins typed it, nothing added. Takes a chapter ID or post. */
+function ws_chapter_name( $chapter ) {
+	return get_the_title( $chapter );
+}
+
+/*
+ * Once (data, not code): chapters created before names were shown as typed got "Widows Sons" added on display.
+ * Save that full name on each of them, so every page looks the same as before; their addresses do not change.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'ws_chapter_names_full' ) || ! post_type_exists( 'ws_chapter' ) ) {
+		return;
+	}
+	update_option( 'ws_chapter_names_full', gmdate( 'c' ), false );
+	foreach ( get_posts( array( 'post_type' => 'ws_chapter', 'post_status' => 'any', 'numberposts' => -1 ) ) as $c ) {
+		if ( false === stripos( $c->post_title, 'widows sons' ) ) {
+			wp_update_post( array( 'ID' => $c->ID, 'post_title' => 'Widows Sons ' . $c->post_title ) );
+		}
+	}
+	do_action( 'litespeed_purge_all' );
+}, 50 );
 
 /* -------------------------------------------------------------------------
  * Sections
@@ -384,19 +406,21 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 	}
 	$out = '<div class="ws-chapter-rows">';
 	foreach ( $chapters as $c ) {
-		$trash = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) . ws_fe_rename_box( $c->ID, false ) : '';
+		// Rename and Delete for the people who manage this country's chapters (empty for everyone else).
+		$tools = $manage_term ? ws_fe_rename_box( $c->ID, __( 'Rename', 'ws-chapters' ) ) . ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
+		$trash = '' !== $tools ? '<div class="ws-chapter-row__actions">' . $tools . '</div>' : '';
 		$photo = get_post_thumbnail_id( $c );
 		$out  .= sprintf(
-			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a></div>%7$s</article>',
+			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a>%8$s</div>%7$s</article>',
 			ws_chapter_logo( $c->ID ),
 			esc_url( get_permalink( $c ) ),
-			esc_html( ws_display_name( get_the_title( $c ) ) ),
+			esc_html( ws_chapter_name( $c ) ),
 			esc_html( get_post_meta( $c->ID, 'city', true ) ),
 			esc_html__( 'Explore chapter', 'ws-chapters' ),
 			ws_icon( 'arrow' ),
-			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : ''
+			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : '',
+			$trash
 		);
-		$out = substr( $out, 0, -strlen( '</article>' ) ) . $trash . '</article>';
 	}
 	return $out . '</div>';
 }
@@ -433,7 +457,7 @@ function ws_country_page() {
 	// The pencil sits beside the circle (not inside the link), so it can be used whether or not the circle links.
 	$emblem_block = ( $emblem_link
 			/* translators: %s: chapter name */
-			? '<a class="ws-emblem" href="' . esc_url( $emblem_link ) . '" title="' . esc_attr( sprintf( __( 'Visit %s', 'ws-chapters' ), ws_display_name( get_the_title( $c ) ) ) ) . '">' . $emblem . '</a>'
+			? '<a class="ws-emblem" href="' . esc_url( $emblem_link ) . '" title="' . esc_attr( sprintf( __( 'Visit %s', 'ws-chapters' ), ws_chapter_name( $c ) ) ) . '">' . $emblem . '</a>'
 			: '<div class="ws-emblem">' . $emblem . '</div>' )
 		. ws_fe_image_box( 'term', $term->term_id, 'national_logo' );
 	$hero = ws_page_hero(
@@ -451,7 +475,7 @@ function ws_country_page() {
 		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $chapters && ws_join_url( 0, $term->term_id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( 0, $term->term_id ) ) . '">' . esc_html__( 'Apply to join', 'ws-chapters' ) . '</a>' : '' )
 		. ws_fe_contact_box( 'term', $term->term_id, $get ) . '</aside></div>'
-		. '<h3 class="ws-subhead">' . esc_html( $chapters_title ) . '</h3>' . ws_chapter_rows( $chapters );
+		. '<h3 class="ws-subhead">' . esc_html( $chapters_title ) . '</h3>' . ws_fe_create_chapter_form( $term->term_id ) . ws_chapter_rows( $chapters, $term->term_id );
 
 	$map = $chapters ? ws_map_element( 'chapters', ws_chapter_map_data( $term->slug ), array( ws_iso_numeric( ws_country_code( $term ) ) ), 440 ) : '';
 
@@ -484,7 +508,7 @@ function ws_chapter_profile() {
 	$hero = ws_page_hero(
 		(int) get_post_thumbnail_id( $id ),
 		'',
-		ws_display_name( get_the_title( $id ) ),
+		ws_chapter_name( $id ),
 		$where ? '<p class="ws-page-hero__place">' . ws_icon( 'pin' ) . ' ' . esc_html( $where ) . '</p>' : ''
 	);
 	$hero = str_replace( '</header>', ws_fe_image_box( 'chapter', $id, 'hero' ) . '</header>', $hero );
@@ -500,7 +524,7 @@ function ws_chapter_profile() {
 		. '</aside></div>';
 
 	$content = apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
-	$about   = '<div class="ws-fe-toolbar ws-fe-toolbar--row">' . ws_fe_rename_box( $id ) . '</div>' . ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( get_the_title( $id ) ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
+	$about   = '<div class="ws-fe-toolbar ws-fe-toolbar--row">' . ws_fe_rename_box( $id ) . '</div>' . ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_chapter_name( $id ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' ) . '</div>'
 		. ( $has_map ? '<div id="chapter-map" class="ws-subhead-map">' . ws_map_element( 'chapters', array( ws_chapter_point( $id ) ), array( ws_iso_numeric( ws_country_code( $country ) ) ), 360, array( (float) $lat, (float) $lng ) ) . '</div>' : '' );
 
