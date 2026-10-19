@@ -14,9 +14,9 @@ function ws_contact_fields() {
 		'email'     => array( __( 'Email', 'ws-chapters' ), 'email' ),
 		'phone'     => array( __( 'Phone', 'ws-chapters' ), 'tel' ),
 		'address'   => array( __( 'Address / meeting place', 'ws-chapters' ), 'text' ),
-		'website'   => array( __( 'Website', 'ws-chapters' ), 'url' ),
-		'facebook'  => array( __( 'Facebook page', 'ws-chapters' ), 'url' ),
-		'instagram' => array( __( 'Instagram', 'ws-chapters' ), 'url' ),
+		'website'   => array( __( 'Website', 'ws-chapters' ), 'text' ),
+		'facebook'  => array( __( 'Facebook page', 'ws-chapters' ), 'text' ),
+		'instagram' => array( __( 'Instagram', 'ws-chapters' ), 'text' ),
 	);
 }
 
@@ -30,6 +30,10 @@ function ws_sanitize_contact( $key, $value ) {
 	}
 	if ( 'address' === $key ) {
 		return sanitize_text_field( $value );
+	}
+	// People type "www.example.org" without https://; add it so the saved link works.
+	if ( '' !== $value && ! preg_match( '#^https?://#i', $value ) ) {
+		$value = 'https://' . ltrim( $value, '/' );
 	}
 	return esc_url_raw( $value );
 }
