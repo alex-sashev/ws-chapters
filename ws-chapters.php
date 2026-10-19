@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.18.16
+ * Version:     2.18.17
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *

@@ -246,3 +246,5 @@
 .ws-fe-remove { position: absolute; top: 6px; right: 6px; z-index: 2; margin: 0; }
 .ws-fe-remove__btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #C9A24A; background: rgba(20, 18, 12, .85); color: #E8D08A; font-size: 1.2rem; line-height: 1; cursor: pointer; }
 .ws-fe-remove__btn:hover, .ws-fe-remove__btn:focus-visible { background: #a3222b; color: #fff; border-color: #a3222b; }
+/* Tick boxes inside a field label sit beside their text, not on a line of their own. */
+.ws-fedit__label input[type=checkbox] { display: inline-block; width: auto; margin: 0 .5rem 0 0; vertical-align: middle; }
