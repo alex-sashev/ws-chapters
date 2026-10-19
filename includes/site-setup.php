@@ -1,7 +1,7 @@
 <?php
 /**
- * One-time setup of a new live site: chapters, pages, menu, the real 2026 events, useful links,
- * the home page photo and Bulgaria's photos. No demo content.
+ * Install of a new live site: chapters, pages, menu, the 2026 events, useful links, the home page photo,
+ * Bulgaria's photos and insignia. No demo content. The member pages are added by member-management.php.
  *
  * Runs once, on the first page load after the plugin is activated, on a site that has no chapters yet.
  * The Playground demo builds its own content and sets the option ws_site_setup_done first, so it is skipped there.
@@ -38,7 +38,7 @@ function ws_site_setup() {
 	}
 	$img = array();
 	$gc = function ($name) { $t = term_exists($name, 'ws_country'); return $t ? (int) $t['term_id'] : 0; };
-	// One chapter per Grand Chapter, named by country for now; chapters rename themselves later.
+	// One chapter per Grand Chapter, named by country; chapters can rename themselves.
 	// No coordinates: the map puts each pin on the country's capital until the chapter enters its city. [name, grand chapter, city, lat, lng, logo, back patch]
 	$chapters = array(
 	  array('Austria', 'Austria', '', null, null, -1, -1),
@@ -87,7 +87,7 @@ function ws_site_setup() {
 	};
 	$home  = $page('Home', 'home', '');
 	$news  = $page('News', 'news', '');
-	$about = $page('About', 'about', '<!-- wp:pattern {"slug":"ws-europe/page-about"} /-->');
+	$about = $page('About', 'about', ws_site_setup_pattern_text('page-about'));
 	$char  = $page('Charity & Community', 'charity', '<!-- wp:pattern {"slug":"ws-europe/page-charity"} /-->');
 	$join  = $page('Join Widows Sons', 'join', '<!-- wp:pattern {"slug":"ws-europe/page-join"} /-->');
 	$subev = $page('Submit an event', 'submit-event', '<!-- wp:pattern {"slug":"ws-europe/page-submit-event"} /-->');
@@ -275,7 +275,55 @@ JSON
 	update_post_meta($ch('Bulgaria'), 'city', 'Sofia');
 
 	ws_site_setup_photos();
+	ws_site_setup_bulgaria_insignia();
 	flush_rewrite_rules( false );
+}
+
+/**
+ * A theme pattern's block markup, so the page holds the text itself and can be edited like any page
+ * (the About page). Falls back to the pattern reference when the theme is not there.
+ */
+function ws_site_setup_pattern_text( $slug ) {
+	$file = get_theme_file_path( 'patterns/' . $slug . '.php' );
+	$src  = is_readable( $file ) ? (string) file_get_contents( $file ) : ''; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	$end  = strpos( $src, '?>' );
+	$text = trim( false === $end ? '' : substr( $src, $end + 2 ) );
+	return '' !== $text ? $text : '<!-- wp:pattern {"slug":"ws-europe/' . $slug . '"} /-->';
+}
+
+/** Bulgaria's insignia: the WS back patch is the chapter patch, the Motorcycle Riders (MR) logo is the chapter logo. */
+function ws_site_setup_bulgaria_insignia() {
+	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
+	if ( ! $ch ) {
+		return;
+	}
+	$dir = dirname( __DIR__ ) . '/playground/media/';
+	$up  = wp_upload_dir( null, false );
+	$sub = trailingslashit( $up['basedir'] ) . 'countries/bulgaria';
+	$set = function ( $file, $title ) use ( $dir, $sub, $ch ) {
+		if ( ! is_file( $dir . $file ) || ! wp_mkdir_p( $sub ) ) {
+			return 0;
+		}
+		$dest = $sub . '/' . wp_unique_filename( $sub, $file );
+		if ( ! copy( $dir . $file, $dest ) ) {
+			return 0;
+		}
+		$id = wp_insert_attachment( array( 'post_mime_type' => 'image/png', 'post_title' => $title, 'post_status' => 'inherit' ), $dest, $ch->ID );
+		if ( ! $id || is_wp_error( $id ) ) {
+			return 0;
+		}
+		wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $dest ) );
+		update_post_meta( $id, '_wp_attachment_image_alt', $title );
+		return (int) $id;
+	};
+	$patch = $set( 'bulgaria-ws-patch.png', 'Bulgarian Grand Chapter: back patch' );
+	$logo  = $set( 'bulgaria-mr-logo.png', 'Bulgarian Grand Chapter: MR logo' );
+	if ( $patch ) {
+		update_post_meta( $ch->ID, 'back_patch', $patch );
+	}
+	if ( $logo ) {
+		update_post_meta( $ch->ID, 'chapter_logo', $logo );
+	}
 }
 
 /** Home page photo, and Bulgaria's 2025 National Tour photos, from the plugin's media folder. */
@@ -327,117 +375,3 @@ add_action( 'init', function () {
 		update_option( $opt, set_url_scheme( (string) get_option( $opt ), 'https' ) );
 	}
 }, 1 );
-
-/*
- * Useful links added after the one-time setup. Each is added once (remembered by address),
- * so a link an admin later deletes does not come back.
- */
-add_action( 'init', function () {
-	if ( ! post_type_exists( 'ws_link' ) || ! get_option( 'ws_site_setup_done' ) ) {
-		return;
-	}
-	$links = array(
-		array( 'Widows Sons Masonic Riders Association, Inc.', 'https://wsmrainc.org', 'Official website of the Widows Sons Masonic Riders Association, Inc. (WSMRA Inc.), the international association of Widows Sons chapters worldwide.', -1 ),
-	);
-	$done = (array) get_option( 'ws_links_added', array() );
-	foreach ( $links as $l ) {
-		if ( in_array( $l[1], $done, true ) ) {
-			continue;
-		}
-		$exists = get_posts( array( 'post_type' => 'ws_link', 'post_status' => 'any', 'meta_key' => '_ws_url', 'meta_value' => $l[1], 'fields' => 'ids', 'numberposts' => 1 ) );
-		if ( ! $exists ) {
-			$id = wp_insert_post( array( 'post_type' => 'ws_link', 'post_status' => 'publish', 'post_title' => $l[0], 'menu_order' => $l[3] ) );
-			if ( $id && ! is_wp_error( $id ) ) {
-				update_post_meta( $id, '_ws_url', $l[1] );
-				update_post_meta( $id, '_ws_desc', $l[2] );
-			}
-		}
-		$done[] = $l[1];
-	}
-	update_option( 'ws_links_added', $done, false );
-}, 20 );
-
-/*
- * Useful links taken off the list after setup: moved to the bin once (an admin can restore them from there).
- */
-add_action( 'init', function () {
-	if ( ! post_type_exists( 'ws_link' ) || ! get_option( 'ws_site_setup_done' ) ) {
-		return;
-	}
-	$remove = array( 'https://widowssons.bg', 'https://widows-sons-germany.de', 'https://masonic-biker.dk' );
-	$done   = (array) get_option( 'ws_links_removed', array() );
-	$todo   = array_diff( $remove, $done );
-	if ( ! $todo ) {
-		return;
-	}
-	foreach ( $todo as $url ) {
-		$ids = get_posts( array( 'post_type' => 'ws_link', 'post_status' => array( 'publish', 'draft', 'pending', 'private' ), 'meta_key' => '_ws_url', 'meta_value' => $url, 'fields' => 'ids', 'numberposts' => -1 ) );
-		foreach ( $ids as $id ) {
-			wp_trash_post( $id );
-		}
-		$done[] = $url;
-	}
-	update_option( 'ws_links_removed', $done, false );
-}, 30 );
-
-/* The Bulgaria chapter page shows no photos (header photo and gallery) until the chapter adds its own. Runs once. */
-add_action( 'init', function () {
-	if ( get_option( 'ws_bg_chapter_photos_cleared' ) || ! post_type_exists( 'ws_chapter' ) ) {
-		return;
-	}
-	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
-	if ( $ch ) {
-		delete_post_thumbnail( $ch->ID );
-		delete_post_meta( $ch->ID, 'gallery' );
-	}
-	if ( $ch ) {
-		update_option( 'ws_bg_chapter_photos_cleared', gmdate( 'c' ), false );
-	}
-}, 40 );
-
-/*
- * Bulgaria's insignia: the WS back patch is the chapter patch, and the Motorcycle Riders (MR) logo is the chapter logo.
- * Their photos are removed from the chapter. Runs once.
- */
-add_action( 'init', function () {
-	if ( get_option( 'ws_bg_insignia_done' ) || ! post_type_exists( 'ws_chapter' ) ) {
-		return;
-	}
-	$ch = get_page_by_path( 'bulgaria', OBJECT, 'ws_chapter' );
-	if ( ! $ch ) {
-		return; // Not created yet (fresh install): try again on a later page load.
-	}
-	update_option( 'ws_bg_insignia_done', gmdate( 'c' ), false ); // Set before the work, so a failed run is not repeated on every page load.
-	require_once ABSPATH . 'wp-admin/includes/image.php';
-	$term = get_term_by( 'slug', 'bulgaria', 'ws_country' );
-	$dir  = dirname( __DIR__ ) . '/playground/media/';
-	$up   = wp_upload_dir( null, false );
-	$sub  = $term ? trailingslashit( $up['basedir'] ) . 'countries/bulgaria' : $up['path'];
-	$set  = function ( $file, $title ) use ( $dir, $sub, $ch ) {
-		if ( ! is_file( $dir . $file ) || ! wp_mkdir_p( $sub ) ) {
-			return 0;
-		}
-		$dest = $sub . '/' . wp_unique_filename( $sub, $file );
-		if ( ! copy( $dir . $file, $dest ) ) {
-			return 0;
-		}
-		$id = wp_insert_attachment( array( 'post_mime_type' => 'image/png', 'post_title' => $title, 'post_status' => 'inherit' ), $dest, $ch->ID );
-		if ( ! $id || is_wp_error( $id ) ) {
-			return 0;
-		}
-		wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $dest ) );
-		update_post_meta( $id, '_wp_attachment_image_alt', $title );
-		return (int) $id;
-	};
-	$patch = $set( 'bulgaria-ws-patch.png', 'Bulgarian Grand Chapter: back patch' );
-	$logo  = $set( 'bulgaria-mr-logo.png', 'Bulgarian Grand Chapter: MR logo' );
-	if ( $patch ) {
-		update_post_meta( $ch->ID, 'back_patch', $patch );
-	}
-	if ( $logo ) {
-		update_post_meta( $ch->ID, 'chapter_logo', $logo );
-	}
-	// Remove the tour photos from the chapter.
-	delete_post_thumbnail( $ch->ID );
-	delete_post_meta( $ch->ID, 'gallery' );
-}, 41 );

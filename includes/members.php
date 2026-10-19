@@ -321,14 +321,14 @@ function ws_doc_item( $doc ) {
 		. '<td><div class="ws-doc__cell"><span class="ws-doc__icon" aria-hidden="true">' . esc_html( $badge ) . '</span><span><a class="ws-doc__title" href="' . esc_url( $href ) . '"' . $target . '>' . esc_html( $doc->post_title ) . '</a>'
 		. ( '' !== trim( $doc->post_content ) ? '<span class="ws-doc__desc">' . nl2br( esc_html( $doc->post_content ) ) . '</span>' : '' ) . '</span></div></td>'
 		. '<td data-label="' . esc_attr__( 'Type', 'ws-chapters' ) . '"><span class="ws-doc__type">' . esc_html( $types[ $type ] ?? '' ) . '</span></td>'
-		. '<td data-label="' . esc_attr__( 'Added by', 'ws-chapters' ) . '">' . esc_html( $author ? ( function_exists( 'ws_mm_person_name' ) ? ws_mm_person_name( $author ) : $author->display_name ) : '—' ) . '</td>'
+		. '<td data-label="' . esc_attr__( 'Added by', 'ws-chapters' ) . '">' . esc_html( $author ? ws_mm_person_name( $author ) : '—' ) . '</td>'
 		. '<td data-label="' . esc_attr__( 'Size', 'ws-chapters' ) . '" class="ws-muted">' . esc_html( $extra ) . '</td>'
 		. '<td><div class="ws-mm__row-actions"><a class="ws-mm__btn ws-mm__btn--small ws-mm__btn--ghost" href="' . esc_url( $href ) . '"' . $target . '>' . ( $is_url ? esc_html__( 'Open link', 'ws-chapters' ) : esc_html__( 'Download', 'ws-chapters' ) ) . '</a>' . $delete . '</div></td>'
 		. '</tr>';
 }
 
 function ws_members_area() {
-	$nav = is_user_logged_in() && function_exists( 'ws_mm_subnav' ) ? ws_mm_subnav( 'library', true ) : '';
+	$nav = is_user_logged_in() ? ws_mm_subnav( 'library', true ) : '';
 	return $nav . ws_members_area_body();
 }
 

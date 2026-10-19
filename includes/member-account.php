@@ -250,23 +250,3 @@ add_shortcode( 'ws_member_account', function () {
 		. $submit( __( 'Log in', 'ws-chapters' ) ) . '</form>'
 		. '<p class="ws-ma__switch"><a href="' . esc_url( ws_ma_url( array( 'ws_forgot' => 1 ) ) ) . '">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</a></p></section></div>' . ws_mm_script();
 } );
-
-/* One-time: the "My profile" page, under the Members page. An existing page is never changed. */
-add_action( 'init', function () {
-	if ( get_option( 'ws_ma_page_done' ) || ! post_type_exists( 'page' ) ) {
-		return;
-	}
-	update_option( 'ws_ma_page_done', gmdate( 'c' ), false );
-	if ( ws_mm_page( 'member-account' ) ) {
-		return;
-	}
-	$parent = ws_mm_page( 'members' );
-	wp_insert_post( array(
-		'post_type'    => 'page',
-		'post_status'  => 'publish',
-		'post_title'   => __( 'My profile', 'ws-chapters' ),
-		'post_name'    => 'member-account',
-		'post_parent'  => $parent ? $parent->ID : 0,
-		'post_content' => '<!-- wp:html -->[ws_member_account]<!-- /wp:html -->',
-	) );
-}, 48 );

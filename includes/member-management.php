@@ -147,14 +147,11 @@ function ws_mm_person_name( $user ) {
 	return $user->display_name === $user->user_login && 0 === strpos( $user->user_login, 'ws_' ) ? $user->user_email : $user->display_name;
 }
 
-/** Road name: the WordPress nickname (the old ws_road_name field only when no nickname was set). */
+/** Road name: the WordPress nickname. */
 function ws_mm_road_name( $user ) {
 	$nick = trim( (string) get_user_meta( $user->ID, 'nickname', true ) );
 	// Invited people start with a random login (ws_…) as nickname: that is not a road name.
-	if ( '' === $nick || ( $nick === $user->user_login && 0 === strpos( $nick, 'ws_' ) ) || $nick === ws_mm_person_name( $user ) ) {
-		$nick = trim( (string) get_user_meta( $user->ID, 'ws_road_name', true ) );
-	}
-	return $nick;
+	return ( $nick === $user->user_login && 0 === strpos( $nick, 'ws_' ) ) || $nick === ws_mm_person_name( $user ) ? '' : $nick;
 }
 
 /** A dash for an empty cell, marked so it stands out. */
@@ -549,7 +546,7 @@ function ws_mm_send_invite( $user ) {
 	if ( is_wp_error( $key ) ) {
 		return __( 'The invitation could not be created. Please try again.', 'ws-chapters' );
 	}
-	$link = function_exists( 'ws_ma_url' ) ? ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) ) : network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
+	$link = ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) );
 	$sent = ws_send_email( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), array(
 		'preheader' => __( "You're invited to the Widows Sons Europe members' area.", 'ws-chapters' ),
 		'heading'   => __( 'Welcome, Brother', 'ws-chapters' ),
@@ -746,16 +743,24 @@ add_action( 'personal_options_update', 'ws_mm_save_avatar' );
 add_action( 'edit_user_profile_update', 'ws_mm_save_avatar' );
 add_action( 'edit_user_profile_update', 'ws_mm_save_profile_fields' );
 
-/* One-time: the two member pages, under the Members page. Existing pages are never changed. */
+/**
+ * The member pages under Members: member list, member management and My profile. Added on install and whenever
+ * one is missing after a WS_MM_PAGES change; an existing page is never changed.
+ */
+const WS_MM_PAGES = '1.0';
 add_action( 'init', function () {
-	if ( get_option( 'ws_mm_pages_done' ) || ! post_type_exists( 'page' ) ) {
+	if ( WS_MM_PAGES === get_option( 'ws_mm_pages' ) || ! post_type_exists( 'page' ) ) {
 		return;
 	}
-	update_option( 'ws_mm_pages_done', gmdate( 'c' ), false );
 	$parent = ws_mm_page( 'members' );
-	$pages  = array(
+	if ( ! $parent ) {
+		return; // The Members page comes first (site setup); try again on a later page load.
+	}
+	update_option( 'ws_mm_pages', WS_MM_PAGES, false );
+	$pages = array(
 		'member-directory'  => array( __( 'Member directory', 'ws-chapters' ), '[ws_member_directory]' ),
 		'member-management' => array( __( 'Member management', 'ws-chapters' ), '[ws_member_manage]' ),
+		'member-account'    => array( __( 'My profile', 'ws-chapters' ), '[ws_member_account]' ),
 	);
 	foreach ( $pages as $slug => $def ) {
 		if ( ws_mm_page( $slug ) ) {
@@ -766,40 +771,11 @@ add_action( 'init', function () {
 			'post_status'  => 'publish',
 			'post_title'   => $def[0],
 			'post_name'    => $slug,
-			'post_parent'  => $parent ? $parent->ID : 0,
+			'post_parent'  => $parent->ID,
 			'post_content' => '<!-- wp:html -->' . $def[1] . '<!-- /wp:html -->',
 		) );
 	}
 }, 45 );
-
-/* Menu: the two member pages sit after the Members link. The management link shows only to Super Admins and Country Admins. */
-add_filter( 'render_block_core/navigation-link', function ( $html, $block ) {
-	$class = $block['attrs']['className'] ?? '';
-	return false !== strpos( $class, 'ws-mm-admin-only' ) && ! ws_mm_can_manage() ? '' : $html;
-}, 11, 2 );
-
-/* One-time cleanup: the header menu keeps only "Members". The two member sub-pages are reached from the sub-row on the Members page, so their header links are removed (the pages stay). Never re-added. */
-add_action( 'init', function () {
-	if ( get_option( 'ws_mm_menu_cleared' ) ) {
-		return;
-	}
-	$nav = get_posts( array( 'post_type' => 'wp_navigation', 'post_status' => 'publish', 'numberposts' => 1, 'title' => 'Main menu' ) );
-	if ( ! $nav ) {
-		return; // Try again on a later page load.
-	}
-	update_option( 'ws_mm_menu_cleared', gmdate( 'c' ), false );
-	$lines = explode( "\n", $nav[0]->post_content );
-	$keep  = array();
-	foreach ( $lines as $line ) {
-		if ( false !== strpos( $line, 'wp:navigation-link' ) && preg_match( '/"label":\s*"Member (directory|management)"/', $line ) ) {
-			continue;
-		}
-		$keep[] = $line;
-	}
-	if ( count( $keep ) !== count( $lines ) ) {
-		wp_update_post( array( 'ID' => $nav[0]->ID, 'post_content' => implode( "\n", $keep ) ) );
-	}
-}, 46 );
 
 /* On the profile screen, WordPress's "Nickname" is the road name. */
 add_filter( 'gettext', function ( $translation, $text, $domain ) {
@@ -808,18 +784,3 @@ add_filter( 'gettext', function ( $translation, $text, $domain ) {
 	}
 	return $translation;
 }, 10, 3 );
-
-/* One-time: road names typed in the old separate field move into the Nickname field, where no real nickname was set. */
-add_action( 'init', function () {
-	if ( get_option( 'ws_mm_road_names_moved' ) ) {
-		return;
-	}
-	update_option( 'ws_mm_road_names_moved', gmdate( 'c' ), false );
-	foreach ( get_users( array( 'meta_key' => 'ws_road_name', 'fields' => 'all' ) ) as $u ) { // phpcs:ignore WordPress.DB.SlowDBQuery
-		$road = trim( (string) get_user_meta( $u->ID, 'ws_road_name', true ) );
-		$nick = trim( (string) get_user_meta( $u->ID, 'nickname', true ) );
-		if ( '' !== $road && ( '' === $nick || $nick === $u->user_login ) ) {
-			update_user_meta( $u->ID, 'nickname', $road );
-		}
-	}
-}, 47 );

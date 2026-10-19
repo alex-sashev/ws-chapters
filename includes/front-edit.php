@@ -6,8 +6,7 @@
  * Each pencil opens a small form; the form posts back to the same page and is saved here, after the same
  * permission check that the admin screens use (ws_front_can_edit). Visitors and members see no pencils.
  *
- * Also: the About page text is a normal WordPress page (moved out of the theme pattern once), so Super Admins
- * can edit it; the page shows an edit link for anyone who may edit it.
+ * The About page is an ordinary WordPress page (its text is in the page itself), edited in the admin.
  *
  * @package ws-chapters
  */
@@ -324,41 +323,6 @@ add_action( 'wp_footer', function () {
 		// It goes away by itself after a few seconds, or on click, so it never sticks to the page.
 		. '<script>(function(){var n=document.querySelector(".ws-fe-notice");if(!n)return;var h=function(){n.remove();};n.addEventListener("click",h);setTimeout(h,4000);})();</script>';
 } );
-
-/* -------------------------------------------------------------------------
- * About page: an ordinary page, with a link to edit it
- * ---------------------------------------------------------------------- */
-
-/**
- * Once: the About page used to show the theme's pattern file (text inside the theme). Copy that text into the
- * page itself, so it can be edited like any other page. Existing edits are never overwritten.
- */
-add_action( 'init', function () {
-	if ( get_option( 'ws_about_migrated' ) || ! post_type_exists( 'page' ) ) {
-		return;
-	}
-	$page = get_page_by_path( 'about' );
-	if ( ! $page || false === strpos( $page->post_content, 'ws-europe/page-about' ) ) {
-		if ( $page ) {
-			update_option( 'ws_about_migrated', gmdate( 'c' ), false );
-		}
-		return;
-	}
-	$file = get_theme_file_path( 'patterns/page-about.php' );
-	if ( ! is_readable( $file ) ) {
-		return; // Try again on a later page load.
-	}
-	$src = (string) file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-	$end = strpos( $src, '?>' );
-	$new = trim( false === $end ? $src : substr( $src, $end + 2 ) );
-	if ( '' === $new ) {
-		return;
-	}
-	wp_update_post( array( 'ID' => $page->ID, 'post_content' => $new ) );
-	update_option( 'ws_about_migrated', gmdate( 'c' ), false );
-}, 30 );
-
-
 
 /* -------------------------------------------------------------------------
  * Chapter page: About text, Submit an event, Submit news or activity

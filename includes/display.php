@@ -170,7 +170,7 @@ function ws_chapter_directory( $country = '' ) {
 	return $out;
 }
 
-/** One chapter as a map marker, or null without coordinates. Logo is null while pending. */
+/** One chapter as a map marker, or null without coordinates. Without its own logo it shows the Widows Sons emblem. */
 function ws_chapter_point( $chapter_id ) {
 	$pos = ws_chapter_position( $chapter_id );
 	if ( ! $pos ) {

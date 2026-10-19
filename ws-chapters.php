@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Widows Sons Chapters
- * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.20.0
+ * Description: Widows Sons Europe: chapters and countries with official insignia, map of Europe, events, news, front-end editing, members' area (library, member list, profiles, member management) and branded emails.
+ * Version:     1.0.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -27,6 +27,9 @@ if ( empty( $_SERVER['HTTPS'] ) || 'off' === $_SERVER['HTTPS'] ) {
 }
 
 const WS_ASSET_CAP = 'manage_ws_chapter_assets';
+
+/** Bump to re-apply roles, capabilities and URLs on the next page load (live sites run it once per value). */
+const WS_CHAPTERS_SETUP = '8';
 
 /** Chapter image fields: meta key => [label, placeholder text]. */
 function ws_chapter_asset_fields() {
@@ -172,9 +175,9 @@ add_action( 'init', function () {
 
 	add_image_size( 'ws-chapter-card', 480, 480, false ); // Fit-inside, never cropped.
 
-	// One-time setup (works for mu-plugin installs too, which have no activation hook):
-	// grant role capabilities and register the /chapters/ URLs.
-	if ( get_option( 'ws_chapters_setup_version' ) !== '8' ) {
+	// Install and upgrade step (works for mu-plugin installs too, which have no activation hook): role capabilities,
+	// the starting list of countries and the URLs. Runs again only when WS_CHAPTERS_SETUP changes.
+	if ( get_option( 'ws_chapters_setup_version' ) !== WS_CHAPTERS_SETUP ) {
 		foreach ( ws_chapter_role_caps() as $role_name => $caps ) {
 			$role = get_role( $role_name );
 			if ( $role ) {
@@ -195,11 +198,11 @@ add_action( 'init', function () {
 		flush_rewrite_rules( false );
 		ws_install_scoped_roles();
 		ws_install_member_role();
-		update_option( 'ws_chapters_setup_version', '8' ); // 5: /events/ URLs. 6: Country Admin / Chapter Editor roles, /country/ URLs. 7: Member role. 8: Useful links.
+		update_option( 'ws_chapters_setup_version', WS_CHAPTERS_SETUP );
 	}
 }, 20 );
 
-/** Starting list of Widows Sons Grand Chapters in Europe (Oct 2026) => flag code. Added once if missing; admins edit from there. */
+/** Starting list of Widows Sons Grand Chapters in Europe => flag code. Added at install if missing; admins edit from there. */
 function ws_default_grand_chapters() {
 	return array(
 		'Austria' => 'at', 'Belgium' => 'be', 'Bulgaria' => 'bg', 'Croatia' => 'hr', 'Cyprus' => 'cy',
@@ -402,7 +405,6 @@ require __DIR__ . '/includes/emails.php';
 require __DIR__ . '/includes/member-management.php';
 require __DIR__ . '/includes/member-account.php';
 require __DIR__ . '/includes/front-edit.php';
-require __DIR__ . '/includes/domain.php';
 require __DIR__ . '/includes/site-setup.php';
 require __DIR__ . '/includes/private-mode.php';
 
