@@ -241,3 +241,8 @@
 .ws-viewer__prev[hidden], .ws-viewer__next[hidden] { display: none; }
 .ws-fedit__close { position: absolute; top: 6px; right: 8px; background: transparent; border: 0; color: #5a5a5a; font-size: 1.4rem; line-height: 1; cursor: pointer; padding: 2px 6px; }
 .ws-fedit__close:hover, .ws-fedit__close:focus-visible { color: #14120c; }
+/* Remove one photo from a gallery (editors only). */
+.ws-gallery-item { position: relative; }
+.ws-fe-remove { position: absolute; top: 6px; right: 6px; z-index: 2; margin: 0; }
+.ws-fe-remove__btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #C9A24A; background: rgba(20, 18, 12, .85); color: #E8D08A; font-size: 1.2rem; line-height: 1; cursor: pointer; }
+.ws-fe-remove__btn:hover, .ws-fe-remove__btn:focus-visible { background: #a3222b; color: #fff; border-color: #a3222b; }

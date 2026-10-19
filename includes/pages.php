@@ -145,14 +145,15 @@ function ws_contact_list( $get ) {
 		: '<p class="ws-muted">' . esc_html__( 'Contact details coming soon.', 'ws-chapters' ) . '</p>';
 }
 
-function ws_gallery_grid( $ids ) {
+function ws_gallery_grid( $ids, $removable = null ) {
 	if ( ! $ids ) {
 		return '<p class="ws-muted">' . esc_html__( 'Photos coming soon.', 'ws-chapters' ) . '</p>';
 	}
 	// Click a photo to see it large in a viewer (previous, next, close). The link still opens the full image without script.
 	$out = '<div class="ws-gallery-grid" data-ws-gallery>';
 	foreach ( $ids as $id ) {
-		$out .= sprintf( '<a href="%s" data-ws-full="%s">%s</a>', esc_url( wp_get_attachment_image_url( $id, 'large' ) ), esc_url( wp_get_attachment_image_url( $id, 'full' ) ), wp_get_attachment_image( $id, 'medium_large', false, array( 'loading' => 'lazy' ) ) );
+		$remove = $removable && function_exists( 'ws_fe_gallery_remove_form' ) ? ws_fe_gallery_remove_form( $removable[0], $removable[1], $id ) : '';
+		$out .= sprintf( '<div class="ws-gallery-item">%s<a href="%s" data-ws-full="%s">%s</a></div>', $remove, esc_url( wp_get_attachment_image_url( $id, 'large' ) ), esc_url( wp_get_attachment_image_url( $id, 'full' ) ), wp_get_attachment_image( $id, 'medium_large', false, array( 'loading' => 'lazy' ) ) );
 	}
 	$out .= '</div>';
 	$GLOBALS['ws_gallery_used'] = true; // The viewer script is printed once, at the bottom of the page.
@@ -220,10 +221,10 @@ function ws_gallery_viewer_script() {
 		document.body.classList.remove('ws-viewer-open');
 	}
 	document.addEventListener('click', function (e) {
-		var a = e.target.closest && e.target.closest('[data-ws-gallery] > a');
+		var a = e.target.closest && e.target.closest('[data-ws-gallery] a[data-ws-full]');
 		if (a && a.closest('.ws-gallery-grid') === null) { return; }
 		if (!a || e.ctrlKey || e.metaKey || e.shiftKey) { return; }
-		var grid = a.parentNode, links = [].slice.call(grid.querySelectorAll(':scope > a'));
+		var grid = a.closest('[data-ws-gallery]'), links = [].slice.call(grid.querySelectorAll('a[data-ws-full]'));
 		e.preventDefault();
 		open(links.map(function (l) { var im = l.querySelector('img'); return { href: l.getAttribute('data-ws-full') || l.href, alt: im ? im.alt : '' }; }), links.indexOf(a));
 	});

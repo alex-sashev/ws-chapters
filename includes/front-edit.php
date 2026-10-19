@@ -116,7 +116,29 @@ function ws_fe_gallery_panel( $type, $id, $ids ) {
 	$inner = '<input type="hidden" name="ws_fe_slot" value="gallery">'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Choose photos (several at once is fine)', 'ws-chapters' )
 		. '<input type="file" name="ws_fe_file[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
-	return '<div class="ws-fe-toolbar">' . ws_fe_box( $type, $id, 'image', $inner, __( 'Upload photos', 'ws-chapters' ), true ) . '</div>' . ws_gallery_grid( $ids );
+	return '<div class="ws-fe-toolbar">' . ws_fe_box( $type, $id, 'image', $inner, __( 'Upload photos', 'ws-chapters' ), true ) . '</div>' . ws_gallery_grid( $ids, array( $type, $id ) );
+}
+
+/** A small × on a gallery photo that removes it from this gallery (the photo file stays in the Media Library). */
+function ws_fe_gallery_remove_form( $type, $id, $photo ) {
+	if ( ! ws_front_can_edit( $type, $id ) ) {
+		return '';
+	}
+	$id     = (int) $id;
+	$return = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
+	$base   = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
+	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
+		$return = substr( $return, strlen( $base ) );
+	}
+	return '<form method="post" class="ws-fe-remove" onsubmit="return confirm(\'' . esc_js( __( 'Remove this photo from the gallery?', 'ws-chapters' ) ) . '\')">'
+		. '<input type="hidden" name="ws_fe_action" value="image">'
+		. '<input type="hidden" name="ws_fe_type" value="' . esc_attr( $type ) . '">'
+		. '<input type="hidden" name="ws_fe_id" value="' . $id . '">'
+		. '<input type="hidden" name="ws_fe_nonce" value="' . esc_attr( wp_create_nonce( 'ws_fe_' . $type . '_' . $id ) ) . '">'
+		. '<input type="hidden" name="ws_fe_return" value="' . esc_attr( $return ) . '">'
+		. '<input type="hidden" name="ws_fe_slot" value="gallery_remove">'
+		. '<input type="hidden" name="ws_fe_remove" value="' . (int) $photo . '">'
+		. '<button type="submit" class="ws-fe-remove__btn" aria-label="' . esc_attr__( 'Remove photo from gallery', 'ws-chapters' ) . '" title="' . esc_attr__( 'Remove from gallery', 'ws-chapters' ) . '">&times;</button></form>';
 }
 
 /** Contact details box: the fields of ws_contact_fields() with their current values. */
@@ -207,6 +229,14 @@ function ws_fe_save( $type, $id, $action ) {
 
 	// Image.
 	$slot = sanitize_key( wp_unslash( $_POST['ws_fe_slot'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+	if ( 'gallery_remove' === $slot ) {
+		$photo = absint( $_POST['ws_fe_remove'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+		$key   = 'term' === $type ? get_term_meta( $id, 'gallery', true ) : get_post_meta( $id, 'gallery', true );
+		$left  = array_values( array_diff( ws_gallery_ids( $key ), array( $photo ) ) );
+		$value = ws_sanitize_gallery( implode( ',', $left ) );
+		'term' === $type ? update_term_meta( $id, 'gallery', $value ) : update_post_meta( $id, 'gallery', $value );
+		return __( 'Photo removed from the gallery.', 'ws-chapters' );
+	}
 	if ( ! isset( ws_fe_image_slots( $type )[ $slot ] ) ) {
 		return new WP_Error( 'ws_fe', __( 'That image cannot be changed here.', 'ws-chapters' ) );
 	}
