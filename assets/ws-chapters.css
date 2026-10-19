@@ -355,15 +355,13 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-ma__logout { margin: 0; text-align: right; }
 .ws-mm__btn { box-sizing: border-box; text-decoration: none; }
 .ws-members .ws-upload--js:not([open]) { display: none; }
-/* Chapter page: "Rename the chapter" sits beside "Edit the About text". */
-.ws-fe-toolbar--row, .ws-fe-toolbar--row + .ws-fe-toolbar { display: inline-block; vertical-align: top; margin-right: .5rem; }
-/* Chapter lists on a country page: Create new chapter, Rename under each chapter, Close chapter in its top-right corner (Super Admin, Country Admin). */
+/* Country page: "+ Create new chapter" above the chapter list (Super Admin, Country Admin). */
 .ws-fe-create-chapter { margin: 0 0 1rem; }
 .ws-fe-create-chapter .ws-fedit--button .ws-fedit__btn { background: var(--ws-gold, #C9A24A); color: var(--ws-ink, #0b0b0c); border-color: var(--ws-gold, #C9A24A); }
-.ws-chapter-row__actions { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-top: .5rem; }
-.ws-chapter-row__actions .ws-fedit--button { margin: 0; }
-.ws-chapter-row__actions .ws-fedit--button > .ws-fedit__btn, .ws-fe-delete-btn { padding: .3em .6em; font-size: .62rem; letter-spacing: .06em; line-height: 1.2; border-radius: 3px; }
-.ws-fe-trash--inline { position: absolute; top: 8px; right: 8px; margin: 0; z-index: 2; }
-.ws-fe-delete-btn { display: inline-flex; align-items: center; border: 1px solid #a3222b; background: #fff; color: #a3222b; font-family: inherit; font-weight: 700; text-transform: uppercase; cursor: pointer; }
-.ws-fe-delete-btn:hover, .ws-fe-delete-btn:focus-visible { background: #a3222b; color: #fff; }
-.ws-chapter-row:has(.ws-fe-trash--inline) .ws-chapter-row__body h3 { padding-right: 96px; }
+/* Chapter page: Rename the chapter and Edit the About text on the left, a red Close chapter on the right. */
+.ws-fe-chapter-tools { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .5rem; }
+.ws-fe-chapter-tools:empty { display: none; }
+.ws-fe-chapter-tools .ws-fedit--button { margin: 0 0 .75rem; }
+.ws-fe-trash--page { position: static; margin: 0 0 .75rem auto; }
+.ws-fe-delete-btn { display: inline-flex; align-items: center; padding: .7em 1em; border: 1px solid #a3222b; border-radius: 3px; background: #a3222b; color: #fff; font-family: inherit; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1; cursor: pointer; }
+.ws-fe-delete-btn:hover, .ws-fe-delete-btn:focus-visible { background: #7e1a21; border-color: #7e1a21; }

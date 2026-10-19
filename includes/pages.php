@@ -406,23 +406,16 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 	}
 	$out = '<div class="ws-chapter-rows">';
 	foreach ( $chapters as $c ) {
-		// Rename and Delete for the people who manage this country's chapters (empty for everyone else).
-		// Rename (under the name) and Close chapter (top-right corner) for the people who manage this country's chapters.
-		$rename = $manage_term ? ws_fe_rename_box( $c->ID, __( 'Rename', 'ws-chapters' ) ) : '';
-		$trash  = '' !== $rename ? '<div class="ws-chapter-row__actions">' . $rename . '</div>' : '';
-		$close  = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
 		$photo = get_post_thumbnail_id( $c );
 		$out  .= sprintf(
-			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a>%8$s</div>%7$s%9$s</article>',
+			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a></div>%7$s</article>',
 			ws_chapter_logo( $c->ID ),
 			esc_url( get_permalink( $c ) ),
 			esc_html( ws_chapter_name( $c ) ),
 			esc_html( get_post_meta( $c->ID, 'city', true ) ),
 			esc_html__( 'Explore chapter', 'ws-chapters' ),
 			ws_icon( 'arrow' ),
-			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : '',
-			$trash,
-			$close
+			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : ''
 		);
 	}
 	return $out . '</div>';
@@ -527,7 +520,9 @@ function ws_chapter_profile() {
 		. '</aside></div>';
 
 	$content = apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
-	$about   = '<div class="ws-fe-toolbar ws-fe-toolbar--row">' . ws_fe_rename_box( $id ) . '</div>' . ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_chapter_name( $id ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
+	// Rename the chapter, Edit the About text, and (right) Close chapter: each shown only to those allowed.
+	$country_id = $country ? (int) $country->term_id : 0;
+	$about   = '<div class="ws-fe-chapter-tools"><div class="ws-fe-toolbar">' . ws_fe_rename_box( $id ) . '</div>' . ws_fe_about_box( $id ) . ( $country_id ? ws_fe_trash_chapter_form( $id, $country_id ) : '' ) . '</div>' . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_chapter_name( $id ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' ) . '</div>'
 		. ( $has_map ? '<div id="chapter-map" class="ws-subhead-map">' . ws_map_element( 'chapters', array( ws_chapter_point( $id ) ), array( ws_iso_numeric( ws_country_code( $country ) ) ), 360, array( (float) $lat, (float) $lng ) ) . '</div>' : '' );
 

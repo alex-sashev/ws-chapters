@@ -228,7 +228,7 @@ function ws_fe_save( $type, $id, $action ) {
 			return new WP_Error( 'ws_fe', __( 'You can only remove chapters of your own country.', 'ws-chapters' ) );
 		}
 		wp_trash_post( $chapter ); // In the Trash: it can be restored from the admin.
-		return __( 'The chapter was moved to the Trash.', 'ws-chapters' );
+		return __( 'The chapter is closed. It can be restored from the Trash in the WordPress admin.', 'ws-chapters' );
 	}
 
 	if ( 'about' === $action ) {
@@ -732,7 +732,10 @@ function ws_chapter_in_country( $chapter_id, $term_id ) {
 	return in_array( (int) $term_id, $item['countries'], true );
 }
 
-/** "Close chapter" button in the top-right corner of a chapter row. Asks for confirmation first; the chapter goes to the Trash. */
+/**
+ * Red "Close chapter" button on the chapter's own page (Super Admins and the country's Country Admins).
+ * Asks for confirmation first; the chapter goes to the Trash and the person lands on the country page.
+ */
 function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 	if ( ! ws_can_manage_country_chapters( $term_id ) || ! ws_chapter_in_country( $chapter_id, $term_id ) ) {
 		return '';
@@ -740,12 +743,14 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 	$name    = ws_chapter_name( $chapter_id );
 	/* translators: %s: chapter name */
 	$confirm = sprintf( __( 'Close %s? It is removed from the site and goes to the Trash, where it can be restored from the WordPress admin.', 'ws-chapters' ), $name );
-	$return  = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
+	// After closing, back to the country page (the chapter's own page is gone).
+	$country = get_term_link( (int) $term_id, 'ws_country' );
+	$return  = is_wp_error( $country ) ? '/' : (string) wp_parse_url( $country, PHP_URL_PATH );
 	$base    = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
 	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
 		$return = substr( $return, strlen( $base ) );
 	}
-	return '<form method="post" class="ws-fe-trash ws-fe-trash--inline" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
+	return '<form method="post" class="ws-fe-trash ws-fe-trash--page" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
 		. '<input type="hidden" name="ws_fe_action" value="trash_chapter">'
 		. '<input type="hidden" name="ws_fe_type" value="term">'
 		. '<input type="hidden" name="ws_fe_id" value="' . (int) $term_id . '">'
