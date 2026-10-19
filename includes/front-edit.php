@@ -204,6 +204,24 @@ function ws_fe_save( $type, $id, $action ) {
 		return __( 'Contact details saved.', 'ws-chapters' );
 	}
 
+	if ( 'rename' === $action ) {
+		$name = trim( sanitize_text_field( wp_unslash( $_POST['ws_chapter_name'] ?? '' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+		if ( 'chapter' !== $type || 'ws_chapter' !== get_post_type( $id ) ) {
+			return new WP_Error( 'ws_fe', __( 'That name cannot be changed here.', 'ws-chapters' ) );
+		}
+		if ( '' === $name || mb_strlen( $name ) > 80 ) {
+			return new WP_Error( 'ws_fe', __( 'Please enter a chapter name (up to 80 characters).', 'ws-chapters' ) );
+		}
+		// The address follows the name; WordPress redirects the old address to the new one.
+		$saved = wp_update_post( array( 'ID' => $id, 'post_title' => $name, 'post_name' => sanitize_title( $name ) ), true );
+		if ( is_wp_error( $saved ) ) {
+			return $saved;
+		}
+		$GLOBALS['ws_fe_return_override'] = get_permalink( $id );
+		/* translators: %s: chapter name */
+		return sprintf( __( 'The chapter is now called %s.', 'ws-chapters' ), ws_display_name( $name ) );
+	}
+
 	if ( 'trash_chapter' === $action ) {
 		$chapter = absint( $_POST['ws_chapter'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
 		if ( 'term' !== $type || ! ws_can_manage_country_chapters( $id ) || ! ws_chapter_in_country( $chapter, $id ) ) {
@@ -287,7 +305,12 @@ add_action( 'template_redirect', function () {
 	if ( '' === $return || '/' !== $return[0] || '/' === ( $return[1] ?? '' ) ) {
 		$return = '/'; // Only back to a path on this site.
 	}
-	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', home_url( $return ) ) ) );
+	$url = home_url( $return );
+	// A chapter renamed on its own page has a new address: go there (from the country page, stay on it).
+	if ( ! empty( $GLOBALS['ws_fe_return_override'] ) && false !== strpos( $return, '/chapters/' ) ) {
+		$url = $GLOBALS['ws_fe_return_override'];
+	}
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', $url ) ) );
 	exit;
 }, 1 );
 
@@ -731,6 +754,20 @@ function ws_fe_trash_chapter_form( $chapter_id, $term_id ) {
 		. '<input type="hidden" name="ws_chapter" value="' . (int) $chapter_id . '">'
 		. '<button type="submit" class="ws-fe-trash__btn" title="' . esc_attr( sprintf( __( 'Move %s to the Trash', 'ws-chapters' ), $name ) ) . '" aria-label="' . esc_attr( sprintf( __( 'Move %s to the Trash', 'ws-chapters' ), $name ) ) . '">'
 		. '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></button></form>';
+}
+
+/**
+ * Rename a chapter: a text button on the chapter's page, a pencil on its row in the country's Chapters list.
+ * Same people as every other chapter edit (ws_front_can_edit): Super Admins, the country's Country Admins,
+ * the chapter's Chapter Editors.
+ */
+function ws_fe_rename_box( $chapter_id, $button = true ) {
+	$inner = '<label class="ws-fedit__label">' . esc_html__( 'Chapter name', 'ws-chapters' )
+		. '<input type="text" name="ws_chapter_name" value="' . esc_attr( get_the_title( $chapter_id ) ) . '" maxlength="80" required></label>'
+		. '<p class="ws-muted">' . esc_html__( 'Shown as "Widows Sons" followed by the name, unless the name already includes "Widows Sons". For example Sofia becomes Widows Sons Sofia.', 'ws-chapters' ) . '</p>';
+	/* translators: %s: chapter name */
+	$label = $button ? __( 'Rename the chapter', 'ws-chapters' ) : sprintf( __( 'Rename %s', 'ws-chapters' ), ws_display_name( get_the_title( $chapter_id ) ) );
+	return ws_fe_box( 'chapter', $chapter_id, 'rename', $inner, $label, $button );
 }
 
 /** "Create chapter" for Country Admins of this country (and Super Admins); empty for everyone else. */

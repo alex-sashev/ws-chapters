@@ -348,9 +348,9 @@ function ws_page_hero( $photo_id, $emblem_html, $title, $sub_html ) {
 	);
 }
 
-/** "Widows Sons Cyprus" unless the name already says Widows Sons. */
+/** "Widows Sons Cyprus" unless the name already says Widows Sons (anywhere, e.g. "Phoenix Widows Sons"). */
 function ws_display_name( $name ) {
-	return stripos( $name, 'widows sons' ) === 0 ? $name : 'Widows Sons ' . $name;
+	return false !== stripos( $name, 'widows sons' ) ? $name : 'Widows Sons ' . $name;
 }
 
 /* -------------------------------------------------------------------------
@@ -384,7 +384,7 @@ function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 	}
 	$out = '<div class="ws-chapter-rows">';
 	foreach ( $chapters as $c ) {
-		$trash = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
+		$trash = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) . ws_fe_rename_box( $c->ID, false ) : '';
 		$photo = get_post_thumbnail_id( $c );
 		$out  .= sprintf(
 			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a></div>%7$s</article>',
@@ -500,7 +500,7 @@ function ws_chapter_profile() {
 		. '</aside></div>';
 
 	$content = apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
-	$about   = ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( get_the_title( $id ) ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
+	$about   = '<div class="ws-fe-toolbar ws-fe-toolbar--row">' . ws_fe_rename_box( $id ) . '</div>' . ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( get_the_title( $id ) ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' ) . '</div>'
 		. ( $has_map ? '<div id="chapter-map" class="ws-subhead-map">' . ws_map_element( 'chapters', array( ws_chapter_point( $id ) ), array( ws_iso_numeric( ws_country_code( $country ) ) ), 360, array( (float) $lat, (float) $lng ) ) . '</div>' : '' );
 

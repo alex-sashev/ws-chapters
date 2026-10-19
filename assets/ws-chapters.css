@@ -355,3 +355,5 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-ma__logout { margin: 0; text-align: right; }
 .ws-mm__btn { box-sizing: border-box; text-decoration: none; }
 .ws-members .ws-upload--js:not([open]) { display: none; }
+/* Chapter page: "Rename the chapter" sits beside "Edit the About text". */
+.ws-fe-toolbar--row, .ws-fe-toolbar--row + .ws-fe-toolbar { display: inline-block; vertical-align: top; margin-right: .5rem; }
