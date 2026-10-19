@@ -94,9 +94,9 @@ function ws_fe_box( $type, $id, $action, $inner, $label, $button = false ) {
 	}
 	return '<details class="ws-fedit' . ( $button ? ' ws-fedit--button' : '' ) . '">'
 		. '<summary class="ws-fedit__btn" title="' . esc_attr( $label ) . '" aria-label="' . esc_attr( $label ) . '">' . ( $button ? esc_html( $label ) : ws_fe_pencil() ) . '</summary>'
-		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
+		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><button type="button" class="ws-fedit__close" aria-label="' . esc_attr__( 'Close', 'ws-chapters' ) . '" onclick="this.closest(\'details\').removeAttribute(\'open\')">&times;</button><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
 		. $hidden . $inner
-		. '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Save', 'ws-chapters' ) . '</button></p></form></details>';
+		. '<p><button type="submit" class="ws-btn-gold">' . esc_html( 'image' === $action ? __( 'Upload', 'ws-chapters' ) : __( 'Save', 'ws-chapters' ) ) . '</button></p></form></details>';
 }
 
 /** Pencil for one image slot (patch, logo, header photo) placed over the image. */

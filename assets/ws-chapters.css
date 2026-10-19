@@ -239,3 +239,5 @@
 .ws-viewer__prev { left: 16px; top: 50%; transform: translateY(-50%); }
 .ws-viewer__next { right: 16px; top: 50%; transform: translateY(-50%); }
 .ws-viewer__prev[hidden], .ws-viewer__next[hidden] { display: none; }
+.ws-fedit__close { position: absolute; top: 6px; right: 8px; background: transparent; border: 0; color: #5a5a5a; font-size: 1.4rem; line-height: 1; cursor: pointer; padding: 2px 6px; }
+.ws-fedit__close:hover, .ws-fedit__close:focus-visible { color: #14120c; }
