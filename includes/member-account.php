@@ -105,11 +105,17 @@ add_action( 'template_redirect', function () {
 		if ( $user ) {
 			$key = get_password_reset_key( $user );
 			if ( ! is_wp_error( $key ) ) {
-				wp_mail( $user->user_email, __( 'Your new password for Widows Sons Europe', 'ws-chapters' ), sprintf(
-					/* translators: 1: link, 2: days */
-					__( "Someone (hopefully you) asked for a new password for the Widows Sons Europe members' area.\n\nChoose your new password here (the link expires in %2\$d days):\n%1\$s\n\nIf you did not ask for this, you can ignore this email.", 'ws-chapters' ),
-					ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) ),
-					WS_MM_INVITE_DAYS
+				ws_send_email( $user->user_email, __( 'Your new password for Widows Sons Europe', 'ws-chapters' ), array(
+					'preheader' => __( "Choose a new password for the Widows Sons Europe members' area.", 'ws-chapters' ),
+					'heading'   => __( 'Choose a new password', 'ws-chapters' ),
+					'before'    => array( __( "Someone (hopefully you) asked for a new password for the Widows Sons Europe members' area.", 'ws-chapters' ) ),
+					'button'    => __( 'Choose my new password', 'ws-chapters' ),
+					'url'       => ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) ),
+					'after'     => array(
+						/* translators: %d: days */
+						sprintf( __( 'This link expires in %d days.', 'ws-chapters' ), WS_MM_INVITE_DAYS ),
+						__( 'If you did not ask for this, you can ignore this email: your password stays the same.', 'ws-chapters' ),
+					),
 				) );
 			}
 		}

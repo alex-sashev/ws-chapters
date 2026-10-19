@@ -550,11 +550,20 @@ function ws_mm_send_invite( $user ) {
 		return __( 'The invitation could not be created. Please try again.', 'ws-chapters' );
 	}
 	$link = function_exists( 'ws_ma_url' ) ? ws_ma_url( array( 'ws_key' => $key, 'ws_login' => rawurlencode( $user->user_login ) ) ) : network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
-	$sent = wp_mail( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), sprintf(
-		/* translators: 1: link, 2: days */
-		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter that you land on your profile: add your first and last name, road name, phone and title.", 'ws-chapters' ),
-		$link,
-		WS_MM_INVITE_DAYS
+	$sent = ws_send_email( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), array(
+		'preheader' => __( "You're invited to the Widows Sons Europe members' area.", 'ws-chapters' ),
+		'heading'   => __( 'Welcome, Brother', 'ws-chapters' ),
+		'before'    => array(
+			__( "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile.", 'ws-chapters' ),
+			__( 'Choose your password to get started. You will sign in with this email address.', 'ws-chapters' ),
+		),
+		'button'    => __( 'Set my password', 'ws-chapters' ),
+		'url'       => $link,
+		'after'     => array(
+			/* translators: %d: days */
+			sprintf( __( 'This link expires in %d days. If it has expired, ask your Country Admin to send a new one.', 'ws-chapters' ), WS_MM_INVITE_DAYS ),
+			__( 'After that you land on your profile: add your first and last name, road name, phone and title.', 'ws-chapters' ),
+		),
 	) );
 	return $sent ? null : __( 'The invitation email could not be sent. Check the mail settings, then resend.', 'ws-chapters' );
 }

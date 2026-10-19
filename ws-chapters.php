@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.19.2
+ * Version:     2.20.0
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -398,6 +398,7 @@ require __DIR__ . '/includes/retention.php';
 require __DIR__ . '/includes/upload-folders.php';
 require __DIR__ . '/includes/auto-purge.php';
 require __DIR__ . '/includes/login-box.php';
+require __DIR__ . '/includes/emails.php';
 require __DIR__ . '/includes/member-management.php';
 require __DIR__ . '/includes/member-account.php';
 require __DIR__ . '/includes/front-edit.php';
