@@ -226,3 +226,16 @@
 .ws-fe-trash { position: absolute; top: 8px; right: 8px; margin: 0; }
 .ws-fe-trash__btn { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #a3222b; background: #fff; color: #a3222b; cursor: pointer; padding: 0; }
 .ws-fe-trash__btn:hover, .ws-fe-trash__btn:focus-visible { background: #a3222b; color: #fff; }
+/* Photo viewer for galleries: opens over the page; previous, next and close. */
+.ws-viewer { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; background: rgba(8, 7, 5, .94); }
+.ws-viewer.is-open { display: flex; }
+.ws-viewer-open { overflow: hidden; }
+.ws-viewer__figure { margin: 0; max-width: min(1100px, 86vw); max-height: 90vh; display: flex; flex-direction: column; align-items: center; }
+.ws-viewer__figure img { max-width: 100%; max-height: 82vh; object-fit: contain; border-radius: 3px; box-shadow: 0 10px 40px rgba(0, 0, 0, .6); }
+.ws-viewer__count { margin-top: .6rem; color: #f4efe2; font-size: .9rem; letter-spacing: .05em; }
+.ws-viewer__close, .ws-viewer__prev, .ws-viewer__next { position: absolute; background: rgba(20, 18, 12, .8); color: #E8D08A; border: 1px solid #C9A24A; border-radius: 50%; cursor: pointer; line-height: 1; font-size: 1.6rem; width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; }
+.ws-viewer__close:hover, .ws-viewer__prev:hover, .ws-viewer__next:hover, .ws-viewer__close:focus-visible, .ws-viewer__prev:focus-visible, .ws-viewer__next:focus-visible { background: #C9A24A; color: #14120c; }
+.ws-viewer__close { top: 16px; right: 16px; font-size: 2rem; }
+.ws-viewer__prev { left: 16px; top: 50%; transform: translateY(-50%); }
+.ws-viewer__next { right: 16px; top: 50%; transform: translateY(-50%); }
+.ws-viewer__prev[hidden], .ws-viewer__next[hidden] { display: none; }

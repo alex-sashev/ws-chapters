@@ -149,11 +149,83 @@ function ws_gallery_grid( $ids ) {
 	if ( ! $ids ) {
 		return '<p class="ws-muted">' . esc_html__( 'Photos coming soon.', 'ws-chapters' ) . '</p>';
 	}
-	$out = '<div class="ws-gallery-grid">';
+	// Click a photo to see it large in a viewer (previous, next, close). The link still opens the full image without script.
+	$out = '<div class="ws-gallery-grid" data-ws-gallery>';
 	foreach ( $ids as $id ) {
-		$out .= sprintf( '<a href="%s">%s</a>', esc_url( wp_get_attachment_image_url( $id, 'large' ) ), wp_get_attachment_image( $id, 'medium_large', false, array( 'loading' => 'lazy' ) ) );
+		$out .= sprintf( '<a href="%s" data-ws-full="%s">%s</a>', esc_url( wp_get_attachment_image_url( $id, 'large' ) ), esc_url( wp_get_attachment_image_url( $id, 'full' ) ), wp_get_attachment_image( $id, 'medium_large', false, array( 'loading' => 'lazy' ) ) );
 	}
-	return $out . '</div>';
+	$out .= '</div>';
+	return $out . ws_gallery_viewer_script();
+}
+
+/** The viewer script: once per page, however many galleries it has. */
+function ws_gallery_viewer_script() {
+	static $done = false;
+	if ( $done ) {
+		return '';
+	}
+	$done = true;
+	return <<<'HTML'
+<script>
+(function () {
+	if (window.wsGalleryViewer) { return; }
+	window.wsGalleryViewer = true;
+	var items = [], index = 0, box, img, count;
+	function build() {
+		box = document.createElement('div');
+		box.className = 'ws-viewer';
+		box.setAttribute('role', 'dialog');
+		box.setAttribute('aria-modal', 'true');
+		box.setAttribute('aria-label', 'Photo viewer');
+		box.innerHTML = '<button type="button" class="ws-viewer__close" aria-label="Close">&times;</button>' +
+			'<button type="button" class="ws-viewer__prev" aria-label="Previous photo">&#8249;</button>' +
+			'<figure class="ws-viewer__figure"><img alt=""><figcaption class="ws-viewer__count"></figcaption></figure>' +
+			'<button type="button" class="ws-viewer__next" aria-label="Next photo">&#8250;</button>';
+		document.body.appendChild(box);
+		img = box.querySelector('img');
+		count = box.querySelector('.ws-viewer__count');
+		box.querySelector('.ws-viewer__close').addEventListener('click', close);
+		box.querySelector('.ws-viewer__prev').addEventListener('click', function (e) { e.stopPropagation(); show(index - 1); });
+		box.querySelector('.ws-viewer__next').addEventListener('click', function (e) { e.stopPropagation(); show(index + 1); });
+		box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('ws-viewer__figure')) { close(); } });
+		document.addEventListener('keydown', function (e) {
+			if (!box || !box.classList.contains('is-open')) { return; }
+			if (e.key === 'Escape') { close(); }
+			if (e.key === 'ArrowLeft') { show(index - 1); }
+			if (e.key === 'ArrowRight') { show(index + 1); }
+		});
+	}
+	function show(i) {
+		var n = items.length;
+		index = (i + n) % n;
+		img.src = items[index].href;
+		img.alt = items[index].alt || '';
+		count.textContent = (index + 1) + ' / ' + n;
+		box.querySelector('.ws-viewer__prev').hidden = n < 2;
+		box.querySelector('.ws-viewer__next').hidden = n < 2;
+	}
+	function open(list, i) {
+		if (!box) { build(); }
+		items = list;
+		show(i);
+		box.classList.add('is-open');
+		document.body.classList.add('ws-viewer-open');
+		box.querySelector('.ws-viewer__close').focus();
+	}
+	function close() {
+		if (box) { box.classList.remove('is-open'); }
+		document.body.classList.remove('ws-viewer-open');
+	}
+	document.addEventListener('click', function (e) {
+		var a = e.target.closest && e.target.closest('[data-ws-gallery] > a');
+		if (!a || e.ctrlKey || e.metaKey || e.shiftKey) { return; }
+		var grid = a.parentNode, links = [].slice.call(grid.querySelectorAll(':scope > a'));
+		e.preventDefault();
+		open(links.map(function (l) { var im = l.querySelector('img'); return { href: l.getAttribute('data-ws-full') || l.href, alt: im ? im.alt : '' }; }), links.indexOf(a));
+	});
+})();
+</script>
+HTML;
 }
 
 /** News cards for a country and/or chapter. */
