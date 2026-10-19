@@ -403,3 +403,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-doc-icon-btn { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 4.5rem; height: 2rem; margin: 0; padding: 0; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: #fff; color: var(--ws-gold-dark, #8a6d2c); text-decoration: none; }
 .ws-doc-icon-btn svg { width: 15px; height: 15px; }
 .ws-doc-icon-btn:hover, .ws-doc-icon-btn:focus-visible { background: rgba(201, 162, 74, .12); }
+/* Library: Edit and Download line up on the same right edge. */
+.ws-mm__table--library .ws-mm__row-actions { align-items: flex-end; padding-right: .6rem; }
+.ws-mm__table--library .ws-doc-icon-btn { margin-left: auto; }
