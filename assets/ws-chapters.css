@@ -208,10 +208,11 @@
 .ws-fedit__btn:hover, .ws-fedit__btn:focus-visible { background: var(--ws-gold, #C9A24A); color: var(--ws-ink, #0b0b0c); }
 .ws-fedit--button .ws-fedit__btn { width: auto; height: auto; border-radius: 3px; padding: .55em 1em; background: transparent; color: var(--ws-gold-dark, #8a6d2c); border-color: var(--ws-gold-dark, #8a6d2c); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
 .ws-fedit__btn--link { width: auto; height: auto; border-radius: 3px; padding: .45em .9em; text-decoration: none; background: transparent; color: var(--ws-gold-dark, #8a6d2c); border-color: var(--ws-gold-dark, #8a6d2c); }
-.ws-fedit[open] .ws-fedit__form { position: absolute; right: 0; bottom: 44px; z-index: 31; width: min(360px, 88vw); box-sizing: border-box; padding: 1rem 1.1rem; background: #fff; color: #111; border: 1px solid var(--ws-gold, #C9A24A); border-radius: 6px; box-shadow: 0 12px 30px rgba(0, 0, 0, .35); text-align: left; }
+.ws-fedit[open] .ws-fedit__form { position: absolute; right: 0; bottom: 44px; z-index: 31; width: min(600px, 92vw); max-height: 80vh; overflow-y: auto; box-sizing: border-box; padding: 1rem 1.1rem; background: #fff; color: #111; border: 1px solid var(--ws-gold, #C9A24A); border-radius: 6px; box-shadow: 0 12px 30px rgba(0, 0, 0, .35); text-align: left; }
 .ws-fedit--button[open] .ws-fedit__form { right: auto; left: 0; top: 100%; bottom: auto; }
 .ws-fedit__title { margin: 0 0 .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: .8rem; }
 .ws-fedit__label { display: block; margin: .4rem 0; font-size: .85rem; font-weight: 600; }
+.ws-fedit__form textarea { display: block; width: 100%; box-sizing: border-box; min-height: 260px; margin-top: .25rem; padding: .6rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-size: 1rem; line-height: 1.5; resize: vertical; }
 .ws-fedit__label input { display: block; width: 100%; box-sizing: border-box; margin-top: .25rem; padding: .45rem .5rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-weight: 400; }
 .ws-fedit__grid { display: grid; grid-template-columns: 1fr; gap: .2rem .6rem; }
 .ws-fedit .ws-btn-gold { cursor: pointer; }
