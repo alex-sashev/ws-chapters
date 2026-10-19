@@ -67,6 +67,7 @@ add_action( 'init', function () {
 	}
 	$gallery = array( 'type' => 'string', 'single' => true, 'default' => '', 'show_in_rest' => true, 'sanitize_callback' => 'ws_sanitize_gallery' );
 	register_post_meta( 'ws_chapter', 'gallery', $gallery + array( 'auth_callback' => $post_auth ) );
+	register_post_meta( 'ws_event', 'gallery', $gallery + array( 'auth_callback' => $post_auth ) );
 	register_term_meta( 'ws_country', 'gallery', $gallery + array( 'auth_callback' => $term_auth ) );
 	register_term_meta( 'ws_country', 'hero_image', array(
 		'type' => 'integer', 'single' => true, 'default' => 0, 'show_in_rest' => true,
@@ -207,7 +208,7 @@ add_action( 'save_post_post', function ( $post_id ) {
 /* Media picker for galleries (and the hero photo control, which reuses the insignia picker). */
 add_action( 'admin_enqueue_scripts', function () {
 	$screen = get_current_screen();
-	if ( ! $screen || ( 'ws_chapter' !== $screen->post_type && 'ws_country' !== $screen->taxonomy ) || ! current_user_can( 'upload_files' ) ) {
+	if ( ! $screen || ( ! in_array( $screen->post_type, array( 'ws_chapter', 'ws_event' ), true ) && 'ws_country' !== $screen->taxonomy ) || ! current_user_can( 'upload_files' ) ) {
 		return;
 	}
 	wp_enqueue_media();

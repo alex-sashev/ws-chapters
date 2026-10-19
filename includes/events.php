@@ -218,6 +218,13 @@ add_action( 'init', function () {
 		return esc_url( get_post_type_archive_link( 'ws_event' ) );
 	} );
 
+	// Extra photos of the current event, below its description (single event page).
+	add_shortcode( 'ws_event_gallery', function () {
+		$id  = get_the_ID();
+		$ids = $id && 'ws_event' === get_post_type( $id ) ? ws_gallery_ids( get_post_meta( $id, 'gallery', true ) ) : array();
+		return $ids ? '<h2 class="ws-event-photos__title">' . esc_html__( 'Photos', 'ws-chapters' ) . '</h2>' . ws_gallery_grid( $ids ) : '';
+	} );
+
 	add_shortcode( 'ws_event_details', function () {
 		$id = get_the_ID();
 		if ( ! $id || 'ws_event' !== get_post_type( $id ) ) {
@@ -270,6 +277,8 @@ add_action( 'add_meta_boxes_ws_event', function () {
 			printf( '<option value="%d"%s>%s</option>', $c->ID, selected( $host, $c->ID, false ), esc_html( $c->post_title ) );
 		}
 		echo '</select></p><p class="description">' . esc_html__( "The host chapter's official logo is shown with the event.", 'ws-chapters' ) . '</p>';
+		echo '<p><strong>' . esc_html__( 'Event photos', 'ws-chapters' ) . '</strong><br><span class="description">' . esc_html__( 'The poster is the Featured image (right-hand column). Photos here are shown below the description.', 'ws-chapters' ) . '</span></p>';
+		ws_gallery_control( 'ws_gallery', (string) get_post_meta( $post->ID, 'gallery', true ) );
 	}, 'ws_event', 'normal', 'high' );
 } );
 
@@ -284,6 +293,9 @@ add_action( 'save_post_ws_event', function ( $post_id ) {
 		if ( isset( $_POST[ 'ws_' . $key ] ) ) {
 			update_post_meta( $post_id, $key, wp_unslash( $_POST[ 'ws_' . $key ] ) ); // Sanitized by register_post_meta.
 		}
+	}
+	if ( isset( $_POST['ws_gallery'] ) ) {
+		update_post_meta( $post_id, 'gallery', ws_sanitize_gallery( wp_unslash( $_POST['ws_gallery'] ) ) );
 	}
 } );
 

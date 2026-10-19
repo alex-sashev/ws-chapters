@@ -46,6 +46,10 @@ function ws_retention_cleanup() {
 
 	$submitted = array( 'meta_key' => '_ws_submitted_email' );
 	foreach ( ws_posts_older_than( 'ws_event', array( 'pending', 'draft', 'trash' ), WS_KEEP_SUBMISSIONS, $submitted ) as $id ) {
+		// Images sent with the submission go too (uploaded with the event as their parent).
+		foreach ( get_posts( array( 'post_type' => 'attachment', 'post_parent' => $id, 'post_status' => 'inherit', 'fields' => 'ids', 'numberposts' => -1 ) ) as $att ) {
+			wp_delete_attachment( $att, true );
+		}
 		$done['submissions'] += wp_delete_post( $id, true ) ? 1 : 0;
 	}
 	foreach ( ws_posts_older_than( 'ws_event', array( 'publish', 'future', 'private' ), WS_KEEP_SUBMISSIONS, $submitted ) as $id ) {

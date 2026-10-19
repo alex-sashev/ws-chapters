@@ -175,6 +175,10 @@ function ws_handle_event_submission() {
 	if ( empty( $_POST['ws_consent'] ) ) {
 		$missing[] = __( 'Agreement to the privacy policy', 'ws-chapters' );
 	}
+	$images = ws_event_image_files();
+	if ( is_wp_error( $images ) ) {
+		return array( 'ok' => false, 'message' => esc_html( $images->get_error_message() ) );
+	}
 	$term = $f['country'] ? get_term( $f['country'], 'ws_country' ) : null;
 	if ( $f['country'] && ( ! $term || is_wp_error( $term ) ) ) {
 		$missing[] = __( 'Country', 'ws-chapters' );
@@ -211,6 +215,9 @@ function ws_handle_event_submission() {
 	update_post_meta( $id, '_ws_submitted_email', $f['email'] );
 	wp_set_object_terms( $id, array( $f['country'] ), 'ws_country' );
 
+	// Images: stored in the event's country folder (uploads/countries/{country}/), the first one becomes the poster.
+	$image_ids = ws_save_event_images( $images, $id );
+
 	// Tell the reviewers: site admins, plus Country Admins for this country.
 	$to = array( get_option( 'admin_email' ) );
 	foreach ( get_users( array( 'role' => 'ws_country_admin' ) ) as $u ) {
@@ -230,6 +237,8 @@ function ws_handle_event_submission() {
 			__( 'Where:', 'ws-chapters' ) . ' ' . implode( ', ', array_filter( array( $f['venue'], $f['city'], $term ? $term->name : '' ) ) ),
 			__( 'Organiser:', 'ws-chapters' ) . ' ' . ( $meta['organiser'] ?: '—' ),
 			__( 'Submitted by:', 'ws-chapters' ) . ' ' . $f['name'] . ' <' . $f['email'] . '>',
+			/* translators: %d: number of images */
+			sprintf( __( 'Images: %d', 'ws-chapters' ), count( $image_ids ) ),
 			'',
 			__( 'Review and publish it here:', 'ws-chapters' ),
 			admin_url( 'post.php?post=' . $id . '&action=edit' ),
@@ -237,6 +246,78 @@ function ws_handle_event_submission() {
 		$f['email']
 	);
 	return array( 'ok' => true, 'message' => __( 'Thank you! Your event has been sent for review. It will appear in the event calendar once an admin approves it.', 'ws-chapters' ) );
+}
+
+const WS_EVENT_MAX_IMAGES   = 5;
+const WS_EVENT_MAX_IMAGE_MB = 8;
+
+/** The images sent with the event form, checked (count, size, type). Returns a list of $_FILES-style entries or WP_Error. */
+function ws_event_image_files() {
+	$raw = $_FILES['ws_event_images'] ?? null; // phpcs:ignore WordPress.Security.NonceVerification -- checked by ws_form_guard_check().
+	if ( ! $raw || ! is_array( $raw['name'] ?? null ) ) {
+		return array();
+	}
+	$files = array();
+	foreach ( array_keys( $raw['name'] ) as $i ) {
+		if ( UPLOAD_ERR_NO_FILE === (int) $raw['error'][ $i ] ) {
+			continue;
+		}
+		$file = array(
+			'name'     => $raw['name'][ $i ],
+			'type'     => $raw['type'][ $i ],
+			'tmp_name' => $raw['tmp_name'][ $i ],
+			'error'    => (int) $raw['error'][ $i ],
+			'size'     => (int) $raw['size'][ $i ],
+		);
+		if ( UPLOAD_ERR_OK !== $file['error'] || $file['size'] > WS_EVENT_MAX_IMAGE_MB * MB_IN_BYTES ) {
+			/* translators: 1: file name, 2: size in MB */
+			return new WP_Error( 'ws_image', sprintf( __( 'The image "%1$s" could not be uploaded. Images can be up to %2$d MB each.', 'ws-chapters' ), $file['name'], WS_EVENT_MAX_IMAGE_MB ) );
+		}
+		$check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'], ws_event_image_mimes() );
+		if ( empty( $check['type'] ) ) {
+			/* translators: %s: file name */
+			return new WP_Error( 'ws_image', sprintf( __( '"%s" is not an image. Please use JPG, PNG, WebP or GIF.', 'ws-chapters' ), $file['name'] ) );
+		}
+		$files[] = $file;
+	}
+	if ( count( $files ) > WS_EVENT_MAX_IMAGES ) {
+		/* translators: %d: number of images */
+		return new WP_Error( 'ws_image', sprintf( __( 'Please send at most %d images.', 'ws-chapters' ), WS_EVENT_MAX_IMAGES ) );
+	}
+	return $files;
+}
+
+function ws_event_image_mimes() {
+	return array( 'jpg|jpeg|jpe' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'gif' => 'image/gif' );
+}
+
+/**
+ * Save the checked images as media of the event. The event's country decides the folder
+ * (see upload-folders.php, which reads post_id). First image = poster (featured image), the rest = event photos.
+ */
+function ws_save_event_images( $files, $event_id ) {
+	if ( ! $files ) {
+		return array();
+	}
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$_REQUEST['post_id'] = $event_id; // Country folder for this event.
+	$ids                 = array();
+	foreach ( $files as $file ) {
+		$id = media_handle_sideload( $file, $event_id, null, array( 'test_form' => false, 'mimes' => ws_event_image_mimes() ) );
+		if ( ! is_wp_error( $id ) ) {
+			$ids[] = (int) $id;
+		}
+	}
+	unset( $_REQUEST['post_id'] );
+	if ( $ids ) {
+		set_post_thumbnail( $event_id, $ids[0] );
+		if ( count( $ids ) > 1 ) {
+			update_post_meta( $event_id, 'gallery', implode( ',', array_slice( $ids, 1 ) ) );
+		}
+	}
+	return $ids;
 }
 
 function ws_event_submit_form() {
@@ -252,7 +333,7 @@ function ws_event_submit_form() {
 		return $result ? ws_post_field( $k, in_array( $k, array( 'ws_description', 'ws_contact' ), true ) ) : '';
 	};
 	$out  = $result ? ws_form_notice( 'error', $result['message'] ) : '';
-	$out .= '<form class="ws-form" method="post" action="#ws-event-form" id="ws-event-form" data-ws-chapter-filter novalidate>';
+	$out .= '<form class="ws-form" method="post" action="#ws-event-form" id="ws-event-form" enctype="multipart/form-data" data-ws-chapter-filter novalidate>';
 	$out .= ws_form_guard_fields( 'event' );
 	$out .= '<fieldset><legend>' . esc_html__( 'The event', 'ws-chapters' ) . '</legend>';
 	$out .= ws_field( 'ws_title', __( 'Event name', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_title' ) ) );
@@ -271,6 +352,10 @@ function ws_event_submit_form() {
 	$out .= '</div>';
 	$out .= ws_field( 'ws_description', __( 'Description', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_description' ), 'help' => __( 'Programme, route, costs, how to register.', 'ws-chapters' ) ) );
 	$out .= ws_field( 'ws_contact', __( 'Contact details for riders', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_contact' ), 'help' => __( 'Shown on the event page: who to contact, email and/or phone.', 'ws-chapters' ), 'attrs' => 'rows="3"' ) );
+	$out .= '<p class="ws-field ws-field--file"><label for="ws_event_images">' . esc_html__( 'Poster and photos', 'ws-chapters' ) . '</label>'
+		. '<input type="file" id="ws_event_images" name="ws_event_images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple aria-describedby="ws_event_images-help">'
+		/* translators: 1: number of images, 2: size in MB */
+		. '<span class="ws-help" id="ws_event_images-help">' . esc_html( sprintf( __( 'Optional. Up to %1$d images (JPG, PNG, WebP or GIF), %2$d MB each. The first image is shown as the event poster.', 'ws-chapters' ), WS_EVENT_MAX_IMAGES, WS_EVENT_MAX_IMAGE_MB ) ) . '</span></p>';
 	$out .= '</fieldset><fieldset><legend>' . esc_html__( 'About you (not published)', 'ws-chapters' ) . '</legend><div class="ws-field-row">';
 	$out .= ws_field( 'ws_name', __( 'Your name', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_name' ), 'attrs' => 'autocomplete="name"' ) );
 	$out .= ws_field( 'ws_email', __( 'Your email', 'ws-chapters' ), 'email', array( 'required' => true, 'value' => $v( 'ws_email' ), 'attrs' => 'autocomplete="email"', 'help' => __( 'In case the admins have questions.', 'ws-chapters' ) ) );
