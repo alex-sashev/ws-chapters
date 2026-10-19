@@ -358,6 +358,7 @@ function ws_country_page() {
 		ws_display_name( $term->name ),
 		'<p class="ws-page-hero__tagline">' . esc_html__( 'Brotherhood · Motorcycling · Service', 'ws-chapters' ) . '</p>'
 	);
+	$hero = str_replace( '</header>', ws_fe_image_box( 'term', $term->term_id, 'hero' ) . '</header>', $hero );
 
 	/* translators: 1: country name, 2: number of chapters */
 	$chapters_title = sprintf( __( 'Chapters in %1$s (%2$d)', 'ws-chapters' ), $term->name, count( $chapters ) );
@@ -365,7 +366,7 @@ function ws_country_page() {
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' )
 		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $chapters && ws_join_url( 0, $term->term_id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( 0, $term->term_id ) ) . '">' . esc_html__( 'Apply to join', 'ws-chapters' ) . '</a>' : '' )
-		. '</aside></div>'
+		. ws_fe_contact_box( 'term', $term->term_id, $get ) . '</aside></div>'
 		. '<h3 class="ws-subhead">' . esc_html( $chapters_title ) . '</h3>' . ws_chapter_rows( $chapters );
 
 	$map = $chapters ? ws_map_element( 'chapters', ws_chapter_map_data( $term->slug ), array( ws_iso_numeric( ws_country_code( $term ) ) ), 440 ) : '';
@@ -375,7 +376,7 @@ function ws_country_page() {
 		'chapters' => array( __( 'Chapters', 'ws-chapters' ), $map . ws_chapter_rows( $chapters ) ),
 		'events'   => array( __( 'Events', 'ws-chapters' ), ws_event_cards_for( $term->term_id ) ),
 		'news'     => array( __( 'News', 'ws-chapters' ), ws_news_cards( $term->term_id, 0, 6 ) ),
-		'gallery'  => array( __( 'Gallery', 'ws-chapters' ), ws_gallery_grid( $gallery ) ),
+		'gallery'  => array( __( 'Gallery', 'ws-chapters' ), ws_fe_gallery_panel( 'term', $term->term_id, $gallery ) ),
 		'contact'  => array( __( 'Contact', 'ws-chapters' ), ws_contact_list( $get ) ),
 	) ) . '</div>';
 }
@@ -402,14 +403,16 @@ function ws_chapter_profile() {
 		ws_display_name( get_the_title( $id ) ),
 		$where ? '<p class="ws-page-hero__place">' . ws_icon( 'pin' ) . ' ' . esc_html( $where ) . '</p>' : ''
 	);
+	$hero = str_replace( '</header>', ws_fe_image_box( 'chapter', $id, 'hero' ) . '</header>', $hero );
 
 	$identity = '<div class="ws-identity">'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Patch', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_back_patch( $id ) . '</figure>'
-		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Logo', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_logo( $id ) . '</figure>'
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Patch', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_back_patch( $id ) . ws_fe_image_box( 'chapter', $id, 'back_patch' ) . '</figure>'
+		. '<figure class="ws-identity__item"><figcaption><strong>' . esc_html__( 'Official Chapter Logo', 'ws-chapters' ) . '</strong></figcaption>' . ws_chapter_logo( $id ) . ws_fe_image_box( 'chapter', $id, 'chapter_logo' ) . '</figure>'
 		. '<aside class="ws-identity__contact"><h3>' . esc_html__( 'Official Contact Information', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $has_map ? '<a class="ws-btn-gold" href="#chapter-map">' . esc_html__( 'Show on map', 'ws-chapters' ) . ' ' . ws_icon( 'arrow' ) . '</a>' : '' )
 		. ( ws_join_url( $id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( $id ) ) . '">' . esc_html__( 'Apply to join this chapter', 'ws-chapters' ) . '</a>' : '' )
 		. ( $country ? '<p class="ws-identity__country">' . ws_flag( $country ) . ' <a href="' . esc_url( get_term_link( $country ) ) . '">' . esc_html( ws_display_name( $country->name ) ) . '</a></p>' : '' )
+		. ws_fe_contact_box( 'chapter', $id, $get )
 		. '</aside></div>';
 
 	$content = apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
@@ -421,7 +424,7 @@ function ws_chapter_profile() {
 		'about'   => array( __( 'About', 'ws-chapters' ), $about ),
 		'events'  => array( __( 'Events', 'ws-chapters' ), ws_event_cards_for( 0, $id ) ),
 		'news'    => array( __( 'News & Activities', 'ws-chapters' ), ws_news_cards( 0, $id, 6 ) ),
-		'gallery' => array( __( 'Gallery', 'ws-chapters' ), ws_gallery_grid( $gallery ) ),
+		'gallery' => array( __( 'Gallery', 'ws-chapters' ), ws_fe_gallery_panel( 'chapter', $id, $gallery ) ),
 		'contact' => array( __( 'Contact', 'ws-chapters' ), ws_contact_list( $get ) ),
 	) ) . '</div>';
 }
