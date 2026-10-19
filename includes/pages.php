@@ -419,14 +419,14 @@ function ws_chapter_profile() {
 		. '</aside></div>';
 
 	$content = apply_filters( 'the_content', get_post_field( 'post_content', $id ) );
-	$about   = '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( get_the_title( $id ) ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
+	$about   = ws_fe_about_box( $id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( get_the_title( $id ) ) ) ) . '</h3><div class="ws-prose">' . $content . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' ) . '</div>'
 		. ( $has_map ? '<div id="chapter-map" class="ws-subhead-map">' . ws_map_element( 'chapters', array( ws_chapter_point( $id ) ), array( ws_iso_numeric( ws_country_code( $country ) ) ), 360, array( (float) $lat, (float) $lng ) ) . '</div>' : '' );
 
 	return $hero . '<div class="ws-page-body">' . $identity . ws_tabs( 'chapter', array(
 		'about'   => array( __( 'About', 'ws-chapters' ), $about ),
-		'events'  => array( __( 'Events', 'ws-chapters' ), ws_event_cards_for( 0, $id ) ),
-		'news'    => array( __( 'News & Activities', 'ws-chapters' ), ws_news_cards( 0, $id, 6 ) ),
+		'events'  => array( __( 'Events', 'ws-chapters' ), ws_fe_submit_event_button( $id ) . ws_event_cards_for( 0, $id ) ),
+		'news'    => array( __( 'News & Activities', 'ws-chapters' ), ws_fe_news_form( $id ) . ws_news_cards( 0, $id, 6 ) ),
 		'gallery' => array( __( 'Gallery', 'ws-chapters' ), ws_fe_gallery_panel( 'chapter', $id, $gallery ) ),
 		'contact' => array( __( 'Contact', 'ws-chapters' ), ws_contact_list( $get ) ),
 	) ) . '</div>';

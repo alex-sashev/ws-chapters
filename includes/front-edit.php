@@ -178,6 +178,15 @@ function ws_fe_save( $type, $id, $action ) {
 		return __( 'Contact details saved.', 'ws-chapters' );
 	}
 
+	if ( 'about' === $action ) {
+		if ( 'ws_chapter' !== get_post_type( $id ) ) {
+			return new WP_Error( 'ws_fe', __( 'That text cannot be changed here.', 'ws-chapters' ) );
+		}
+		$text = wp_kses_post( wp_unslash( $_POST['ws_about'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+		wp_update_post( array( 'ID' => $id, 'post_content' => $text ) );
+		return __( 'About text saved.', 'ws-chapters' );
+	}
+
 	// Image.
 	$slot = sanitize_key( wp_unslash( $_POST['ws_fe_slot'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 	if ( ! isset( ws_fe_image_slots( $type )[ $slot ] ) ) {
@@ -237,7 +246,7 @@ add_action( 'template_redirect', function () {
 
 /** A short notice after saving or failing (one-off, from the transient above). */
 add_action( 'wp_footer', function () {
-	if ( empty( $_GET['ws_fe'] ) || ! is_user_logged_in() ) { // phpcs:ignore WordPress.Security.NonceVerification
+	if ( empty( $_GET['ws_fe'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
 	$msg = get_transient( 'ws_fe_msg_' . get_current_user_id() );
@@ -289,3 +298,154 @@ add_filter( 'the_content', function ( $content ) {
 	}
 	return $content . '<p class="ws-fe-page-edit"><a class="ws-fedit__btn ws-fedit__btn--link" href="' . esc_url( get_edit_post_link( $id ) ) . '" title="' . esc_attr__( 'Edit this page', 'ws-chapters' ) . '" aria-label="' . esc_attr__( 'Edit this page', 'ws-chapters' ) . '">' . ws_fe_pencil() . ' <span>' . esc_html__( 'Edit this page', 'ws-chapters' ) . '</span></a></p>';
 } );
+
+/* -------------------------------------------------------------------------
+ * Chapter page: About text, Submit an event, Submit news or activity
+ * ---------------------------------------------------------------------- */
+
+/** Plain text of the chapter's About page text, for the edit box (block markup removed). */
+function ws_fe_about_text( $id ) {
+	$raw = (string) get_post_field( 'post_content', $id );
+	$raw = preg_replace( '/<!--.*?-->/s', '', $raw );
+	return trim( html_entity_decode( wp_strip_all_tags( $raw ), ENT_QUOTES, 'UTF-8' ) );
+}
+
+/** Edit box for the About text; empty for people who may not edit the chapter. */
+function ws_fe_about_box( $id ) {
+	$inner = '<label class="ws-fedit__label">' . esc_html__( 'About the chapter (leave an empty line between paragraphs)', 'ws-chapters' )
+		. '<textarea name="ws_about" rows="12">' . esc_textarea( ws_fe_about_text( $id ) ) . '</textarea></label>';
+	return '<div class="ws-fe-toolbar">' . ws_fe_box( 'chapter', $id, 'about', $inner, __( 'Edit the About text', 'ws-chapters' ), true ) . '</div>';
+}
+
+/** "Submit an event": opens the public event form with this chapter preselected. */
+function ws_fe_submit_event_button( $chapter_id ) {
+	$page = get_page_by_path( 'submit-event' );
+	$url  = $page ? get_permalink( $page ) : home_url( '/submit-event/' );
+	return '<p class="ws-fe-submit"><a class="ws-btn-gold" href="' . esc_url( add_query_arg( 'chapter', (int) $chapter_id, $url ) . '#ws-event-form' ) . '">' . esc_html__( 'Submit an event', 'ws-chapters' ) . '</a></p>';
+}
+
+/** "Submit news or activity" form on the chapter's News tab. Posts to the same page. */
+function ws_fe_news_form( $chapter_id ) {
+	$logged = is_user_logged_in();
+	$inner  = ws_form_guard_fields( 'chapter_news' )
+		. '<input type="hidden" name="ws_chapter" value="' . (int) $chapter_id . '">'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'What happened or what is coming up', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
+	if ( ! $logged ) {
+		$inner .= '<label class="ws-fedit__label">' . esc_html__( 'Your name', 'ws-chapters' ) . '<input type="text" name="ws_news_name" required></label>'
+			. '<label class="ws-fedit__label">' . esc_html__( 'Your email (not published)', 'ws-chapters' ) . '<input type="email" name="ws_news_email" required></label>';
+	}
+	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
+	return ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), $logged ? 'Published straight away if you can edit this chapter, otherwise sent for review.' : 'Sent to the chapter team for review before it appears.' );
+}
+
+/** A public button that opens a form (not tied to a chapter edit permission). */
+function ws_fe_form_box( $inner, $label, $note ) {
+	return '<details class="ws-fedit ws-fedit--button ws-fe-news"><summary class="ws-fedit__btn" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</summary>'
+		. '<form method="post" enctype="multipart/form-data" class="ws-fedit__form"><p class="ws-fedit__title">' . esc_html( $label ) . '</p>'
+		. '<p class="ws-help">' . esc_html( $note ) . '</p>' . $inner
+		. '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Send', 'ws-chapters' ) . '</button></p></form></details>';
+}
+
+/** Handle the news form: create the post, its country and chapter, and its images. */
+add_action( 'template_redirect', function () {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'chapter_news' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$chapter_id = absint( $_POST['ws_chapter'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+	$chapter    = $chapter_id ? get_post( $chapter_id ) : null;
+	$guard      = ws_form_guard_check( 'chapter_news' );
+	$error      = null;
+	if ( true !== $guard ) {
+		$error = $guard;
+	} elseif ( ! $chapter || 'ws_chapter' !== $chapter->post_type || 'publish' !== $chapter->post_status ) {
+		$error = __( 'Chapter not found.', 'ws-chapters' );
+	} elseif ( '' === ws_post_field( 'ws_news_title' ) || '' === ws_post_field( 'ws_news_body', true ) || empty( $_POST['ws_consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$error = __( 'Please fill in the title, the text and the agreement.', 'ws-chapters' );
+	} elseif ( ! is_user_logged_in() && ( '' === ws_post_field( 'ws_news_name' ) || ! is_email( ws_post_field( 'ws_news_email' ) ) ) ) {
+		$error = __( 'Please add your name and a valid email address.', 'ws-chapters' );
+	}
+
+	$ok = null === $error;
+	if ( $ok ) {
+		$publish = ws_front_can_edit( 'chapter', $chapter_id );
+		$post_id = wp_insert_post( array(
+			'post_type'    => 'post',
+			'post_status'  => $publish ? 'publish' : 'pending',
+			'post_title'   => ws_post_field( 'ws_news_title' ),
+			'post_content' => wpautop( ws_post_field( 'ws_news_body', true ) ),
+			'post_author'  => get_current_user_id(),
+		), true );
+		if ( is_wp_error( $post_id ) ) {
+			$ok    = false;
+			$error = __( 'Sorry, something went wrong. Please try again later.', 'ws-chapters' );
+		} else {
+			update_post_meta( $post_id, 'related_chapter', $chapter_id );
+			$country = ws_chapter_country( $chapter_id );
+			if ( $country ) {
+				wp_set_object_terms( $post_id, array( (int) $country->term_id ), 'ws_country' );
+			}
+			if ( ! is_user_logged_in() ) {
+				update_post_meta( $post_id, '_ws_submitted_by', ws_post_field( 'ws_news_name' ) );
+				update_post_meta( $post_id, '_ws_submitted_email', sanitize_email( ws_post_field( 'ws_news_email' ) ) );
+			}
+			// Images go to the chapter's country folder (upload-folders.php reads post_id).
+			$_REQUEST['post_id'] = $chapter_id;
+			$images              = ws_fe_news_images( $post_id );
+			unset( $_REQUEST['post_id'] );
+			if ( $images ) {
+				set_post_thumbnail( $post_id, $images[0] );
+				$extra = '';
+				foreach ( array_slice( $images, 1 ) as $img ) {
+					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
+				}
+				if ( $extra ) {
+					wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
+				}
+			}
+			if ( ! $publish ) {
+				ws_send_mail( get_option( 'admin_email' ), sprintf( /* translators: %s: chapter name */ __( 'News to review: %s', 'ws-chapters' ), $chapter->post_title ), array(
+					__( 'A news item was sent from a chapter page and is waiting for review.', 'ws-chapters' ), '',
+					__( 'Title:', 'ws-chapters' ) . ' ' . ws_post_field( 'ws_news_title' ),
+					__( 'Chapter:', 'ws-chapters' ) . ' ' . $chapter->post_title,
+					__( 'Review it here:', 'ws-chapters' ) . ' ' . admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
+				), is_user_logged_in() ? '' : sanitize_email( ws_post_field( 'ws_news_email' ) ) );
+			}
+		}
+	}
+
+	$msg = $ok
+		? ( $publish ?? false ? __( 'Published.', 'ws-chapters' ) : __( 'Thank you. Your news has been sent for review.', 'ws-chapters' ) )
+		: $error;
+	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), MINUTE_IN_SECONDS );
+	$return = $chapter ? get_permalink( $chapter ) : home_url( '/' );
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', $return ) ) . '#news' );
+	exit;
+}, 2 );
+
+/** Upload the news photos as media for this post (the chapter's country folder). Returns IDs. */
+function ws_fe_news_images( $post_id ) {
+	if ( empty( $_FILES['ws_news_images'] ) || ! is_array( $_FILES['ws_news_images']['name'] ?? null ) ) {
+		return array();
+	}
+	$files = $_FILES['ws_news_images']; // phpcs:ignore WordPress.Security.NonceVerification -- guarded by the handler.
+	$ids   = array();
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	foreach ( array_slice( array_keys( $files['name'] ), 0, 5 ) as $i ) {
+		if ( UPLOAD_ERR_OK !== (int) $files['error'][ $i ] || (int) $files['size'][ $i ] > 8 * MB_IN_BYTES ) {
+			continue;
+		}
+		$file = array( 'name' => sanitize_file_name( $files['name'][ $i ] ), 'type' => $files['type'][ $i ], 'tmp_name' => $files['tmp_name'][ $i ], 'error' => 0, 'size' => (int) $files['size'][ $i ] );
+		if ( empty( wp_check_filetype_and_ext( $file['tmp_name'], $file['name'], ws_event_image_mimes() )['type'] ) ) {
+			continue;
+		}
+		$id = media_handle_sideload( $file, $post_id, null, array( 'test_form' => false, 'mimes' => ws_event_image_mimes() ) );
+		if ( ! is_wp_error( $id ) ) {
+			$ids[] = (int) $id;
+		}
+	}
+	return $ids;
+}

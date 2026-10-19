@@ -321,6 +321,15 @@ function ws_save_event_images( $files, $event_id ) {
 }
 
 function ws_event_submit_form() {
+	// "Submit an event" on a chapter page links here with ?chapter=ID: that chapter and its country are preselected.
+	$preset_chapter = isset( $_GET['chapter'] ) ? absint( $_GET['chapter'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+	$preset_country = 0;
+	if ( $preset_chapter && 'ws_chapter' === get_post_type( $preset_chapter ) ) {
+		$c              = ws_chapter_country( $preset_chapter );
+		$preset_country = $c ? $c->term_id : 0;
+	} else {
+		$preset_chapter = 0;
+	}
 	$result = null;
 	if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && 'event' === ( $_POST['ws_form'] ?? '' ) ) {
 		$result = ws_handle_event_submission();
@@ -342,12 +351,12 @@ function ws_event_submit_form() {
 	$out .= ws_field( 'ws_end_date', __( 'End date', 'ws-chapters' ), 'date', array( 'value' => $v( 'ws_end_date' ), 'help' => __( 'If it runs over several days.', 'ws-chapters' ) ) );
 	$out .= ws_field( 'ws_start_time', __( 'Start time', 'ws-chapters' ), 'time', array( 'value' => $v( 'ws_start_time' ) ) );
 	$out .= '</div><div class="ws-field-row">';
-	$out .= ws_field( 'ws_form_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) $v( 'ws_form_country' ) ), 'attrs' => 'data-ws-country' ) );
+	$out .= ws_field( 'ws_form_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) ( $v( 'ws_form_country' ) ?: $preset_country ) ), 'attrs' => 'data-ws-country' ) );
 	$out .= ws_field( 'ws_city', __( 'City', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_city' ) ) );
 	$out .= '</div>';
 	$out .= ws_field( 'ws_venue', __( 'Venue or meeting point', 'ws-chapters' ), 'text', array( 'value' => $v( 'ws_venue' ), 'help' => __( 'Address, or a website for the venue.', 'ws-chapters' ) ) );
 	$out .= '<div class="ws-field-row">';
-	$out .= ws_field( 'ws_form_chapter', __( 'Organising chapter', 'ws-chapters' ), 'select', array( 'options' => ws_chapter_options( (int) $v( 'ws_form_chapter' ), __( '— Not a listed chapter —', 'ws-chapters' ) ), 'attrs' => 'data-ws-chapter' ) );
+	$out .= ws_field( 'ws_form_chapter', __( 'Organising chapter', 'ws-chapters' ), 'select', array( 'options' => ws_chapter_options( (int) ( $v( 'ws_form_chapter' ) ?: $preset_chapter ), __( '— Not a listed chapter —', 'ws-chapters' ) ), 'attrs' => 'data-ws-chapter' ) );
 	$out .= ws_field( 'ws_organiser', __( 'Or organiser name', 'ws-chapters' ), 'text', array( 'value' => $v( 'ws_organiser' ), 'help' => __( 'Club, lodge or group, if not a chapter above.', 'ws-chapters' ) ) );
 	$out .= '</div>';
 	$out .= ws_field( 'ws_description', __( 'Description', 'ws-chapters' ), 'textarea', array( 'required' => true, 'value' => $v( 'ws_description' ), 'help' => __( 'Programme, route, costs, how to register.', 'ws-chapters' ) ) );
