@@ -267,12 +267,15 @@ add_action( 'wp_footer', function () {
 	if ( empty( $_GET['ws_fe'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return;
 	}
+	nocache_headers(); // The message must not be kept in the page cache and shown on other pages.
 	$msg = get_transient( 'ws_fe_msg_' . get_current_user_id() );
 	delete_transient( 'ws_fe_msg_' . get_current_user_id() );
 	if ( ! $msg ) {
 		return;
 	}
-	echo '<div class="ws-fe-notice ' . ( $msg['ok'] ? 'ws-fe-notice--ok' : 'ws-fe-notice--error' ) . '" role="status">' . esc_html( $msg['text'] ) . '</div>';
+	echo '<div class="ws-fe-notice ' . ( $msg['ok'] ? 'ws-fe-notice--ok' : 'ws-fe-notice--error' ) . '" role="status">' . esc_html( $msg['text'] ) . '</div>'
+		// It goes away by itself after a few seconds, or on click, so it never sticks to the page.
+		. '<script>(function(){var n=document.querySelector(".ws-fe-notice");if(!n)return;var h=function(){n.remove();};n.addEventListener("click",h);setTimeout(h,4000);})();</script>';
 } );
 
 /* -------------------------------------------------------------------------
