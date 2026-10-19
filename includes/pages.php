@@ -365,7 +365,7 @@ function ws_country_page() {
 
 	/* translators: 1: country name, 2: number of chapters */
 	$chapters_title = sprintf( __( 'Chapters in %1$s (%2$d)', 'ws-chapters' ), $term->name, count( $chapters ) );
-	$overview       = '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( $term->name ) ) ) . '</h3><div class="ws-prose">' . $about . '</div></div>'
+	$overview       = ws_fe_country_about_box( $term->term_id ) . '<div class="ws-overview"><div class="ws-overview__main"><h3>' . esc_html( sprintf( __( 'About %s', 'ws-chapters' ), ws_display_name( $term->name ) ) ) . '</h3><div class="ws-prose">' . $about . '</div></div>'
 		. ( $gallery ? '<div class="ws-overview__photo">' . wp_get_attachment_image( $gallery[0], 'medium_large' ) . '</div>' : '' )
 		. '<aside class="ws-overview__contact"><h3>' . esc_html__( 'Official contacts and links', 'ws-chapters' ) . '</h3>' . ws_contact_list( $get )
 		. ( $chapters && ws_join_url( 0, $term->term_id ) ? '<a class="ws-btn-outline" href="' . esc_url( ws_join_url( 0, $term->term_id ) ) . '">' . esc_html__( 'Apply to join', 'ws-chapters' ) . '</a>' : '' )
@@ -377,8 +377,8 @@ function ws_country_page() {
 	return $hero . '<div class="ws-page-body">' . ws_tabs( 'country', array(
 		'overview' => array( __( 'Overview', 'ws-chapters' ), $overview ),
 		'chapters' => array( __( 'Chapters', 'ws-chapters' ), $map . ws_chapter_rows( $chapters ) ),
-		'events'   => array( __( 'Events', 'ws-chapters' ), ws_event_cards_for( $term->term_id ) ),
-		'news'     => array( __( 'News', 'ws-chapters' ), ws_news_cards( $term->term_id, 0, 6 ) ),
+		'events'   => array( __( 'Events', 'ws-chapters' ), ws_fe_submit_event_button( 0, $term->term_id ) . ws_event_cards_for( $term->term_id ) ),
+		'news'     => array( __( 'News', 'ws-chapters' ), ws_fe_country_news_form( $term->term_id ) . ws_news_cards( $term->term_id, 0, 6 ) ),
 		'gallery'  => array( __( 'Gallery', 'ws-chapters' ), ws_fe_gallery_panel( 'term', $term->term_id, $gallery ) ),
 		'contact'  => array( __( 'Contact', 'ws-chapters' ), ws_contact_list( $get ) ),
 	) ) . '</div>';

@@ -179,10 +179,14 @@ function ws_fe_save( $type, $id, $action ) {
 	}
 
 	if ( 'about' === $action ) {
+		$text = wp_kses_post( wp_unslash( $_POST['ws_about'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+		if ( 'term' === $type ) {
+			$saved = wp_update_term( $id, 'ws_country', array( 'description' => $text ) );
+			return is_wp_error( $saved ) ? $saved : __( 'About text saved.', 'ws-chapters' );
+		}
 		if ( 'ws_chapter' !== get_post_type( $id ) ) {
 			return new WP_Error( 'ws_fe', __( 'That text cannot be changed here.', 'ws-chapters' ) );
 		}
-		$text = wp_kses_post( wp_unslash( $_POST['ws_about'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 		wp_update_post( array( 'ID' => $id, 'post_content' => $text ) );
 		return __( 'About text saved.', 'ws-chapters' );
 	}
@@ -317,11 +321,40 @@ function ws_fe_about_box( $id ) {
 	return '<div class="ws-fe-toolbar">' . ws_fe_box( 'chapter', $id, 'about', $inner, __( 'Edit the About text', 'ws-chapters' ), true ) . '</div>';
 }
 
-/** "Submit an event": opens the public event form with this chapter preselected. */
-function ws_fe_submit_event_button( $chapter_id ) {
+/** "Submit an event": opens the public event form, with this chapter (or, on a country page, this country) preselected. */
+function ws_fe_submit_event_button( $chapter_id, $country_id = 0 ) {
 	$page = get_page_by_path( 'submit-event' );
 	$url  = $page ? get_permalink( $page ) : home_url( '/submit-event/' );
-	return '<p class="ws-fe-submit"><a class="ws-btn-gold" href="' . esc_url( add_query_arg( 'chapter', (int) $chapter_id, $url ) . '#ws-event-form' ) . '">' . esc_html__( 'Submit an event', 'ws-chapters' ) . '</a></p>';
+	$url  = $chapter_id ? add_query_arg( 'chapter', (int) $chapter_id, $url ) : add_query_arg( 'country', (int) $country_id, $url );
+	return '<p class="ws-fe-submit"><a class="ws-btn-gold" href="' . esc_url( $url . '#ws-event-form' ) . '">' . esc_html__( 'Submit an event', 'ws-chapters' ) . '</a></p>';
+}
+
+/** Country About text: the Overview shows the country's term description; editable here. */
+function ws_fe_country_about_box( $term_id ) {
+	$term = get_term( (int) $term_id, 'ws_country' );
+	if ( ! $term || is_wp_error( $term ) ) {
+		return '';
+	}
+	$text  = trim( html_entity_decode( wp_strip_all_tags( (string) $term->description ), ENT_QUOTES, 'UTF-8' ) );
+	$inner = '<label class="ws-fedit__label">' . esc_html__( 'About the country (leave an empty line between paragraphs)', 'ws-chapters' )
+		. '<textarea name="ws_about" rows="12">' . esc_textarea( $text ) . '</textarea></label>';
+	return '<div class="ws-fe-toolbar">' . ws_fe_box( 'term', $term->term_id, 'about', $inner, __( 'Edit the About text', 'ws-chapters' ), true ) . '</div>';
+}
+
+/** "Submit news" on a country page: a news form for this country (no chapter, so posted by the country). */
+function ws_fe_country_news_form( $term_id ) {
+	$logged = is_user_logged_in();
+	$inner  = ws_form_guard_fields( 'country_news' )
+		. '<input type="hidden" name="ws_country" value="' . (int) $term_id . '">'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'The news', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
+	if ( ! $logged ) {
+		$inner .= '<label class="ws-fedit__label">' . esc_html__( 'Your name', 'ws-chapters' ) . '<input type="text" name="ws_news_name" required></label>'
+			. '<label class="ws-fedit__label">' . esc_html__( 'Your email (not published)', 'ws-chapters' ) . '<input type="email" name="ws_news_email" required></label>';
+	}
+	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
+	return ws_fe_form_box( $inner, __( 'Submit news', 'ws-chapters' ), $logged ? 'Published straight away if you can edit this country, otherwise sent for review.' : 'Sent to the country team for review before it appears.' );
 }
 
 /** "Submit news or activity" form on the chapter's News tab. Posts to the same page. */
@@ -449,3 +482,72 @@ function ws_fe_news_images( $post_id ) {
 	}
 	return $ids;
 }
+
+/** Handle the country news form: a post for the country (no chapter), pending for non-admins. */
+add_action( 'template_redirect', function () {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'country_news' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$term_id = absint( $_POST['ws_country'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+	$term    = $term_id ? get_term( $term_id, 'ws_country' ) : null;
+	$guard   = ws_form_guard_check( 'country_news' );
+	$error   = null;
+	if ( true !== $guard ) {
+		$error = $guard;
+	} elseif ( ! $term || is_wp_error( $term ) ) {
+		$error = __( 'Country not found.', 'ws-chapters' );
+	} elseif ( '' === ws_post_field( 'ws_news_title' ) || '' === ws_post_field( 'ws_news_body', true ) || empty( $_POST['ws_consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$error = __( 'Please fill in the title, the text and the agreement.', 'ws-chapters' );
+	} elseif ( ! is_user_logged_in() && ( '' === ws_post_field( 'ws_news_name' ) || ! is_email( ws_post_field( 'ws_news_email' ) ) ) ) {
+		$error = __( 'Please add your name and a valid email address.', 'ws-chapters' );
+	}
+
+	$ok      = null === $error;
+	$publish = false;
+	if ( $ok ) {
+		$publish = ws_front_can_edit( 'term', $term_id );
+		$post_id = wp_insert_post( array(
+			'post_type'    => 'post',
+			'post_status'  => $publish ? 'publish' : 'pending',
+			'post_title'   => ws_post_field( 'ws_news_title' ),
+			'post_content' => wpautop( ws_post_field( 'ws_news_body', true ) ),
+			'post_author'  => get_current_user_id(),
+		), true );
+		if ( is_wp_error( $post_id ) ) {
+			$ok    = false;
+			$error = __( 'Sorry, something went wrong. Please try again later.', 'ws-chapters' );
+		} else {
+			wp_set_object_terms( $post_id, array( $term_id ), 'ws_country' );
+			if ( ! is_user_logged_in() ) {
+				update_post_meta( $post_id, '_ws_submitted_by', ws_post_field( 'ws_news_name' ) );
+				update_post_meta( $post_id, '_ws_submitted_email', sanitize_email( ws_post_field( 'ws_news_email' ) ) );
+			}
+			// Images go to this country's folder (upload-folders.php reads ws_country).
+			$_REQUEST['ws_country'] = $term_id;
+			$images                 = ws_fe_news_images( $post_id );
+			unset( $_REQUEST['ws_country'] );
+			if ( $images ) {
+				set_post_thumbnail( $post_id, $images[0] );
+				$extra = '';
+				foreach ( array_slice( $images, 1 ) as $img ) {
+					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
+				}
+				wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
+			}
+			if ( ! $publish ) {
+				ws_send_mail( get_option( 'admin_email' ), sprintf( /* translators: %s: country name */ __( 'News to review: %s', 'ws-chapters' ), $term->name ), array(
+					__( 'A news item was sent from a country page and is waiting for review.', 'ws-chapters' ), '',
+					__( 'Title:', 'ws-chapters' ) . ' ' . ws_post_field( 'ws_news_title' ),
+					__( 'Country:', 'ws-chapters' ) . ' ' . $term->name,
+					__( 'Review it here:', 'ws-chapters' ) . ' ' . admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
+				), is_user_logged_in() ? '' : sanitize_email( ws_post_field( 'ws_news_email' ) ) );
+			}
+		}
+	}
+
+	$msg = $ok ? ( $publish ? __( 'Published.', 'ws-chapters' ) : __( 'Thank you. Your news has been sent for review.', 'ws-chapters' ) ) : $error;
+	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), MINUTE_IN_SECONDS );
+	$return = $term ? get_term_link( $term ) : home_url( '/' );
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', is_wp_error( $return ) ? home_url( '/' ) : $return ) ) . '#news' );
+	exit;
+}, 2 );

@@ -329,6 +329,10 @@ function ws_event_submit_form() {
 		$preset_country = $c ? $c->term_id : 0;
 	} else {
 		$preset_chapter = 0;
+		$country_id     = isset( $_GET['country'] ) ? absint( $_GET['country'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+		if ( $country_id && term_exists( $country_id, 'ws_country' ) ) {
+			$preset_country = $country_id; // "Submit an event" on a country page: country only.
+		}
 	}
 	$result = null;
 	if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && 'event' === ( $_POST['ws_form'] ?? '' ) ) {
