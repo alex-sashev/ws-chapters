@@ -193,6 +193,16 @@ add_action( 'template_redirect', function () {
 			$ok  = true;
 			$msg = __( 'Access removed. The account is kept and can be added back later.', 'ws-chapters' );
 		}
+	} elseif ( 'resend' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$uid = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+		if ( ! ws_mm_may_manage_user( $uid ) || ! get_user_meta( $uid, 'ws_invited', true ) ) {
+			$msg = __( 'You cannot resend this invitation.', 'ws-chapters' );
+		} else {
+			$msg = ws_mm_send_invite( get_userdata( $uid ) );
+			$ok  = null === $msg;
+			$msg = $ok ? __( 'Invitation sent again.', 'ws-chapters' ) : $msg;
+			ws_mm_log( 'resent', $uid );
+		}
 	} elseif ( 'title' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid   = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
 		$title = sanitize_text_field( wp_unslash( $_POST['ws_mm_title'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -247,20 +257,28 @@ function ws_mm_invite() {
 	update_user_meta( $uid, 'ws_scope_countries', array( $cid ) );
 	update_user_meta( $uid, 'ws_scope_chapters', $chaps );
 	update_user_meta( $uid, 'ws_invited', gmdate( 'c' ) );
-	$user = get_userdata( $uid );
-	$key  = get_password_reset_key( $user );
+	$err = ws_mm_send_invite( get_userdata( $uid ) );
+	ws_mm_log( 'invited', $uid, $role );
+	return $err ? $err : null;
+}
+
+/** Send (or send again) the invitation email with a fresh link. Returns null, or an error message. */
+function ws_mm_send_invite( $user ) {
+	if ( ! $user ) {
+		return __( 'That person was not found.', 'ws-chapters' );
+	}
+	$key = get_password_reset_key( $user );
 	if ( is_wp_error( $key ) ) {
-		return __( 'The account was created but the invitation could not be sent. Use Resend later.', 'ws-chapters' );
+		return __( 'The invitation could not be created. Please try again.', 'ws-chapters' );
 	}
 	$link = network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
-	wp_mail( $email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), sprintf(
+	$sent = wp_mail( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), sprintf(
 		/* translators: 1: link, 2: days */
 		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter signing in, add your road name, phone, first and last name on your profile.", 'ws-chapters' ),
 		$link,
 		WS_MM_INVITE_DAYS
 	) );
-	ws_mm_log( 'invited', $uid, $role );
-	return null;
+	return $sent ? null : __( 'The invitation email could not be sent. Check the mail settings, then resend.', 'ws-chapters' );
 }
 
 // Invitation links last WS_MM_INVITE_DAYS days (WordPress default is one day). Applies to all password reset links.
@@ -318,12 +336,26 @@ add_shortcode( 'ws_member_manage', function () {
 		if ( ws_mm_may_set_title( $u->ID ) ) {
 			$out .= '<form method="post" class="ws-mm__inline">' . $nonce . '<input type="hidden" name="ws_mm_action" value="title"><input type="hidden" name="ws_mm_user" value="' . (int) $u->ID . '"><select name="ws_mm_title">' . $tsel . '</select> <input type="text" name="ws_mm_title_other" placeholder="' . esc_attr__( 'If Other', 'ws-chapters' ) . '"> <button type="submit" class="ws-btn-outline">' . esc_html__( 'Save title', 'ws-chapters' ) . '</button></form>';
 		}
+		if ( ws_mm_may_manage_user( $u->ID ) && get_user_meta( $u->ID, 'ws_invited', true ) ) {
+			$out .= '<form method="post" class="ws-mm__inline">' . $nonce . '<input type="hidden" name="ws_mm_action" value="resend"><input type="hidden" name="ws_mm_user" value="' . (int) $u->ID . '"><button type="submit" class="ws-btn-outline">' . esc_html__( 'Resend invitation', 'ws-chapters' ) . '</button></form>';
+		}
 		if ( ws_mm_may_manage_user( $u->ID ) ) {
 			$out .= '<form method="post" class="ws-mm__inline" onsubmit="return confirm(\'' . esc_js( __( 'Remove access for this person? Their account and posts are kept.', 'ws-chapters' ) ) . '\')">' . $nonce . '<input type="hidden" name="ws_mm_action" value="remove"><input type="hidden" name="ws_mm_user" value="' . (int) $u->ID . '"><button type="submit" class="ws-btn-outline">' . esc_html__( 'Remove access', 'ws-chapters' ) . '</button></form>';
 		}
 		$out .= '</li>';
 	}
-	return $out . '</ul></section>';
+	$out .= '</ul></section>';
+	if ( $super ) {
+		$log = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -20 ) );
+		$out .= '<section class="ws-mm__log"><h3>' . esc_html__( 'Recent activity', 'ws-chapters' ) . '</h3><ul>';
+		foreach ( $log as $e ) {
+			$by     = get_userdata( (int) $e['by'] );
+			$target = get_userdata( (int) $e['target'] );
+			$out   .= '<li>' . esc_html( mysql2date( 'j M Y H:i', $e['time'] ) ) . ' · ' . esc_html( $by ? $by->display_name : '?' ) . ' · ' . esc_html( $e['action'] ) . ' · ' . esc_html( $target ? ws_mm_person_name( $target ) : '?' ) . ( $e['detail'] ? ' (' . esc_html( $e['detail'] ) . ')' : '' ) . '</li>';
+		}
+		$out .= '</ul></section>';
+	}
+	return $out;
 } );
 
 /* The member's own details, filled in after the invitation: road name, phone, first and last name (on their profile). */
@@ -354,4 +386,43 @@ function ws_mm_save_profile_fields( $user_id ) {
 	}
 }
 add_action( 'personal_options_update', 'ws_mm_save_profile_fields' );
+
+/* Avatar: each member uploads their own photo (no Gravatar). */
+function ws_mm_avatar_field( $user ) {
+	if ( ! is_object( $user ) || ! array_intersect( (array) $user->roles, array( 'ws_member', 'ws_chapter_editor', 'ws_country_admin' ) ) ) {
+		return;
+	}
+	echo '<table class="form-table" role="presentation"><tr><th><label for="ws_avatar_file">' . esc_html__( 'Photo', 'ws-chapters' ) . '</label></th><td>';
+	echo wp_kses_post( ws_mm_avatar_html( $user->ID, ws_mm_person_name( $user ) ) ) . '<br>';
+	echo '<input type="file" id="ws_avatar_file" name="ws_avatar_file" accept="image/jpeg,image/png,image/webp,image/gif"> <span class="description">' . esc_html__( 'JPG, PNG, WebP or GIF, up to 4 MB.', 'ws-chapters' ) . '</span>';
+	echo '</td></tr></table>';
+}
+add_action( 'show_user_profile', 'ws_mm_avatar_field' );
+add_action( 'edit_user_profile', 'ws_mm_avatar_field' );
+add_action( 'user_edit_form_tag', function () {
+	echo ' enctype="multipart/form-data"';
+} );
+
+function ws_mm_save_avatar( $user_id ) {
+	if ( ! current_user_can( 'edit_user', $user_id ) || empty( $_FILES['ws_avatar_file']['name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$file = $_FILES['ws_avatar_file']; // phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! empty( $file['error'] ) || (int) $file['size'] > 4 * MB_IN_BYTES ) {
+		return;
+	}
+	$check = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'], array( 'jpg|jpeg|jpe' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'gif' => 'image/gif' ) );
+	if ( empty( $check['type'] ) ) {
+		return;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	$id = media_handle_upload( 'ws_avatar_file', 0, array(), array( 'test_form' => false, 'mimes' => array( 'jpg|jpeg|jpe' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp', 'gif' => 'image/gif' ) ) );
+	if ( ! is_wp_error( $id ) ) {
+		update_user_meta( $user_id, 'ws_avatar', (int) $id );
+	}
+}
+add_action( 'personal_options_update', 'ws_mm_save_avatar' );
+add_action( 'edit_user_profile_update', 'ws_mm_save_avatar' );
 add_action( 'edit_user_profile_update', 'ws_mm_save_profile_fields' );
