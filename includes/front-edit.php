@@ -815,6 +815,8 @@ add_action( 'template_redirect', function () {
 		} else {
 			wp_set_object_terms( $chapter_id, array( (int) $term_id ), 'ws_country' ); // This country only.
 			update_post_meta( $chapter_id, 'city', ws_post_field( 'ws_chapter_city' ) );
+			ws_locate_chapter( $chapter_id ); // Its pin goes on its city.
+			do_action( 'litespeed_purge_all' );
 		}
 	}
 	$msg = $ok ? __( 'Chapter created. Its details, patch and logo can be added from its page.', 'ws-chapters' ) : $error;

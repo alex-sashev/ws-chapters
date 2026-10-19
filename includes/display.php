@@ -191,9 +191,29 @@ function ws_chapter_point( $chapter_id ) {
 	);
 }
 
-/** Map markers: every chapter whose position is known (own coordinates, city, or country capital). */
+/**
+ * Map markers: every chapter whose position is known (own coordinates, city, or country capital).
+ * Chapters at the very same spot (same city, or both on the capital) are spread a little around it,
+ * so every pin can be seen and clicked.
+ */
 function ws_chapter_map_data( $country = '' ) {
-	return array_values( array_filter( array_map( 'ws_chapter_point', wp_list_pluck( ws_get_chapters( $country ), 'ID' ) ) ) );
+	$points = array_values( array_filter( array_map( 'ws_chapter_point', wp_list_pluck( ws_get_chapters( $country ), 'ID' ) ) ) );
+	$groups = array();
+	foreach ( $points as $i => $p ) {
+		$groups[ round( $p['lat'], 3 ) . ',' . round( $p['lng'], 3 ) ][] = $i;
+	}
+	foreach ( $groups as $members ) {
+		$n = count( $members );
+		if ( $n < 2 ) {
+			continue;
+		}
+		foreach ( $members as $k => $i ) {
+			$angle                = 2 * M_PI * $k / $n;
+			$points[ $i ]['lat'] += 0.06 * sin( $angle );
+			$points[ $i ]['lng'] += 0.08 * cos( $angle );
+		}
+	}
+	return $points;
 }
 
 /** Chapter map, with the chapters' countries highlighted in gold. */

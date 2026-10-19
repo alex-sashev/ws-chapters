@@ -38,6 +38,14 @@ function ws_capital_coords( $code ) {
 function ws_chapter_position( $chapter_id ) {
 	$lat = get_post_meta( $chapter_id, 'latitude', true );
 	$lng = get_post_meta( $chapter_id, 'longitude', true );
+	if ( ! is_numeric( $lat ) || ! is_numeric( $lng ) ) {
+		// A city with no position yet (e.g. a chapter made on the site): look it up once and keep the result.
+		$city = trim( (string) get_post_meta( $chapter_id, 'city', true ) );
+		if ( '' !== $city && $city !== (string) get_post_meta( $chapter_id, 'geocode_tried', true ) && ws_locate_chapter( $chapter_id ) ) {
+			$lat = get_post_meta( $chapter_id, 'latitude', true );
+			$lng = get_post_meta( $chapter_id, 'longitude', true );
+		}
+	}
 	if ( is_numeric( $lat ) && is_numeric( $lng ) ) {
 		return array( (float) $lat, (float) $lng, get_post_meta( $chapter_id, 'coords_source', true ) ?: 'manual' );
 	}
@@ -66,6 +74,28 @@ function ws_geocode_city( $city, $country = '' ) {
 	$hit  = is_array( $data ) && isset( $data[0]['lat'], $data[0]['lon'] ) ? array( round( (float) $data[0]['lat'], 6 ), round( (float) $data[0]['lon'], 6 ) ) : null;
 	set_transient( $key, $hit ?: array(), $hit ? MONTH_IN_SECONDS : HOUR_IN_SECONDS );
 	return $hit;
+}
+
+/**
+ * Put a chapter's pin on its city: look the city up and store the position (marked as found from the city,
+ * so it follows later city changes). Returns true when a position was found. Each city is tried once.
+ */
+function ws_locate_chapter( $post_id ) {
+	$city = trim( (string) get_post_meta( $post_id, 'city', true ) );
+	if ( '' === $city ) {
+		return false;
+	}
+	update_post_meta( $post_id, 'geocode_tried', $city );
+	$country = ws_chapter_country( $post_id );
+	$hit     = ws_geocode_city( $city, $country ? $country->name : '' );
+	if ( ! $hit ) {
+		return false;
+	}
+	update_post_meta( $post_id, 'latitude', $hit[0] );
+	update_post_meta( $post_id, 'longitude', $hit[1] );
+	update_post_meta( $post_id, 'coords_source', 'city' );
+	update_post_meta( $post_id, 'geocoded_city', $city );
+	return true;
 }
 
 /**
@@ -98,12 +128,5 @@ add_action( 'save_post_ws_chapter', function ( $post_id ) {
 		}
 		return;
 	}
-	$country = ws_chapter_country( $post_id );
-	$hit     = ws_geocode_city( $city, $country ? $country->name : '' );
-	if ( $hit ) {
-		update_post_meta( $post_id, 'latitude', $hit[0] );
-		update_post_meta( $post_id, 'longitude', $hit[1] );
-		update_post_meta( $post_id, 'coords_source', 'city' );
-		update_post_meta( $post_id, 'geocoded_city', $city );
-	}
+	ws_locate_chapter( $post_id );
 }, 30 );
