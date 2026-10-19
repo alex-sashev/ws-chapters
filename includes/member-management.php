@@ -452,3 +452,40 @@ add_action( 'init', function () {
 		) );
 	}
 }, 45 );
+
+/* Menu: the two member pages sit after the Members link. The management link shows only to Super Admins and Country Admins. */
+add_filter( 'render_block_core/navigation-link', function ( $html, $block ) {
+	$class = $block['attrs']['className'] ?? '';
+	return false !== strpos( $class, 'ws-mm-admin-only' ) && ! ws_mm_can_manage() ? '' : $html;
+}, 11, 2 );
+
+add_action( 'init', function () {
+	if ( get_option( 'ws_mm_menu_done' ) ) {
+		return;
+	}
+	$nav = get_posts( array( 'post_type' => 'wp_navigation', 'post_status' => 'publish', 'numberposts' => 1, 'title' => 'Main menu' ) );
+	$dir = get_page_by_path( 'member-directory' );
+	$man = get_page_by_path( 'member-management' );
+	if ( ! $nav || ! $dir || ! $man ) {
+		return; // Try again on a later page load.
+	}
+	update_option( 'ws_mm_menu_done', gmdate( 'c' ), false );
+	$links = '<!-- wp:navigation-link ' . wp_json_encode( array( 'label' => __( 'Member directory', 'ws-chapters' ), 'url' => get_permalink( $dir ), 'kind' => 'post-type', 'type' => 'page', 'id' => $dir->ID, 'isTopLevelLink' => true, 'className' => 'ws-members-only' ) ) . ' /-->'
+		. "\n<!-- wp:navigation-link " . wp_json_encode( array( 'label' => __( 'Member management', 'ws-chapters' ), 'url' => get_permalink( $man ), 'kind' => 'post-type', 'type' => 'page', 'id' => $man->ID, 'isTopLevelLink' => true, 'className' => 'ws-members-only ws-mm-admin-only' ) ) . ' /-->';
+	$content = $nav[0]->post_content;
+	if ( false !== strpos( $content, 'ws-mm-admin-only' ) || false !== strpos( $content, 'Member directory' ) ) {
+		return;
+	}
+	$lines = explode( "\n", $content );
+	$out   = array();
+	foreach ( $lines as $line ) {
+		$out[] = $line;
+		if ( false !== strpos( $line, 'Members' ) && false !== strpos( $line, 'wp:navigation-link' ) ) {
+			$out[] = $links;
+		}
+	}
+	if ( count( $out ) === count( $lines ) ) {
+		$out[] = $links; // No Members link found: add the entries at the end.
+	}
+	wp_update_post( array( 'ID' => $nav[0]->ID, 'post_content' => implode( "\n", $out ) ) );
+}, 46 );
