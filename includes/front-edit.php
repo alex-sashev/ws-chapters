@@ -292,6 +292,14 @@ add_action( 'template_redirect', function () {
 	exit;
 }, 1 );
 
+/* While a save is running, the button says so and cannot be pressed twice (people were clicking again when nothing seemed to happen). */
+add_action( 'wp_footer', function () {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+	echo '<script>(function(){document.addEventListener("submit",function(e){var f=e.target;if(!f.classList||!f.classList.contains("ws-fedit__form")&&!f.classList.contains("ws-fe-remove")&&!f.closest(".ws-fe-news")){return;}if(f.getAttribute("data-busy")){e.preventDefault();return;}f.setAttribute("data-busy","1");var b=f.querySelector("button[type=submit]");if(b){var isRemove=f.classList.contains("ws-fe-remove");b.disabled=true;b.textContent=isRemove?"…":"Please wait…";}f.classList.add("is-busy");});})();</script>';
+} );
+
 /* A page showing a saved message must not be kept in the page cache, or the message comes back on refresh.
    Headers have to be set before the page is output, so this runs at the start of the request. */
 add_action( 'template_redirect', function () {

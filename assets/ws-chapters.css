@@ -248,3 +248,8 @@
 .ws-fe-remove__btn:hover, .ws-fe-remove__btn:focus-visible { background: #a3222b; color: #fff; border-color: #a3222b; }
 /* Tick boxes inside a field label sit beside their text, not on a line of their own. */
 .ws-fedit__label input[type=checkbox] { display: inline-block; width: auto; margin: 0 .5rem 0 0; vertical-align: middle; }
+/* A save is running: the form shows it is working and cannot be sent twice. */
+.ws-fedit__form.is-busy { cursor: progress; }
+.ws-fedit__form.is-busy button[type=submit] { opacity: .7; cursor: progress; }
+.ws-fe-remove.is-busy .ws-fe-remove__btn { opacity: .5; cursor: progress; }
+
