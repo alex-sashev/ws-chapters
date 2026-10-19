@@ -399,7 +399,7 @@ function ws_fe_country_news_form( $term_id ) {
 		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'The news', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
-	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
+	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website.', 'ws-chapters' ) . '</label>';
 	return ws_fe_form_box( $inner, __( 'Submit news', 'ws-chapters' ), 'Published straight away.' );
 }
 
@@ -414,7 +414,7 @@ function ws_fe_news_form( $chapter_id ) {
 		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'What happened or what is coming up', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
 		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>';
-	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website after it has been reviewed.', 'ws-chapters' ) . '</label>';
+	$inner .= '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I agree that this is shared on the website.', 'ws-chapters' ) . '</label>';
 	return ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), 'Published straight away.' );
 }
 
