@@ -317,7 +317,7 @@ function ws_doc_item( $doc ) {
 		. '<td data-label="' . esc_attr__( 'Type', 'ws-chapters' ) . '"><span class="ws-doc__type">' . esc_html( $types[ $type ] ?? '' ) . '</span></td>'
 		. '<td data-label="' . esc_attr__( 'Added by', 'ws-chapters' ) . '">' . esc_html( $author ? ws_mm_person_name( $author ) : '—' ) . '</td>'
 		. '<td data-label="' . esc_attr__( 'Size', 'ws-chapters' ) . '" class="ws-muted">' . esc_html( $extra ) . '</td>'
-		. '<td><div class="ws-mm__row-actions"><a class="ws-mm__btn ws-mm__btn--small ws-mm__btn--ghost" href="' . esc_url( $href ) . '"' . $target . '>' . ( $is_url ? esc_html__( 'Open link', 'ws-chapters' ) : esc_html__( 'Download', 'ws-chapters' ) ) . '</a>' . $delete . '</div></td>'
+		. '<td><div class="ws-mm__row-actions"><a class="ws-doc-icon-btn" href="' . esc_url( $href ) . '"' . $target . ' aria-label="' . esc_attr( $is_url ? __( 'Open link', 'ws-chapters' ) : __( 'Download', 'ws-chapters' ) ) . '" title="' . esc_attr( $is_url ? __( 'Open link', 'ws-chapters' ) : __( 'Download', 'ws-chapters' ) ) . '">' . ( $is_url ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>' ) . '</a>' . $delete . '</div></td>'
 		. '</tr>';
 }
 

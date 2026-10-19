@@ -399,3 +399,7 @@ a.ws-doc__title:hover { text-decoration: underline; }
 /* The Edit pencil on a single news article sits in the top-right corner of the article. */
 .wp-block-post-content:has(.ws-cx-edit) { position: relative; }
 .wp-block-post-content > .ws-cx-edit, .ws-news-gallery + .ws-cx-edit { top: 0; right: 0; }
+/* Library: Download and Open link as icon-only buttons, the same look as the Edit button. */
+.ws-doc-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin: 0; padding: 0; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: #fff; color: var(--ws-gold-dark, #8a6d2c); text-decoration: none; }
+.ws-doc-icon-btn svg { width: 15px; height: 15px; }
+.ws-doc-icon-btn:hover, .ws-doc-icon-btn:focus-visible { background: rgba(201, 162, 74, .12); }
