@@ -20,6 +20,25 @@ function ws_mm_titles() {
 	return array( 'President', 'Chapter President', 'Vice President', 'Sergeant of Arms', 'Secretary', 'Treasurer', 'Road Captain', 'Other' );
 }
 
+/** The row of links between the three member pages. $current is 'library', 'directory' or 'manage'. */
+function ws_mm_subnav( $current ) {
+	$items = array(
+		'library'   => array( __( 'Library', 'ws-chapters' ), get_page_by_path( 'members' ) ),
+		'directory' => array( __( 'Members', 'ws-chapters' ), get_page_by_path( 'member-directory' ) ),
+	);
+	if ( ws_mm_can_manage() ) {
+		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), get_page_by_path( 'member-management' ) );
+	}
+	$out = '<nav class="ws-subnav" aria-label="' . esc_attr__( 'Members', 'ws-chapters' ) . '">';
+	foreach ( $items as $key => $item ) {
+		if ( ! $item[1] ) {
+			continue;
+		}
+		$out .= '<a href="' . esc_url( get_permalink( $item[1] ) ) . '"' . ( $key === $current ? ' class="is-active" aria-current="page"' : '' ) . '>' . esc_html( $item[0] ) . '</a>';
+	}
+	return $out . '</nav>';
+}
+
 function ws_mm_is_super() {
 	return is_super_admin() || current_user_can( 'manage_options' );
 }
@@ -168,7 +187,7 @@ add_shortcode( 'ws_member_directory', function () {
 		$filter .= '<option value="' . esc_attr( $tt ) . '"' . selected( $title, $tt, false ) . '>' . esc_html( $tt ) . '</option>';
 	}
 	$filter .= '</select><button type="submit" class="ws-btn-outline">' . esc_html__( 'Filter', 'ws-chapters' ) . '</button></form>';
-	return '<div class="ws-mm">' . $filter . '<div class="ws-mm__scroll"><table class="ws-mm__table"><thead><tr><th></th><th>' . esc_html__( 'Name and road name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country and chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email and phone', 'ws-chapters' ) . '</th></tr></thead><tbody>' . ( $rows ?: '<tr><td colspan="5">' . esc_html__( 'No members match.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></div>';
+	return ws_mm_subnav( 'directory' ) . '<div class="ws-mm">' . $filter . '<div class="ws-mm__scroll"><table class="ws-mm__table"><thead><tr><th></th><th>' . esc_html__( 'Name and road name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country and chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email and phone', 'ws-chapters' ) . '</th></tr></thead><tbody>' . ( $rows ?: '<tr><td colspan="5">' . esc_html__( 'No members match.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></div>';
 } );
 
 /** Save the management forms (invite, remove, title). */
@@ -295,7 +314,7 @@ add_shortcode( 'ws_member_manage', function () {
 	if ( ! is_user_logged_in() || ! ws_mm_can_manage() ) {
 		return '';
 	}
-	$out   = '';
+	$out   = ws_mm_subnav( 'manage' );
 	$flash = get_transient( 'ws_mm_msg_' . get_current_user_id() );
 	if ( $flash ) {
 		delete_transient( 'ws_mm_msg_' . get_current_user_id() );

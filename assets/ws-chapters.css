@@ -256,3 +256,8 @@
 .ws-fe-trash--news { position: absolute; top: 8px; right: 8px; margin: 0; }
 .ws-fe-trash--text { position: static; margin: 2rem 0 0; }
 .ws-fe-trash__text { cursor: pointer; }
+/* Sub-navigation between Library, Members and Member management. */
+.ws-subnav { display: flex; flex-wrap: wrap; gap: 4px 20px; border-bottom: 0.5px solid var(--ws-line, #e0d8c4); margin: 0 0 1.5rem; }
+.ws-subnav a { padding: .6rem 0; color: var(--ws-muted, #666); text-decoration: none; font-weight: 600; font-size: .9rem; letter-spacing: .04em; text-transform: uppercase; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.ws-subnav a:hover { color: var(--ws-gold-dark, #8a6d2c); }
+.ws-subnav a.is-active { color: var(--ws-gold-dark, #8a6d2c); border-bottom-color: var(--ws-gold, #C9A24A); }

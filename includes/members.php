@@ -336,6 +336,11 @@ function ws_doc_item( $doc ) {
 }
 
 function ws_members_area() {
+	$nav = is_user_logged_in() && function_exists( 'ws_mm_subnav' ) ? ws_mm_subnav( 'library' ) : '';
+	return $nav . ws_members_area_body();
+}
+
+function ws_members_area_body() {
 	if ( ! is_user_logged_in() ) {
 		return '<div class="ws-members-locked"><h2>' . esc_html__( 'Members only', 'ws-chapters' ) . '</h2><p>' . esc_html__( 'This area is for Widows Sons members. Please log in with your email address and password.', 'ws-chapters' ) . '</p><p><a class="ws-btn-gold" href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . esc_html__( 'Log in', 'ws-chapters' ) . '</a></p></div>';
 	}
