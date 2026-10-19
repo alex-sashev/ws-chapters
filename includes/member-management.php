@@ -20,14 +20,20 @@ function ws_mm_titles() {
 	return array( 'President', 'Chapter President', 'Vice President', 'Sergeant of Arms', 'Secretary', 'Treasurer', 'Road Captain', 'Other' );
 }
 
+/** A page by its name, wherever it sits (get_page_by_path misses pages under a parent page). */
+function ws_mm_page( $slug ) {
+	$found = get_posts( array( 'post_type' => 'page', 'post_status' => 'publish', 'name' => $slug, 'posts_per_page' => 1, 'no_found_rows' => true ) );
+	return $found ? $found[0] : null;
+}
+
 /** The row of links between the three member pages. $current is 'library', 'directory' or 'manage'. */
 function ws_mm_subnav( $current ) {
 	$items = array(
-		'library'   => array( __( 'Library', 'ws-chapters' ), get_page_by_path( 'members' ) ),
-		'directory' => array( __( 'Members', 'ws-chapters' ), get_page_by_path( 'member-directory' ) ),
+		'library'   => array( __( 'Library', 'ws-chapters' ), ws_mm_page( 'members' ) ),
+		'directory' => array( __( 'Members', 'ws-chapters' ), ws_mm_page( 'member-directory' ) ),
 	);
 	if ( ws_mm_can_manage() ) {
-		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), get_page_by_path( 'member-management' ) );
+		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), ws_mm_page( 'member-management' ) );
 	}
 	$out = '<nav class="ws-subnav" aria-label="' . esc_attr__( 'Members', 'ws-chapters' ) . '">';
 	foreach ( $items as $key => $item ) {
@@ -457,13 +463,13 @@ add_action( 'init', function () {
 		return;
 	}
 	update_option( 'ws_mm_pages_done', gmdate( 'c' ), false );
-	$parent = get_page_by_path( 'members' );
+	$parent = ws_mm_page( 'members' );
 	$pages  = array(
 		'member-directory'  => array( __( 'Member directory', 'ws-chapters' ), '[ws_member_directory]' ),
 		'member-management' => array( __( 'Member management', 'ws-chapters' ), '[ws_member_manage]' ),
 	);
 	foreach ( $pages as $slug => $def ) {
-		if ( get_page_by_path( $slug ) ) {
+		if ( ws_mm_page( $slug ) ) {
 			continue;
 		}
 		wp_insert_post( array(
@@ -488,8 +494,8 @@ add_action( 'init', function () {
 		return;
 	}
 	$nav = get_posts( array( 'post_type' => 'wp_navigation', 'post_status' => 'publish', 'numberposts' => 1, 'title' => 'Main menu' ) );
-	$dir = get_page_by_path( 'member-directory' );
-	$man = get_page_by_path( 'member-management' );
+	$dir = ws_mm_page( 'member-directory' );
+	$man = ws_mm_page( 'member-management' );
 	if ( ! $nav || ! $dir || ! $man ) {
 		return; // Try again on a later page load.
 	}
