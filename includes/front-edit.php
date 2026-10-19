@@ -428,6 +428,113 @@ function ws_fe_news_form( $chapter_id ) {
 	return ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), 'Published straight away.' );
 }
 
+/* -------------------------------------------------------------------------
+ * "Submit news or activity" on the News page: the poster chooses Widows Sons Europe, a country or a chapter.
+ * Signed-in users only; published straight away.
+ * ---------------------------------------------------------------------- */
+
+/** The News page button and form (signed-in users only). */
+function ws_fe_site_news_form() {
+	if ( ! is_user_logged_in() ) {
+		return '';
+	}
+	$options = '<option value="0">' . esc_html__( 'Widows Sons Europe', 'ws-chapters' ) . '</option>';
+	$options .= '<optgroup label="' . esc_attr__( 'Countries', 'ws-chapters' ) . '">';
+	foreach ( get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false, 'orderby' => 'name' ) ) as $t ) {
+		$options .= '<option value="c' . (int) $t->term_id . '">' . esc_html( ws_display_name( $t->name ) ) . '</option>';
+	}
+	$options .= '</optgroup><optgroup label="' . esc_attr__( 'Chapters', 'ws-chapters' ) . '">';
+	foreach ( get_posts( array( 'post_type' => 'ws_chapter', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'no_found_rows' => true ) ) as $c ) {
+		$options .= '<option value="h' . (int) $c->ID . '">' . esc_html( ws_display_name( $c->post_title ) ) . '</option>';
+	}
+	$options .= '</optgroup>';
+	$inner = ws_form_guard_fields( 'site_news' )
+		. '<label class="ws-fedit__label">' . esc_html__( 'Posted by', 'ws-chapters' ) . '<select name="ws_news_scope" required>' . $options . '</select></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Title', 'ws-chapters' ) . '<input type="text" name="ws_news_title" required></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'The news or activity', 'ws-chapters' ) . '<textarea name="ws_news_body" rows="6" required></textarea></label>'
+		. '<label class="ws-fedit__label">' . esc_html__( 'Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)', 'ws-chapters' ) . '<input type="file" name="ws_news_images[]" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>'
+		. '<label class="ws-fedit__label"><input type="checkbox" name="ws_consent" value="1" required> ' . esc_html__( 'I acknowledge that this will be shared on the website.', 'ws-chapters' ) . '</label>';
+	return '<div class="ws-fe-site-news">' . ws_fe_form_box( $inner, __( 'Submit news or activity', 'ws-chapters' ), 'Published straight away.' ) . '</div>';
+}
+
+add_shortcode( 'ws_site_news_submit', 'ws_fe_site_news_form' );
+
+/** Save the News page form: a post for Widows Sons Europe, a country or a chapter. */
+add_action( 'template_redirect', function () {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || 'site_news' !== ( $_POST['ws_form'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$guard = ws_form_guard_check( 'site_news' );
+	$scope = sanitize_text_field( wp_unslash( $_POST['ws_news_scope'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+	$chapter_id = 0;
+	$term_id    = 0;
+	$error      = null;
+	if ( true !== $guard ) {
+		$error = $guard;
+	} elseif ( ! is_user_logged_in() ) {
+		$error = __( 'Please sign in to submit news.', 'ws-chapters' );
+	} elseif ( '' === ws_post_field( 'ws_news_title' ) || '' === ws_post_field( 'ws_news_body', true ) || empty( $_POST['ws_consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$error = __( 'Please fill in the title, the text and the agreement.', 'ws-chapters' );
+	} elseif ( preg_match( '/^h(\d+)$/', $scope, $m ) ) {
+		$chapter_id = (int) $m[1];
+		$chapter    = get_post( $chapter_id );
+		if ( ! $chapter || 'ws_chapter' !== $chapter->post_type || 'publish' !== $chapter->post_status ) {
+			$error = __( 'Chapter not found.', 'ws-chapters' );
+		} else {
+			$terms   = get_the_terms( $chapter_id, 'ws_country' );
+			$term_id = $terms && ! is_wp_error( $terms ) ? (int) $terms[0]->term_id : 0;
+		}
+	} elseif ( preg_match( '/^c(\d+)$/', $scope, $m ) ) {
+		$term_id = (int) $m[1];
+		if ( ! term_exists( $term_id, 'ws_country' ) ) {
+			$error = __( 'Country not found.', 'ws-chapters' );
+		}
+	} elseif ( '0' !== $scope && '' !== $scope ) {
+		$error = __( 'Please choose who the news is from.', 'ws-chapters' );
+	}
+
+	$ok = null === $error;
+	if ( $ok ) {
+		$post_id = wp_insert_post( array(
+			'post_type'    => 'post',
+			'post_status'  => 'publish', // Signed-in users' news is published straight away.
+			'post_title'   => ws_post_field( 'ws_news_title' ),
+			'post_content' => wpautop( ws_post_field( 'ws_news_body', true ) ),
+			'post_author'  => get_current_user_id(),
+		), true );
+		if ( is_wp_error( $post_id ) ) {
+			$ok    = false;
+			$error = __( 'Sorry, something went wrong. Please try again later.', 'ws-chapters' );
+		} else {
+			if ( $chapter_id ) {
+				update_post_meta( $post_id, 'related_chapter', $chapter_id );
+			}
+			if ( $term_id ) {
+				wp_set_object_terms( $post_id, array( $term_id ), 'ws_country' );
+			}
+			// Images go to the country's folder when the news has a country (upload-folders.php reads ws_country).
+			if ( $term_id ) {
+				$_REQUEST['ws_country'] = $term_id;
+			}
+			$images = ws_fe_news_images( $post_id );
+			unset( $_REQUEST['ws_country'] );
+			if ( $images ) {
+				set_post_thumbnail( $post_id, $images[0] );
+				$extra = '';
+				foreach ( array_slice( $images, 1 ) as $img ) {
+					$extra .= '<!-- wp:image {"id":' . $img . ',"sizeSlug":"large"} --><figure class="wp-block-image size-large">' . wp_get_attachment_image( $img, 'large', false, array( 'class' => 'wp-image-' . $img ) ) . '</figure><!-- /wp:image -->';
+				}
+				wp_update_post( array( 'ID' => $post_id, 'post_content' => get_post_field( 'post_content', $post_id ) . $extra ) );
+			}
+		}
+	}
+
+	$msg = $ok ? __( 'Published.', 'ws-chapters' ) : $error;
+	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $msg ), MINUTE_IN_SECONDS );
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', home_url( '/news/' ) ) ) );
+	exit;
+}, 2 );
+
 /** A public button that opens a form (not tied to a chapter edit permission). */
 function ws_fe_form_box( $inner, $label, $note ) {
 	return '<details class="ws-fedit ws-fedit--button ws-fe-news"><summary class="ws-fedit__btn" aria-label="' . esc_attr( $label ) . '">' . esc_html( $label ) . '</summary>'
