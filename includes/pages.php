@@ -296,6 +296,8 @@ function ws_news_cards( $country = 0, $chapter = 0, $limit = 3 ) {
 			esc_html( wp_trim_words( get_the_excerpt( $p ), 24 ) ),
 			ws_news_source( $p )
 		);
+		// Delete button for people who may delete this article (see front-edit.php).
+		$out = substr( $out, 0, -strlen( '</article>' ) ) . ws_fe_delete_news_form( $p->ID ) . '</article>';
 	}
 	return $out . '</div>';
 }

@@ -252,4 +252,7 @@
 .ws-fedit__form.is-busy { cursor: progress; }
 .ws-fedit__form.is-busy button[type=submit] { opacity: .7; cursor: progress; }
 .ws-fe-remove.is-busy .ws-fe-remove__btn { opacity: .5; cursor: progress; }
-
+.ws-news-card { position: relative; }
+.ws-fe-trash--news { position: absolute; top: 8px; right: 8px; margin: 0; }
+.ws-fe-trash--text { position: static; margin: 2rem 0 0; }
+.ws-fe-trash__text { cursor: pointer; }

@@ -819,3 +819,89 @@ add_action( 'template_redirect', function () {
 	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', is_wp_error( $return ) ? home_url( '/' ) : $return ) ) . '#chapters' );
 	exit;
 }, 2 );
+
+/* -------------------------------------------------------------------------
+ * News: delete an article (to the Trash)
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Who may delete a news article: its author, a Super Admin, or a Country Admin of the article's country.
+ * Everyone else is refused, on the server, whatever the button shows.
+ */
+function ws_can_delete_news( $post_id ) {
+	$post = get_post( (int) $post_id );
+	$uid  = get_current_user_id();
+	if ( ! $post || 'post' !== $post->post_type || ! $uid ) {
+		return false;
+	}
+	if ( (int) $post->post_author === $uid ) {
+		return true;
+	}
+	if ( current_user_can( 'manage_options' ) || current_user_can( WS_ASSET_CAP ) ) {
+		return true;
+	}
+	$scope = ws_user_scope( $uid );
+	if ( ! $scope || ! $scope['country_admin'] ) {
+		return false;
+	}
+	$terms = wp_get_object_terms( $post->ID, 'ws_country', array( 'fields' => 'ids' ) );
+	return ! is_wp_error( $terms ) && (bool) array_intersect( array_map( 'intval', $terms ), $scope['countries'] );
+}
+
+/** Trash button for a news article, shown only to people who may delete it. $text = a labelled button. */
+function ws_fe_delete_news_form( $post_id, $text = false ) {
+	if ( ! ws_can_delete_news( $post_id ) ) {
+		return '';
+	}
+	$post_id = (int) $post_id;
+	$title   = get_the_title( $post_id );
+	/* translators: %s: article title */
+	$confirm = sprintf( __( 'Move "%s" to the Trash? You can restore it from the WordPress admin.', 'ws-chapters' ), $title );
+	$return  = wp_unslash( (string) ( $_SERVER['REQUEST_URI'] ?? '/' ) );
+	$base    = rtrim( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ), '/' );
+	if ( '' !== $base && 0 === strpos( $return, $base . '/' ) ) {
+		$return = substr( $return, strlen( $base ) );
+	}
+	$label  = sprintf( __( 'Delete %s', 'ws-chapters' ), $title );
+	$button = $text
+		? '<button type="submit" class="ws-btn-outline ws-fe-trash__text">' . esc_html__( 'Delete this article', 'ws-chapters' ) . '</button>'
+		: '<button type="submit" class="ws-fe-trash__btn" title="' . esc_attr( $label ) . '" aria-label="' . esc_attr( $label ) . '"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></button>';
+	return '<form method="post" class="ws-fe-trash ws-fe-trash--news' . ( $text ? ' ws-fe-trash--text' : '' ) . '" onsubmit="' . esc_attr( 'return confirm(' . wp_json_encode( $confirm ) . ');' ) . '">'
+		. '<input type="hidden" name="ws_news_delete" value="' . $post_id . '">'
+		. '<input type="hidden" name="ws_news_nonce" value="' . esc_attr( wp_create_nonce( 'ws_delete_news_' . $post_id ) ) . '">'
+		. '<input type="hidden" name="ws_fe_return" value="' . esc_attr( $return ) . '">'
+		. $button . '</form>';
+}
+
+/** Move the article to the Trash, after the nonce and permission checks. */
+add_action( 'template_redirect', function () {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || empty( $_POST['ws_news_delete'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	$post_id = absint( $_POST['ws_news_delete'] ); // phpcs:ignore WordPress.Security.NonceVerification
+	$nonce   = sanitize_text_field( wp_unslash( $_POST['ws_news_nonce'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! $post_id || ! wp_verify_nonce( $nonce, 'ws_delete_news_' . $post_id ) ) {
+		wp_die( esc_html__( 'This form has expired. Please reload the page and try again.', 'ws-chapters' ), 403 );
+	}
+	if ( ! ws_can_delete_news( $post_id ) ) {
+		wp_die( esc_html__( 'You do not have permission to delete this article.', 'ws-chapters' ), 403 );
+	}
+	$ok = (bool) wp_trash_post( $post_id );
+	set_transient( 'ws_fe_msg_' . get_current_user_id(), array( 'ok' => $ok, 'text' => $ok ? __( 'The article was moved to the Trash.', 'ws-chapters' ) : __( 'Sorry, the article could not be deleted.', 'ws-chapters' ) ), MINUTE_IN_SECONDS );
+	$return = wp_unslash( (string) ( $_POST['ws_fe_return'] ?? '/' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+	if ( '' === $return || '/' !== $return[0] || '/' === ( $return[1] ?? '' ) ) {
+		$return = '/';
+	}
+	wp_safe_redirect( add_query_arg( 'ws_fe', $ok ? 'saved' : 'error', remove_query_arg( 'ws_fe', home_url( $return ) ) ) );
+	exit;
+}, 1 );
+
+/** On a single news article: the delete button under the text (for those who may delete it). */
+add_filter( 'the_content', function ( $content ) {
+	$id = get_the_ID();
+	if ( ! $id || ! is_main_query() || ! in_the_loop() || ! is_single() || 'post' !== get_post_type( $id ) ) {
+		return $content;
+	}
+	return $content . ws_fe_delete_news_form( $id, true );
+} );
+
