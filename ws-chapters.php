@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Chapter records with separate official back patch and chapter logo, Grand Chapters with national logos and flags, a map of Europe, and events.
- * Version:     2.16.2
+ * Version:     2.16.3
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -11,6 +11,20 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/*
+ * HTTPS behind Cloudflare / Hostinger's front servers: the secure connection ends there and reaches
+ * WordPress as plain HTTP, marked with X-Forwarded-Proto or CF-Visitor. Without this, WordPress keeps
+ * redirecting https://wseurope.org/ to itself.
+ */
+if ( empty( $_SERVER['HTTPS'] ) || 'off' === $_SERVER['HTTPS'] ) {
+	$ws_proto = strtolower( (string) ( $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '' ) );
+	$ws_cf    = (string) ( $_SERVER['HTTP_CF_VISITOR'] ?? '' );
+	if ( 'https' === $ws_proto || false !== strpos( $ws_cf, '"https"' ) || 'on' === strtolower( (string) ( $_SERVER['HTTP_X_FORWARDED_SSL'] ?? '' ) ) ) {
+		$_SERVER['HTTPS'] = 'on';
+	}
+	unset( $ws_proto, $ws_cf );
+}
 
 const WS_ASSET_CAP = 'manage_ws_chapter_assets';
 

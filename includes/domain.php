@@ -75,18 +75,5 @@ add_action( 'init', function () {
 	do_action( 'litespeed_purge_all' );
 }, 0 );
 
-/* After the switch: send the old address (and www.) to the same page on https://wseurope.org. */
-add_action( 'plugins_loaded', function () {
-	if ( defined( 'WP_CLI' ) || wp_doing_cron() ) {
-		return;
-	}
-	$host = ws_request_host();
-	$old  = in_array( $host, array( WS_OLD_HOST, 'www.' . WS_OLD_HOST, 'www.' . WS_MAIN_HOST ), true );
-	if ( ! $old || WS_MAIN_HOST !== wp_parse_url( (string) get_option( 'home' ), PHP_URL_HOST ) ) {
-		return;
-	}
-	$method = strtoupper( (string) ( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) );
-	$code   = in_array( $method, array( 'GET', 'HEAD' ), true ) ? 301 : 308; // 308 keeps a posted form's data.
-	header( 'Location: https://' . WS_MAIN_HOST . ( $_SERVER['REQUEST_URI'] ?? '/' ), true, $code ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-	exit;
-}, 0 );
+/* The old address (widowssonseurope.org, www.) is redirected by Cloudflare, not here: a redirect in WordPress
+   looped once Hostinger's main domain became wseurope.org. */
