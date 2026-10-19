@@ -138,6 +138,21 @@ function ws_mm_person_name( $user ) {
 	return $user->display_name === $user->user_login && 0 === strpos( $user->user_login, 'ws_' ) ? $user->user_email : $user->display_name;
 }
 
+/** Road name: the WordPress nickname (the old ws_road_name field only when no nickname was set). */
+function ws_mm_road_name( $user ) {
+	$nick = trim( (string) get_user_meta( $user->ID, 'nickname', true ) );
+	// Invited people start with a random login (ws_…) as nickname: that is not a road name.
+	if ( '' === $nick || ( $nick === $user->user_login && 0 === strpos( $nick, 'ws_' ) ) || $nick === ws_mm_person_name( $user ) ) {
+		$nick = trim( (string) get_user_meta( $user->ID, 'ws_road_name', true ) );
+	}
+	return $nick;
+}
+
+/** A dash for an empty cell, marked so it stands out. */
+function ws_mm_cell( $text, $missing = '' ) {
+	return '' !== $text ? esc_html( $text ) : '<span class="ws-mm__missing">' . esc_html( '' !== $missing ? $missing : '—' ) . '</span>';
+}
+
 function ws_mm_country_names( $uid ) {
 	$names = array();
 	foreach ( ws_mm_user_ids( $uid ) as $tid ) {
@@ -171,7 +186,7 @@ function ws_mm_field( $label, $control, $class = '' ) {
 
 /** Country drop-down. $first is the label of the empty choice ('' for none). */
 function ws_mm_country_select( $name, array $terms, $selected, $first = '' ) {
-	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-country>' . ( '' !== $first ? '<option value="0">' . esc_html( $first ) . '</option>' : '' );
+	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-country>' . ( '' !== $first ? '<option value="">' . esc_html( $first ) . '</option>' : '' );
 	foreach ( $terms as $c ) {
 		$html .= '<option value="' . (int) $c->term_id . '"' . selected( (int) $selected, (int) $c->term_id, false ) . '>' . esc_html( ws_display_name( $c->name ) ) . '</option>';
 	}
@@ -180,7 +195,7 @@ function ws_mm_country_select( $name, array $terms, $selected, $first = '' ) {
 
 /** Chapter drop-down; each choice carries its country, so the list follows the country drop-down in the same form. */
 function ws_mm_chapter_select( $name, array $chapters, $selected, $first ) {
-	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-chapter><option value="0">' . esc_html( $first ) . '</option>';
+	$html = '<select name="' . esc_attr( $name ) . '" class="ws-mm__input" data-ws-mm-chapter><option value="">' . esc_html( $first ) . '</option>';
 	foreach ( $chapters as $c ) {
 		$t     = ws_chapter_country( $c->ID );
 		$html .= '<option value="' . (int) $c->ID . '" data-country="' . ( $t ? (int) $t->term_id : 0 ) . '"' . selected( (int) $selected, (int) $c->ID, false ) . '>' . esc_html( ws_display_name( $c->post_title ) ) . '</option>';
@@ -217,7 +232,7 @@ function ws_mm_script() {
 	$done = true;
 	$wait = esc_js( __( 'Please wait…', 'ws-chapters' ) );
 	return "<script>(function(){
-function syncChapters(form){var c=form.querySelector('[data-ws-mm-country]'),ch=form.querySelector('[data-ws-mm-chapter]');if(!c||!ch)return;var v=c.value;Array.prototype.forEach.call(ch.options,function(o){if(o.value==='0')return;var show=v==='0'||o.getAttribute('data-country')===v;o.hidden=!show;o.disabled=!show;if(!show&&o.selected){ch.value='0';}});}
+function syncChapters(form){var c=form.querySelector('[data-ws-mm-country]'),ch=form.querySelector('[data-ws-mm-chapter]');if(!c||!ch)return;var v=c.value;Array.prototype.forEach.call(ch.options,function(o){if(o.value==='')return;var show=v===''||o.getAttribute('data-country')===v;o.hidden=!show;o.disabled=!show;if(!show&&o.selected){ch.value='';}});}
 function syncOther(form){var t=form.querySelector('[data-ws-mm-title]'),o=form.querySelector('[data-ws-mm-other]');if(t&&o){o.hidden=t.value!=='Other';}}
 document.querySelectorAll('.ws-mm form').forEach(function(f){syncChapters(f);syncOther(f);f.addEventListener('change',function(e){if(e.target.matches('[data-ws-mm-country]'))syncChapters(f);if(e.target.matches('[data-ws-mm-title]'))syncOther(f);});
 if(f.method.toLowerCase()==='post'){f.addEventListener('submit',function(e){if(f.classList.contains('is-busy')){e.preventDefault();return;}if(e.defaultPrevented)return;f.classList.add('is-busy');var b=f.querySelector('button[type=submit]');if(b){b.textContent='{$wait}';}});}});
@@ -248,17 +263,18 @@ add_shortcode( 'ws_member_directory', function () {
 			continue;
 		}
 		$name  = ws_mm_person_name( $u );
-		$road  = (string) get_user_meta( $u->ID, 'ws_road_name', true );
+		$road  = ws_mm_road_name( $u );
 		$phone = (string) get_user_meta( $u->ID, 'ws_phone', true );
 		if ( '' !== $search && false === mb_stripos( $name . ' ' . $road . ' ' . $u->user_email, $search ) ) {
 			continue;
 		}
 		++$count;
 		$rows .= '<tr>'
-			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<span><strong>' . esc_html( $name ) . '</strong>' . ( $road ? '<span class="ws-muted">&ldquo;' . esc_html( $road ) . '&rdquo;</span>' : '' ) . '</span></div></td>'
-			. '<td data-label="' . esc_attr__( 'Country', 'ws-chapters' ) . '">' . esc_html( ws_mm_country_names( $u->ID ) ) . '</td>'
-			. '<td data-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '">' . esc_html( ws_mm_chapter_names( $u->ID ) ) . '</td>'
-			. '<td data-label="' . esc_attr__( 'Title', 'ws-chapters' ) . '">' . esc_html( $t ) . '</td>'
+			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<strong>' . esc_html( $name ) . '</strong></div></td>'
+			. '<td data-label="' . esc_attr__( 'Road name', 'ws-chapters' ) . '">' . ( $road ? '<span class="ws-mm__road">' . esc_html( $road ) . '</span>' : ws_mm_cell( '' ) ) . '</td>'
+			. '<td data-label="' . esc_attr__( 'Title', 'ws-chapters' ) . '">' . ws_mm_cell( $t ) . '</td>'
+			. '<td data-label="' . esc_attr__( 'Country', 'ws-chapters' ) . '">' . ws_mm_cell( ws_mm_country_names( $u->ID ) ) . '</td>'
+			. '<td data-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '">' . ws_mm_cell( ws_mm_chapter_names( $u->ID ) ) . '</td>'
 			. '<td data-label="' . esc_attr__( 'Email', 'ws-chapters' ) . '"><a href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a></td>'
 			. '<td data-label="' . esc_attr__( 'Phone', 'ws-chapters' ) . '">' . ( $phone ? '<a href="tel:' . esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>' : '' ) . '</td>'
 			. '</tr>';
@@ -275,8 +291,8 @@ add_shortcode( 'ws_member_directory', function () {
 		. ( $filtered ? '<a class="ws-mm__clear" href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Clear', 'ws-chapters' ) . '</a>' : '' ) . '</div></form>';
 	/* translators: %d: number of members */
 	$summary = '<p class="ws-mm__count">' . esc_html( sprintf( _n( '%d member', '%d members', $count, 'ws-chapters' ), $count ) ) . '</p>';
-	$head    = '<thead><tr><th>' . esc_html__( 'Name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Phone', 'ws-chapters' ) . '</th></tr></thead>';
-	return ws_mm_subnav( 'directory', true ) . '<div class="ws-mm alignwide">' . $filter . $summary . '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--directory">' . $head . '<tbody>' . ( $rows ?: '<tr><td colspan="6" class="ws-mm__empty">' . esc_html__( 'No members match.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></div>' . ws_mm_script();
+	$head    = '<thead><tr><th>' . esc_html__( 'Name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Road name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Phone', 'ws-chapters' ) . '</th></tr></thead>';
+	return ws_mm_subnav( 'directory', true ) . '<div class="ws-mm alignwide">' . $filter . $summary . '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--directory">' . $head . '<tbody>' . ( $rows ?: '<tr><td colspan="7" class="ws-mm__empty">' . esc_html__( 'No members match.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></div>' . ws_mm_script();
 } );
 
 /** Save the management forms (invite, remove, title). */
@@ -316,6 +332,24 @@ add_action( 'template_redirect', function () {
 			$ok  = null === $msg;
 			$msg = $ok ? __( 'Invitation sent again.', 'ws-chapters' ) : $msg;
 			ws_mm_log( 'resent', $uid );
+		}
+	} elseif ( 'place' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$uid  = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+		$chap = absint( $_POST['ws_mm_chapter'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
+		$t    = $chap ? ws_chapter_country( $chap ) : null;
+		if ( ! ws_mm_may_manage_user( $uid ) || ! $t || ! array_key_exists( $chap, ws_mm_chapters_in( ws_mm_manageable_countries() ) ) ) {
+			$msg = __( 'You cannot set this chapter.', 'ws-chapters' );
+		} else {
+			update_user_meta( $uid, 'ws_scope_chapters', array( $chap ) );
+			$countries = array( (int) $t->term_id );
+			if ( in_array( 'ws_country_admin', (array) get_userdata( $uid )->roles, true ) ) {
+				$countries = array_values( array_unique( array_merge( ws_mm_user_ids( $uid ), $countries ) ) ); // A Country Admin keeps the countries they run.
+			}
+			update_user_meta( $uid, 'ws_scope_countries', $countries );
+			ws_mm_log( 'chapter', $uid, get_the_title( $chap ) );
+			$ok = true;
+			/* translators: 1: person's name, 2: chapter */
+			$msg = sprintf( __( '%1$s is now in %2$s.', 'ws-chapters' ), ws_mm_person_name( get_userdata( $uid ) ), ws_display_name( get_the_title( $chap ) ) );
 		}
 	} elseif ( 'title' === $_POST['ws_mm_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 		$uid   = absint( $_POST['ws_mm_user'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -394,8 +428,8 @@ function ws_mm_invite() {
 	if ( array_diff( $chaps, $chapters_ok ) ) {
 		return __( 'That chapter is not in the chosen country.', 'ws-chapters' );
 	}
-	if ( 'ws_chapter_editor' === $role && ! $chaps ) {
-		return __( 'Please choose the chapter for a Chapter Editor.', 'ws-chapters' );
+	if ( ! $chaps ) {
+		return __( 'Please choose a chapter. Everyone belongs to a country and a chapter.', 'ws-chapters' );
 	}
 	$uid = wp_insert_user( array(
 		'user_login' => 'ws_' . wp_generate_password( 10, false, false ),
@@ -430,7 +464,7 @@ function ws_mm_send_invite( $user ) {
 	$link = network_site_url( 'wp-login.php?action=rp&key=' . rawurlencode( $key ) . '&login=' . rawurlencode( $user->user_login ), 'login' );
 	$sent = wp_mail( $user->user_email, __( 'Your invitation to Widows Sons Europe', 'ws-chapters' ), sprintf(
 		/* translators: 1: link, 2: days */
-		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter signing in, add your road name, phone, first and last name on your profile.", 'ws-chapters' ),
+		__( "You have been invited to the Widows Sons Europe members' area.\n\nSet your password here (the link expires in %2\$d days):\n%1\$s\n\nAfter signing in, add your first and last name, your road name (the Nickname field) and your phone on your profile.", 'ws-chapters' ),
 		$link,
 		WS_MM_INVITE_DAYS
 	) );
@@ -470,12 +504,13 @@ add_shortcode( 'ws_member_manage', function () {
 		. ws_mm_field( __( 'Email', 'ws-chapters' ), '<input type="email" name="ws_mm_email" class="ws-mm__input" required placeholder="name@example.com">' )
 		. ws_mm_field( __( 'Role', 'ws-chapters' ), $rhtml )
 		. ws_mm_field( __( 'Country', 'ws-chapters' ), str_replace( '<select ', '<select required ', ws_mm_country_select( 'ws_mm_country', $terms, 0, $country_first ) ) )
-		. ws_mm_field( __( 'Chapter', 'ws-chapters' ), ws_mm_chapter_select( 'ws_mm_chapter', ws_mm_chapters_in( $mine ), 0, __( 'No chapter', 'ws-chapters' ) ) )
-		. '<p class="ws-mm__hint ws-muted">' . esc_html__( 'A Chapter Editor needs a chapter. For members the chapter is optional.', 'ws-chapters' ) . '</p>'
+		. ws_mm_field( __( 'Chapter', 'ws-chapters' ), str_replace( '<select ', '<select required ', ws_mm_chapter_select( 'ws_mm_chapter', ws_mm_chapters_in( $mine ), 0, __( 'Choose a chapter', 'ws-chapters' ) ) ) )
+		. '<p class="ws-mm__hint ws-muted">' . esc_html__( 'Everyone belongs to a country and a chapter.', 'ws-chapters' ) . '</p>'
 		. '<div class="ws-mm__actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Send invitation', 'ws-chapters' ) . '</button></div></form></section>';
 
-	$rows   = '';
-	$labels = ws_mm_role_labels();
+	$rows            = '';
+	$labels          = ws_mm_role_labels();
+	$chapter_choices = ws_mm_chapters_in( $mine );
 	foreach ( ws_mm_people() as $u ) {
 		$can_title  = ws_mm_may_set_title( $u->ID );
 		$can_manage = ws_mm_may_manage_user( $u->ID );
@@ -483,7 +518,7 @@ add_shortcode( 'ws_member_manage', function () {
 			continue;
 		}
 		$name    = ws_mm_person_name( $u );
-		$road    = (string) get_user_meta( $u->ID, 'ws_road_name', true );
+		$road    = ws_mm_road_name( $u );
 		$title   = (string) get_user_meta( $u->ID, 'ws_title', true );
 		$custom  = '' !== $title && ! in_array( $title, ws_mm_titles(), true );
 		$role    = '';
@@ -499,6 +534,14 @@ add_shortcode( 'ws_member_manage', function () {
 				. '<input type="text" name="ws_mm_title_other" class="ws-mm__input" data-ws-mm-other value="' . esc_attr( $custom ? $title : '' ) . '" placeholder="' . esc_attr__( 'Title', 'ws-chapters' ) . '" aria-label="' . esc_attr__( 'Other title', 'ws-chapters' ) . '">'
 				. '<button type="submit" class="ws-mm__btn ws-mm__btn--small">' . esc_html__( 'Save', 'ws-chapters' ) . '</button></form>';
 		}
+		$my_chaps = array_values( array_filter( array_map( 'intval', (array) get_user_meta( $u->ID, 'ws_scope_chapters', true ) ) ) );
+		$ccell    = ws_mm_cell( ws_mm_chapter_names( $u->ID ), __( 'Missing', 'ws-chapters' ) );
+		if ( $can_manage && count( $my_chaps ) <= 1 ) {
+			// The chapter sets the country too.
+			$ccell = '<form method="post" class="ws-mm__inline">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="place">'
+				. str_replace( '<select ', '<select required aria-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '" ', ws_mm_chapter_select( 'ws_mm_chapter', $chapter_choices, $my_chaps ? $my_chaps[0] : 0, __( 'Choose a chapter', 'ws-chapters' ) ) )
+				. '<button type="submit" class="ws-mm__btn ws-mm__btn--small">' . esc_html__( 'Save', 'ws-chapters' ) . '</button></form>';
+		}
 		$actions = '';
 		if ( $can_manage && $pending ) {
 			$actions .= '<form method="post" class="ws-mm__inline">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="resend"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--ghost">' . esc_html__( 'Resend invitation', 'ws-chapters' ) . '</button></form>';
@@ -507,18 +550,17 @@ add_shortcode( 'ws_member_manage', function () {
 			$actions .= '<form method="post" class="ws-mm__inline" onsubmit="return confirm(\'' . esc_js( __( 'Remove access for this person? Their account and posts are kept.', 'ws-chapters' ) ) . '\')">' . $nonce . $hidden . '<input type="hidden" name="ws_mm_action" value="remove"><button type="submit" class="ws-mm__btn ws-mm__btn--small ws-mm__btn--danger">' . esc_html__( 'Remove access', 'ws-chapters' ) . '</button></form>';
 		}
 		$rows .= '<tr>'
-			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<span><strong>' . esc_html( $name ) . '</strong>' . ( $road ? '<span class="ws-muted">&ldquo;' . esc_html( $road ) . '&rdquo;</span>' : '' ) . '<span class="ws-muted">' . esc_html( $role ) . '</span></span></div></td>'
-			. '<td data-label="' . esc_attr__( 'Email', 'ws-chapters' ) . '"><a href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a></td>'
-			. '<td data-label="' . esc_attr__( 'Country', 'ws-chapters' ) . '">' . esc_html( ws_mm_country_names( $u->ID ) ) . '</td>'
-			. '<td data-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '">' . esc_html( ws_mm_chapter_names( $u->ID ) ) . '</td>'
+			. '<td><div class="ws-mm__person">' . ws_mm_avatar_html( $u->ID, $name ) . '<span><strong>' . esc_html( $name ) . '</strong>' . ( $road ? '<span class="ws-mm__road">' . esc_html( $road ) . '</span>' : '' ) . '<a class="ws-mm__email" href="mailto:' . esc_attr( $u->user_email ) . '">' . esc_html( $u->user_email ) . '</a><span class="ws-muted">' . esc_html( $role ) . '</span></span></div></td>'
 			. '<td data-label="' . esc_attr__( 'Title', 'ws-chapters' ) . '">' . $tcell . '</td>'
+			. '<td data-label="' . esc_attr__( 'Country', 'ws-chapters' ) . '">' . ws_mm_cell( ws_mm_country_names( $u->ID ), __( 'Missing', 'ws-chapters' ) ) . '</td>'
+			. '<td data-label="' . esc_attr__( 'Chapter', 'ws-chapters' ) . '">' . $ccell . '</td>'
 			. '<td data-label="' . esc_attr__( 'Status', 'ws-chapters' ) . '"><span class="ws-mm__status ws-mm__status--' . ( $pending ? 'invited' : 'active' ) . '">' . ( $pending ? esc_html__( 'Invited', 'ws-chapters' ) : esc_html__( 'Active', 'ws-chapters' ) ) . '</span></td>'
 			. '<td data-label="' . esc_attr__( 'Actions', 'ws-chapters' ) . '"><div class="ws-mm__row-actions">' . $actions . '</div></td>'
 			. '</tr>';
 	}
-	$head = '<thead><tr><th>' . esc_html__( 'Name', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Email', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Status', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Actions', 'ws-chapters' ) . '</th></tr></thead>';
+	$head = '<thead><tr><th>' . esc_html__( 'Name, road name and email', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Title', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Country', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Chapter', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Status', 'ws-chapters' ) . '</th><th>' . esc_html__( 'Actions', 'ws-chapters' ) . '</th></tr></thead>';
 	$out .= '<section class="ws-mm__section"><h3 class="ws-mm__heading">' . esc_html__( 'People you manage', 'ws-chapters' ) . '</h3>'
-		. '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--manage">' . $head . '<tbody>' . ( $rows ?: '<tr><td colspan="7" class="ws-mm__empty">' . esc_html__( 'Nobody yet. Invite someone above.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></section>';
+		. '<div class="ws-mm__scroll"><table class="ws-mm__table ws-mm__table--manage">' . $head . '<tbody>' . ( $rows ?: '<tr><td colspan="6" class="ws-mm__empty">' . esc_html__( 'Nobody yet. Invite someone above.', 'ws-chapters' ) . '</td></tr>' ) . '</tbody></table></div></section>';
 	if ( $super ) {
 		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -20 ) );
 		$lrow = '';
@@ -532,7 +574,7 @@ add_shortcode( 'ws_member_manage', function () {
 	return $out . '</div>' . ws_mm_script();
 } );
 
-/* The member's own details, filled in after the invitation: road name, phone, first and last name (on their profile). */
+/* The member's own details, filled in after the invitation: phone here; the road name is WordPress's Nickname field, first and last name are WordPress's own. */
 function ws_mm_profile_fields( $user ) {
 	if ( ! is_object( $user ) || ! array_intersect( (array) $user->roles, array( 'ws_member', 'ws_chapter_editor', 'ws_country_admin' ) ) ) {
 		return;
@@ -540,7 +582,6 @@ function ws_mm_profile_fields( $user ) {
 	?>
 	<h2><?php esc_html_e( 'Widows Sons details', 'ws-chapters' ); ?></h2>
 	<table class="form-table" role="presentation">
-		<tr><th><label for="ws_road_name"><?php esc_html_e( 'Road name', 'ws-chapters' ); ?></label></th><td><input type="text" id="ws_road_name" name="ws_road_name" class="regular-text" value="<?php echo esc_attr( get_user_meta( $user->ID, 'ws_road_name', true ) ); ?>"></td></tr>
 		<tr><th><label for="ws_phone"><?php esc_html_e( 'Phone', 'ws-chapters' ); ?></label></th><td><input type="text" id="ws_phone" name="ws_phone" class="regular-text" value="<?php echo esc_attr( get_user_meta( $user->ID, 'ws_phone', true ) ); ?>"></td></tr>
 	</table>
 	<?php
@@ -551,9 +592,6 @@ add_action( 'edit_user_profile', 'ws_mm_profile_fields' );
 function ws_mm_save_profile_fields( $user_id ) {
 	if ( ! current_user_can( 'edit_user', $user_id ) ) {
 		return;
-	}
-	if ( isset( $_POST['ws_road_name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-		update_user_meta( $user_id, 'ws_road_name', sanitize_text_field( wp_unslash( $_POST['ws_road_name'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
 	}
 	if ( isset( $_POST['ws_phone'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		update_user_meta( $user_id, 'ws_phone', sanitize_text_field( wp_unslash( $_POST['ws_phone'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
@@ -655,3 +693,26 @@ add_action( 'init', function () {
 		wp_update_post( array( 'ID' => $nav[0]->ID, 'post_content' => implode( "\n", $keep ) ) );
 	}
 }, 46 );
+
+/* On the profile screen, WordPress's "Nickname" is the road name. */
+add_filter( 'gettext', function ( $translation, $text, $domain ) {
+	if ( 'default' === $domain && 'Nickname' === $text && is_admin() && in_array( $GLOBALS['pagenow'] ?? '', array( 'profile.php', 'user-edit.php', 'user-new.php' ), true ) ) {
+		return 'Road name (nickname)';
+	}
+	return $translation;
+}, 10, 3 );
+
+/* One-time: road names typed in the old separate field move into the Nickname field, where no real nickname was set. */
+add_action( 'init', function () {
+	if ( get_option( 'ws_mm_road_names_moved' ) ) {
+		return;
+	}
+	update_option( 'ws_mm_road_names_moved', gmdate( 'c' ), false );
+	foreach ( get_users( array( 'meta_key' => 'ws_road_name', 'fields' => 'all' ) ) as $u ) { // phpcs:ignore WordPress.DB.SlowDBQuery
+		$road = trim( (string) get_user_meta( $u->ID, 'ws_road_name', true ) );
+		$nick = trim( (string) get_user_meta( $u->ID, 'nickname', true ) );
+		if ( '' !== $road && ( '' === $nick || $nick === $u->user_login ) ) {
+			update_user_meta( $u->ID, 'nickname', $road );
+		}
+	}
+}, 47 );

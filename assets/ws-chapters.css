@@ -328,3 +328,9 @@ select.ws-mm__input { appearance: none; -webkit-appearance: none; padding-right:
 	.ws-mm__btn { width: 100%; }
 	.ws-mm__btn--small { width: auto; }
 }
+.ws-mm__road { font-style: italic; color: var(--ws-gold-dark, #8a6d2c); font-weight: 600; }
+.ws-mm__person .ws-mm__road { font-size: .9rem; }
+.ws-mm__missing { color: #a3222b; font-size: .85rem; font-weight: 600; }
+.ws-mm__table--manage { min-width: 1000px; }
+.ws-mm__table--manage [data-ws-mm-chapter] { min-width: 210px; }
+.ws-mm__email { font-size: .85rem; }
