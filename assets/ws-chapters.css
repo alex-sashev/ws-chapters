@@ -261,3 +261,5 @@
 .ws-subnav a { padding: .8rem 1.4rem; color: var(--ws-text, #333); background: #f4efe2; text-decoration: none; font-weight: 700; font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase; border: 2px solid var(--ws-line, #e0d8c4); border-bottom: 0; border-radius: 6px 6px 0 0; margin-bottom: -2px; }
 .ws-subnav a:hover { color: var(--ws-gold-dark, #8a6d2c); background: #fff; }
 .ws-subnav a.is-active { color: #fff; background: var(--ws-gold-dark, #8a6d2c); border-color: var(--ws-gold-dark, #8a6d2c); }
+.ws-fe-trash--news.is-busy .ws-fe-trash__btn { cursor: progress; opacity: .6; width: auto; padding: 0 .7rem; font-size: .8rem; }
+.ws-fe-trash--news.is-busy button[type=submit]:disabled { cursor: progress; }
