@@ -299,12 +299,13 @@ function ws_europe_map_panel() {
 }
 
 /** Chapter cards with photo, as on the country page. */
-function ws_chapter_rows( $chapters ) {
+function ws_chapter_rows( $chapters, $manage_term = 0 ) {
 	if ( ! $chapters ) {
 		return '<p class="ws-muted">' . esc_html__( 'No chapters listed yet.', 'ws-chapters' ) . '</p>';
 	}
 	$out = '<div class="ws-chapter-rows">';
 	foreach ( $chapters as $c ) {
+		$trash = $manage_term ? ws_fe_trash_chapter_form( $c->ID, $manage_term ) : '';
 		$photo = get_post_thumbnail_id( $c );
 		$out  .= sprintf(
 			'<article class="ws-chapter-row"><div class="ws-chapter-row__logo">%1$s</div><div class="ws-chapter-row__body"><h3><a href="%2$s">%3$s</a></h3><p class="ws-muted">%4$s</p><a class="ws-link-arrow" href="%2$s">%5$s %6$s</a></div>%7$s</article>',
@@ -316,6 +317,7 @@ function ws_chapter_rows( $chapters ) {
 			ws_icon( 'arrow' ),
 			$photo ? '<div class="ws-chapter-row__photo">' . wp_get_attachment_image( $photo, 'medium', false, array( 'loading' => 'lazy' ) ) . '</div>' : ''
 		);
+		$out = substr( $out, 0, -strlen( '</article>' ) ) . $trash . '</article>';
 	}
 	return $out . '</div>';
 }
@@ -376,7 +378,7 @@ function ws_country_page() {
 
 	return $hero . '<div class="ws-page-body">' . ws_tabs( 'country', array(
 		'overview' => array( __( 'Overview', 'ws-chapters' ), $overview ),
-		'chapters' => array( __( 'Chapters', 'ws-chapters' ), $map . ws_chapter_rows( $chapters ) ),
+		'chapters' => array( __( 'Chapters', 'ws-chapters' ), ws_fe_create_chapter_form( $term->term_id ) . $map . ws_chapter_rows( $chapters, $term->term_id ) ),
 		'events'   => array( __( 'Events', 'ws-chapters' ), ws_fe_submit_event_button( 0, $term->term_id ) . ws_event_cards_for( $term->term_id ) ),
 		'news'     => array( __( 'News', 'ws-chapters' ), ws_fe_country_news_form( $term->term_id ) . ws_news_cards( $term->term_id, 0, 6 ) ),
 		'gallery'  => array( __( 'Gallery', 'ws-chapters' ), ws_fe_gallery_panel( 'term', $term->term_id, $gallery ) ),
