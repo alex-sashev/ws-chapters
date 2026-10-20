@@ -143,6 +143,11 @@ function ws_fe_gallery_remove_form( $type, $id, $photo ) {
 /** Contact details box: the fields of ws_contact_fields() with their current values. */
 function ws_fe_contact_box( $type, $id, $get ) {
 	$inner = '<div class="ws-fedit__grid">';
+	if ( 'chapter' === $type ) {
+		// The chapter's city: shown under its name and used for its pin on the maps.
+		$inner .= '<label class="ws-fedit__label">' . esc_html__( 'City (moves the pin on the map)', 'ws-chapters' )
+			. '<input type="text" name="ws_c_city" maxlength="80" value="' . esc_attr( (string) get_post_meta( $id, 'city', true ) ) . '"></label>';
+	}
 	foreach ( ws_contact_fields() as $key => $field ) {
 		$inner .= '<label class="ws-fedit__label">' . esc_html( $field[0] )
 			. '<input type="' . esc_attr( $field[1] ) . '" name="ws_c_' . esc_attr( $key ) . '" value="' . esc_attr( (string) $get( $key ) ) . '"></label>';
@@ -199,6 +204,24 @@ function ws_fe_save( $type, $id, $action ) {
 			if ( isset( $_POST[ 'ws_c_' . $key ] ) ) {
 				$value = ws_sanitize_contact( $key, wp_unslash( $_POST[ 'ws_c_' . $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 				'term' === $type ? update_term_meta( $id, $key, $value ) : update_post_meta( $id, $key, $value );
+			}
+		}
+		if ( 'chapter' === $type && isset( $_POST['ws_c_city'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$city = trim( sanitize_text_field( wp_unslash( $_POST['ws_c_city'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			if ( $city !== trim( (string) get_post_meta( $id, 'city', true ) ) ) {
+				// A new city moves the pin: look it up; if it cannot be found the pin goes to the country's capital.
+				update_post_meta( $id, 'city', $city );
+				delete_post_meta( $id, 'latitude' );
+				delete_post_meta( $id, 'longitude' );
+				delete_post_meta( $id, 'coords_source' );
+				delete_post_meta( $id, 'geocoded_city' );
+				delete_post_meta( $id, 'geocode_tried' );
+				if ( '' !== $city && ! ws_locate_chapter( $id ) ) {
+					/* translators: %s: city */
+					return sprintf( __( 'Contact details saved. %s could not be found on the map, so the pin is on the country\'s capital for now; check the spelling, or add the country after a comma (for example Plovdiv, Bulgaria).', 'ws-chapters' ), $city );
+				}
+				/* translators: %s: city */
+				return '' !== $city ? sprintf( __( 'Contact details saved. The pin is now on %s.', 'ws-chapters' ), $city ) : __( 'Contact details saved. Without a city, the pin is on the country\'s capital.', 'ws-chapters' );
 			}
 		}
 		return __( 'Contact details saved.', 'ws-chapters' );
