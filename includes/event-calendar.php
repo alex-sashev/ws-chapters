@@ -82,14 +82,17 @@ add_action( 'init', function () {
 		$svg = function ( $paths ) {
 			return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $paths . '</svg>';
 		};
+		// "Submit an event" on the same row as the switch, on the right.
+		$submit_page = get_page_by_path( 'submit-event' );
+		$submit      = $submit_page ? '<a class="ws-btn-gold ws-views__submit" href="' . esc_url( get_permalink( $submit_page ) ) . '">' . esc_html__( 'Submit an event', 'ws-chapters' ) . '</a>' : '';
 		$list = do_shortcode( '[ws_events]' ) . '<div class="ws-section-head" style="margin-top:3rem"><h2>' . esc_html__( 'Past events', 'ws-chapters' ) . '</h2></div>' . do_shortcode( '[ws_events past="1"]' );
 
 		return '<div class="ws-views" data-ws-events="' . esc_attr( wp_json_encode( $items ) ) . '">'
-			. '<div class="ws-views__bar" role="group" aria-label="' . esc_attr__( 'View', 'ws-chapters' ) . '">'
+			. '<div class="ws-views__top"><div class="ws-views__bar" role="group" aria-label="' . esc_attr__( 'View', 'ws-chapters' ) . '">'
 			. $button( 'list', $svg( '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>' ), __( 'List', 'ws-chapters' ) )
 			. $button( 'month', $svg( '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>' ), __( 'Month', 'ws-chapters' ) )
 			. $button( 'week', $svg( '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h8"/>' ), __( 'Week', 'ws-chapters' ) )
-			. '</div>'
+			. '</div>' . $submit . '</div>'
 			. '<div class="ws-views__list">' . $list . '</div>'
 			. '<div class="ws-views__cal" hidden></div>'
 			. '</div>';

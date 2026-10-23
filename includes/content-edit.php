@@ -351,9 +351,11 @@ add_shortcode( 'ws_content_edit', function () {
 		. '<a class="ws-mm__btn ws-mm__btn--ghost" href="' . esc_url( $back ) . '">' . esc_html__( 'Go back', 'ws-chapters' ) . '</a>'
 		. '<button type="submit" form="ws-cx-delete-form" class="ws-cx__delete-btn">' . esc_html__( 'Delete', 'ws-chapters' ) . '</button></div>'
 		. '</form>';
-	$out .= '<form method="post" id="ws-cx-delete-form" class="ws-cx__delete-form" onsubmit="return confirm(' . esc_attr( wp_json_encode( __( 'Delete this for everyone? It moves to the Trash and can be restored from the WordPress admin.', 'ws-chapters' ) ) ) . ');">'
+	// One confirmation; after OK the button says "Deleting…" and further clicks are ignored while the page reloads.
+	$out .= '<form method="post" id="ws-cx-delete-form" class="ws-cx__delete-form" data-ws-confirm="' . esc_attr( __( 'Delete this for everyone? It moves to the Trash and can be restored from the WordPress admin.', 'ws-chapters' ) ) . '" data-ws-busy="' . esc_attr__( 'Deleting…', 'ws-chapters' ) . '">'
 		. '<input type="hidden" name="ws_cx_form" value="delete"><input type="hidden" name="ws_cx_type" value="' . esc_attr( $type ) . '"><input type="hidden" name="ws_cx_id" value="' . $id . '"><input type="hidden" name="ws_cx_nonce" value="' . esc_attr( wp_create_nonce( 'ws_cx_delete_' . $type . '_' . $id ) ) . '">'
 		. '</form>';
+	$out .= '<script>(function(){var f=document.getElementById("ws-cx-delete-form");if(!f){return;}f.addEventListener("submit",function(e){if(f.getAttribute("data-busy")){e.preventDefault();e.stopImmediatePropagation();return;}if(!window.confirm(f.getAttribute("data-ws-confirm"))){e.preventDefault();e.stopImmediatePropagation();return;}f.setAttribute("data-busy","1");var b=document.querySelector("button[form=ws-cx-delete-form]");if(b){b.textContent=f.getAttribute("data-ws-busy");b.setAttribute("aria-disabled","true");b.style.cursor="progress";b.style.opacity=".7";}},true);})();</script>';
 	return $out . '</section></div>';
 } );
 

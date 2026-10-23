@@ -487,7 +487,8 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-fedit[open] .ws-fedit__form, .ws-fedit--button[open] .ws-fedit__form { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; z-index: 1001; transform: translate(-50%, -50%); width: min(600px, 92vw); max-height: 85vh; }
 
 /* Events page: List / Month / Week switch and the calendar (FullCalendar), in the site's black and gold. */
-.ws-views__bar { display: inline-flex; gap: .4rem; margin: 0 0 1.5rem; }
+.ws-views__top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin: 0 0 1.5rem; }
+.ws-views__bar { display: inline-flex; gap: .4rem; }
 .ws-views__btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5em 1em; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: transparent; color: var(--ws-gold-dark, #8a6d2c); font: inherit; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
 .ws-views__btn[aria-pressed="true"] { background: var(--ws-ink, #0b0b0c); border-color: var(--ws-ink, #0b0b0c); color: var(--ws-gold-light, #e3c77a); }
 .ws-views__btn:hover { background: rgba(201, 162, 74, .12); }
