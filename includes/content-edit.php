@@ -222,6 +222,9 @@ add_action( 'template_redirect', function () {
 			update_post_meta( $id, 'venue', ws_post_field( 'ws_cx_venue' ) );
 			update_post_meta( $id, 'organiser', ws_post_field( 'ws_cx_organiser' ) );
 			update_post_meta( $id, 'contact', ws_post_field( 'ws_cx_contact', true ) );
+			// Organising chapter: shown as "Hosted by" with its logo and flag; none = "Organised by" the name above.
+			$host = absint( ws_post_field( 'ws_cx_chapter' ) );
+			'ws_chapter' === get_post_type( $host ) ? update_post_meta( $id, 'host_chapter', $host ) : delete_post_meta( $id, 'host_chapter' );
 		}
 	} elseif ( null === $error && 'doc' === $type ) {
 		$date = ws_sanitize_date( ws_post_field( 'ws_cx_date' ) );
@@ -316,7 +319,8 @@ add_shortcode( 'ws_content_edit', function () {
 			. $f( __( 'Start time', 'ws-chapters' ), '<input type="time" class="ws-mm__input" name="ws_cx_time" value="' . esc_attr( get_post_meta( $id, 'start_time', true ) ) . '">' )
 			. $f( __( 'City', 'ws-chapters' ), $text( 'ws_cx_city', get_post_meta( $id, 'city', true ) ) )
 			. $f( __( 'Venue or meeting point', 'ws-chapters' ), $text( 'ws_cx_venue', get_post_meta( $id, 'venue', true ) ) )
-			. $f( __( 'Organiser', 'ws-chapters' ), $text( 'ws_cx_organiser', get_post_meta( $id, 'organiser', true ) ) )
+			. $f( __( 'Organising chapter', 'ws-chapters' ), '<select class="ws-mm__input" name="ws_cx_chapter">' . ws_chapter_options( (int) get_post_meta( $id, 'host_chapter', true ), __( '— Not a listed chapter —', 'ws-chapters' ) ) . '</select>' )
+			. $f( __( 'Or organiser name', 'ws-chapters' ), $text( 'ws_cx_organiser', get_post_meta( $id, 'organiser', true ) ) )
 			. '</div>'
 			. $f( __( 'Description', 'ws-chapters' ), $area( 'ws_cx_body', wp_strip_all_tags( $post->post_content ), 8 ) )
 			. $f( __( 'Contact details for riders', 'ws-chapters' ), $area( 'ws_cx_contact', get_post_meta( $id, 'contact', true ), 3 ) )

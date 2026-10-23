@@ -455,7 +455,6 @@ a.ws-doc__title:hover { text-decoration: underline; }
 /* Edit pop-up on a useful link card: top right, like the news pencil; the form opens as a centred pop-up. */
 .ws-link-card .ws-link-edit { position: absolute; top: .6rem; right: .6rem; z-index: 2; }
 .ws-link-card .ws-link-edit:has(details[open]) { z-index: 1000; }
-.ws-link-card .ws-link-edit .ws-fedit--button[open] .ws-fedit__form { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(560px, 92vw); max-height: 85vh; }
 
 /* Photo picker (ws-images.js): thumbnails, Remove, Make main, and an add/drop area. */
 .ws-pick__input { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
@@ -480,3 +479,9 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-mm__table--library th:last-child { text-align: center; }
 .ws-mm__table--library .ws-mm__row-actions { flex-direction: column; flex-wrap: nowrap; align-items: center; justify-content: center; gap: .4rem; margin: 0; }
 .ws-mm__table--library .ws-mm__row-actions .ws-cx-edit { position: static; order: -1; }
+
+/* Pencil pop-ups (patch, logo, photos, contact, About, Rename, Create chapter, news, links): always centred on the
+   screen over a dimmed page, so they never run off the edge; clicking the dimmed page closes them. */
+.ws-fedit[open] { z-index: 1000; }
+.ws-fedit[open] > summary::after { content: ""; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, .45); cursor: default; }
+.ws-fedit[open] .ws-fedit__form, .ws-fedit--button[open] .ws-fedit__form { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; z-index: 1001; transform: translate(-50%, -50%); width: min(600px, 92vw); max-height: 85vh; }
