@@ -34,3 +34,32 @@
 		apply();
 	});
 })();
+
+/*
+ * Check the form in the browser before sending: a missing or wrong field is pointed out on the spot, without
+ * sending the page. (A server error reloads the page, and browsers never refill a file box, so attached photos
+ * would be lost.) The server still checks everything again.
+ */
+(function () {
+	'use strict';
+	document.querySelectorAll('form.ws-form[novalidate]').forEach(function (form) {
+		var start = form.querySelector('[name="ws_start_date"]');
+		var end = form.querySelector('[name="ws_end_date"]');
+		function checkDates() {
+			if (!start || !end) return;
+			end.setCustomValidity(end.value && start.value && end.value < start.value ? (end.getAttribute('data-ws-msg') || 'The end date is before the start date.') : '');
+		}
+		if (start && end) {
+			start.addEventListener('change', checkDates);
+			end.addEventListener('change', checkDates);
+		}
+		form.addEventListener('submit', function (e) {
+			checkDates();
+			if (!form.checkValidity()) {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				form.reportValidity();
+			}
+		}, true);
+	});
+})();

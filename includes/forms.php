@@ -374,7 +374,7 @@ function ws_event_submit_form() {
 	$out .= ws_field( 'ws_title', __( 'Event name', 'ws-chapters' ), 'text', array( 'required' => true, 'value' => $v( 'ws_title' ) ) );
 	$out .= '<div class="ws-field-row">';
 	$out .= ws_field( 'ws_start_date', __( 'Start date', 'ws-chapters' ), 'date', array( 'required' => true, 'value' => $v( 'ws_start_date' ) ) );
-	$out .= ws_field( 'ws_end_date', __( 'End date', 'ws-chapters' ), 'date', array( 'value' => $v( 'ws_end_date' ), 'help' => __( 'If it runs over several days.', 'ws-chapters' ) ) );
+	$out .= ws_field( 'ws_end_date', __( 'End date', 'ws-chapters' ), 'date', array( 'value' => $v( 'ws_end_date' ), 'help' => __( 'If it runs over several days.', 'ws-chapters' ), 'attrs' => 'data-ws-msg="' . esc_attr__( 'The end date is before the start date.', 'ws-chapters' ) . '"' ) );
 	$out .= ws_field( 'ws_start_time', __( 'Start time', 'ws-chapters' ), 'time', array( 'value' => $v( 'ws_start_time' ) ) );
 	$out .= '</div><div class="ws-field-row">';
 	$out .= ws_field( 'ws_form_country', __( 'Country', 'ws-chapters' ), 'select', array( 'required' => true, 'options' => ws_country_options( (int) ( $v( 'ws_form_country' ) ?: $preset_country ) ), 'attrs' => 'data-ws-country' ) );

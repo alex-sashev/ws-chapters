@@ -39,7 +39,8 @@
 		var max = input.hasAttribute( 'data-ws-max' ) ? parseInt( input.getAttribute( 'data-ws-max' ), 10 ) || 0 : Infinity;
 		var maxMb = parseFloat( input.getAttribute( 'data-ws-max-mb' ) || '0' );
 		var main = input.hasAttribute( 'data-ws-main' );
-		var files = [];
+		// Photos already chosen before this script started (a slow page) are kept, not dropped.
+		var files = Array.prototype.slice.call( input.files || [] );
 
 		var wrap = document.createElement( 'div' );
 		wrap.className = 'ws-pick';
