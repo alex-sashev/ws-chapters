@@ -556,3 +556,30 @@ add_action( 'init', function () {
 		return ws_news_cards( $term ? $term->term_id : 0, (int) $atts['chapter'], (int) $atts['limit'] );
 	} );
 } );
+
+/*
+ * Once (data, not code): the page "The Hour of Widows Sons" under Charity & Community, built from the theme's
+ * pattern. An existing page is never changed; a deleted one is not brought back.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'ws_hour_page' ) || ! post_type_exists( 'page' ) ) {
+		return;
+	}
+	$charity = get_page_by_path( 'charity' );
+	if ( ! $charity ) {
+		return;
+	}
+	update_option( 'ws_hour_page', '1', false );
+	if ( get_page_by_path( 'charity/the-hour-of-widows-sons' ) ) {
+		return;
+	}
+	wp_insert_post( array(
+		'post_type'    => 'page',
+		'post_status'  => 'publish',
+		'post_title'   => 'The Hour of Widows Sons',
+		'post_name'    => 'the-hour-of-widows-sons',
+		'post_parent'  => $charity->ID,
+		'post_content' => '<!-- wp:pattern {"slug":"ws-europe/page-hour-of-widows-sons"} /-->',
+	) );
+	do_action( 'litespeed_purge_all' );
+}, 20 );
