@@ -511,3 +511,14 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-addcal__menu { position: absolute; left: 0; top: calc(100% + 6px); z-index: 20; min-width: 260px; margin: 0; padding: .35rem; list-style: none; background: #fff; border: 1px solid var(--ws-gold, #C9A24A); border-radius: 4px; box-shadow: 0 10px 24px rgba(0, 0, 0, .18); }
 .ws-addcal__menu a { display: block; padding: .55rem .75rem; border-radius: 3px; color: #111; text-decoration: none; }
 .ws-addcal__menu a:hover, .ws-addcal__menu a:focus-visible { background: rgba(201, 162, 74, .14); }
+
+/* Event lists never get wider than the screen: the grid column and the cards may shrink, long words wrap.
+   On phones the Edit button sits at the bottom of the card instead of taking room beside the title. */
+.ws-event-list { grid-template-columns: minmax(0, 1fr); }
+.ws-event-card, .ws-event-card__body { min-width: 0; }
+.ws-event-card__title { overflow-wrap: break-word; hyphens: auto; }
+@media (max-width: 520px) {
+	.ws-event-card { grid-template-columns: 64px minmax(0, 1fr); }
+	.ws-event-card:has(.ws-cx-edit) .ws-event-card__title { padding-right: 0; }
+	.ws-event-card .ws-cx-edit { position: static; margin-top: .9rem; }
+}
