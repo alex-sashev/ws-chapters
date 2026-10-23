@@ -485,3 +485,27 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-fedit[open] { z-index: 1000; }
 .ws-fedit[open] > summary::after { content: ""; position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, .45); cursor: default; }
 .ws-fedit[open] .ws-fedit__form, .ws-fedit--button[open] .ws-fedit__form { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; z-index: 1001; transform: translate(-50%, -50%); width: min(600px, 92vw); max-height: 85vh; }
+
+/* Events page: List / Month / Week switch and the calendar (FullCalendar), in the site's black and gold. */
+.ws-views__bar { display: inline-flex; gap: .4rem; margin: 0 0 1.5rem; }
+.ws-views__btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5em 1em; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; background: transparent; color: var(--ws-gold-dark, #8a6d2c); font: inherit; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.ws-views__btn[aria-pressed="true"] { background: var(--ws-ink, #0b0b0c); border-color: var(--ws-ink, #0b0b0c); color: var(--ws-gold-light, #e3c77a); }
+.ws-views__btn:hover { background: rgba(201, 162, 74, .12); }
+.ws-views__btn[aria-pressed="true"]:hover { background: var(--ws-ink, #0b0b0c); }
+.ws-views__cal { --fc-border-color: #e3dccd; --fc-event-bg-color: var(--ws-gold, #C9A24A); --fc-event-border-color: var(--ws-gold-dark, #8a6d2c); --fc-event-text-color: #111; --fc-today-bg-color: rgba(201, 162, 74, .12); --fc-button-bg-color: var(--ws-ink, #0b0b0c); --fc-button-border-color: var(--ws-ink, #0b0b0c); --fc-button-hover-bg-color: #2a2b2f; --fc-button-hover-border-color: #2a2b2f; --fc-button-active-bg-color: var(--ws-gold-dark, #8a6d2c); --fc-button-active-border-color: var(--ws-gold-dark, #8a6d2c); --fc-page-bg-color: #fff; --fc-list-event-hover-bg-color: rgba(201, 162, 74, .12); background: #fff; padding: 1rem; border: 1px solid #e3dccd; border-radius: 4px; }
+.ws-views__cal .fc-toolbar-title { font-family: var(--ws-display, Cinzel, serif); font-size: 1.4rem; }
+.ws-views__cal .fc-event { cursor: pointer; font-weight: 600; }
+.ws-views__cal .fc-daygrid-event { white-space: normal; }
+.ws-views__cal a { color: inherit; text-decoration: none; }
+.ws-views__cal .fc-col-header-cell-cushion { text-transform: uppercase; font-size: .75rem; letter-spacing: .08em; color: var(--ws-gold-dark, #8a6d2c); }
+.ws-views__cal .fc-daygrid-week-view .fc-daygrid-day-frame, .ws-views__cal .fc-dayGridWeek-view .fc-daygrid-day-frame { min-height: 8rem; }
+
+/* Event page: Add to calendar. */
+.ws-addcal { position: relative; display: block; width: fit-content; margin-top: 1.25rem; }
+.ws-addcal summary { list-style: none; }
+.ws-addcal summary::-webkit-details-marker { display: none; }
+.ws-addcal__btn { display: inline-flex; align-items: center; gap: .5rem; padding: .6em 1.1em; border: 1px solid var(--ws-gold-dark, #8a6d2c); border-radius: 3px; color: var(--ws-gold-dark, #8a6d2c); font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.ws-addcal__btn:hover, .ws-addcal[open] .ws-addcal__btn { background: rgba(201, 162, 74, .12); }
+.ws-addcal__menu { position: absolute; left: 0; top: calc(100% + 6px); z-index: 20; min-width: 260px; margin: 0; padding: .35rem; list-style: none; background: #fff; border: 1px solid var(--ws-gold, #C9A24A); border-radius: 4px; box-shadow: 0 10px 24px rgba(0, 0, 0, .18); }
+.ws-addcal__menu a { display: block; padding: .55rem .75rem; border-radius: 3px; color: #111; text-decoration: none; }
+.ws-addcal__menu a:hover, .ws-addcal__menu a:focus-visible { background: rgba(201, 162, 74, .14); }

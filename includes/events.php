@@ -247,7 +247,7 @@ add_action( 'init', function () {
 		foreach ( $rows as $label => $value ) {
 			$out .= '<div><dt>' . esc_html( $label ) . '</dt><dd>' . $value . '</dd></div>';
 		}
-		return $out . '</dl>' . ws_event_host( $id );
+		return $out . '</dl>' . ws_event_host( $id ) . ( function_exists( 'ws_event_add_to_calendar' ) ? ws_event_add_to_calendar( $id ) : '' );
 	} );
 } );
 
