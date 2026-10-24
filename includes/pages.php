@@ -25,7 +25,9 @@ function ws_iso_numeric( $alpha2 ) {
 		'sk' => '703', 'si' => '705', 'es' => '724', 'se' => '752', 'ch' => '756', 'gb' => '826', 'ua' => '804',
 		'md' => '498', 'me' => '499', 'mk' => '807', 'al' => '008', 'ba' => '070', 'tr' => '792',
 	);
-	return $map[ strtolower( (string) $alpha2 ) ] ?? '';
+	$code = strtolower( (string) $alpha2 );
+	// The UK nations (gb-sct, gb-eng, …) have no outline of their own on the map: the UK is highlighted.
+	return $map[ 0 === strpos( $code, 'gb-' ) ? 'gb' : $code ] ?? '';
 }
 
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Widows Sons Europe: chapters and countries with official insignia, map of Europe, events, news, front-end editing, members' area (library, member list, profiles, member management) and branded emails.
- * Version:     1.0.10
+ * Version:     1.0.11
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -246,7 +246,8 @@ function ws_sanitize_asset_id( $value ) {
 function ws_sanitize_country_code( $value ) {
 	$code = strtolower( trim( (string) $value ) );
 	$code = 'uk' === $code ? 'gb' : $code;
-	return preg_match( '/^[a-z]{2}$/', $code ) ? $code : '';
+	// Two letters (de), or a UK nation with its own flag: gb-sct, gb-eng, gb-wls, gb-nir.
+	return preg_match( '/^[a-z]{2}$/', $code ) || in_array( $code, array( 'gb-sct', 'gb-eng', 'gb-wls', 'gb-nir' ), true ) ? $code : '';
 }
 
 /** A latitude/longitude in range, or '' (unset). Accepts a comma as decimal separator. */
@@ -522,8 +523,8 @@ add_action( 'ws_country_add_form_fields', function () {
 	echo '<div class="form-field">';
 	ws_asset_control( 'ws_national_logo', __( 'National logo', 'ws-chapters' ), 0, current_user_can( WS_ASSET_CAP ) );
 	echo '</div><div class="form-field"><label for="ws_country_code">' . esc_html__( 'Flag (country code)', 'ws-chapters' ) . '</label>';
-	echo '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="2" style="width:5em" placeholder="bg">';
-	echo '<p>' . esc_html__( 'Two-letter country code, e.g. bg, de, gb. Used to show the flag.', 'ws-chapters' ) . '</p></div>';
+	echo '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="6" style="width:6em" placeholder="bg">';
+	echo '<p>' . esc_html__( 'Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag.', 'ws-chapters' ) . '</p></div>';
 } );
 
 add_action( 'ws_country_edit_form_fields', function ( $term ) {
@@ -533,8 +534,8 @@ add_action( 'ws_country_edit_form_fields', function ( $term ) {
 	echo '</td></tr>';
 	$code = (string) get_term_meta( $term->term_id, 'country_code', true );
 	echo '<tr class="form-field"><th scope="row"><label for="ws_country_code">' . esc_html__( 'Flag (country code)', 'ws-chapters' ) . '</label></th><td>';
-	printf( '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="2" style="width:5em" value="%s"> %s', esc_attr( $code ), ws_flag( $term ) );
-	echo '<p class="description">' . esc_html__( 'Two-letter country code, e.g. bg, de, gb. Used to show the flag.', 'ws-chapters' ) . '</p></td></tr>';
+	printf( '<input type="text" id="ws_country_code" name="ws_country_code" maxlength="6" style="width:6em" value="%s"> %s', esc_attr( $code ), ws_flag( $term ) );
+	echo '<p class="description">' . esc_html__( 'Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag.', 'ws-chapters' ) . '</p></td></tr>';
 } );
 
 $ws_save_country_logo = function ( $term_id ) {
