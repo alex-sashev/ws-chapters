@@ -212,6 +212,36 @@ function ws_si_code_screen( $req, $token, $notice ) {
 		. '<p class="ws-ma__switch"><a href="' . esc_url( ws_ma_url() ) . '">' . esc_html__( 'Send a new code', 'ws-chapters' ) . '</a></p></section></div>' . ws_mm_script();
 }
 
+/**
+ * The sign-in form, email first: the member types their email and taps Next, then chooses how to sign in
+ * (password, emailed code or passkey). Without the script both steps simply show together. One form, so
+ * password managers still see the email and password as a pair. $popup: the pop-up's look instead of the page's.
+ */
+function ws_si_login_form( $to, $popup = false ) {
+	$btn   = $popup ? 'ws-btn-gold' : 'ws-mm__btn';
+	$field = function ( $name, $label, $type, $extra ) use ( $popup ) {
+		return $popup
+			? '<label>' . esc_html( $label ) . '<input type="' . esc_attr( $type ) . '" name="' . esc_attr( $name ) . '" ' . $extra . '></label>'
+			: ws_ma_input( $name, $label, '', $type, $extra );
+	};
+	$action = ws_mm_page( 'member-account' ) ? ws_ma_url() : wp_login_url();
+	return '<form method="post" action="' . esc_url( $action ) . '" class="' . ( $popup ? 'ws-login__form' : 'ws-ma__form' ) . ' ws-si-form" data-ws-steps>'
+		. '<input type="hidden" name="ws_ma_action" value="login"><input type="hidden" name="redirect_to" value="' . esc_attr( $to ) . '">'
+		. '<div class="ws-si-step" data-ws-step="1">'
+		. $field( 'log', __( 'Email', 'ws-chapters' ), 'email', 'required autocomplete="username"' )
+		. '<button type="button" class="' . esc_attr( $btn ) . ' ws-si-next" data-ws-next hidden>' . esc_html__( 'Next', 'ws-chapters' ) . '</button>'
+		. '</div>'
+		. '<div class="ws-si-step" data-ws-step="2">'
+		. '<p class="ws-si-who" hidden><span data-ws-who></span><button type="button" class="ws-si-change" data-ws-change>' . esc_html__( 'Change', 'ws-chapters' ) . '</button></p>'
+		. '<p class="ws-si-choose" hidden>' . esc_html__( 'How would you like to sign in?', 'ws-chapters' ) . '</p>'
+		. $field( 'pwd', __( 'Password', 'ws-chapters' ), 'password', 'required autocomplete="current-password"' )
+		. '<label class="' . ( $popup ? 'ws-login__remember' : 'ws-ma__remember' ) . '"><input type="checkbox" name="rememberme" value="forever" checked> ' . esc_html__( 'Keep me signed in on this device', 'ws-chapters' ) . '</label>'
+		. '<button type="submit" class="' . esc_attr( $btn ) . ' ws-si-login">' . esc_html__( 'Log in with password', 'ws-chapters' ) . '</button>'
+		. ws_si_buttons( $btn )
+		. '<p class="ws-si-forgot"><a href="' . esc_url( wp_lostpassword_url( $to ) ) . '">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</a></p>'
+		. '</div></form>';
+}
+
 /** The extra buttons under a sign-in form: email code, and passkey (shown by the script where the browser can). */
 function ws_si_buttons( $btn_class ) {
 	return '<div class="ws-si">'

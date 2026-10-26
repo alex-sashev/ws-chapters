@@ -75,6 +75,56 @@
 	}
 	installState();
 
+	/* ---- Sign in, email first: Email → Next → password, emailed code or passkey ---- */
+	function stepTo( form, n ) {
+		var email = form.querySelector( '[name=log]' );
+		var first = 1 === n;
+		form.querySelector( '[data-ws-step="2"]' ).hidden = first;
+		form.querySelector( '[data-ws-next]' ).hidden = ! first;
+		( email.closest( 'label' ) || email ).hidden = ! first;
+		form.querySelector( '.ws-si-who' ).hidden = first;
+		form.querySelector( '.ws-si-choose' ).hidden = first;
+		form.querySelector( '[data-ws-who]' ).textContent = email.value;
+		form.classList.toggle( 'is-step-2', ! first );
+		var focus = first ? email : form.querySelector( '[name=pwd]' );
+		if ( focus && form.offsetParent ) {
+			focus.focus();
+		}
+	}
+	function next( form ) {
+		var email = form.querySelector( '[name=log]' );
+		if ( email.checkValidity() ) {
+			stepTo( form, 2 );
+		} else {
+			email.reportValidity();
+		}
+	}
+	document.querySelectorAll( 'form[data-ws-steps]' ).forEach( function ( form ) {
+		stepTo( form, 1 );
+		form.querySelector( '[data-ws-next]' ).addEventListener( 'click', function () {
+			next( form );
+		} );
+		form.querySelector( '[data-ws-change]' ).addEventListener( 'click', function () {
+			stepTo( form, 1 );
+		} );
+		// Enter in the email box means Next (the browser would stop at the hidden password box otherwise).
+		form.querySelector( '[name=log]' ).addEventListener( 'keydown', function ( e ) {
+			if ( 'Enter' === e.key && ! form.classList.contains( 'is-step-2' ) ) {
+				e.preventDefault();
+				next( form );
+			}
+		} );
+	} );
+	// Enter in the email box means Next, not Log in. Capture phase: before the "Please wait…" handlers.
+	document.addEventListener( 'submit', function ( e ) {
+		var form = e.target;
+		if ( form.matches && form.matches( 'form[data-ws-steps]' ) && ! form.classList.contains( 'is-step-2' ) ) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			next( form );
+		}
+	}, true );
+
 	/* ---- Passkeys ---- */
 	function enc( buf ) {
 		var s = '';

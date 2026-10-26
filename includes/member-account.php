@@ -250,10 +250,5 @@ add_shortcode( 'ws_member_account', function () {
 			. '<p class="ws-ma__switch"><a href="' . esc_url( ws_ma_url() ) . '">' . esc_html__( 'Back to sign in', 'ws-chapters' ) . '</a></p></section></div>' . ws_mm_script();
 	}
 	return '<div class="ws-mm ws-ma">' . $notice . '<section class="ws-mm__card ws-ma__card"><h3 class="ws-mm__heading">' . esc_html__( 'Member login', 'ws-chapters' ) . '</h3>'
-		. '<form method="post" class="ws-ma__form"><input type="hidden" name="ws_ma_action" value="login"><input type="hidden" name="redirect_to" value="' . esc_attr( $to ) . '">'
-		. ws_ma_input( 'log', __( 'Email', 'ws-chapters' ), '', 'email', 'required autocomplete="username"' )
-		. ws_ma_input( 'pwd', __( 'Password', 'ws-chapters' ), '', 'password', 'required autocomplete="current-password"' )
-		. '<label class="ws-ma__remember"><input type="checkbox" name="rememberme" value="forever" checked> ' . esc_html__( 'Keep me signed in on this device', 'ws-chapters' ) . '</label>'
-		. $submit( __( 'Log in', 'ws-chapters' ) ) . ws_si_buttons( 'ws-mm__btn' ) . '</form>'
-		. '<p class="ws-ma__switch"><a href="' . esc_url( ws_ma_url( array( 'ws_forgot' => 1 ) ) ) . '">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</a></p></section></div>' . ws_mm_script();
+		. ws_si_login_form( $to ) . '</section></div>' . ws_mm_script();
 } );

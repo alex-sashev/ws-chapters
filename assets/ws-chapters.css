@@ -529,11 +529,8 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-si__or::before, .ws-si__or::after { content: ""; flex: 1; border-top: 1px solid rgba(138, 109, 44, .35); }
 .ws-si__alt { width: 100%; min-width: 0; box-sizing: border-box; white-space: normal; justify-content: center; text-align: center; background: transparent !important; color: var(--ws-gold-dark, #8a6d2c) !important; border: 1px solid var(--ws-gold-dark, #8a6d2c) !important; }
 .ws-si__alt:hover, .ws-si__alt:focus-visible { background: var(--ws-gold-dark, #8a6d2c) !important; color: #fff !important; }
-.ws-login .ws-si__alt { color: #c9a64b !important; border-color: #c9a64b !important; }
-.ws-login .ws-si__alt:hover { background: #c9a64b !important; color: #0e0d0b !important; }
 .ws-si__alt.is-busy, .ws-pk .is-busy { opacity: .6; cursor: progress; }
 .ws-si__hint { margin: 0; font-size: .85rem; line-height: 1.45; color: #7a7366; }
-.ws-login .ws-si__hint { color: #b9b2a3; }
 .ws-si__msg { margin: .2rem 0 0; color: #a3341f; font-size: .95rem; }
 .ws-ma__code { font-size: 1.6rem !important; letter-spacing: .35em; text-align: center; font-variant-numeric: tabular-nums; }
 .ws-pk, .ws-app { margin-top: 1.5rem; }
@@ -549,3 +546,15 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-app-bar strong { color: #c9a64b; letter-spacing: .04em; }
 .ws-app-bar .ws-mm__btn { margin-top: .4rem; padding: .45rem .9rem; }
 .ws-app-bar__close { position: absolute; top: .3rem; right: .4rem; background: none; border: 0; color: #efe9dc; font-size: 1.6rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
+
+/* Sign in, email first (1.0.15). */
+.ws-si-form .ws-si-step { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; }
+.ws-si-form .ws-si-step[hidden] { display: none; }
+.ws-si-form [hidden] { display: none !important; }
+.ws-si-form .ws-si-next, .ws-si-form .ws-si-login { width: 100%; box-sizing: border-box; justify-content: center; text-align: center; white-space: normal; }
+.ws-si-who { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin: 0; padding: .6rem .8rem; background: rgba(201, 162, 74, .1); border: 1px solid rgba(138, 109, 44, .3); border-radius: 6px; font-weight: 600; overflow-wrap: anywhere; }
+.ws-si-change { flex: none; background: none; border: 0; padding: .2rem; color: var(--ws-gold-dark, #8a6d2c); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.ws-si-choose { margin: .2rem 0 0; font-weight: 600; }
+.ws-si-forgot { margin: .2rem 0 0; font-size: .9rem; }
+.ws-login label, .ws-login .ws-si-form p { margin-bottom: 0; }
+.ws-login input[type=email] { display: block; width: 100%; box-sizing: border-box; margin-top: .25rem; padding: .55rem .6rem; border: 1px solid #c3c4c7; border-radius: 3px; font: inherit; font-weight: 400; }
