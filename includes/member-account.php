@@ -24,7 +24,7 @@ function ws_ma_is_page() {
 
 /** Messages shown after a redirect, by code (the code is in the address, so nothing personal is). */
 function ws_ma_messages() {
-	return array(
+	return apply_filters( 'ws_ma_messages', array(
 		'bad_login' => array( 'error', __( 'The email or password is not right. Please try again, or ask for a new password below.', 'ws-chapters' ) ),
 		'locked'    => array( 'error', __( 'Too many sign-in attempts. Please wait 15 minutes and try again, or ask for a new password below.', 'ws-chapters' ) ),
 		'expired'   => array( 'error', __( 'This link has expired or was already used. Enter your email below and we will send you a new one.', 'ws-chapters' ) ),
@@ -35,7 +35,7 @@ function ws_ma_messages() {
 		'saved'     => array( 'success', __( 'Your profile is saved.', 'ws-chapters' ) ),
 		'title'     => array( 'error', __( 'For "Other", please type your title.', 'ws-chapters' ) ),
 		'expired_form' => array( 'error', __( 'The form expired. Please try again.', 'ws-chapters' ) ),
-	);
+	) );
 }
 
 function ws_ma_redirect( $args ) {
@@ -181,6 +181,8 @@ add_shortcode( 'ws_member_account', function () {
 	$login  = isset( $_GET['ws_login'] ) ? sanitize_user( rawurldecode( wp_unslash( $_GET['ws_login'] ) ) ) : '';
 	$forgot = ! empty( $_GET['ws_forgot'] );
 	$to     = isset( $_GET['redirect_to'] ) ? esc_url_raw( rawurldecode( wp_unslash( $_GET['redirect_to'] ) ) ) : '';
+	$si_req = isset( $_GET['ws_code'] ) ? preg_replace( '/[^A-Za-z0-9]/', '', (string) wp_unslash( $_GET['ws_code'] ) ) : '';
+	$si_tok = isset( $_GET['ws_tok'] ) ? preg_replace( '/[^A-Za-z0-9]/', '', (string) wp_unslash( $_GET['ws_tok'] ) ) : '';
 	// phpcs:enable
 	$msgs   = ws_ma_messages();
 	$notice = isset( $msgs[ $code ] ) ? ws_form_notice( $msgs[ $code ][0], esc_html( $msgs[ $code ][1] ) ) : '';
@@ -230,11 +232,15 @@ add_shortcode( 'ws_member_account', function () {
 			. ws_ma_input( 'pass2', __( 'Type it again', 'ws-chapters' ), '', 'password', 'minlength="8" autocomplete="new-password"' )
 			. '</div></details>'
 			. $submit( __( 'Save my profile', 'ws-chapters' ) ) . '</form></section>'
+			. ws_pk_profile_card() . ws_app_install_card()
 			. '<p class="ws-ma__logout"><a href="' . esc_url( wp_logout_url( home_url( '/' ) ) ) . '">' . esc_html__( 'Log out', 'ws-chapters' ) . '</a></p></div>';
 		return $out . ws_mm_script();
 	}
 
-	// 3. Signed out: forgot password, or sign in.
+	// 3. Signed out: an emailed code, forgot password, or sign in.
+	if ( '' !== $si_req ) {
+		return ws_si_code_screen( $si_req, $si_tok, $notice );
+	}
 	if ( $forgot ) {
 		return '<div class="ws-mm ws-ma">' . $notice . '<section class="ws-mm__card ws-ma__card"><h3 class="ws-mm__heading">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</h3>'
 			. '<p class="ws-muted">' . esc_html__( 'Enter the email you were invited with. We will send you a link to choose a new password.', 'ws-chapters' ) . '</p>'
@@ -247,7 +253,7 @@ add_shortcode( 'ws_member_account', function () {
 		. '<form method="post" class="ws-ma__form"><input type="hidden" name="ws_ma_action" value="login"><input type="hidden" name="redirect_to" value="' . esc_attr( $to ) . '">'
 		. ws_ma_input( 'log', __( 'Email', 'ws-chapters' ), '', 'email', 'required autocomplete="username"' )
 		. ws_ma_input( 'pwd', __( 'Password', 'ws-chapters' ), '', 'password', 'required autocomplete="current-password"' )
-		. '<label class="ws-ma__remember"><input type="checkbox" name="rememberme" value="forever"> ' . esc_html__( 'Remember me', 'ws-chapters' ) . '</label>'
-		. $submit( __( 'Log in', 'ws-chapters' ) ) . '</form>'
+		. '<label class="ws-ma__remember"><input type="checkbox" name="rememberme" value="forever" checked> ' . esc_html__( 'Keep me signed in on this device', 'ws-chapters' ) . '</label>'
+		. $submit( __( 'Log in', 'ws-chapters' ) ) . ws_si_buttons( 'ws-mm__btn' ) . '</form>'
 		. '<p class="ws-ma__switch"><a href="' . esc_url( ws_ma_url( array( 'ws_forgot' => 1 ) ) ) . '">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</a></p></section></div>' . ws_mm_script();
 } );

@@ -25,9 +25,10 @@ add_action( 'wp_footer', function () {
 		$inner  = '<form method="post" action="' . esc_url( $action ) . '" class="ws-login__form"><input type="hidden" name="ws_ma_action" value="login">'
 			. '<label>' . esc_html__( 'Email', 'ws-chapters' ) . '<input type="email" name="log" autocomplete="username" required></label>'
 			. '<label>' . esc_html__( 'Password', 'ws-chapters' ) . '<input type="password" name="pwd" autocomplete="current-password" required></label>'
-			. '<label class="ws-login__remember"><input type="checkbox" name="rememberme" value="forever"> ' . esc_html__( 'Remember me', 'ws-chapters' ) . '</label>'
+			. '<label class="ws-login__remember"><input type="checkbox" name="rememberme" value="forever" checked> ' . esc_html__( 'Keep me signed in on this device', 'ws-chapters' ) . '</label>'
 			. '<input type="hidden" name="redirect_to" value="' . esc_url( $back ) . '">'
 			. '<p><button type="submit" class="ws-btn-gold">' . esc_html__( 'Log in', 'ws-chapters' ) . '</button></p>'
+			. ( function_exists( 'ws_si_buttons' ) ? ws_si_buttons( 'ws-btn-gold' ) : '' )
 			. '<p><a href="' . esc_url( wp_lostpassword_url( $back ) ) . '">' . esc_html__( 'Forgot your password?', 'ws-chapters' ) . '</a></p>'
 			. '</form>';
 	}

@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  * }
  */
 function ws_email_html( array $a ) {
-	$a = wp_parse_args( $a, array( 'preheader' => '', 'heading' => '', 'before' => array(), 'button' => '', 'url' => '', 'after' => array() ) );
+	$a = wp_parse_args( $a, array( 'preheader' => '', 'heading' => '', 'before' => array(), 'code' => '', 'button' => '', 'url' => '', 'after' => array() ) );
 
 	$ink    = '#0B0B0C';
 	$text   = '#1C1A17';
@@ -59,6 +59,9 @@ function ws_email_html( array $a ) {
 	$body = '';
 	foreach ( (array) $a['before'] as $t ) {
 		$body .= $p( $t );
+	}
+	if ( '' !== $a['code'] ) { // A one-time code, large and spaced so it is easy to read and type.
+		$body .= '<p style="margin:0 0 24px;font-family:' . $sans . ';font-size:34px;line-height:1.2;font-weight:700;letter-spacing:8px;color:' . $ink . ';">' . esc_html( $a['code'] ) . '</p>';
 	}
 	$body .= $button;
 	foreach ( (array) $a['after'] as $t ) {

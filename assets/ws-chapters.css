@@ -522,3 +522,28 @@ a.ws-doc__title:hover { text-decoration: underline; }
 	.ws-event-card:has(.ws-cx-edit) .ws-event-card__title { padding-right: 0; }
 	.ws-event-card .ws-cx-edit { position: static; margin-top: .9rem; }
 }
+
+/* Sign in without a password (1.0.13): email code, passkeys, the home-screen app. */
+.ws-si { display: grid; grid-template-columns: minmax(0, 1fr); gap: .6rem; margin-top: .4rem; }
+.ws-si__or { display: flex; align-items: center; gap: .75rem; margin: .2rem 0; color: #7a7366; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; }
+.ws-si__or::before, .ws-si__or::after { content: ""; flex: 1; border-top: 1px solid rgba(138, 109, 44, .35); }
+.ws-si__alt { width: 100%; min-width: 0; box-sizing: border-box; white-space: normal; justify-content: center; text-align: center; background: transparent !important; color: var(--ws-gold-dark, #8a6d2c) !important; border: 1px solid var(--ws-gold-dark, #8a6d2c) !important; }
+.ws-si__alt:hover, .ws-si__alt:focus-visible { background: var(--ws-gold-dark, #8a6d2c) !important; color: #fff !important; }
+.ws-login .ws-si__alt { color: #c9a64b !important; border-color: #c9a64b !important; }
+.ws-login .ws-si__alt:hover { background: #c9a64b !important; color: #0e0d0b !important; }
+.ws-si__alt.is-busy, .ws-pk .is-busy { opacity: .6; cursor: progress; }
+.ws-si__msg { margin: .2rem 0 0; color: #a3341f; font-size: .95rem; }
+.ws-ma__code { font-size: 1.6rem !important; letter-spacing: .35em; text-align: center; font-variant-numeric: tabular-nums; }
+.ws-pk, .ws-app { margin-top: 1.5rem; }
+.ws-pk__list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .5rem; }
+.ws-pk__item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .6rem .8rem; border: 1px solid rgba(138, 109, 44, .25); border-radius: 6px; }
+.ws-pk__item form { margin: 0; }
+.ws-pk__remove { background: none; border: 0; color: #a3341f; font-weight: 600; cursor: pointer; padding: .25rem; }
+.ws-pk__actions { margin: 0; }
+.ws-app__how p { margin: .4rem 0 0; }
+.ws-app-bar { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 9998; display: flex; align-items: flex-start; gap: .75rem; padding: .8rem 2.4rem .8rem .8rem; background: #0e0d0b; color: #efe9dc; border: 1px solid #c9a64b; border-radius: 10px; box-shadow: 0 8px 28px rgba(0, 0, 0, .35); font-size: .92rem; line-height: 1.45; }
+.ws-app-bar[hidden] { display: none; }
+.ws-app-bar img { border-radius: 9px; flex: none; }
+.ws-app-bar strong { color: #c9a64b; letter-spacing: .04em; }
+.ws-app-bar .ws-mm__btn { margin-top: .4rem; padding: .45rem .9rem; }
+.ws-app-bar__close { position: absolute; top: .3rem; right: .4rem; background: none; border: 0; color: #efe9dc; font-size: 1.6rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
