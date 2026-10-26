@@ -532,6 +532,8 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-login .ws-si__alt { color: #c9a64b !important; border-color: #c9a64b !important; }
 .ws-login .ws-si__alt:hover { background: #c9a64b !important; color: #0e0d0b !important; }
 .ws-si__alt.is-busy, .ws-pk .is-busy { opacity: .6; cursor: progress; }
+.ws-si__hint { margin: 0; font-size: .85rem; line-height: 1.45; color: #7a7366; }
+.ws-login .ws-si__hint { color: #b9b2a3; }
 .ws-si__msg { margin: .2rem 0 0; color: #a3341f; font-size: .95rem; }
 .ws-ma__code { font-size: 1.6rem !important; letter-spacing: .35em; text-align: center; font-variant-numeric: tabular-nums; }
 .ws-pk, .ws-app { margin-top: 1.5rem; }

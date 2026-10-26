@@ -218,6 +218,7 @@ function ws_si_buttons( $btn_class ) {
 		. '<p class="ws-si__or"><span>' . esc_html__( 'or, without a password', 'ws-chapters' ) . '</span></p>'
 		. '<button type="submit" name="ws_ma_action" value="code_send" formnovalidate class="' . esc_attr( $btn_class ) . ' ws-si__alt">' . esc_html__( 'Email me a sign-in code', 'ws-chapters' ) . '</button>'
 		. '<button type="button" class="' . esc_attr( $btn_class ) . ' ws-si__alt" data-ws-passkey-login hidden>' . esc_html__( 'Sign in with a passkey', 'ws-chapters' ) . '</button>'
+		. '<p class="ws-si__hint" data-ws-passkey-hint hidden>' . esc_html__( 'Passkeys work after you add one: sign in with an email code, then go to My profile and tap "Add a passkey on this device".', 'ws-chapters' ) . '</p>'
 		. '<p class="ws-si__msg" role="alert" hidden></p>'
 		. '</div>';
 }

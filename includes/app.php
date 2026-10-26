@@ -97,7 +97,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		'ajax'     => admin_url( 'admin-ajax.php' ),
 		'sw'       => 'demo' === get_option( 'ws_site_setup_done' ) ? '' : ws_app_url( 'sw' ), // The Playground demo runs on its own service worker.
 		'scope'    => (string) ( wp_parse_url( home_url( '/' ), PHP_URL_PATH ) ?: '/' ),
-		'cancel'   => __( 'Passkey sign-in was cancelled.', 'ws-chapters' ),
+		'cancel'   => __( 'No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code).', 'ws-chapters' ),
+		'addCancel' => __( 'No passkey was added.', 'ws-chapters' ),
 		'failed'   => __( 'That did not work. Please try again, or use an email code.', 'ws-chapters' ),
 		'noKey'    => __( 'No passkey for this site was found on this device. Sign in with an email code, then add a passkey on My profile.', 'ws-chapters' ),
 		'exists'   => __( 'This device already has a passkey for your account.', 'ws-chapters' ),

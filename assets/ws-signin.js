@@ -121,7 +121,7 @@
 	}
 	var canPasskey = !! ( window.PublicKeyCredential && navigator.credentials && navigator.credentials.get );
 	var canAdd = canPasskey && window.AuthenticatorAttestationResponse && 'getPublicKey' in window.AuthenticatorAttestationResponse.prototype;
-	showAll( '[data-ws-passkey-login]', canPasskey );
+	showAll( '[data-ws-passkey-login], [data-ws-passkey-hint]', canPasskey );
 	showAll( '[data-ws-passkey-add]', canAdd );
 	showAll( '.ws-pk__none', ! canAdd );
 
@@ -200,7 +200,7 @@
 			if ( err && 'InvalidStateError' === err.name ) {
 				text = cfg.exists;
 			} else if ( err && 'NotAllowedError' === err.name ) {
-				text = cfg.cancel;
+				text = cfg.addCancel;
 			}
 			say( btn, text );
 		} );
