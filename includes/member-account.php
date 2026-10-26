@@ -26,6 +26,7 @@ function ws_ma_is_page() {
 function ws_ma_messages() {
 	return array(
 		'bad_login' => array( 'error', __( 'The email or password is not right. Please try again, or ask for a new password below.', 'ws-chapters' ) ),
+		'locked'    => array( 'error', __( 'Too many sign-in attempts. Please wait 15 minutes and try again, or ask for a new password below.', 'ws-chapters' ) ),
 		'expired'   => array( 'error', __( 'This link has expired or was already used. Enter your email below and we will send you a new one.', 'ws-chapters' ) ),
 		'short'     => array( 'error', __( 'Please choose a password of at least 8 characters.', 'ws-chapters' ) ),
 		'mismatch'  => array( 'error', __( 'The two passwords are not the same. Please type them again.', 'ws-chapters' ) ),
@@ -73,7 +74,7 @@ add_action( 'template_redirect', function () {
 			'remember'      => ! empty( $_POST['rememberme'] ),
 		), is_ssl() );
 		if ( is_wp_error( $user ) ) {
-			ws_ma_redirect( array( 'ws_ma' => 'bad_login' ) );
+			ws_ma_redirect( array( 'ws_ma' => 'ws_locked' === $user->get_error_code() ? 'locked' : 'bad_login' ) );
 		}
 		$to = wp_validate_redirect( esc_url_raw( wp_unslash( $_POST['redirect_to'] ?? '' ) ), '' );
 		$members = ws_mm_page( 'members' );

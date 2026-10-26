@@ -19,10 +19,13 @@ defined( 'ABSPATH' ) || exit;
  * Shared
  * ---------------------------------------------------------------------- */
 
-/** Hidden fields every form carries: honeypot, signed start time, form id. */
+/** Hidden fields every form carries: honeypot, signed start time, form id; for signed-in people also a nonce. */
 function ws_form_guard_fields( $form ) {
 	$t = time();
-	return sprintf(
+	// Signed in: a nonce tied to the person, so another site cannot send the form in their name.
+	// Not for visitors: their pages are cached, and a cached nonce would stop working.
+	$nonce = is_user_logged_in() ? wp_nonce_field( 'ws_form_' . $form, 'ws_nonce', false, false ) : '';
+	return $nonce . sprintf(
 		'<input type="hidden" name="ws_form" value="%1$s"><input type="hidden" name="ws_t" value="%2$d"><input type="hidden" name="ws_sig" value="%3$s"><div class="ws-hp" aria-hidden="true"><label>Leave this empty <input type="text" name="ws_website" tabindex="-1" autocomplete="off"></label></div>',
 		esc_attr( $form ),
 		$t,
@@ -38,6 +41,9 @@ function ws_form_guard_check( $form ) {
 	$t   = isset( $_POST['ws_t'] ) ? (int) $_POST['ws_t'] : 0;
 	$sig = isset( $_POST['ws_sig'] ) ? sanitize_text_field( wp_unslash( $_POST['ws_sig'] ) ) : '';
 	if ( ! $t || ! hash_equals( wp_hash( $form . '|' . $t ), $sig ) || time() - $t > DAY_IN_SECONDS ) {
+		return __( 'The form expired. Please reload the page and try again.', 'ws-chapters' );
+	}
+	if ( is_user_logged_in() && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ws_nonce'] ?? '' ) ), 'ws_form_' . $form ) ) {
 		return __( 'The form expired. Please reload the page and try again.', 'ws-chapters' );
 	}
 	if ( time() - $t < 4 ) {
