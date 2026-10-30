@@ -19,8 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 const WS_APP_COLOR = '#0e0d0b';
 
+/** The app's files, at the address without a language code: one app for every language. */
 function ws_app_url( $what ) {
-	return add_query_arg( 'ws_app', $what, home_url( '/' ) );
+	return add_query_arg( 'ws_app', $what, ws_lang_raw_home() . '/' );
 }
 function ws_app_icon_url( $file ) {
 	return plugin_dir_url( __DIR__ ) . 'assets/app/' . $file;
@@ -32,7 +33,8 @@ add_action( 'template_redirect', function () {
 	if ( '' === $what ) {
 		return;
 	}
-	$path = (string) ( wp_parse_url( home_url( '/' ), PHP_URL_PATH ) ?: '/' );
+	$path  = ws_lang_base();
+	$start = isset( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 	if ( 'manifest' === $what ) {
 		header( 'Content-Type: application/manifest+json; charset=utf-8' );
 		header( 'Cache-Control: public, max-age=86400' );
@@ -41,7 +43,7 @@ add_action( 'template_redirect', function () {
 			'name'             => 'Widows Sons Europe',
 			'short_name'       => 'WS Europe',
 			'description'      => __( 'Widows Sons Europe: chapters, events, news and the members\' area.', 'ws-chapters' ),
-			'start_url'        => add_query_arg( 'source', 'app', $path ),
+			'start_url'        => add_query_arg( 'source', 'app', $path . ( isset( ws_languages()[ $start ] ) && 'en' !== $start ? $start . '/' : '' ) ), // Opens in the language it was added from.
 			'scope'            => $path,
 			'display'          => 'standalone',
 			'orientation'      => 'portrait',
@@ -81,7 +83,7 @@ add_action( 'template_redirect', function () {
 }, -5 );
 
 add_action( 'wp_head', function () {
-	echo '<link rel="manifest" href="' . esc_url( ws_app_url( 'manifest' ) ) . '">' . "\n"
+	echo '<link rel="manifest" href="' . esc_url( 'en' === ws_lang() ? ws_app_url( 'manifest' ) : add_query_arg( 'lang', ws_lang(), ws_app_url( 'manifest' ) ) ) . '">' . "\n"
 		. '<meta name="theme-color" content="' . esc_attr( WS_APP_COLOR ) . '">' . "\n"
 		. '<meta name="mobile-web-app-capable" content="yes">' . "\n"
 		. '<meta name="apple-mobile-web-app-capable" content="yes">' . "\n"
@@ -96,7 +98,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_localize_script( 'ws-signin', 'wsSignIn', array(
 		'ajax'     => admin_url( 'admin-ajax.php' ),
 		'sw'       => 'demo' === get_option( 'ws_site_setup_done' ) ? '' : ws_app_url( 'sw' ), // The Playground demo runs on its own service worker.
-		'scope'    => (string) ( wp_parse_url( home_url( '/' ), PHP_URL_PATH ) ?: '/' ),
+		'scope'    => ws_lang_base(),
 		'cancel'   => __( 'No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code).', 'ws-chapters' ),
 		'addCancel' => __( 'No passkey was added.', 'ws-chapters' ),
 		'failed'   => __( 'That did not work. Please try again, or use an email code.', 'ws-chapters' ),

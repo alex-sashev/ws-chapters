@@ -1,0 +1,2837 @@
+msgid ""
+msgstr ""
+"Language: el\\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+
+#: plugins/ws-chapters/includes/access.php:228
+msgid "Widows Sons access"
+msgstr "Πρόσβαση Widows Sons"
+
+#: plugins/ws-chapters/includes/access.php:229
+msgid "Widows Sons access — assign allowed countries to Country Admins and allowed chapters to Chapter Editors."
+msgstr "Πρόσβαση Widows Sons — ανάθεσε επιτρεπόμενες χώρες στους Country Admins και επιτρεπόμενα Chapters στους Chapter Editors."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/access.php:263 plugins/ws-chapters/includes/access.php:263
+msgid "Country: %s"
+msgstr "Χώρα: %s"
+
+#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:16
+msgid "Country Admin"
+msgstr "Country Admin"
+
+#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:16
+msgid "Chapter Editor"
+msgstr "Chapter Editor"
+
+#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:309 plugins/ws-chapters/includes/member-management.php:376 plugins/ws-chapters/includes/member-management.php:401
+msgid "Road name"
+msgstr "Road name"
+
+#: plugins/ws-chapters/includes/accounts.php:72
+msgid "<strong>Error:</strong> Please log in with your email address, not your road name."
+msgstr "<strong>Σφάλμα:</strong> Συνδέσου με τη διεύθυνση email σου, όχι με το road name σου."
+
+#: plugins/ws-chapters/includes/app.php:102
+msgid "No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code)."
+msgstr "Δεν χρησιμοποιήθηκε passkey. Αν δεν έχεις προσθέσει ακόμη, συνδέσου πρώτα με κωδικό μέσω email και μετά πρόσθεσε ένα passkey στο «Το προφίλ μου». Ένα passkey λειτουργεί στη συσκευή όπου το πρόσθεσες (ή με εκείνο το τηλέφωνο, σαρώνοντας τον κωδικό QR)."
+
+#: plugins/ws-chapters/includes/app.php:103
+msgid "No passkey was added."
+msgstr "Δεν προστέθηκε passkey."
+
+#: plugins/ws-chapters/includes/app.php:104
+msgid "That did not work. Please try again, or use an email code."
+msgstr "Αυτό δεν λειτούργησε. Δοκίμασε ξανά ή χρησιμοποίησε κωδικό μέσω email."
+
+#: plugins/ws-chapters/includes/app.php:105
+msgid "No passkey for this site was found on this device. Sign in with an email code, then add a passkey on My profile."
+msgstr "Δεν βρέθηκε passkey για αυτόν τον ιστότοπο σε αυτή τη συσκευή. Συνδέσου με κωδικό μέσω email και μετά πρόσθεσε ένα passkey στο «Το προφίλ μου»."
+
+#: plugins/ws-chapters/includes/app.php:106
+msgid "This device already has a passkey for your account."
+msgstr "Αυτή η συσκευή έχει ήδη passkey για τον λογαριασμό σου."
+
+#: plugins/ws-chapters/includes/app.php:107
+msgid "This browser cannot add passkeys. Please update it, or use Safari or Chrome."
+msgstr "Αυτό το πρόγραμμα περιήγησης δεν μπορεί να προσθέσει passkeys. Ενημέρωσέ το ή χρησιμοποίησε Safari ή Chrome."
+
+#: plugins/ws-chapters/includes/app.php:108 plugins/ws-chapters/includes/sign-in.php:380
+msgid "Passkey"
+msgstr "Passkey"
+
+#: plugins/ws-chapters/includes/app.php:109
+msgid "Are you sure?"
+msgstr "Είσαι σίγουρος;"
+
+#: plugins/ws-chapters/includes/app.php:116
+msgid "Add to home screen"
+msgstr "Προσθήκη στην αρχική οθόνη"
+
+#: plugins/ws-chapters/includes/app.php:117
+msgid "On iPhone or iPad: open this site in Safari, tap the Share button (the square with an arrow), then \"Add to Home Screen\"."
+msgstr "Σε iPhone ή iPad: άνοιξε αυτόν τον ιστότοπο στο Safari, πάτησε το κουμπί Κοινοποίηση (το τετράγωνο με το βέλος) και μετά «Προσθήκη στην οθόνη Αφετηρίας»."
+
+#: plugins/ws-chapters/includes/app.php:118
+msgid "In your browser's menu, choose \"Install app\" or \"Add to Home screen\"."
+msgstr "Στο μενού του προγράμματος περιήγησης, επίλεξε «Εγκατάσταση εφαρμογής» ή «Προσθήκη στην αρχική οθόνη»."
+
+#: plugins/ws-chapters/includes/app.php:119
+msgid "You are using the app. ✓"
+msgstr "Χρησιμοποιείς την εφαρμογή. ✓"
+
+#: plugins/ws-chapters/includes/app.php:124
+msgid "Widows Sons Europe on your home screen"
+msgstr "Widows Sons Europe στην αρχική σου οθόνη"
+
+#: plugins/ws-chapters/includes/app.php:125
+msgid "Add the site to your phone's home screen: it opens full screen with our emblem, like an app, and you stay signed in."
+msgstr "Πρόσθεσε τον ιστότοπο στην αρχική οθόνη του τηλεφώνου σου: ανοίγει σε πλήρη οθόνη με το έμβλημά μας, σαν εφαρμογή, και παραμένεις συνδεδεμένος."
+
+#: plugins/ws-chapters/includes/app.php:135
+msgid "Get the app"
+msgstr "Απόκτησε την εφαρμογή"
+
+#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:308
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: plugins/ws-chapters/includes/app.php:45
+msgid "Widows Sons Europe: chapters, events, news and the members' area."
+msgstr "Widows Sons Europe: Chapters, εκδηλώσεις, νέα και η περιοχή μελών."
+
+#: plugins/ws-chapters/includes/app.php:78
+msgid "You are offline"
+msgstr "Είσαι εκτός σύνδεσης"
+
+#: plugins/ws-chapters/includes/app.php:79
+msgid "Widows Sons Europe needs an internet connection. Please check it and try again."
+msgstr "Το Widows Sons Europe χρειάζεται σύνδεση στο διαδίκτυο. Έλεγξέ τη και δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/app.php:80
+msgid "Try again"
+msgstr "Δοκίμασε ξανά"
+
+#. translators: %d: number of images allowed
+#: plugins/ws-chapters/includes/content-edit.php:103
+msgid "At most %d images in total. Remove some first."
+msgstr "Το πολύ %d εικόνες συνολικά. Αφαίρεσε πρώτα μερικές."
+
+#: plugins/ws-chapters/includes/content-edit.php:111 plugins/ws-chapters/includes/front-edit.php:185
+msgid "The image \"%s\" is too large or could not be uploaded (8 MB each at most)."
+msgstr "Η εικόνα «%s» είναι πολύ μεγάλη ή δεν ήταν δυνατή η μεταφόρτωσή της (έως 8 MB η καθεμία)."
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/content-edit.php:115 plugins/ws-chapters/includes/forms.php:304 plugins/ws-chapters/includes/front-edit.php:189
+msgid "\"%s\" is not an image. Please use JPG, PNG, WebP or GIF."
+msgstr "Το «%s» δεν είναι εικόνα. Χρησιμοποίησε JPG, PNG, WebP ή GIF."
+
+#: plugins/ws-chapters/includes/content-edit.php:166
+msgid "Images (up to 5: the first is the main image, the rest are the gallery)"
+msgstr "Εικόνες (έως 5: η πρώτη είναι η κύρια εικόνα, οι υπόλοιπες η γκαλερί)"
+
+#: plugins/ws-chapters/includes/content-edit.php:169
+msgid "Position"
+msgstr "Θέση"
+
+#: plugins/ws-chapters/includes/content-edit.php:172
+msgid "Add images"
+msgstr "Προσθήκη εικόνων"
+
+#: plugins/ws-chapters/includes/content-edit.php:187
+msgid "You cannot change this item, or the form has expired."
+msgstr "Δεν μπορείς να αλλάξεις αυτό το στοιχείο ή η φόρμα έχει λήξει."
+
+#: plugins/ws-chapters/includes/content-edit.php:193
+msgid "The item has been deleted. It can be restored from the Trash in the WordPress admin."
+msgstr "Το στοιχείο διαγράφηκε. Μπορεί να ανακτηθεί από τον Κάδο στη διαχείριση του WordPress."
+
+#: plugins/ws-chapters/includes/content-edit.php:199
+msgid "Please add a title."
+msgstr "Πρόσθεσε τίτλο."
+
+#: plugins/ws-chapters/includes/content-edit.php:204
+msgid "Please add the text."
+msgstr "Πρόσθεσε το κείμενο."
+
+#: plugins/ws-chapters/includes/content-edit.php:213
+msgid "Please add the start date."
+msgstr "Πρόσθεσε την ημερομηνία έναρξης."
+
+#: plugins/ws-chapters/includes/content-edit.php:215 plugins/ws-chapters/includes/forms.php:205 plugins/ws-chapters/includes/forms.php:383
+msgid "The end date is before the start date."
+msgstr "Η ημερομηνία λήξης είναι πριν από την ημερομηνία έναρξης."
+
+#: plugins/ws-chapters/includes/content-edit.php:234
+msgid "Please choose a type and a date."
+msgstr "Επίλεξε τύπο και ημερομηνία."
+
+#: plugins/ws-chapters/includes/content-edit.php:236
+msgid "Please add a web address starting with https://"
+msgstr "Πρόσθεσε μια διεύθυνση ιστού που αρχίζει με https://"
+
+#: plugins/ws-chapters/includes/content-edit.php:272
+msgid "Your changes are saved."
+msgstr "Οι αλλαγές σου αποθηκεύτηκαν."
+
+#: plugins/ws-chapters/includes/content-edit.php:283
+msgid "Please sign in to edit."
+msgstr "Συνδέσου για να κάνεις επεξεργασία."
+
+#: plugins/ws-chapters/includes/content-edit.php:290
+msgid "You cannot edit this item."
+msgstr "Δεν μπορείς να επεξεργαστείς αυτό το στοιχείο."
+
+#: plugins/ws-chapters/includes/content-edit.php:310 plugins/ws-chapters/includes/content-edit.php:334 plugins/ws-chapters/includes/front-edit.php:424 plugins/ws-chapters/includes/front-edit.php:439 plugins/ws-chapters/includes/front-edit.php:468
+msgid "Title"
+msgstr "Τίτλος"
+
+#: plugins/ws-chapters/includes/content-edit.php:311 plugins/ws-chapters/includes/members.php:257 plugins/ws-chapters/includes/members.php:376 plugins/ws-chapters/includes/members.php:395
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: plugins/ws-chapters/includes/content-edit.php:312 plugins/ws-chapters/includes/front-edit.php:425
+msgid "The news"
+msgstr "Το νέο"
+
+#: plugins/ws-chapters/includes/content-edit.php:315 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:380
+msgid "Event name"
+msgstr "Όνομα εκδήλωσης"
+
+#: plugins/ws-chapters/includes/content-edit.php:317 plugins/ws-chapters/includes/events.php:265 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:382
+msgid "Start date"
+msgstr "Ημερομηνία έναρξης"
+
+#: plugins/ws-chapters/includes/content-edit.php:318 plugins/ws-chapters/includes/forms.php:383
+msgid "End date"
+msgstr "Ημερομηνία λήξης"
+
+#: plugins/ws-chapters/includes/content-edit.php:319 plugins/ws-chapters/includes/forms.php:384
+msgid "Start time"
+msgstr "Ώρα έναρξης"
+
+#: plugins/ws-chapters/includes/content-edit.php:321 plugins/ws-chapters/includes/forms.php:389
+msgid "Venue or meeting point"
+msgstr "Χώρος ή σημείο συνάντησης"
+
+#: plugins/ws-chapters/includes/content-edit.php:322 plugins/ws-chapters/includes/forms.php:391
+msgid "Organising chapter"
+msgstr "Chapter διοργάνωσης"
+
+#: plugins/ws-chapters/includes/content-edit.php:322 plugins/ws-chapters/includes/forms.php:391
+msgid "— Not a listed chapter —"
+msgstr "— Μη καταχωρισμένο Chapter —"
+
+#: plugins/ws-chapters/includes/content-edit.php:323 plugins/ws-chapters/includes/forms.php:392
+msgid "Or organiser name"
+msgstr "Ή όνομα διοργανωτή"
+
+#: plugins/ws-chapters/includes/content-edit.php:325 plugins/ws-chapters/includes/content-edit.php:339 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:394 plugins/ws-chapters/includes/links.php:59
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: plugins/ws-chapters/includes/content-edit.php:326 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:395
+msgid "Contact details for riders"
+msgstr "Στοιχεία επικοινωνίας για τους αναβάτες"
+
+#: plugins/ws-chapters/includes/content-edit.php:336 plugins/ws-chapters/includes/members.php:254 plugins/ws-chapters/includes/members.php:317 plugins/ws-chapters/includes/members.php:370 plugins/ws-chapters/includes/members.php:376
+msgid "Type"
+msgstr "Τύπος"
+
+#: plugins/ws-chapters/includes/content-edit.php:337 plugins/ws-chapters/includes/members.php:415
+msgid "Document date"
+msgstr "Ημερομηνία εγγράφου"
+
+#: plugins/ws-chapters/includes/content-edit.php:340
+msgid "Web address (for the Link type)"
+msgstr "Διεύθυνση ιστού (για τον τύπο Σύνδεσμος)"
+
+#: plugins/ws-chapters/includes/content-edit.php:341
+msgid "Replace the file (optional)"
+msgstr "Αντικατάσταση αρχείου (προαιρετικό)"
+
+#: plugins/ws-chapters/includes/content-edit.php:344
+msgid "Edit news"
+msgstr "Επεξεργασία νέου"
+
+#: plugins/ws-chapters/includes/content-edit.php:344 plugins/ws-chapters/includes/events.php:22
+msgid "Edit event"
+msgstr "Επεξεργασία εκδήλωσης"
+
+#: plugins/ws-chapters/includes/content-edit.php:344
+msgid "Edit document"
+msgstr "Επεξεργασία εγγράφου"
+
+#: plugins/ws-chapters/includes/content-edit.php:350 plugins/ws-chapters/includes/links.php:133
+msgid "Save changes"
+msgstr "Αποθήκευση αλλαγών"
+
+#: plugins/ws-chapters/includes/content-edit.php:351
+msgid "Go back"
+msgstr "Επιστροφή"
+
+#: plugins/ws-chapters/includes/content-edit.php:352
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: plugins/ws-chapters/includes/content-edit.php:355
+msgid "Delete this for everyone? It moves to the Trash and can be restored from the WordPress admin."
+msgstr "Διαγραφή για όλους; Μεταφέρεται στον Κάδο και μπορεί να ανακτηθεί από τη διαχείριση του WordPress."
+
+#: plugins/ws-chapters/includes/content-edit.php:355 plugins/ws-chapters/includes/front-edit.php:350
+msgid "Deleting…"
+msgstr "Διαγραφή…"
+
+#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:833
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#. translators: %s: Grand Chapter / country name
+#: plugins/ws-chapters/includes/display.php:108
+msgid "Flag of %s"
+msgstr "Σημαία: %s"
+
+#: plugins/ws-chapters/includes/display.php:170 plugins/ws-chapters/includes/pages.php:418
+msgid "No chapters listed yet."
+msgstr "Δεν υπάρχουν ακόμη καταχωρισμένα Chapters."
+
+#: plugins/ws-chapters/includes/display.php:188 plugins/ws-chapters/includes/members.php:28
+msgid "Other"
+msgstr "Άλλο"
+
+#. translators: %d: number of chapters
+#: plugins/ws-chapters/includes/display.php:269 plugins/ws-chapters/includes/pages.php:406
+msgid "%d chapter"
+msgid_plural "%d chapters"
+msgstr[0] "%d Chapter"
+msgstr[1] "%d Chapters"
+
+#: plugins/ws-chapters/includes/display.php:280
+msgid "Widows Sons founded, Illinois, USA"
+msgstr "Ίδρυση των Widows Sons, Illinois, ΗΠΑ"
+
+#: plugins/ws-chapters/includes/display.php:52
+msgid "+ Choose photos"
+msgstr "+ Επιλογή φωτογραφιών"
+
+#: plugins/ws-chapters/includes/display.php:53
+msgid "+ Add more photos"
+msgstr "+ Προσθήκη κι άλλων φωτογραφιών"
+
+#: plugins/ws-chapters/includes/display.php:54
+msgid "or drag them here"
+msgstr "ή σύρε τες εδώ"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:56
+msgid "%1$s of %2$s"
+msgstr "%1$s από %2$s"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:57
+msgid "Main image"
+msgstr "Κύρια εικόνα"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:58
+msgid "Make main"
+msgstr "Ορισμός ως κύρια"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:60
+msgid "Remove %s"
+msgstr "Αφαίρεση %s"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:61
+msgid "Photo limit reached"
+msgstr "Συμπληρώθηκε το όριο φωτογραφιών"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:62
+msgid "No room for more photos: remove one first"
+msgstr "Δεν υπάρχει χώρος για άλλες φωτογραφίες: αφαίρεσε πρώτα μία"
+
+#. translators: %s: most allowed
+#: plugins/ws-chapters/includes/display.php:64
+msgid "You can add up to %s photos here; the rest were left out."
+msgstr "Μπορείς να προσθέσεις έως %s φωτογραφίες εδώ· οι υπόλοιπες παραλείφθηκαν."
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:66
+msgid "%s is not a JPG, PNG, WebP or GIF image and was left out."
+msgstr "Το %s δεν είναι εικόνα JPG, PNG, WebP ή GIF και παραλείφθηκε."
+
+#. translators: 1: file name, 2: size in MB
+#: plugins/ws-chapters/includes/display.php:68
+msgid "%1$s is larger than %2$s MB and was left out."
+msgstr "Το %1$s είναι μεγαλύτερο από %2$s MB και παραλείφθηκε."
+
+#: plugins/ws-chapters/includes/edit-form.php:124 plugins/ws-chapters/includes/events.php:19
+msgid "Event"
+msgstr "Εκδήλωση"
+
+#: plugins/ws-chapters/includes/edit-form.php:127
+msgid "View page"
+msgstr "Προβολή σελίδας"
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:130 plugins/ws-chapters/includes/edit-form.php:131
+msgid "%s updated."
+msgstr "%s: ενημερώθηκε."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:132
+msgid "%s published."
+msgstr "%s: δημοσιεύτηκε."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:133
+msgid "%s saved."
+msgstr "%s: αποθηκεύτηκε."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:134
+msgid "%s submitted."
+msgstr "%s: υποβλήθηκε."
+
+#: plugins/ws-chapters/includes/edit-form.php:135
+msgid "%s draft updated."
+msgstr "%s: το πρόχειρο ενημερώθηκε."
+
+#: plugins/ws-chapters/includes/edit-form.php:39
+msgid "Fill in the fields below. The page layout is the same for every chapter and is set by the site design, so you only need to add your text, photos, insignia and contact details."
+msgstr "Συμπλήρωσε τα παρακάτω πεδία. Η διάταξη της σελίδας είναι ίδια για κάθε Chapter και ορίζεται από τον σχεδιασμό του ιστότοπου, οπότε χρειάζεται μόνο να προσθέσεις το κείμενο, τις φωτογραφίες, τα διακριτικά και τα στοιχεία επικοινωνίας σου."
+
+#: plugins/ws-chapters/includes/edit-form.php:40
+msgid "Fill in the fields below. The event page layout is set by the site design."
+msgstr "Συμπλήρωσε τα παρακάτω πεδία. Η διάταξη της σελίδας εκδήλωσης ορίζεται από τον σχεδιασμό του ιστότοπου."
+
+#: plugins/ws-chapters/includes/emails.php:55
+msgid "If the button does not work, copy this link into your browser:"
+msgstr "Αν το κουμπί δεν λειτουργεί, αντέγραψε αυτόν τον σύνδεσμο στο πρόγραμμα περιήγησής σου:"
+
+#: plugins/ws-chapters/includes/emails.php:96
+msgid "You receive this email because a Widows Sons Europe admin added you to the members' area."
+msgstr "Λαμβάνεις αυτό το email επειδή ένας διαχειριστής του Widows Sons Europe σε πρόσθεσε στην περιοχή μελών."
+
+#: plugins/ws-chapters/includes/event-calendar.php:147
+msgid "Add to calendar"
+msgstr "Προσθήκη στο ημερολόγιο"
+
+#: plugins/ws-chapters/includes/event-calendar.php:148
+msgid "Google Calendar"
+msgstr "Google Calendar"
+
+#: plugins/ws-chapters/includes/event-calendar.php:149
+msgid "Outlook.com"
+msgstr "Outlook.com"
+
+#: plugins/ws-chapters/includes/event-calendar.php:150
+msgid "Office 365 / Outlook at work"
+msgstr "Office 365 / Outlook στη δουλειά"
+
+#: plugins/ws-chapters/includes/event-calendar.php:151
+msgid "Apple Calendar"
+msgstr "Apple Calendar"
+
+#: plugins/ws-chapters/includes/event-calendar.php:152
+msgid "Other calendar (.ics file)"
+msgstr "Άλλο ημερολόγιο (αρχείο .ics)"
+
+#. translators: %s: start time
+#: plugins/ws-chapters/includes/event-calendar.php:43
+msgid "Starts at %s (local time)."
+msgstr "Ξεκινά στις %s (τοπική ώρα)."
+
+#: plugins/ws-chapters/includes/event-calendar.php:79
+msgid "Today"
+msgstr "Σήμερα"
+
+#: plugins/ws-chapters/includes/event-calendar.php:80
+msgid "No events in this period."
+msgstr "Δεν υπάρχουν εκδηλώσεις σε αυτό το διάστημα."
+
+#: plugins/ws-chapters/includes/event-calendar.php:81
+msgid "The calendar could not be loaded. Please use the list."
+msgstr "Δεν ήταν δυνατή η φόρτωση του ημερολογίου. Χρησιμοποίησε τη λίστα."
+
+#: plugins/ws-chapters/includes/event-calendar.php:92 plugins/ws-chapters/includes/front-edit.php:401
+msgid "Submit an event"
+msgstr "Υποβολή εκδήλωσης"
+
+#: plugins/ws-chapters/includes/event-calendar.php:93 plugins/ws-chapters/includes/pages.php:331
+msgid "Past events"
+msgstr "Προηγούμενες εκδηλώσεις"
+
+#: plugins/ws-chapters/includes/event-calendar.php:96
+msgid "View"
+msgstr "Προβολή"
+
+#: plugins/ws-chapters/includes/event-calendar.php:97
+msgid "List"
+msgstr "Λίστα"
+
+#: plugins/ws-chapters/includes/event-calendar.php:98
+msgid "Month"
+msgstr "Μήνας"
+
+#: plugins/ws-chapters/includes/event-calendar.php:99
+msgid "Week"
+msgstr "Εβδομάδα"
+
+#: plugins/ws-chapters/includes/events.php:135 plugins/ws-chapters/includes/events.php:243
+msgid "Organised by"
+msgstr "Διοργανωτής"
+
+#: plugins/ws-chapters/includes/events.php:157
+msgid "Hosted by"
+msgstr "Οικοδεσπότης"
+
+#: plugins/ws-chapters/includes/events.php:18 plugins/ws-chapters/includes/pages.php:494 plugins/ws-chapters/includes/pages.php:544
+msgid "Events"
+msgstr "Εκδηλώσεις"
+
+#: plugins/ws-chapters/includes/events.php:20 plugins/ws-chapters/includes/events.php:21
+msgid "Add event"
+msgstr "Προσθήκη εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:209
+msgid "No upcoming events have been published yet. Explore past gatherings below:"
+msgstr "Δεν έχουν δημοσιευτεί ακόμη επερχόμενες εκδηλώσεις. Δες παρακάτω προηγούμενες συναντήσεις:"
+
+#: plugins/ws-chapters/includes/events.php:213
+msgid "No past events are listed yet."
+msgstr "Δεν υπάρχουν ακόμη καταχωρισμένες προηγούμενες εκδηλώσεις."
+
+#: plugins/ws-chapters/includes/events.php:213
+msgid "No upcoming events have been published yet."
+msgstr "Δεν έχουν δημοσιευτεί ακόμη επερχόμενες εκδηλώσεις."
+
+#: plugins/ws-chapters/includes/events.php:226
+msgid "Photos"
+msgstr "Φωτογραφίες"
+
+#: plugins/ws-chapters/includes/events.php:23
+msgid "View event"
+msgstr "Προβολή εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:24
+msgid "All events"
+msgstr "Όλες οι εκδηλώσεις"
+
+#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:744
+msgid "When"
+msgstr "Πότε"
+
+#: plugins/ws-chapters/includes/events.php:241
+msgid "from %s"
+msgstr "από %s"
+
+#: plugins/ws-chapters/includes/events.php:242
+msgid "Where"
+msgstr "Πού"
+
+#: plugins/ws-chapters/includes/events.php:244 plugins/ws-chapters/includes/pages.php:497 plugins/ws-chapters/includes/pages.php:547
+msgid "Contact"
+msgstr "Επικοινωνία"
+
+#: plugins/ws-chapters/includes/events.php:25
+msgid "Search events"
+msgstr "Αναζήτηση εκδηλώσεων"
+
+#: plugins/ws-chapters/includes/events.php:259
+msgid "Event details"
+msgstr "Στοιχεία εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:26
+msgid "No events found."
+msgstr "Δεν βρέθηκαν εκδηλώσεις."
+
+#: plugins/ws-chapters/includes/events.php:266
+msgid "End date (optional)"
+msgstr "Ημερομηνία λήξης (προαιρετικό)"
+
+#: plugins/ws-chapters/includes/events.php:267
+msgid "Start time (optional)"
+msgstr "Ώρα έναρξης (προαιρετικό)"
+
+#: plugins/ws-chapters/includes/events.php:268
+msgid "Organising chapter / club"
+msgstr "Chapter / λέσχη διοργάνωσης"
+
+#: plugins/ws-chapters/includes/events.php:269
+msgid "Venue (address or website)"
+msgstr "Χώρος (διεύθυνση ή ιστότοπος)"
+
+#: plugins/ws-chapters/includes/events.php:27
+msgid "No events in the Trash."
+msgstr "Δεν υπάρχουν εκδηλώσεις στον Κάδο."
+
+#: plugins/ws-chapters/includes/events.php:270
+msgid "City, country"
+msgstr "Πόλη, χώρα"
+
+#: plugins/ws-chapters/includes/events.php:272 plugins/ws-chapters/includes/profile-fields.php:168
+msgid "Contact details"
+msgstr "Στοιχεία επικοινωνίας"
+
+#: plugins/ws-chapters/includes/events.php:276 plugins/ws-chapters/includes/events.php:304
+msgid "Host chapter"
+msgstr "Chapter οικοδεσπότης"
+
+#: plugins/ws-chapters/includes/events.php:276
+msgid "— None —"
+msgstr "— Κανένα —"
+
+#: plugins/ws-chapters/includes/events.php:28
+msgid "Event photo"
+msgstr "Φωτογραφία εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:280
+msgid "The host chapter's official logo is shown with the event."
+msgstr "Το επίσημο λογότυπο του Chapter οικοδεσπότη εμφανίζεται μαζί με την εκδήλωση."
+
+#: plugins/ws-chapters/includes/events.php:281
+msgid "Event photos"
+msgstr "Φωτογραφίες εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:281
+msgid "The poster is the Featured image (right-hand column). Photos here are shown below the description."
+msgstr "Η αφίσα είναι η Επιλεγμένη εικόνα (δεξιά στήλη). Οι φωτογραφίες εδώ εμφανίζονται κάτω από την περιγραφή."
+
+#: plugins/ws-chapters/includes/events.php:29
+msgid "Set event photo"
+msgstr "Ορισμός φωτογραφίας εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:30
+msgid "Remove event photo"
+msgstr "Αφαίρεση φωτογραφίας εκδήλωσης"
+
+#: plugins/ws-chapters/includes/events.php:31
+msgid "Event published."
+msgstr "Η εκδήλωση δημοσιεύτηκε."
+
+#: plugins/ws-chapters/includes/events.php:32
+msgid "Event updated."
+msgstr "Η εκδήλωση ενημερώθηκε."
+
+#: plugins/ws-chapters/includes/forms.php:101
+msgid "— Choose a country —"
+msgstr "— Επίλεξε χώρα —"
+
+#: plugins/ws-chapters/includes/forms.php:113
+msgid "— Choose a chapter —"
+msgstr "— Επίλεξε Chapter —"
+
+#: plugins/ws-chapters/includes/forms.php:140 plugins/ws-chapters/includes/forms.php:140
+msgid "privacy policy"
+msgstr "πολιτική απορρήτου"
+
+#: plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:410
+msgid "Your name"
+msgstr "Το όνομά σου"
+
+#: plugins/ws-chapters/includes/forms.php:188
+msgid "Your email (a valid address)"
+msgstr "Το email σου (έγκυρη διεύθυνση)"
+
+#: plugins/ws-chapters/includes/forms.php:191 plugins/ws-chapters/includes/forms.php:543
+msgid "Agreement to the privacy policy"
+msgstr "Αποδοχή της πολιτικής απορρήτου"
+
+#: plugins/ws-chapters/includes/forms.php:202 plugins/ws-chapters/includes/forms.php:546 plugins/ws-chapters/includes/members.php:263
+msgid "Please fill in:"
+msgstr "Συμπλήρωσε:"
+
+#: plugins/ws-chapters/includes/forms.php:219
+msgid "Sorry, something went wrong saving your event. Please try again later."
+msgstr "Δυστυχώς, κάτι πήγε στραβά κατά την αποθήκευση της εκδήλωσής σου. Δοκίμασε ξανά αργότερα."
+
+#: plugins/ws-chapters/includes/forms.php:242
+msgid "Your event is published in the event calendar."
+msgstr "Η εκδήλωσή σου δημοσιεύτηκε στο ημερολόγιο εκδηλώσεων."
+
+#: plugins/ws-chapters/includes/forms.php:242
+msgid "See the event"
+msgstr "Δες την εκδήλωση"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:256
+msgid "New event to review: %s"
+msgstr "Νέα εκδήλωση για έλεγχο: %s"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:258
+msgid "A new event was submitted on the website and is waiting for review."
+msgstr "Υποβλήθηκε μια νέα εκδήλωση στον ιστότοπο και περιμένει έλεγχο."
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:260
+msgid "Event:"
+msgstr "Εκδήλωση:"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:261
+msgid "When:"
+msgstr "Πότε:"
+
+#: plugins/ws-chapters/includes/forms.php:262
+msgid "Where:"
+msgstr "Πού:"
+
+#: plugins/ws-chapters/includes/forms.php:263
+msgid "Organiser:"
+msgstr "Διοργανωτής:"
+
+#: plugins/ws-chapters/includes/forms.php:264
+msgid "Submitted by:"
+msgstr "Υποβλήθηκε από:"
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:266
+msgid "Images: %d"
+msgstr "Εικόνες: %d"
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:268
+msgid "Review and publish it here:"
+msgstr "Έλεγξε και δημοσίευσέ την εδώ:"
+
+#: plugins/ws-chapters/includes/forms.php:273
+msgid "Thank you! Your event has been sent for review. It will appear in the event calendar once an admin approves it."
+msgstr "Ευχαριστούμε! Η εκδήλωσή σου στάλθηκε για έλεγχο. Θα εμφανιστεί στο ημερολόγιο εκδηλώσεων μόλις την εγκρίνει ένας διαχειριστής."
+
+#. translators: 1: file name, 2: size in MB
+#: plugins/ws-chapters/includes/forms.php:299
+msgid "The image \"%1$s\" could not be uploaded. Images can be up to %2$d MB each."
+msgstr "Δεν ήταν δυνατή η μεταφόρτωση της εικόνας «%1$s». Κάθε εικόνα μπορεί να είναι έως %2$d MB."
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:310
+msgid "Please send at most %d images."
+msgstr "Στείλε το πολύ %d εικόνες."
+
+#: plugins/ws-chapters/includes/forms.php:375
+msgid "Back"
+msgstr "Πίσω"
+
+#: plugins/ws-chapters/includes/forms.php:379
+msgid "The event"
+msgstr "Η εκδήλωση"
+
+#: plugins/ws-chapters/includes/forms.php:383
+msgid "If it runs over several days."
+msgstr "Αν διαρκεί αρκετές ημέρες."
+
+#: plugins/ws-chapters/includes/forms.php:389
+msgid "Address, or a website for the venue."
+msgstr "Διεύθυνση ή ιστότοπος του χώρου."
+
+#: plugins/ws-chapters/includes/forms.php:39
+msgid "Your submission could not be accepted."
+msgstr "Η υποβολή σου δεν έγινε δεκτή."
+
+#: plugins/ws-chapters/includes/forms.php:392
+msgid "Club, lodge or group, if not a chapter above."
+msgstr "Λέσχη, Στοά ή ομάδα, αν δεν είναι κάποιο από τα παραπάνω Chapters."
+
+#: plugins/ws-chapters/includes/forms.php:394
+msgid "Programme, route, costs, how to register."
+msgstr "Πρόγραμμα, διαδρομή, κόστος, τρόπος εγγραφής."
+
+#: plugins/ws-chapters/includes/forms.php:395
+msgid "Shown on the event page: who to contact, email and/or phone."
+msgstr "Εμφανίζεται στη σελίδα της εκδήλωσης: με ποιον να επικοινωνήσει κανείς, email ή/και τηλέφωνο."
+
+#: plugins/ws-chapters/includes/forms.php:396
+msgid "Poster and photos"
+msgstr "Αφίσα και φωτογραφίες"
+
+#. translators: 1: number of images, 2: size in MB
+#: plugins/ws-chapters/includes/forms.php:399
+msgid "Optional. Up to %1$d images (JPG, PNG, WebP or GIF), %2$d MB each. The first image is shown as the event poster."
+msgstr "Προαιρετικό. Έως %1$d εικόνες (JPG, PNG, WebP ή GIF), %2$d MB η καθεμία. Η πρώτη εικόνα εμφανίζεται ως αφίσα της εκδήλωσης."
+
+#. translators: %s: the member's name
+#: plugins/ws-chapters/includes/forms.php:404
+msgid "Posting as %s. Your event is published as soon as you send it."
+msgstr "Δημοσίευση ως %s. Η εκδήλωσή σου δημοσιεύεται μόλις τη στείλεις."
+
+#: plugins/ws-chapters/includes/forms.php:405
+msgid "I acknowledge that this event and its contact details will be shared on the website."
+msgstr "Αναγνωρίζω ότι αυτή η εκδήλωση και τα στοιχεία επικοινωνίας της θα κοινοποιηθούν στον ιστότοπο."
+
+#: plugins/ws-chapters/includes/forms.php:406
+msgid "Publish the event"
+msgstr "Δημοσίευση της εκδήλωσης"
+
+#: plugins/ws-chapters/includes/forms.php:409
+msgid "About you (not published)"
+msgstr "Σχετικά με σένα (δεν δημοσιεύεται)"
+
+#: plugins/ws-chapters/includes/forms.php:411
+msgid "Your email"
+msgstr "Το email σου"
+
+#: plugins/ws-chapters/includes/forms.php:411
+msgid "In case the admins have questions."
+msgstr "Σε περίπτωση που οι διαχειριστές έχουν ερωτήσεις."
+
+#. translators: %s: link to the privacy policy
+#: plugins/ws-chapters/includes/forms.php:414
+msgid "I agree that the details above are stored to review this event, and that the event and its contact details are published if approved. See our %s."
+msgstr "Συμφωνώ να αποθηκευτούν τα παραπάνω στοιχεία για τον έλεγχο αυτής της εκδήλωσης και να δημοσιευτούν η εκδήλωση και τα στοιχεία επικοινωνίας της, αν εγκριθεί. Δες την %s μας."
+
+#: plugins/ws-chapters/includes/forms.php:415
+msgid "Send for review"
+msgstr "Αποστολή για έλεγχο"
+
+#: plugins/ws-chapters/includes/forms.php:424
+msgid "Submitted via the website"
+msgstr "Υποβλήθηκε μέσω του ιστότοπου"
+
+#: plugins/ws-chapters/includes/forms.php:429
+msgid "Check the details, then click Publish to approve. To reject it, move it to the Trash."
+msgstr "Έλεγξε τα στοιχεία και πάτησε Δημοσίευση για έγκριση. Για απόρριψη, μετάφερέ την στον Κάδο."
+
+#: plugins/ws-chapters/includes/forms.php:44 plugins/ws-chapters/includes/forms.php:47 plugins/ws-chapters/includes/members.php:239
+msgid "The form expired. Please reload the page and try again."
+msgstr "Η φόρμα έληξε. Φόρτωσε ξανά τη σελίδα και δοκίμασε πάλι."
+
+#: plugins/ws-chapters/includes/forms.php:467 plugins/ws-chapters/includes/forms.php:469
+msgid "Applications"
+msgstr "Αιτήσεις"
+
+#: plugins/ws-chapters/includes/forms.php:468 plugins/ws-chapters/includes/forms.php:470 plugins/ws-chapters/includes/forms.php:684
+msgid "Application"
+msgstr "Αίτηση"
+
+#: plugins/ws-chapters/includes/forms.php:471
+msgid "Search applications"
+msgstr "Αναζήτηση αιτήσεων"
+
+#: plugins/ws-chapters/includes/forms.php:472
+msgid "No applications yet."
+msgstr "Δεν υπάρχουν ακόμη αιτήσεις."
+
+#: plugins/ws-chapters/includes/forms.php:497 plugins/ws-chapters/includes/forms.php:663 plugins/ws-chapters/includes/member-account.php:220
+msgid "First name"
+msgstr "Όνομα"
+
+#: plugins/ws-chapters/includes/forms.php:498 plugins/ws-chapters/includes/forms.php:664 plugins/ws-chapters/includes/member-account.php:221
+msgid "Last name"
+msgstr "Επώνυμο"
+
+#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:318 plugins/ws-chapters/includes/member-management.php:381
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: plugins/ws-chapters/includes/forms.php:50
+msgid "That was quick! Please check the form and send it again."
+msgstr "Πολύ γρήγορα! Έλεγξε τη φόρμα και στείλε την ξανά."
+
+#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:317 plugins/ws-chapters/includes/member-management.php:380
+msgid "Email"
+msgstr "Email"
+
+#: plugins/ws-chapters/includes/forms.php:501
+msgid "Lodge (name and number)"
+msgstr "Στοά (όνομα και αριθμός)"
+
+#: plugins/ws-chapters/includes/forms.php:504
+msgid "Message"
+msgstr "Μήνυμα"
+
+#: plugins/ws-chapters/includes/forms.php:530
+msgid "Email (a valid address)"
+msgstr "Email (έγκυρη διεύθυνση)"
+
+#: plugins/ws-chapters/includes/forms.php:540
+msgid "a chapter in the chosen country"
+msgstr "ένα Chapter στη χώρα που επέλεξες"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:556
+msgid "New application to join %s, sent from the Widows Sons Europe website."
+msgstr "Νέα αίτηση ένταξης στο %s, από τον ιστότοπο του Widows Sons Europe."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:558
+msgid "Name:"
+msgstr "Όνομα:"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:559
+msgid "Phone:"
+msgstr "Τηλέφωνο:"
+
+#: plugins/ws-chapters/includes/forms.php:56
+msgid "Too many submissions from your connection. Please try again in an hour."
+msgstr "Πάρα πολλές υποβολές από τη σύνδεσή σου. Δοκίμασε ξανά σε μία ώρα."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:560
+msgid "Email:"
+msgstr "Email:"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:561
+msgid "Lodge:"
+msgstr "Στοά:"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:562 plugins/ws-chapters/includes/front-edit.php:704
+msgid "Country:"
+msgstr "Χώρα:"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:563 plugins/ws-chapters/includes/front-edit.php:611
+msgid "Chapter:"
+msgstr "Chapter:"
+
+#: plugins/ws-chapters/includes/forms.php:567
+msgid "Message:"
+msgstr "Μήνυμα:"
+
+#: plugins/ws-chapters/includes/forms.php:571
+msgid "Reply to this email to answer the applicant directly."
+msgstr "Απάντησε σε αυτό το email για να απαντήσεις απευθείας στον αιτούντα."
+
+#. translators: 1: applicant name, 2: chapter name
+#: plugins/ws-chapters/includes/forms.php:578
+msgid "%1$s → %2$s"
+msgstr "%1$s → %2$s"
+
+#. translators: 1: applicant name, 2: chapter name
+#: plugins/ws-chapters/includes/forms.php:588
+msgid "Application to join: %1$s → %2$s"
+msgstr "Αίτηση ένταξης: %1$s → %2$s"
+
+#: plugins/ws-chapters/includes/forms.php:593
+msgid "NOTE: this chapter has no contact email on the website yet, so it did not receive a copy. Please forward this application to the chapter."
+msgstr "ΣΗΜΕΙΩΣΗ: αυτό το Chapter δεν έχει ακόμη email επικοινωνίας στον ιστότοπο, οπότε δεν έλαβε αντίγραφο. Προώθησε αυτή την αίτηση στο Chapter."
+
+#. translators: %s: chapter email
+#: plugins/ws-chapters/includes/forms.php:597
+msgid "NOTE: sending the copy to the chapter (%s) failed. Please forward this application."
+msgstr "ΣΗΜΕΙΩΣΗ: η αποστολή του αντιγράφου στο Chapter (%s) απέτυχε. Προώθησε αυτή την αίτηση."
+
+#. translators: %s: chapter email
+#: plugins/ws-chapters/includes/forms.php:600
+msgid "A copy was sent to the chapter at %s."
+msgstr "Στάλθηκε αντίγραφο στο Chapter στη διεύθυνση %s."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:610
+msgid "Thank you, Brother. Your application has been sent to %s. The chapter will contact you."
+msgstr "Ευχαριστούμε, Αδελφέ. Η αίτησή σου στάλθηκε στο %s. Το Chapter θα επικοινωνήσει μαζί σου."
+
+#: plugins/ws-chapters/includes/forms.php:618
+msgid "Explore the chapters"
+msgstr "Δες τα Chapters"
+
+#: plugins/ws-chapters/includes/forms.php:619
+msgid "See upcoming events"
+msgstr "Δες τις επερχόμενες εκδηλώσεις"
+
+#: plugins/ws-chapters/includes/forms.php:620
+msgid "Back to the home page"
+msgstr "Πίσω στην αρχική σελίδα"
+
+#: plugins/ws-chapters/includes/forms.php:629
+msgid "Application sent"
+msgstr "Η αίτηση στάλθηκε"
+
+#: plugins/ws-chapters/includes/forms.php:630
+msgid "Thank you, Brother"
+msgstr "Ευχαριστούμε, Αδελφέ"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:632
+msgid "Your application has been sent to %s. The chapter will get in touch with you soon by email or phone."
+msgstr "Η αίτησή σου στάλθηκε στο %s. Το Chapter θα επικοινωνήσει σύντομα μαζί σου με email ή τηλέφωνο."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:633
+msgid "A copy has also gone to the Widows Sons Europe team. While you wait, take a look around:"
+msgstr "Αντίγραφο στάλθηκε επίσης στην ομάδα του Widows Sons Europe. Όσο περιμένεις, ρίξε μια ματιά:"
+
+#: plugins/ws-chapters/includes/forms.php:662
+msgid "About you"
+msgstr "Σχετικά με σένα"
+
+#: plugins/ws-chapters/includes/forms.php:669
+msgid "Your lodge"
+msgstr "Η Στοά σου"
+
+#: plugins/ws-chapters/includes/forms.php:669
+msgid "Lodge name and number, and its Grand Lodge."
+msgstr "Όνομα και αριθμός της Στοάς και η Μεγάλη Στοά της."
+
+#: plugins/ws-chapters/includes/forms.php:670
+msgid "The chapter you would like to join"
+msgstr "Το Chapter στο οποίο θέλεις να ενταχθείς"
+
+#: plugins/ws-chapters/includes/forms.php:672
+msgid "Choose the chapter closest to you. Your application goes straight to that chapter."
+msgstr "Επίλεξε το Chapter που είναι πιο κοντά σου. Η αίτησή σου πηγαίνει απευθείας σε αυτό το Chapter."
+
+#: plugins/ws-chapters/includes/forms.php:674
+msgid "Anything you would like to tell the chapter"
+msgstr "Οτιδήποτε θέλεις να πεις στο Chapter"
+
+#. translators: %s: link to the privacy policy
+#: plugins/ws-chapters/includes/forms.php:677
+msgid "I am a Mason in good standing with my lodge and agree that my details are sent to the chosen chapter and the Widows Sons Europe admins to handle my application. See our %s."
+msgstr "Είμαι Τέκτονας σε τακτική κατάσταση με τη Στοά μου και συμφωνώ να σταλούν τα στοιχεία μου στο Chapter που επέλεξα και στους διαχειριστές του Widows Sons Europe για τη διεκπεραίωση της αίτησής μου. Δες την %s μας."
+
+#: plugins/ws-chapters/includes/forms.php:678
+msgid "Send application"
+msgstr "Αποστολή αίτησης"
+
+#: plugins/ws-chapters/includes/forms.php:703
+msgid "Sent to chapter"
+msgstr "Στάλθηκε στο Chapter"
+
+#: plugins/ws-chapters/includes/forms.php:703
+msgid "No — the chapter has no email on the website (or sending failed). Forward it manually."
+msgstr "Όχι — το Chapter δεν έχει email στον ιστότοπο (ή η αποστολή απέτυχε). Προώθησέ την χειροκίνητα."
+
+#: plugins/ws-chapters/includes/forms.php:704
+msgid "Received"
+msgstr "Ελήφθη"
+
+#: plugins/ws-chapters/includes/front-edit.php:108
+msgid "Choose an image (JPG, PNG, WebP or GIF, up to 8 MB)"
+msgstr "Επίλεξε εικόνα (JPG, PNG, WebP ή GIF, έως 8 MB)"
+
+#: plugins/ws-chapters/includes/front-edit.php:116
+msgid "Choose photos (several at once is fine)"
+msgstr "Επίλεξε φωτογραφίες (μπορείς πολλές μαζί)"
+
+#: plugins/ws-chapters/includes/front-edit.php:118
+msgid "Upload photos"
+msgstr "Μεταφόρτωση φωτογραφιών"
+
+#: plugins/ws-chapters/includes/front-edit.php:132
+msgid "Remove this photo from the gallery?"
+msgstr "Αφαίρεση αυτής της φωτογραφίας από τη γκαλερί;"
+
+#: plugins/ws-chapters/includes/front-edit.php:140
+msgid "Remove photo from gallery"
+msgstr "Αφαίρεση φωτογραφίας από τη γκαλερί"
+
+#: plugins/ws-chapters/includes/front-edit.php:140
+msgid "Remove from gallery"
+msgstr "Αφαίρεση από τη γκαλερί"
+
+#: plugins/ws-chapters/includes/front-edit.php:148
+msgid "City (moves the pin on the map)"
+msgstr "Πόλη (μετακινεί την καρφίτσα στον χάρτη)"
+
+#: plugins/ws-chapters/includes/front-edit.php:156
+msgid "Edit contact details"
+msgstr "Επεξεργασία στοιχείων επικοινωνίας"
+
+#: plugins/ws-chapters/includes/front-edit.php:166 plugins/ws-chapters/includes/front-edit.php:197
+msgid "Please choose an image."
+msgstr "Επίλεξε μια εικόνα."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:221
+msgid "Contact details saved. %s could not be found on the map, so the pin is on the country's capital for now; check the spelling, or add the country after a comma (for example Plovdiv, Bulgaria)."
+msgstr "Τα στοιχεία επικοινωνίας αποθηκεύτηκαν. Η πόλη %s δεν βρέθηκε στον χάρτη, οπότε η καρφίτσα είναι προς το παρόν στην πρωτεύουσα της χώρας· έλεγξε την ορθογραφία ή πρόσθεσε τη χώρα μετά από κόμμα (για παράδειγμα Plovdiv, Bulgaria)."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:224
+msgid "Contact details saved. The pin is now on %s."
+msgstr "Τα στοιχεία επικοινωνίας αποθηκεύτηκαν. Η καρφίτσα είναι τώρα σε: %s."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:224
+msgid "Contact details saved. Without a city, the pin is on the country's capital."
+msgstr "Τα στοιχεία επικοινωνίας αποθηκεύτηκαν. Χωρίς πόλη, η καρφίτσα είναι στην πρωτεύουσα της χώρας."
+
+#: plugins/ws-chapters/includes/front-edit.php:227
+msgid "Contact details saved."
+msgstr "Τα στοιχεία επικοινωνίας αποθηκεύτηκαν."
+
+#: plugins/ws-chapters/includes/front-edit.php:233
+msgid "That name cannot be changed here."
+msgstr "Αυτό το όνομα δεν μπορεί να αλλάξει εδώ."
+
+#: plugins/ws-chapters/includes/front-edit.php:236
+msgid "Please enter a chapter name (up to 80 characters)."
+msgstr "Εισήγαγε όνομα Chapter (έως 80 χαρακτήρες)."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:245
+msgid "The chapter is now called %s."
+msgstr "Το Chapter ονομάζεται τώρα %s."
+
+#: plugins/ws-chapters/includes/front-edit.php:253 plugins/ws-chapters/includes/front-edit.php:259
+msgid "The chapter is closed. It can be restored from the Trash in the WordPress admin."
+msgstr "Το Chapter έκλεισε. Μπορεί να ανακτηθεί από τον Κάδο στη διαχείριση του WordPress."
+
+#: plugins/ws-chapters/includes/front-edit.php:256
+msgid "You can only remove chapters of your own country."
+msgstr "Μπορείς να αφαιρέσεις μόνο Chapters της δικής σου χώρας."
+
+#: plugins/ws-chapters/includes/front-edit.php:266 plugins/ws-chapters/includes/front-edit.php:272
+msgid "About text saved."
+msgstr "Το κείμενο «Σχετικά» αποθηκεύτηκε."
+
+#: plugins/ws-chapters/includes/front-edit.php:269
+msgid "That text cannot be changed here."
+msgstr "Αυτό το κείμενο δεν μπορεί να αλλάξει εδώ."
+
+#: plugins/ws-chapters/includes/front-edit.php:283
+msgid "Photo removed from the gallery."
+msgstr "Η φωτογραφία αφαιρέθηκε από τη γκαλερί."
+
+#: plugins/ws-chapters/includes/front-edit.php:286
+msgid "That image cannot be changed here."
+msgstr "Αυτή η εικόνα δεν μπορεί να αλλάξει εδώ."
+
+#: plugins/ws-chapters/includes/front-edit.php:303
+msgid "Image saved."
+msgstr "Η εικόνα αποθηκεύτηκε."
+
+#: plugins/ws-chapters/includes/front-edit.php:316 plugins/ws-chapters/includes/front-edit.php:951
+msgid "This form has expired. Please reload the page and try again."
+msgstr "Αυτή η φόρμα έχει λήξει. Φόρτωσε ξανά τη σελίδα και δοκίμασε πάλι."
+
+#: plugins/ws-chapters/includes/front-edit.php:319
+msgid "You do not have permission to change this."
+msgstr "Δεν έχεις δικαίωμα να το αλλάξεις αυτό."
+
+#: plugins/ws-chapters/includes/front-edit.php:322 plugins/ws-chapters/includes/front-edit.php:505 plugins/ws-chapters/includes/front-edit.php:665
+msgid "Country not found."
+msgstr "Η χώρα δεν βρέθηκε."
+
+#: plugins/ws-chapters/includes/front-edit.php:325 plugins/ws-chapters/includes/front-edit.php:497 plugins/ws-chapters/includes/front-edit.php:569
+msgid "Chapter not found."
+msgstr "Το Chapter δεν βρέθηκε."
+
+#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:333
+msgid "Please wait…"
+msgstr "Περίμενε…"
+
+#: plugins/ws-chapters/includes/front-edit.php:391
+msgid "About the chapter (leave an empty line between paragraphs)"
+msgstr "Σχετικά με το Chapter (άφησε μια κενή γραμμή ανάμεσα στις παραγράφους)"
+
+#: plugins/ws-chapters/includes/front-edit.php:393 plugins/ws-chapters/includes/front-edit.php:413
+msgid "Edit the About text"
+msgstr "Επεξεργασία του κειμένου «Σχετικά»"
+
+#: plugins/ws-chapters/includes/front-edit.php:411
+msgid "About the country (leave an empty line between paragraphs)"
+msgstr "Σχετικά με τη χώρα (άφησε μια κενή γραμμή ανάμεσα στις παραγράφους)"
+
+#: plugins/ws-chapters/includes/front-edit.php:426 plugins/ws-chapters/includes/front-edit.php:441 plugins/ws-chapters/includes/front-edit.php:470
+msgid "Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)"
+msgstr "Φωτογραφίες (έως 5, JPG, PNG, WebP ή GIF, 8 MB η καθεμία)"
+
+#: plugins/ws-chapters/includes/front-edit.php:427 plugins/ws-chapters/includes/front-edit.php:442 plugins/ws-chapters/includes/front-edit.php:471
+msgid "I acknowledge that this will be shared on the website."
+msgstr "Αναγνωρίζω ότι αυτό θα κοινοποιηθεί στον ιστότοπο."
+
+#: plugins/ws-chapters/includes/front-edit.php:428
+msgid "Submit news"
+msgstr "Υποβολή νέου"
+
+#: plugins/ws-chapters/includes/front-edit.php:440
+msgid "What happened or what is coming up"
+msgstr "Τι συνέβη ή τι έρχεται"
+
+#: plugins/ws-chapters/includes/front-edit.php:443 plugins/ws-chapters/includes/front-edit.php:472
+msgid "Submit news or activity"
+msgstr "Υποβολή νέου ή δραστηριότητας"
+
+#: plugins/ws-chapters/includes/front-edit.php:456 plugins/ws-chapters/includes/pages.php:269
+msgid "Widows Sons Europe"
+msgstr "Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/front-edit.php:467 plugins/ws-chapters/includes/pages.php:273 plugins/ws-chapters/includes/profile-fields.php:189
+msgid "Posted by"
+msgstr "Δημοσιεύτηκε από"
+
+#: plugins/ws-chapters/includes/front-edit.php:469
+msgid "The news or activity"
+msgstr "Το νέο ή η δραστηριότητα"
+
+#: plugins/ws-chapters/includes/front-edit.php:49 plugins/ws-chapters/includes/front-edit.php:56
+msgid "Add photos"
+msgstr "Προσθήκη φωτογραφιών"
+
+#: plugins/ws-chapters/includes/front-edit.php:490 plugins/ws-chapters/includes/front-edit.php:573 plugins/ws-chapters/includes/front-edit.php:669
+msgid "Please sign in to submit news."
+msgstr "Συνδέσου για να υποβάλεις νέα."
+
+#: plugins/ws-chapters/includes/front-edit.php:492 plugins/ws-chapters/includes/front-edit.php:571 plugins/ws-chapters/includes/front-edit.php:667
+msgid "Please fill in the title, the text and the agreement."
+msgstr "Συμπλήρωσε τον τίτλο, το κείμενο και τη συναίνεση."
+
+#: plugins/ws-chapters/includes/front-edit.php:508
+msgid "Please choose who the news is from."
+msgstr "Επίλεξε από ποιον προέρχεται το νέο."
+
+#: plugins/ws-chapters/includes/front-edit.php:522 plugins/ws-chapters/includes/front-edit.php:588 plugins/ws-chapters/includes/front-edit.php:685 plugins/ws-chapters/includes/front-edit.php:875 plugins/ws-chapters/includes/links.php:163
+msgid "Sorry, something went wrong. Please try again later."
+msgstr "Δυστυχώς, κάτι πήγε στραβά. Δοκίμασε ξανά αργότερα."
+
+#: plugins/ws-chapters/includes/front-edit.php:53
+msgid "Official chapter patch"
+msgstr "Επίσημο patch του Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:54
+msgid "Official chapter logo"
+msgstr "Επίσημο λογότυπο του Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:543 plugins/ws-chapters/includes/front-edit.php:619 plugins/ws-chapters/includes/front-edit.php:711
+msgid "Published."
+msgstr "Δημοσιεύτηκε."
+
+#: plugins/ws-chapters/includes/front-edit.php:554
+msgid "Send"
+msgstr "Αποστολή"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:608 plugins/ws-chapters/includes/front-edit.php:701
+msgid "News to review: %s"
+msgstr "Νέο για έλεγχο: %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:609
+msgid "A news item was sent from a chapter page and is waiting for review."
+msgstr "Ένα νέο στάλθηκε από σελίδα Chapter και περιμένει έλεγχο."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:610 plugins/ws-chapters/includes/front-edit.php:703
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:612 plugins/ws-chapters/includes/front-edit.php:705
+msgid "Review it here:"
+msgstr "Έλεγξέ το εδώ:"
+
+#: plugins/ws-chapters/includes/front-edit.php:619 plugins/ws-chapters/includes/front-edit.php:711
+msgid "Thank you. Your news has been sent for review."
+msgstr "Ευχαριστούμε. Το νέο σου στάλθηκε για έλεγχο."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/front-edit.php:702
+msgid "A news item was sent from a country page and is waiting for review."
+msgstr "Ένα νέο στάλθηκε από σελίδα χώρας και περιμένει έλεγχο."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:764
+msgid "Close %s? It is removed from the site and goes to the Trash, where it can be restored from the WordPress admin."
+msgstr "Κλείσιμο του %s; Αφαιρείται από τον ιστότοπο και μεταφέρεται στον Κάδο, από όπου μπορεί να ανακτηθεί μέσω της διαχείρισης του WordPress."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:783
+msgid "Close %s"
+msgstr "Κλείσιμο %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:783
+msgid "Close chapter"
+msgstr "Κλείσιμο Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:792
+msgid "Chapter name"
+msgstr "Όνομα Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:794
+msgid "Type the full name; it is shown exactly as typed."
+msgstr "Πληκτρολόγησε το πλήρες όνομα· εμφανίζεται ακριβώς όπως το γράφεις."
+
+#: plugins/ws-chapters/includes/front-edit.php:795
+msgid "Rename the chapter"
+msgstr "Μετονομασία του Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:833
+msgid "— Choose the country —"
+msgstr "— Επίλεξε τη χώρα —"
+
+#: plugins/ws-chapters/includes/front-edit.php:834
+msgid "On the site"
+msgstr "Στον ιστότοπο"
+
+#: plugins/ws-chapters/includes/front-edit.php:834
+msgid "Other countries (added with the chapter)"
+msgstr "Άλλες χώρες (προστίθενται με το Chapter)"
+
+#: plugins/ws-chapters/includes/front-edit.php:839
+msgid "Full chapter name, shown exactly as typed (for example Widows Sons Sofia)"
+msgstr "Πλήρες όνομα του Chapter, εμφανίζεται ακριβώς όπως το γράφεις (για παράδειγμα Widows Sons Sofia)"
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "+ Create new chapter"
+msgstr "+ Δημιουργία νέου Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "The chapter is added to this country. Its details, patch and logo can then be added from its page."
+msgstr "Το Chapter προστίθεται σε αυτή τη χώρα. Τα στοιχεία, το patch και το λογότυπό του μπορούν μετά να προστεθούν από τη σελίδα του."
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "The chapter is added to the country you choose. Its details, patch and logo can then be added from its page."
+msgstr "Το Chapter προστίθεται στη χώρα που επιλέγεις. Τα στοιχεία, το patch και το λογότυπό του μπορούν μετά να προστεθούν από τη σελίδα του."
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "Create chapter"
+msgstr "Δημιουργία Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:856
+msgid "Please add the chapter name and the city."
+msgstr "Πρόσθεσε το όνομα του Chapter και την πόλη."
+
+#: plugins/ws-chapters/includes/front-edit.php:862
+msgid "You can only add chapters to your own country."
+msgstr "Μπορείς να προσθέσεις Chapters μόνο στη δική σου χώρα."
+
+#: plugins/ws-chapters/includes/front-edit.php:871
+msgid "This chapter profile is being prepared. Its history, riding activities and charitable initiatives will appear when confirmed by its representatives."
+msgstr "Το προφίλ αυτού του Chapter ετοιμάζεται. Η ιστορία, οι μοτοσυκλετιστικές δραστηριότητες και οι φιλανθρωπικές πρωτοβουλίες του θα εμφανιστούν όταν επιβεβαιωθούν από τους εκπροσώπους του."
+
+#: plugins/ws-chapters/includes/front-edit.php:883
+msgid "Chapter created. Its details, patch and logo can be added from its page."
+msgstr "Το Chapter δημιουργήθηκε. Τα στοιχεία, το patch και το λογότυπό του μπορούν να προστεθούν από τη σελίδα του."
+
+#. translators: %s: article title
+#: plugins/ws-chapters/includes/front-edit.php:926
+msgid "Move \"%s\" to the Trash? You can restore it from the WordPress admin."
+msgstr "Μεταφορά του «%s» στον Κάδο; Μπορείς να το ανακτήσεις από τη διαχείριση του WordPress."
+
+#: plugins/ws-chapters/includes/front-edit.php:932
+msgid "Delete %s"
+msgstr "Διαγραφή %s"
+
+#: plugins/ws-chapters/includes/front-edit.php:934
+msgid "Delete this article"
+msgstr "Διαγραφή αυτού του άρθρου"
+
+#: plugins/ws-chapters/includes/front-edit.php:954
+msgid "You do not have permission to delete this article."
+msgstr "Δεν έχεις δικαίωμα να διαγράψεις αυτό το άρθρο."
+
+#: plugins/ws-chapters/includes/front-edit.php:957
+msgid "The article was moved to the Trash."
+msgstr "Το άρθρο μεταφέρθηκε στον Κάδο."
+
+#: plugins/ws-chapters/includes/front-edit.php:957
+msgid "Sorry, the article could not be deleted."
+msgstr "Δυστυχώς, δεν ήταν δυνατή η διαγραφή του άρθρου."
+
+#: plugins/ws-chapters/includes/front-edit.php:98
+msgid "Upload"
+msgstr "Μεταφόρτωση"
+
+#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:704 plugins/ws-chapters/includes/member-management.php:712
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: plugins/ws-chapters/includes/languages.php:195
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:401
+msgid "Name"
+msgstr "Όνομα"
+
+#: plugins/ws-chapters/includes/links.php:119 plugins/ws-chapters/includes/links.php:132
+msgid "Description (what visitors find there)"
+msgstr "Περιγραφή (τι βρίσκουν εκεί οι επισκέπτες)"
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "+ Add a link"
+msgstr "+ Προσθήκη συνδέσμου"
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "The link is shown on this page straight away."
+msgstr "Ο σύνδεσμος εμφανίζεται σε αυτή τη σελίδα αμέσως."
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "Post the link"
+msgstr "Δημοσίευση του συνδέσμου"
+
+#: plugins/ws-chapters/includes/links.php:133
+msgid "Change the name, web address or description. The change shows straight away."
+msgstr "Άλλαξε το όνομα, τη διεύθυνση ιστού ή την περιγραφή. Η αλλαγή εμφανίζεται αμέσως."
+
+#: plugins/ws-chapters/includes/links.php:148
+msgid "Only Super Admins and Country Admins can add or edit links."
+msgstr "Μόνο οι Super Admins και οι Country Admins μπορούν να προσθέτουν ή να επεξεργάζονται συνδέσμους."
+
+#: plugins/ws-chapters/includes/links.php:152
+msgid "That link no longer exists."
+msgstr "Αυτός ο σύνδεσμος δεν υπάρχει πια."
+
+#: plugins/ws-chapters/includes/links.php:154
+msgid "Please add a name and a web address starting with https://"
+msgstr "Πρόσθεσε όνομα και διεύθυνση ιστού που αρχίζει με https://"
+
+#: plugins/ws-chapters/includes/links.php:16
+msgid "Useful links"
+msgstr "Χρήσιμοι σύνδεσμοι"
+
+#: plugins/ws-chapters/includes/links.php:17
+msgid "Useful link"
+msgstr "Χρήσιμος σύνδεσμος"
+
+#. translators: %s: link name
+#: plugins/ws-chapters/includes/links.php:171
+msgid "The link \"%s\" is saved."
+msgstr "Ο σύνδεσμος «%s» αποθηκεύτηκε."
+
+#. translators: %s: link name
+#: plugins/ws-chapters/includes/links.php:171
+msgid "The link \"%s\" is posted."
+msgstr "Ο σύνδεσμος «%s» δημοσιεύτηκε."
+
+#: plugins/ws-chapters/includes/links.php:18
+msgid "Add link"
+msgstr "Προσθήκη συνδέσμου"
+
+#: plugins/ws-chapters/includes/links.php:188
+msgid "No links yet."
+msgstr "Δεν υπάρχουν ακόμη σύνδεσμοι."
+
+#: plugins/ws-chapters/includes/links.php:19
+msgid "Add useful link"
+msgstr "Προσθήκη χρήσιμου συνδέσμου"
+
+#: plugins/ws-chapters/includes/links.php:20
+msgid "Edit useful link"
+msgstr "Επεξεργασία χρήσιμου συνδέσμου"
+
+#: plugins/ws-chapters/includes/links.php:202
+msgid "Visit website →"
+msgstr "Επίσκεψη στον ιστότοπο →"
+
+#: plugins/ws-chapters/includes/links.php:203
+msgid "(opens in a new tab)"
+msgstr "(ανοίγει σε νέα καρτέλα)"
+
+#: plugins/ws-chapters/includes/links.php:21
+msgid "All useful links"
+msgstr "Όλοι οι χρήσιμοι σύνδεσμοι"
+
+#: plugins/ws-chapters/includes/links.php:22
+msgid "Search useful links"
+msgstr "Αναζήτηση χρήσιμων συνδέσμων"
+
+#: plugins/ws-chapters/includes/links.php:23
+msgid "No useful links yet."
+msgstr "Δεν υπάρχουν ακόμη χρήσιμοι σύνδεσμοι."
+
+#: plugins/ws-chapters/includes/links.php:24
+msgid "No useful links in the Trash."
+msgstr "Δεν υπάρχουν χρήσιμοι σύνδεσμοι στον Κάδο."
+
+#: plugins/ws-chapters/includes/links.php:25
+msgid "Link published."
+msgstr "Ο σύνδεσμος δημοσιεύτηκε."
+
+#: plugins/ws-chapters/includes/links.php:26
+msgid "Link updated."
+msgstr "Ο σύνδεσμος ενημερώθηκε."
+
+#: plugins/ws-chapters/includes/links.php:57 plugins/ws-chapters/includes/links.php:85 plugins/ws-chapters/includes/links.php:118 plugins/ws-chapters/includes/links.php:131
+msgid "Web address"
+msgstr "Διεύθυνση ιστού"
+
+#: plugins/ws-chapters/includes/links.php:61
+msgid "Shown on the Useful links page as a card. Use \"Order\" on the right to change the position (lower numbers first)."
+msgstr "Εμφανίζεται ως κάρτα στη σελίδα «Χρήσιμοι σύνδεσμοι». Χρησιμοποίησε τη «Σειρά» δεξιά για να αλλάξεις τη θέση (οι μικρότεροι αριθμοί πρώτοι)."
+
+#: plugins/ws-chapters/includes/links.php:85
+msgid "Order"
+msgstr "Σειρά"
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:19
+msgid "Signed in as %s."
+msgstr "Συνδεδεμένος ως %s."
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:20
+msgid "Members area"
+msgstr "Περιοχή μελών"
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:831
+msgid "My profile"
+msgstr "Το προφίλ μου"
+
+#: plugins/ws-chapters/includes/login-box.php:22 plugins/ws-chapters/includes/member-account.php:236
+msgid "Log out"
+msgstr "Αποσύνδεση"
+
+#: plugins/ws-chapters/includes/login-box.php:26 plugins/ws-chapters/includes/login-box.php:28 plugins/ws-chapters/includes/member-account.php:252
+msgid "Member login"
+msgstr "Σύνδεση μελών"
+
+#: plugins/ws-chapters/includes/member-account.php:109
+msgid "Your new password for Widows Sons Europe"
+msgstr "Ο νέος σου κωδικός πρόσβασης για το Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/member-account.php:110
+msgid "Choose a new password for the Widows Sons Europe members' area."
+msgstr "Επίλεξε νέο κωδικό πρόσβασης για την περιοχή μελών του Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-account.php:111
+msgid "Choose a new password"
+msgstr "Επίλεξε νέο κωδικό πρόσβασης"
+
+#: plugins/ws-chapters/includes/member-account.php:112
+msgid "Someone (hopefully you) asked for a new password for the Widows Sons Europe members' area."
+msgstr "Κάποιος (ελπίζουμε εσύ) ζήτησε νέο κωδικό πρόσβασης για την περιοχή μελών του Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-account.php:113
+msgid "Choose my new password"
+msgstr "Επιλογή νέου κωδικού πρόσβασης"
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-account.php:117
+msgid "This link expires in %d days."
+msgstr "Αυτός ο σύνδεσμος λήγει σε %d ημέρες."
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-account.php:118
+msgid "If you did not ask for this, you can ignore this email: your password stays the same."
+msgstr "Αν δεν το ζήτησες εσύ, μπορείς να αγνοήσεις αυτό το email: ο κωδικός πρόσβασής σου μένει ίδιος."
+
+#: plugins/ws-chapters/includes/member-account.php:200
+msgid "Welcome to Widows Sons Europe"
+msgstr "Καλώς ήρθες στο Widows Sons Europe"
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-account.php:202
+msgid "Choose a password for %s. You will use your email and this password to sign in."
+msgstr "Επίλεξε κωδικό πρόσβασης για το %s. Θα χρησιμοποιείς το email σου και αυτόν τον κωδικό για να συνδέεσαι."
+
+#: plugins/ws-chapters/includes/member-account.php:204 plugins/ws-chapters/includes/member-account.php:231
+msgid "New password (at least 8 characters)"
+msgstr "Νέος κωδικός πρόσβασης (τουλάχιστον 8 χαρακτήρες)"
+
+#: plugins/ws-chapters/includes/member-account.php:205 plugins/ws-chapters/includes/member-account.php:232
+msgid "Type it again"
+msgstr "Πληκτρολόγησέ τον ξανά"
+
+#: plugins/ws-chapters/includes/member-account.php:206
+msgid "Set password and continue"
+msgstr "Ορισμός κωδικού και συνέχεια"
+
+#: plugins/ws-chapters/includes/member-account.php:218
+msgid "This is how other members see you in the member list."
+msgstr "Έτσι σε βλέπουν τα άλλα μέλη στη λίστα μελών."
+
+#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:702
+msgid "No title"
+msgstr "Χωρίς τίτλο"
+
+#: plugins/ws-chapters/includes/member-account.php:225
+msgid "Email (to sign in)"
+msgstr "Email (για σύνδεση)"
+
+#: plugins/ws-chapters/includes/member-account.php:228
+msgid "Photo (JPG, PNG, WebP or GIF, up to 4 MB)"
+msgstr "Φωτογραφία (JPG, PNG, WebP ή GIF, έως 4 MB)"
+
+#: plugins/ws-chapters/includes/member-account.php:229
+msgid "Your country and chapter are set by your Country Admin. To change your email, ask them."
+msgstr "Τη χώρα και το Chapter σου τα ορίζει ο Country Admin σου. Για να αλλάξεις το email σου, ζήτησέ το από αυτόν."
+
+#: plugins/ws-chapters/includes/member-account.php:230
+msgid "Change password"
+msgstr "Αλλαγή κωδικού πρόσβασης"
+
+#: plugins/ws-chapters/includes/member-account.php:234
+msgid "Save my profile"
+msgstr "Αποθήκευση του προφίλ μου"
+
+#: plugins/ws-chapters/includes/member-account.php:245 plugins/ws-chapters/includes/sign-in.php:241
+msgid "Forgot your password?"
+msgstr "Ξέχασες τον κωδικό σου;"
+
+#: plugins/ws-chapters/includes/member-account.php:246
+msgid "Enter the email you were invited with. We will send you a link to choose a new password."
+msgstr "Εισήγαγε το email με το οποίο προσκλήθηκες. Θα σου στείλουμε έναν σύνδεσμο για να επιλέξεις νέο κωδικό πρόσβασης."
+
+#: plugins/ws-chapters/includes/member-account.php:249
+msgid "Send me a link"
+msgstr "Στείλε μου σύνδεσμο"
+
+#: plugins/ws-chapters/includes/member-account.php:250
+msgid "Back to sign in"
+msgstr "Πίσω στη σύνδεση"
+
+#: plugins/ws-chapters/includes/member-account.php:28
+msgid "The email or password is not right. Please try again, or ask for a new password below."
+msgstr "Το email ή ο κωδικός πρόσβασης δεν είναι σωστά. Δοκίμασε ξανά ή ζήτησε νέο κωδικό πρόσβασης παρακάτω."
+
+#: plugins/ws-chapters/includes/member-account.php:29
+msgid "Too many sign-in attempts. Please wait 15 minutes and try again, or ask for a new password below."
+msgstr "Πάρα πολλές προσπάθειες σύνδεσης. Περίμενε 15 λεπτά και δοκίμασε ξανά ή ζήτησε νέο κωδικό πρόσβασης παρακάτω."
+
+#: plugins/ws-chapters/includes/member-account.php:30
+msgid "This link has expired or was already used. Enter your email below and we will send you a new one."
+msgstr "Αυτός ο σύνδεσμος έχει λήξει ή έχει ήδη χρησιμοποιηθεί. Εισήγαγε το email σου παρακάτω και θα σου στείλουμε νέο."
+
+#: plugins/ws-chapters/includes/member-account.php:31
+msgid "Please choose a password of at least 8 characters."
+msgstr "Επίλεξε κωδικό πρόσβασης με τουλάχιστον 8 χαρακτήρες."
+
+#: plugins/ws-chapters/includes/member-account.php:32
+msgid "The two passwords are not the same. Please type them again."
+msgstr "Οι δύο κωδικοί δεν είναι ίδιοι. Πληκτρολόγησέ τους ξανά."
+
+#: plugins/ws-chapters/includes/member-account.php:33
+msgid "If this email belongs to a member, a link to choose a new password is on its way. It expires in 7 days."
+msgstr "Αν αυτό το email ανήκει σε μέλος, ένας σύνδεσμος για να επιλέξεις νέο κωδικό πρόσβασης είναι καθ' οδόν. Λήγει σε 7 ημέρες."
+
+#: plugins/ws-chapters/includes/member-account.php:34
+msgid "Your password is set and you are signed in. Please complete your profile."
+msgstr "Ο κωδικός πρόσβασής σου ορίστηκε και συνδέθηκες. Συμπλήρωσε το προφίλ σου."
+
+#: plugins/ws-chapters/includes/member-account.php:35
+msgid "Your profile is saved."
+msgstr "Το προφίλ σου αποθηκεύτηκε."
+
+#: plugins/ws-chapters/includes/member-account.php:36
+msgid "For \"Other\", please type your title."
+msgstr "Για «Άλλο», πληκτρολόγησε τον τίτλο σου."
+
+#: plugins/ws-chapters/includes/member-account.php:37
+msgid "The form expired. Please try again."
+msgstr "Η φόρμα έληξε. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/member-feedback.php:35 plugins/ws-chapters/includes/member-feedback.php:73
+msgid "Please sign in to send feedback."
+msgstr "Συνδέσου για να στείλεις σχόλια."
+
+#: plugins/ws-chapters/includes/member-feedback.php:39
+msgid "Please add a subject and your comments."
+msgstr "Πρόσθεσε θέμα και τα σχόλιά σου."
+
+#: plugins/ws-chapters/includes/member-feedback.php:41
+msgid "Please check the page address (for example wseurope.org/events/), or leave it empty."
+msgstr "Έλεγξε τη διεύθυνση της σελίδας (για παράδειγμα wseurope.org/events/) ή άφησέ τη κενή."
+
+#: plugins/ws-chapters/includes/member-feedback.php:50
+msgid "New feedback from the Widows Sons Europe website."
+msgstr "Νέα σχόλια από τον ιστότοπο του Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-feedback.php:52
+msgid "From:"
+msgstr "Από:"
+
+#: plugins/ws-chapters/includes/member-feedback.php:53
+msgid "Date:"
+msgstr "Ημερομηνία:"
+
+#: plugins/ws-chapters/includes/member-feedback.php:54
+msgid "Page:"
+msgstr "Σελίδα:"
+
+#: plugins/ws-chapters/includes/member-feedback.php:56
+msgid "Comments:"
+msgstr "Σχόλια:"
+
+#: plugins/ws-chapters/includes/member-feedback.php:63
+msgid "Sorry, your feedback could not be sent. Please try again in a few minutes."
+msgstr "Δυστυχώς, δεν ήταν δυνατή η αποστολή των σχολίων σου. Δοκίμασε ξανά σε λίγα λεπτά."
+
+#: plugins/ws-chapters/includes/member-feedback.php:66
+msgid "Thank you for your feedback! Your suggestion has been submitted successfully."
+msgstr "Ευχαριστούμε για τα σχόλιά σου! Η πρότασή σου υποβλήθηκε με επιτυχία."
+
+#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:39 plugins/ws-chapters/includes/member-management.php:832
+msgid "Website feedback"
+msgstr "Σχόλια για τον ιστότοπο"
+
+#: plugins/ws-chapters/includes/member-feedback.php:77
+msgid "Tell us what works, what does not, and what you would change on the website. Your message is emailed to the website team, and we read every one. Please do not include passwords or other people's private details."
+msgstr "Πες μας τι λειτουργεί, τι όχι και τι θα άλλαζες στον ιστότοπο. Το μήνυμά σου στέλνεται με email στην ομάδα του ιστότοπου και διαβάζουμε κάθε μήνυμα. Μην συμπεριλαμβάνεις κωδικούς πρόσβασης ή προσωπικά στοιχεία άλλων."
+
+#: plugins/ws-chapters/includes/member-feedback.php:81
+msgid "Subject"
+msgstr "Θέμα"
+
+#: plugins/ws-chapters/includes/member-feedback.php:81
+msgid "For example: Chapter page photos"
+msgstr "Για παράδειγμα: Φωτογραφίες σελίδας Chapter"
+
+#: plugins/ws-chapters/includes/member-feedback.php:82
+msgid "Your comments"
+msgstr "Τα σχόλιά σου"
+
+#: plugins/ws-chapters/includes/member-feedback.php:83
+msgid "Page address (optional)"
+msgstr "Διεύθυνση σελίδας (προαιρετικό)"
+
+#: plugins/ws-chapters/includes/member-feedback.php:83
+msgid "For example wseurope.org/events/"
+msgstr "Για παράδειγμα wseurope.org/events/"
+
+#: plugins/ws-chapters/includes/member-feedback.php:84
+msgid "Send feedback"
+msgstr "Αποστολή σχολίων"
+
+#: plugins/ws-chapters/includes/member-management.php:16 plugins/ws-chapters/includes/members.php:87
+msgid "Member"
+msgstr "Μέλος"
+
+#: plugins/ws-chapters/includes/member-management.php:220
+msgid "Other (type it)"
+msgstr "Άλλο (πληκτρολόγησέ το)"
+
+#: plugins/ws-chapters/includes/member-management.php:227
+msgid "e.g. Guardian of Membership"
+msgstr "π.χ. Φύλακας Μελών"
+
+#: plugins/ws-chapters/includes/member-management.php:227
+msgid "Your own title"
+msgstr "Ο δικός σου τίτλος"
+
+#: plugins/ws-chapters/includes/member-management.php:32
+msgid "Library"
+msgstr "Βιβλιοθήκη"
+
+#: plugins/ws-chapters/includes/member-management.php:320
+msgid "Send email"
+msgstr "Αποστολή email"
+
+#: plugins/ws-chapters/includes/member-management.php:321
+msgid "Call"
+msgstr "Κλήση"
+
+#: plugins/ws-chapters/includes/member-management.php:33 plugins/ws-chapters/includes/member-management.php:40
+msgid "Members"
+msgstr "Μέλη"
+
+#: plugins/ws-chapters/includes/member-management.php:344
+msgid "Please sign in to see the member list."
+msgstr "Συνδέσου για να δεις τη λίστα μελών."
+
+#: plugins/ws-chapters/includes/member-management.php:37 plugins/ws-chapters/includes/member-management.php:830
+msgid "Member management"
+msgstr "Διαχείριση μελών"
+
+#: plugins/ws-chapters/includes/member-management.php:384
+msgid "All titles"
+msgstr "Όλοι οι τίτλοι"
+
+#: plugins/ws-chapters/includes/member-management.php:393 plugins/ws-chapters/includes/members.php:369
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: plugins/ws-chapters/includes/member-management.php:393
+msgid "Name, road name or email"
+msgstr "Όνομα, road name ή email"
+
+#: plugins/ws-chapters/includes/member-management.php:397 plugins/ws-chapters/includes/members.php:371
+msgid "Filter"
+msgstr "Φίλτρο"
+
+#: plugins/ws-chapters/includes/member-management.php:398 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
+msgid "Clear"
+msgstr "Καθαρισμός"
+
+#. translators: %d: number of members
+#: plugins/ws-chapters/includes/member-management.php:400
+msgid "%d member"
+msgid_plural "%d members"
+msgstr[0] "%d μέλος"
+msgstr[1] "%d μέλη"
+
+#: plugins/ws-chapters/includes/member-management.php:402
+msgid "No members match."
+msgstr "Κανένα μέλος δεν ταιριάζει."
+
+#: plugins/ws-chapters/includes/member-management.php:413
+msgid "You do not have permission to do that."
+msgstr "Δεν έχεις δικαίωμα να το κάνεις αυτό."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:418
+msgid "Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use \"Resend invitation\"."
+msgstr "Η πρόσκληση στάλθηκε στο %s. Αν δεν έχει φτάσει μέσα σε λίγα λεπτά, ζήτησε από τον παραλήπτη να κοιτάξει στα Ανεπιθύμητα/Spam και μετά χρησιμοποίησε την «Επαναποστολή πρόσκλησης»."
+
+#: plugins/ws-chapters/includes/member-management.php:422
+msgid "You cannot remove this person."
+msgstr "Δεν μπορείς να αφαιρέσεις αυτό το άτομο."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:436
+msgid "%s has been removed permanently. What they added to the site stays, now credited to you."
+msgstr "%s αφαιρέθηκε οριστικά. Ό,τι πρόσθεσε στον ιστότοπο παραμένει και πλέον αποδίδεται σε σένα."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:436
+msgid "Sorry, this person could not be removed. Please try again."
+msgstr "Δυστυχώς, δεν ήταν δυνατή η αφαίρεση αυτού του ατόμου. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/member-management.php:441
+msgid "You cannot resend this invitation."
+msgstr "Δεν μπορείς να στείλεις ξανά αυτή την πρόσκληση."
+
+#: plugins/ws-chapters/includes/member-management.php:445
+msgid "Invitation sent again."
+msgstr "Η πρόσκληση στάλθηκε ξανά."
+
+#: plugins/ws-chapters/includes/member-management.php:453
+msgid "You cannot set this chapter."
+msgstr "Δεν μπορείς να ορίσεις αυτό το Chapter."
+
+#. translators: 1: person's name, 2: chapter
+#: plugins/ws-chapters/includes/member-management.php:464
+msgid "%1$s is now in %2$s."
+msgstr "%1$s ανήκει τώρα στο %2$s."
+
+#: plugins/ws-chapters/includes/member-management.php:474
+msgid "You cannot set this title."
+msgstr "Δεν μπορείς να ορίσεις αυτόν τον τίτλο."
+
+#: plugins/ws-chapters/includes/member-management.php:476
+msgid "For \"Other\", please type the title."
+msgstr "Για «Άλλο», πληκτρολόγησε τον τίτλο."
+
+#: plugins/ws-chapters/includes/member-management.php:481
+msgid "Title removed."
+msgstr "Ο τίτλος αφαιρέθηκε."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:487
+msgid "Title saved for %s."
+msgstr "Ο τίτλος αποθηκεύτηκε για: %s."
+
+#: plugins/ws-chapters/includes/member-management.php:563
+msgid "Please enter a valid email address."
+msgstr "Εισήγαγε μια έγκυρη διεύθυνση email."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:567
+msgid "%s already has an account. No invitation was sent."
+msgstr "Το %s έχει ήδη λογαριασμό. Δεν στάλθηκε πρόσκληση."
+
+#: plugins/ws-chapters/includes/member-management.php:571
+msgid "You cannot invite that kind of member."
+msgstr "Δεν μπορείς να προσκαλέσεις αυτό το είδος μέλους."
+
+#: plugins/ws-chapters/includes/member-management.php:574
+msgid "Please choose a country."
+msgstr "Επίλεξε χώρα."
+
+#: plugins/ws-chapters/includes/member-management.php:577
+msgid "You can only add people to your own country."
+msgstr "Μπορείς να προσθέσεις άτομα μόνο στη δική σου χώρα."
+
+#: plugins/ws-chapters/includes/member-management.php:581
+msgid "That chapter is not in the chosen country."
+msgstr "Αυτό το Chapter δεν ανήκει στη χώρα που επέλεξες."
+
+#: plugins/ws-chapters/includes/member-management.php:584
+msgid "Please choose a chapter. Everyone belongs to a country and a chapter."
+msgstr "Επίλεξε Chapter. Όλοι ανήκουν σε μια χώρα και σε ένα Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:593
+msgid "Sorry, the invitation could not be created. Please try again."
+msgstr "Δυστυχώς, δεν ήταν δυνατή η δημιουργία της πρόσκλησης. Δοκίμασε ξανά."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:603
+msgid "The account for %s was created, but the invitation email could not be sent. Check the mail settings, then use \"Resend invitation\" below."
+msgstr "Ο λογαριασμός για το %s δημιουργήθηκε, αλλά δεν ήταν δυνατή η αποστολή του email πρόσκλησης. Έλεγξε τις ρυθμίσεις αλληλογραφίας και μετά χρησιμοποίησε την «Επαναποστολή πρόσκλησης» παρακάτω."
+
+#: plugins/ws-chapters/includes/member-management.php:611
+msgid "That person was not found."
+msgstr "Αυτό το άτομο δεν βρέθηκε."
+
+#: plugins/ws-chapters/includes/member-management.php:615
+msgid "The invitation could not be created. Please try again."
+msgstr "Δεν ήταν δυνατή η δημιουργία της πρόσκλησης. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/member-management.php:618
+msgid "Your invitation to Widows Sons Europe"
+msgstr "Η πρόσκλησή σου στο Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/member-management.php:619
+msgid "You're invited to the Widows Sons Europe members' area."
+msgstr "Έχεις πρόσκληση για την περιοχή μελών του Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-management.php:620
+msgid "Welcome, Brother"
+msgstr "Καλώς ήρθες, Αδελφέ"
+
+#: plugins/ws-chapters/includes/member-management.php:622
+msgid "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile."
+msgstr "Έχεις προσκληθεί στην περιοχή μελών του Widows Sons Europe: τη λίστα μελών όλων των ευρωπαϊκών Chapters, την κοινή βιβλιοθήκη και το δικό σου προφίλ."
+
+#: plugins/ws-chapters/includes/member-management.php:623
+msgid "Choose your password to get started. You will sign in with this email address."
+msgstr "Επίλεξε τον κωδικό πρόσβασής σου για να ξεκινήσεις. Θα συνδέεσαι με αυτή τη διεύθυνση email."
+
+#: plugins/ws-chapters/includes/member-management.php:625
+msgid "Set my password"
+msgstr "Ορισμός κωδικού πρόσβασης"
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-management.php:629
+msgid "This link expires in %d days. If it has expired, ask your Country Admin to send a new one."
+msgstr "Αυτός ο σύνδεσμος λήγει σε %d ημέρες. Αν έχει λήξει, ζήτησε από τον Country Admin σου να σου στείλει νέο."
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-management.php:630
+msgid "After that you land on your profile: add your first and last name, road name, phone and title."
+msgstr "Μετά θα μεταφερθείς στο προφίλ σου: πρόσθεσε όνομα και επώνυμο, road name, τηλέφωνο και τίτλο."
+
+#: plugins/ws-chapters/includes/member-management.php:633
+msgid "The invitation email could not be sent. Check the mail settings, then resend."
+msgstr "Δεν ήταν δυνατή η αποστολή του email πρόσκλησης. Έλεγξε τις ρυθμίσεις αλληλογραφίας και στείλε το ξανά."
+
+#: plugins/ws-chapters/includes/member-management.php:666
+msgid "Choose a country"
+msgstr "Επίλεξε χώρα"
+
+#: plugins/ws-chapters/includes/member-management.php:667
+msgid "Invite a member"
+msgstr "Πρόσκληση μέλους"
+
+#: plugins/ws-chapters/includes/member-management.php:668
+msgid "Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days."
+msgstr "Εισήγαγε το email, τον ρόλο, τη χώρα και το Chapter. Το άτομο ορίζει τον δικό του κωδικό πρόσβασης από το email πρόσκλησης, το οποίο λήγει σε 7 ημέρες."
+
+#: plugins/ws-chapters/includes/member-management.php:671
+msgid "Role"
+msgstr "Ρόλος"
+
+#: plugins/ws-chapters/includes/member-management.php:673 plugins/ws-chapters/includes/member-management.php:711
+msgid "Choose a chapter"
+msgstr "Επίλεξε Chapter"
+
+#: plugins/ws-chapters/includes/member-management.php:674
+msgid "Everyone belongs to a country and a chapter."
+msgstr "Όλοι ανήκουν σε μια χώρα και σε ένα Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:675
+msgid "Send invitation"
+msgstr "Αποστολή πρόσκλησης"
+
+#: plugins/ws-chapters/includes/member-management.php:692
+msgid "Super Admin"
+msgstr "Super Admin"
+
+#: plugins/ws-chapters/includes/member-management.php:695
+msgid "you"
+msgstr "εσύ"
+
+#: plugins/ws-chapters/includes/member-management.php:707 plugins/ws-chapters/includes/member-management.php:724
+msgid "Missing"
+msgstr "Λείπει"
+
+#: plugins/ws-chapters/includes/member-management.php:716
+msgid "Resend invitation"
+msgstr "Επαναποστολή πρόσκλησης"
+
+#: plugins/ws-chapters/includes/member-management.php:719
+msgid "Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you."
+msgstr "Οριστική αφαίρεση αυτού του ατόμου; Ο λογαριασμός, το email και το προφίλ του διαγράφονται και δεν μπορούν να επανέλθουν. Ό,τι πρόσθεσε στον ιστότοπο παραμένει και αποδίδεται σε σένα."
+
+#: plugins/ws-chapters/includes/member-management.php:719
+msgid "Remove member"
+msgstr "Αφαίρεση μέλους"
+
+#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:730
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:736
+msgid "Invited"
+msgstr "Προσκεκλημένος"
+
+#: plugins/ws-chapters/includes/member-management.php:726
+msgid "Active"
+msgstr "Ενεργός"
+
+#: plugins/ws-chapters/includes/member-management.php:727 plugins/ws-chapters/includes/member-management.php:730 plugins/ws-chapters/includes/members.php:376
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#: plugins/ws-chapters/includes/member-management.php:730
+msgid "Name, road name and email"
+msgstr "Όνομα, road name και email"
+
+#: plugins/ws-chapters/includes/member-management.php:731
+msgid "People you manage"
+msgstr "Άτομα που διαχειρίζεσαι"
+
+#: plugins/ws-chapters/includes/member-management.php:732
+msgid "Nobody yet. Invite someone above."
+msgstr "Κανείς ακόμη. Προσκάλεσε κάποιον παραπάνω."
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Invitation sent again"
+msgstr "Η πρόσκληση στάλθηκε ξανά"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Removed permanently"
+msgstr "Αφαιρέθηκε οριστικά"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Own profile"
+msgstr "Δικό του προφίλ"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Email NOT sent"
+msgstr "Το email ΔΕΝ στάλθηκε"
+
+#: plugins/ws-chapters/includes/member-management.php:740
+msgid "removed"
+msgstr "αφαιρέθηκε"
+
+#: plugins/ws-chapters/includes/member-management.php:741
+msgid "(deleted)"
+msgstr "(διαγράφηκε)"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Recent activity"
+msgstr "Πρόσφατη δραστηριότητα"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "By"
+msgstr "Από"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Action"
+msgstr "Ενέργεια"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Person"
+msgstr "Άτομο"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "No activity yet."
+msgstr "Δεν υπάρχει ακόμη δραστηριότητα."
+
+#: plugins/ws-chapters/includes/member-management.php:755
+msgid "Widows Sons details"
+msgstr "Στοιχεία Widows Sons"
+
+#: plugins/ws-chapters/includes/member-management.php:779
+msgid "Photo"
+msgstr "Φωτογραφία"
+
+#: plugins/ws-chapters/includes/member-management.php:781
+msgid "JPG, PNG, WebP or GIF, up to 4 MB."
+msgstr "JPG, PNG, WebP ή GIF, έως 4 MB."
+
+#: plugins/ws-chapters/includes/member-management.php:829
+msgid "Member directory"
+msgstr "Κατάλογος μελών"
+
+#: plugins/ws-chapters/includes/members.php:147
+msgid "The file is too large."
+msgstr "Το αρχείο είναι πολύ μεγάλο."
+
+#: plugins/ws-chapters/includes/members.php:147
+msgid "Please choose a file to upload."
+msgstr "Επίλεξε ένα αρχείο για μεταφόρτωση."
+
+#. translators: %s: maximum size
+#: plugins/ws-chapters/includes/members.php:151
+msgid "The file is too large (maximum %s)."
+msgstr "Το αρχείο είναι πολύ μεγάλο (μέγιστο %s)."
+
+#: plugins/ws-chapters/includes/members.php:155
+msgid "This type of file can't be uploaded. Use PDF, Word, Excel, PowerPoint, OpenDocument, text, JPG or PNG."
+msgstr "Αυτός ο τύπος αρχείου δεν μπορεί να μεταφορτωθεί. Χρησιμοποίησε PDF, Word, Excel, PowerPoint, OpenDocument, κείμενο, JPG ή PNG."
+
+#: plugins/ws-chapters/includes/members.php:161
+msgid "The file could not be saved. Please try again."
+msgstr "Δεν ήταν δυνατή η αποθήκευση του αρχείου. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/members.php:186
+msgid "This document link is not valid. Go back to the members page and try again."
+msgstr "Αυτός ο σύνδεσμος εγγράφου δεν είναι έγκυρος. Επίστρεψε στη σελίδα μελών και δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/members.php:190
+msgid "The file is missing."
+msgstr "Το αρχείο λείπει."
+
+#: plugins/ws-chapters/includes/members.php:229
+msgid "That document could not be deleted."
+msgstr "Δεν ήταν δυνατή η διαγραφή αυτού του εγγράφου."
+
+#. translators: %s: document title
+#: plugins/ws-chapters/includes/members.php:233
+msgid "Deleted \"%s\"."
+msgstr "Διαγράφηκε το «%s»."
+
+#: plugins/ws-chapters/includes/members.php:25 plugins/ws-chapters/includes/members.php:376
+msgid "Document"
+msgstr "Έγγραφο"
+
+#: plugins/ws-chapters/includes/members.php:26
+msgid "Meeting minutes"
+msgstr "Πρακτικά συνεδρίασης"
+
+#: plugins/ws-chapters/includes/members.php:260
+msgid "Link (a web address starting with https://)"
+msgstr "Σύνδεσμος (διεύθυνση ιστού που αρχίζει με https://)"
+
+#: plugins/ws-chapters/includes/members.php:27 plugins/ws-chapters/includes/members.php:402
+msgid "Link"
+msgstr "Σύνδεσμος"
+
+#: plugins/ws-chapters/includes/members.php:283
+msgid "The document could not be saved. Please try again."
+msgstr "Δεν ήταν δυνατή η αποθήκευση του εγγράφου. Δοκίμασε ξανά."
+
+#. translators: %s: document title
+#: plugins/ws-chapters/includes/members.php:296
+msgid "Added \"%s\". It is now visible to all members."
+msgstr "Προστέθηκε το «%s». Είναι πλέον ορατό σε όλα τα μέλη."
+
+#: plugins/ws-chapters/includes/members.php:310
+msgid "LINK"
+msgstr "ΣΥΝΔΕΣΜΟΣ"
+
+#: plugins/ws-chapters/includes/members.php:318 plugins/ws-chapters/includes/members.php:376
+msgid "Added by"
+msgstr "Προστέθηκε από"
+
+#: plugins/ws-chapters/includes/members.php:319 plugins/ws-chapters/includes/members.php:376
+msgid "Size"
+msgstr "Μέγεθος"
+
+#: plugins/ws-chapters/includes/members.php:320 plugins/ws-chapters/includes/members.php:320
+msgid "Open link"
+msgstr "Άνοιγμα συνδέσμου"
+
+#: plugins/ws-chapters/includes/members.php:320 plugins/ws-chapters/includes/members.php:320
+msgid "Download"
+msgstr "Λήψη"
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "Members only"
+msgstr "Μόνο για μέλη"
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "This area is for Widows Sons members. Please log in with your email address and password."
+msgstr "Αυτή η περιοχή είναι για μέλη των Widows Sons. Συνδέσου με τη διεύθυνση email και τον κωδικό πρόσβασής σου."
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "Log in"
+msgstr "Σύνδεση"
+
+#: plugins/ws-chapters/includes/members.php:363
+msgid "All types"
+msgstr "Όλοι οι τύποι"
+
+#: plugins/ws-chapters/includes/members.php:369
+msgid "Title or description"
+msgstr "Τίτλος ή περιγραφή"
+
+#: plugins/ws-chapters/includes/members.php:373 plugins/ws-chapters/includes/members.php:388 plugins/ws-chapters/includes/members.php:389
+msgid "Upload a document"
+msgstr "Μεταφόρτωση εγγράφου"
+
+#. translators: %d: number of documents
+#: plugins/ws-chapters/includes/members.php:375
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d έγγραφο"
+msgstr[1] "%d έγγραφα"
+
+#: plugins/ws-chapters/includes/members.php:377
+msgid "No documents yet."
+msgstr "Δεν υπάρχουν ακόμη έγγραφα."
+
+#: plugins/ws-chapters/includes/members.php:384
+msgid "— Choose —"
+msgstr "— Επίλεξε —"
+
+#: plugins/ws-chapters/includes/members.php:392
+msgid "What is in the document, so members can find it."
+msgstr "Τι περιέχει το έγγραφο, ώστε να το βρίσκουν τα μέλη."
+
+#: plugins/ws-chapters/includes/members.php:395
+msgid "E.g. the date of the meeting or of the document."
+msgstr "Π.χ. η ημερομηνία της συνεδρίασης ή του εγγράφου."
+
+#: plugins/ws-chapters/includes/members.php:397
+msgid "File"
+msgstr "Αρχείο"
+
+#. translators: %s: maximum size
+#: plugins/ws-chapters/includes/members.php:400
+msgid "PDF, Word, Excel, PowerPoint, OpenDocument, text, JPG or PNG, up to %s."
+msgstr "PDF, Word, Excel, PowerPoint, OpenDocument, κείμενο, JPG ή PNG, έως %s."
+
+#: plugins/ws-chapters/includes/members.php:402
+msgid "For the Link type: the web address (e.g. a shared folder or an online document)."
+msgstr "Για τον τύπο Σύνδεσμος: η διεύθυνση ιστού (π.χ. κοινόχρηστος φάκελος ή ηλεκτρονικό έγγραφο)."
+
+#: plugins/ws-chapters/includes/members.php:403
+msgid "Add to the library"
+msgstr "Προσθήκη στη βιβλιοθήκη"
+
+#: plugins/ws-chapters/includes/members.php:415
+msgid "File or link"
+msgstr "Αρχείο ή σύνδεσμος"
+
+#: plugins/ws-chapters/includes/members.php:53 plugins/ws-chapters/includes/members.php:55
+msgid "Member documents"
+msgstr "Έγγραφα μελών"
+
+#: plugins/ws-chapters/includes/members.php:54
+msgid "Member document"
+msgstr "Έγγραφο μελών"
+
+#: plugins/ws-chapters/includes/members.php:56
+msgid "Edit member document"
+msgstr "Επεξεργασία εγγράφου μελών"
+
+#: plugins/ws-chapters/includes/members.php:57
+msgid "Search member documents"
+msgstr "Αναζήτηση εγγράφων μελών"
+
+#: plugins/ws-chapters/includes/members.php:58
+msgid "No member documents yet."
+msgstr "Δεν υπάρχουν ακόμη έγγραφα μελών."
+
+#. translators: used as "4 chapters"
+#: plugins/ws-chapters/includes/pages.php:100
+msgid "chapter"
+msgstr "Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:110
+msgid "Map of Widows Sons in Europe"
+msgstr "Χάρτης των Widows Sons στην Ευρώπη"
+
+#: plugins/ws-chapters/includes/pages.php:158
+msgid "Contact details coming soon."
+msgstr "Τα στοιχεία επικοινωνίας έρχονται σύντομα."
+
+#: plugins/ws-chapters/includes/pages.php:163
+msgid "Photos coming soon."
+msgstr "Οι φωτογραφίες έρχονται σύντομα."
+
+#: plugins/ws-chapters/includes/pages.php:299
+msgid "No news yet."
+msgstr "Δεν υπάρχουν ακόμη νέα."
+
+#: plugins/ws-chapters/includes/pages.php:329
+msgid "No upcoming events announced yet."
+msgstr "Δεν έχουν ανακοινωθεί ακόμη επερχόμενες εκδηλώσεις."
+
+#: plugins/ws-chapters/includes/pages.php:338
+msgid "Page sections"
+msgstr "Ενότητες σελίδας"
+
+#: plugins/ws-chapters/includes/pages.php:409
+msgid "Our Brotherhood Across Europe"
+msgstr "Η αδελφότητά μας σε όλη την Ευρώπη"
+
+#: plugins/ws-chapters/includes/pages.php:410
+msgid "Explore participating countries and their chapters. Select a country to find chapter information, news and events."
+msgstr "Εξερεύνησε τις συμμετέχουσες χώρες και τα Chapters τους. Επίλεξε μια χώρα για να βρεις πληροφορίες, νέα και εκδηλώσεις των Chapters."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/pages.php:449
+msgid "%s brings together Masonic motorcycle brothers. We ride for brotherhood, support our communities, and take part in national and international events."
+msgstr "%s: φέρνουμε κοντά τέκτονες αδελφούς μοτοσυκλετιστές. Οδηγούμε για την αδελφότητα, στηρίζουμε τις κοινότητές μας και συμμετέχουμε σε εθνικές και διεθνείς εκδηλώσεις."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/pages.php:469
+msgid "Visit %s"
+msgstr "Επίσκεψη: %s"
+
+#: plugins/ws-chapters/includes/pages.php:476
+msgid "Brotherhood · Motorcycling · Service"
+msgstr "Αδελφότητα · Μοτοσυκλέτα · Προσφορά"
+
+#. translators: 1: country name, 2: number of chapters
+#: plugins/ws-chapters/includes/pages.php:481
+msgid "Chapters in %1$s (%2$d)"
+msgstr "Chapters: %1$s (%2$d)"
+
+#: plugins/ws-chapters/includes/pages.php:482 plugins/ws-chapters/includes/pages.php:538
+msgid "About %s"
+msgstr "Σχετικά: %s"
+
+#: plugins/ws-chapters/includes/pages.php:484
+msgid "Official contacts and links"
+msgstr "Επίσημες επαφές και σύνδεσμοι"
+
+#: plugins/ws-chapters/includes/pages.php:485
+msgid "Apply to join"
+msgstr "Αίτηση ένταξης"
+
+#: plugins/ws-chapters/includes/pages.php:492
+msgid "Overview"
+msgstr "Επισκόπηση"
+
+#: plugins/ws-chapters/includes/pages.php:495
+msgid "News"
+msgstr "Νέα"
+
+#: plugins/ws-chapters/includes/pages.php:496 plugins/ws-chapters/includes/pages.php:546
+msgid "Gallery"
+msgstr "Γκαλερί"
+
+#: plugins/ws-chapters/includes/pages.php:526
+msgid "Official Chapter Patch"
+msgstr "Επίσημο patch του Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:527
+msgid "Official Chapter Logo"
+msgstr "Επίσημο λογότυπο του Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:528
+msgid "Official Contact Information"
+msgstr "Επίσημα στοιχεία επικοινωνίας"
+
+#: plugins/ws-chapters/includes/pages.php:529
+msgid "Show on map"
+msgstr "Εμφάνιση στον χάρτη"
+
+#: plugins/ws-chapters/includes/pages.php:530
+msgid "Apply to join this chapter"
+msgstr "Αίτηση ένταξης σε αυτό το Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:543
+msgid "About"
+msgstr "Σχετικά"
+
+#: plugins/ws-chapters/includes/pages.php:545
+msgid "News & Activities"
+msgstr "Νέα & δραστηριότητες"
+
+#: plugins/ws-chapters/includes/pages.php:95
+msgid "Official logo pending"
+msgstr "Το επίσημο λογότυπο εκκρεμεί"
+
+#: plugins/ws-chapters/includes/pages.php:96 plugins/ws-chapters/includes/pages.php:429
+msgid "Explore chapter"
+msgstr "Εξερεύνηση Chapter"
+
+#. translators: used as "4 chapters"
+#: plugins/ws-chapters/includes/pages.php:99
+msgid "chapters"
+msgstr "Chapters"
+
+#: plugins/ws-chapters/includes/private-mode.php:51
+msgid "Our new website is being prepared. Please come back soon."
+msgstr "Ο νέος μας ιστότοπος ετοιμάζεται. Έλα ξανά σύντομα."
+
+#: plugins/ws-chapters/includes/private-mode.php:52 plugins/ws-chapters/includes/sign-in.php:211
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: plugins/ws-chapters/includes/private-mode.php:58
+msgid "This site is private while it is being prepared."
+msgstr "Αυτός ο ιστότοπος είναι ιδιωτικός όσο ετοιμάζεται."
+
+#: plugins/ws-chapters/includes/private-mode.php:71
+msgid "Private while in development"
+msgstr "Ιδιωτικός κατά την ανάπτυξη"
+
+#: plugins/ws-chapters/includes/private-mode.php:75
+msgid "Only signed-in users can see the site"
+msgstr "Μόνο οι συνδεδεμένοι χρήστες βλέπουν τον ιστότοπο"
+
+#: plugins/ws-chapters/includes/private-mode.php:76
+msgid "Visitors see a \"coming soon\" page. Untick this when the site opens to the public."
+msgstr "Οι επισκέπτες βλέπουν μια σελίδα «έρχεται σύντομα». Αποεπίλεξέ το όταν ο ιστότοπος ανοίξει στο κοινό."
+
+#: plugins/ws-chapters/includes/private-mode.php:84
+msgid "Private site"
+msgstr "Ιδιωτικός ιστότοπος"
+
+#: plugins/ws-chapters/includes/profile-fields.php:114
+msgid "Choose photos"
+msgstr "Επιλογή φωτογραφιών"
+
+#: plugins/ws-chapters/includes/profile-fields.php:130
+msgid "Contact details & gallery"
+msgstr "Στοιχεία επικοινωνίας & γκαλερί"
+
+#: plugins/ws-chapters/includes/profile-fields.php:137 plugins/ws-chapters/includes/profile-fields.php:170
+msgid "Photo gallery"
+msgstr "Γκαλερί φωτογραφιών"
+
+#: plugins/ws-chapters/includes/profile-fields.php:139
+msgid "Featured image: used as the chapter page header."
+msgstr "Επιλεγμένη εικόνα: χρησιμοποιείται ως κεφαλίδα της σελίδας του Chapter."
+
+#: plugins/ws-chapters/includes/profile-fields.php:16
+msgid "Address / meeting place"
+msgstr "Διεύθυνση / τόπος συνάντησης"
+
+#: plugins/ws-chapters/includes/profile-fields.php:167
+msgid "A wide landscape photo for the top of the country page."
+msgstr "Μια φαρδιά οριζόντια φωτογραφία για το πάνω μέρος της σελίδας της χώρας."
+
+#: plugins/ws-chapters/includes/profile-fields.php:17
+msgid "Website"
+msgstr "Ιστότοπος"
+
+#: plugins/ws-chapters/includes/profile-fields.php:18
+msgid "Facebook page"
+msgstr "Σελίδα Facebook"
+
+#: plugins/ws-chapters/includes/profile-fields.php:19
+msgid "Instagram"
+msgstr "Instagram"
+
+#: plugins/ws-chapters/includes/profile-fields.php:193
+msgid "— No chapter (country or Widows Sons Europe) —"
+msgstr "— Χωρίς Chapter (χώρα ή Widows Sons Europe) —"
+
+#: plugins/ws-chapters/includes/profile-fields.php:199
+msgid "Pick a chapter to post as that chapter (it also shows on the chapter page). With no chapter, the country chosen under Countries is shown. With no chapter and no country, the news is posted by Widows Sons Europe."
+msgstr "Επίλεξε ένα Chapter για να δημοσιεύσεις ως αυτό το Chapter (εμφανίζεται και στη σελίδα του Chapter). Χωρίς Chapter, εμφανίζεται η χώρα που έχει επιλεγεί στις Χώρες. Χωρίς Chapter και χωρίς χώρα, το νέο δημοσιεύεται από το Widows Sons Europe."
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/security.php:54
+msgid "Too many sign-in attempts. Please wait %d minutes, or ask for a new password."
+msgstr "Πάρα πολλές προσπάθειες σύνδεσης. Περίμενε %d λεπτά ή ζήτησε νέο κωδικό πρόσβασης."
+
+#: plugins/ws-chapters/includes/sign-in.php:185
+msgid "If this email belongs to a member, a sign-in code is on its way. Check your inbox (and Junk/Spam)."
+msgstr "Αν αυτό το email ανήκει σε μέλος, ένας κωδικός σύνδεσης είναι καθ' οδόν. Έλεγξε τα εισερχόμενά σου (και τα Ανεπιθύμητα/Spam)."
+
+#: plugins/ws-chapters/includes/sign-in.php:186
+msgid "That code is not right. Please check the email and type it again."
+msgstr "Αυτός ο κωδικός δεν είναι σωστός. Έλεγξε το email και πληκτρολόγησέ τον ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:187
+msgid "This code has expired or was already used. Ask for a new one below."
+msgstr "Αυτός ο κωδικός έχει λήξει ή έχει ήδη χρησιμοποιηθεί. Ζήτησε νέο παρακάτω."
+
+#: plugins/ws-chapters/includes/sign-in.php:188
+msgid "Please type your email address first."
+msgstr "Πληκτρολόγησε πρώτα τη διεύθυνση email σου."
+
+#: plugins/ws-chapters/includes/sign-in.php:189
+msgid "Too many codes were asked for from your connection. Please try again in an hour."
+msgstr "Ζητήθηκαν πάρα πολλοί κωδικοί από τη σύνδεσή σου. Δοκίμασε ξανά σε μία ώρα."
+
+#: plugins/ws-chapters/includes/sign-in.php:190
+msgid "Passkey added. Next time, choose \"Sign in with a passkey\" on this device."
+msgstr "Το passkey προστέθηκε. Την επόμενη φορά, επίλεξε «Σύνδεση με passkey» σε αυτή τη συσκευή."
+
+#: plugins/ws-chapters/includes/sign-in.php:191
+msgid "Passkey removed."
+msgstr "Το passkey αφαιρέθηκε."
+
+#: plugins/ws-chapters/includes/sign-in.php:202
+msgid "Sign in to Widows Sons Europe"
+msgstr "Σύνδεση στο Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/sign-in.php:204
+msgid "Sign me in"
+msgstr "Σύνδεσέ με"
+
+#: plugins/ws-chapters/includes/sign-in.php:206
+msgid "Enter your sign-in code"
+msgstr "Εισήγαγε τον κωδικό σύνδεσης"
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:208
+msgid "We emailed you a 6-digit code. Type it here, or tap the button in the email. It works for %d minutes."
+msgstr "Σου στείλαμε με email έναν 6ψήφιο κωδικό. Πληκτρολόγησέ τον εδώ ή πάτησε το κουμπί στο email. Ισχύει για %d λεπτά."
+
+#: plugins/ws-chapters/includes/sign-in.php:210
+msgid "Code"
+msgstr "Κωδικός"
+
+#: plugins/ws-chapters/includes/sign-in.php:212
+msgid "Send a new code"
+msgstr "Αποστολή νέου κωδικού"
+
+#: plugins/ws-chapters/includes/sign-in.php:232
+msgid "Next"
+msgstr "Επόμενο"
+
+#: plugins/ws-chapters/includes/sign-in.php:235
+msgid "Change"
+msgstr "Αλλαγή"
+
+#: plugins/ws-chapters/includes/sign-in.php:236
+msgid "How would you like to sign in?"
+msgstr "Πώς θέλεις να συνδεθείς;"
+
+#: plugins/ws-chapters/includes/sign-in.php:237
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: plugins/ws-chapters/includes/sign-in.php:238
+msgid "Keep me signed in on this device"
+msgstr "Να παραμείνω συνδεδεμένος σε αυτή τη συσκευή"
+
+#: plugins/ws-chapters/includes/sign-in.php:239
+msgid "Log in with password"
+msgstr "Σύνδεση με κωδικό πρόσβασης"
+
+#: plugins/ws-chapters/includes/sign-in.php:248
+msgid "or, without a password"
+msgstr "ή, χωρίς κωδικό πρόσβασης"
+
+#: plugins/ws-chapters/includes/sign-in.php:249
+msgid "Email me a sign-in code"
+msgstr "Στείλε μου κωδικό σύνδεσης με email"
+
+#: plugins/ws-chapters/includes/sign-in.php:250
+msgid "Sign in with a passkey"
+msgstr "Σύνδεση με passkey"
+
+#: plugins/ws-chapters/includes/sign-in.php:251
+msgid "Passkeys work after you add one: sign in with an email code, then go to My profile and tap \"Add a passkey on this device\"."
+msgstr "Τα passkeys λειτουργούν αφού προσθέσεις ένα: συνδέσου με κωδικό μέσω email, μετά πήγαινε στο «Το προφίλ μου» και πάτησε «Προσθήκη passkey σε αυτή τη συσκευή»."
+
+#: plugins/ws-chapters/includes/sign-in.php:336
+msgid "This passkey answer is not for this site. Please try again."
+msgstr "Αυτή η απάντηση passkey δεν αφορά αυτόν τον ιστότοπο. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:340
+msgid "This passkey is not for this site."
+msgstr "Αυτό το passkey δεν είναι για αυτόν τον ιστότοπο."
+
+#: plugins/ws-chapters/includes/sign-in.php:346
+msgid "This passkey is not known here (it may have been removed). Sign in with an email code and add it again on My profile."
+msgstr "Αυτό το passkey δεν είναι γνωστό εδώ (μπορεί να έχει αφαιρεθεί). Συνδέσου με κωδικό μέσω email και πρόσθεσέ το ξανά στο «Το προφίλ μου»."
+
+#: plugins/ws-chapters/includes/sign-in.php:350
+msgid "The passkey could not be checked. Please try again."
+msgstr "Δεν ήταν δυνατός ο έλεγχος του passkey. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:353
+msgid "This passkey looks copied, so it was refused. Please sign in with an email code."
+msgstr "Αυτό το passkey μοιάζει αντιγραμμένο, γι' αυτό απορρίφθηκε. Συνδέσου με κωδικό μέσω email."
+
+#: plugins/ws-chapters/includes/sign-in.php:364
+msgid "This passkey could not be checked for this site. Please try again."
+msgstr "Δεν ήταν δυνατός ο έλεγχος αυτού του passkey για αυτόν τον ιστότοπο. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:367
+msgid "This device offers a kind of passkey the site cannot use."
+msgstr "Αυτή η συσκευή προσφέρει ένα είδος passkey που ο ιστότοπος δεν μπορεί να χρησιμοποιήσει."
+
+#: plugins/ws-chapters/includes/sign-in.php:371
+msgid "This passkey could not be read. Please try again."
+msgstr "Δεν ήταν δυνατή η ανάγνωση αυτού του passkey. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:375
+msgid "You already have 10 passkeys. Remove one first."
+msgstr "Έχεις ήδη 10 passkeys. Αφαίρεσε πρώτα ένα."
+
+#: plugins/ws-chapters/includes/sign-in.php:403 plugins/ws-chapters/includes/sign-in.php:437
+msgid "This took too long. Please try again."
+msgstr "Αυτό άργησε πολύ. Δοκίμασε ξανά."
+
+#: plugins/ws-chapters/includes/sign-in.php:413
+msgid "Please reload the page and try again."
+msgstr "Φόρτωσε ξανά τη σελίδα και δοκίμασε πάλι."
+
+#. translators: 1: date added, 2: date last used
+#: plugins/ws-chapters/includes/sign-in.php:458
+msgid "added %1$s · last used %2$s"
+msgstr "προστέθηκε %1$s · τελευταία χρήση %2$s"
+
+#. translators: 1: date added, 2: date last used
+#: plugins/ws-chapters/includes/sign-in.php:458
+msgid "never"
+msgstr "ποτέ"
+
+#: plugins/ws-chapters/includes/sign-in.php:460
+msgid "Remove this passkey? That device will need an email code or password next time."
+msgstr "Αφαίρεση αυτού του passkey; Εκείνη η συσκευή θα χρειαστεί κωδικό μέσω email ή κωδικό πρόσβασης την επόμενη φορά."
+
+#: plugins/ws-chapters/includes/sign-in.php:462
+msgid "Sign in without a password"
+msgstr "Σύνδεση χωρίς κωδικό πρόσβασης"
+
+#: plugins/ws-chapters/includes/sign-in.php:463
+msgid "Add a passkey on each phone or computer you use. Next time, choose \"Sign in with a passkey\" and confirm with Face ID, your fingerprint or the screen lock. No password to remember, and nothing anyone can guess."
+msgstr "Πρόσθεσε ένα passkey σε κάθε τηλέφωνο ή υπολογιστή που χρησιμοποιείς. Την επόμενη φορά, επίλεξε «Σύνδεση με passkey» και επιβεβαίωσε με Face ID, το δακτυλικό σου αποτύπωμα ή το κλείδωμα οθόνης. Κανένας κωδικός για να θυμάσαι και τίποτα που μπορεί να μαντέψει κανείς."
+
+#: plugins/ws-chapters/includes/sign-in.php:465
+msgid "Add a passkey on this device"
+msgstr "Προσθήκη passkey σε αυτή τη συσκευή"
+
+#: plugins/ws-chapters/includes/sign-in.php:467
+msgid "This browser cannot use passkeys. You can still sign in with an email code."
+msgstr "Αυτό το πρόγραμμα περιήγησης δεν μπορεί να χρησιμοποιήσει passkeys. Μπορείς ακόμη να συνδεθείς με κωδικό μέσω email."
+
+#: plugins/ws-chapters/includes/sign-in.php:87
+msgid "Your sign-in code for Widows Sons Europe"
+msgstr "Ο κωδικός σύνδεσής σου για το Widows Sons Europe"
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:89
+msgid "Your code is %s. It works once, for 15 minutes."
+msgstr "Ο κωδικός σου είναι %s. Λειτουργεί μία φορά, για 15 λεπτά."
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:90
+msgid "Your sign-in code"
+msgstr "Ο κωδικός σύνδεσής σου"
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:91
+msgid "Type this code on the Widows Sons Europe sign-in screen (in the browser or the app on your home screen):"
+msgstr "Πληκτρολόγησε αυτόν τον κωδικό στην οθόνη σύνδεσης του Widows Sons Europe (στο πρόγραμμα περιήγησης ή στην εφαρμογή της αρχικής σου οθόνης):"
+
+#: plugins/ws-chapters/includes/sign-in.php:93
+msgid "Or sign me in here"
+msgstr "Ή σύνδεσέ με εδώ"
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:97
+msgid "The code and the button work once, for %d minutes. You do not need a password."
+msgstr "Ο κωδικός και το κουμπί λειτουργούν μία φορά, για %d λεπτά. Δεν χρειάζεσαι κωδικό πρόσβασης."
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:98
+msgid "If you did not ask for this, you can ignore this email: nobody can sign in without it."
+msgstr "Αν δεν το ζήτησες εσύ, μπορείς να αγνοήσεις αυτό το email: κανείς δεν μπορεί να συνδεθεί χωρίς αυτό."
+
+#: plugins/ws-chapters/ws-chapters.php:100
+msgid "National Grand Chapters"
+msgstr "Εθνικά Grand Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:317
+msgid "Widows Sons emblem"
+msgstr "Έμβλημα των Widows Sons"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/ws-chapters.php:352
+msgid "Official patch of %s"
+msgstr "Επίσημο patch: %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/ws-chapters.php:360
+msgid "Official logo of %s"
+msgstr "Επίσημο λογότυπο: %s"
+
+#. translators: %s: country / national organisation name
+#: plugins/ws-chapters/ws-chapters.php:368
+msgid "National logo of %s"
+msgstr "Εθνικό λογότυπο: %s"
+
+#: plugins/ws-chapters/ws-chapters.php:369
+msgid "Official national logo pending"
+msgstr "Το επίσημο εθνικό λογότυπο εκκρεμεί"
+
+#: plugins/ws-chapters/ws-chapters.php:37
+msgid "Back patch"
+msgstr "Patch πλάτης"
+
+#: plugins/ws-chapters/ws-chapters.php:37
+msgid "Official chapter patch not yet provided"
+msgstr "Το επίσημο patch του Chapter δεν έχει δοθεί ακόμη"
+
+#: plugins/ws-chapters/ws-chapters.php:38
+msgid "Chapter logo"
+msgstr "Λογότυπο Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:38
+msgid "Official chapter logo not yet provided"
+msgstr "Το επίσημο λογότυπο του Chapter δεν έχει δοθεί ακόμη"
+
+#: plugins/ws-chapters/ws-chapters.php:431
+msgid "No official file uploaded. The Widows Sons emblem will be displayed until the chapter uploads its own."
+msgstr "Δεν έχει μεταφορτωθεί επίσημο αρχείο. Θα εμφανίζεται το έμβλημα των Widows Sons μέχρι το Chapter να μεταφορτώσει το δικό του."
+
+#: plugins/ws-chapters/ws-chapters.php:436
+msgid "Replace"
+msgstr "Αντικατάσταση"
+
+#: plugins/ws-chapters/ws-chapters.php:436
+msgid "Upload / select"
+msgstr "Μεταφόρτωση / επιλογή"
+
+#: plugins/ws-chapters/ws-chapters.php:437 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: plugins/ws-chapters/ws-chapters.php:439
+msgid "Upload the official chapter-supplied insignia at high resolution (prefer PNG or WebP with transparency). Do not edit, recolour or crop official artwork."
+msgstr "Μεταφόρτωσε τα επίσημα διακριτικά που παρέχει το Chapter σε υψηλή ανάλυση (κατά προτίμηση PNG ή WebP με διαφάνεια). Μην επεξεργάζεσαι, αλλάζεις χρώματα ή περικόπτεις επίσημα γραφικά."
+
+#: plugins/ws-chapters/ws-chapters.php:441
+msgid "Only administrators with the relevant permissions may modify official insignia."
+msgstr "Μόνο διαχειριστές με τα σχετικά δικαιώματα μπορούν να τροποποιούν τα επίσημα διακριτικά."
+
+#: plugins/ws-chapters/ws-chapters.php:448
+msgid "Official insignia"
+msgstr "Επίσημα διακριτικά"
+
+#: plugins/ws-chapters/ws-chapters.php:458
+msgid "Location (for the map)"
+msgstr "Τοποθεσία (για τον χάρτη)"
+
+#: plugins/ws-chapters/ws-chapters.php:461 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
+msgid "City"
+msgstr "Πόλη"
+
+#: plugins/ws-chapters/ws-chapters.php:462
+msgid "Latitude (optional)"
+msgstr "Γεωγραφικό πλάτος (προαιρετικό)"
+
+#: plugins/ws-chapters/ws-chapters.php:463
+msgid "Longitude (optional)"
+msgstr "Γεωγραφικό μήκος (προαιρετικό)"
+
+#: plugins/ws-chapters/ws-chapters.php:476
+msgid "Pin is at the coordinates entered above."
+msgstr "Η καρφίτσα είναι στις συντεταγμένες που καταχωρίστηκαν παραπάνω."
+
+#: plugins/ws-chapters/ws-chapters.php:477
+msgid "Pin is at the city, looked up automatically."
+msgstr "Η καρφίτσα είναι στην πόλη, που εντοπίστηκε αυτόματα."
+
+#: plugins/ws-chapters/ws-chapters.php:478
+msgid "No city yet: the pin is on the capital of the chapter's country."
+msgstr "Δεν υπάρχει ακόμη πόλη: η καρφίτσα είναι στην πρωτεύουσα της χώρας του Chapter."
+
+#: plugins/ws-chapters/ws-chapters.php:480
+msgid "Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter's country."
+msgstr "Εισήγαγε την πόλη και αποθήκευσε: η θέση στον χάρτη βρίσκεται αυτόματα. Συμπλήρωσε γεωγραφικό πλάτος/μήκος μόνο για να τοποθετήσεις την καρφίτσα σε ακριβές σημείο (π.χ. κάνε δεξί κλικ στον τόπο συνάντησης στο Google Maps για να τα αντιγράψεις). Χωρίς πόλη, η καρφίτσα μπαίνει στην πρωτεύουσα της χώρας του Chapter."
+
+#: plugins/ws-chapters/ws-chapters.php:49 plugins/ws-chapters/includes/access.php:234 plugins/ws-chapters/includes/display.php:279 plugins/ws-chapters/includes/front-edit.php:461 plugins/ws-chapters/includes/pages.php:493
+msgid "Chapters"
+msgstr "Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:50 plugins/ws-chapters/includes/edit-form.php:124 plugins/ws-chapters/includes/forms.php:503 plugins/ws-chapters/includes/forms.php:538 plugins/ws-chapters/includes/forms.php:672
+msgid "Chapter"
+msgstr "Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:51 plugins/ws-chapters/ws-chapters.php:52
+msgid "Add chapter"
+msgstr "Προσθήκη Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:528 plugins/ws-chapters/ws-chapters.php:536 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/includes/front-edit.php:48
+msgid "National logo"
+msgstr "Εθνικό λογότυπο"
+
+#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:540
+msgid "Flag (country code)"
+msgstr "Σημαία (κωδικός χώρας)"
+
+#: plugins/ws-chapters/ws-chapters.php:53
+msgid "Edit chapter"
+msgstr "Επεξεργασία Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:531 plugins/ws-chapters/ws-chapters.php:542
+msgid "Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag."
+msgstr "Διψήφιος κωδικός χώρας, π.χ. bg, de, gb (gb-sct για Σκωτία, gb-eng Αγγλία, gb-wls Ουαλία). Χρησιμοποιείται για την εμφάνιση της σημαίας."
+
+#: plugins/ws-chapters/ws-chapters.php:54
+msgid "New chapter"
+msgstr "Νέο Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:55
+msgid "View chapter"
+msgstr "Προβολή Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:395
+msgid "All chapters"
+msgstr "Όλα τα Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:57
+msgid "Search chapters"
+msgstr "Αναζήτηση Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:58
+msgid "No chapters found."
+msgstr "Δεν βρέθηκαν Chapters."
+
+#: plugins/ws-chapters/ws-chapters.php:59
+msgid "No chapters in the Trash."
+msgstr "Δεν υπάρχουν Chapters στον Κάδο."
+
+#: plugins/ws-chapters/ws-chapters.php:60 plugins/ws-chapters/includes/front-edit.php:47 plugins/ws-chapters/includes/front-edit.php:55 plugins/ws-chapters/includes/profile-fields.php:165 plugins/ws-chapters/includes/profile-fields.php:166
+msgid "Header photo"
+msgstr "Φωτογραφία κεφαλίδας"
+
+#: plugins/ws-chapters/ws-chapters.php:61
+msgid "Set header photo"
+msgstr "Ορισμός φωτογραφίας κεφαλίδας"
+
+#: plugins/ws-chapters/ws-chapters.php:62
+msgid "Remove header photo"
+msgstr "Αφαίρεση φωτογραφίας κεφαλίδας"
+
+#: plugins/ws-chapters/ws-chapters.php:63
+msgid "Use as header photo"
+msgstr "Χρήση ως φωτογραφία κεφαλίδας"
+
+#: plugins/ws-chapters/ws-chapters.php:64
+msgid "Chapter published."
+msgstr "Το Chapter δημοσιεύτηκε."
+
+#: plugins/ws-chapters/ws-chapters.php:65
+msgid "Chapter updated."
+msgstr "Το Chapter ενημερώθηκε."
+
+#: plugins/ws-chapters/ws-chapters.php:85 plugins/ws-chapters/ws-chapters.php:87 plugins/ws-chapters/includes/access.php:230 plugins/ws-chapters/includes/display.php:278 plugins/ws-chapters/includes/front-edit.php:457
+msgid "Countries"
+msgstr "Χώρες"
+
+#: plugins/ws-chapters/ws-chapters.php:86 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:199 plugins/ws-chapters/includes/forms.php:386 plugins/ws-chapters/includes/forms.php:502
+msgid "Country"
+msgstr "Χώρα"
+
+#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:394
+msgid "All countries"
+msgstr "Όλες οι χώρες"
+
+#: plugins/ws-chapters/ws-chapters.php:89
+msgid "Edit country"
+msgstr "Επεξεργασία χώρας"
+
+#: plugins/ws-chapters/ws-chapters.php:90 plugins/ws-chapters/includes/pages.php:97
+msgid "View country"
+msgstr "Προβολή χώρας"
+
+#: plugins/ws-chapters/ws-chapters.php:91
+msgid "Update country"
+msgstr "Ενημέρωση χώρας"
+
+#: plugins/ws-chapters/ws-chapters.php:92
+msgid "Add country"
+msgstr "Προσθήκη χώρας"
+
+#: plugins/ws-chapters/ws-chapters.php:93
+msgid "New country name"
+msgstr "Όνομα νέας χώρας"
+
+#: plugins/ws-chapters/ws-chapters.php:94
+msgid "Search countries"
+msgstr "Αναζήτηση χωρών"
+
+#: plugins/ws-chapters/ws-chapters.php:95
+msgid "Parent country"
+msgstr "Γονική χώρα"
+
+#: plugins/ws-chapters/ws-chapters.php:96
+msgid "Parent country:"
+msgstr "Γονική χώρα:"
+
+#: plugins/ws-chapters/ws-chapters.php:97
+msgid "No countries found."
+msgstr "Δεν βρέθηκαν χώρες."
+
+#: plugins/ws-chapters/ws-chapters.php:98
+msgid "&larr; Go to countries"
+msgstr "&larr; Μετάβαση στις χώρες"

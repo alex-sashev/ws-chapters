@@ -17,6 +17,9 @@ defined( 'ABSPATH' ) || exit;
 
 const WS_FULLCALENDAR_URL = 'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.15/index.global.min.js';
 const WS_FULLCALENDAR_SRI = 'sha384-B1OFx8Gy9GjPu8UbUyXbGQpzll9ubAUQ9agInFJ8NnD7nYG1u/CLR+Sqr5yifl4q';
+// Month and day names in the other site languages (not on cdnjs; jsDelivr, already used for the map).
+const WS_FULLCALENDAR_LOCALES     = 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js';
+const WS_FULLCALENDAR_LOCALES_SRI = 'sha384-hPdl4OSy73g1XGQaIGe0XKUQyXagcNhzsZbkKn8LDtWWiDfEzxK3LhU+VoQLsPnS';
 
 /** First and last day of an event (Y-m-d); the last day is the start day when there is no end date. */
 function ws_event_days( $event_id ) {
@@ -70,7 +73,9 @@ add_action( 'init', function () {
 		wp_localize_script( 'ws-calendar', 'wsCalendar', array(
 			'lib'    => WS_FULLCALENDAR_URL,
 			'sri'    => WS_FULLCALENDAR_SRI,
-			'locale' => substr( get_locale(), 0, 2 ),
+			'locale' => function_exists( 'ws_lang' ) ? ws_lang() : 'en',
+			'locales'    => WS_FULLCALENDAR_LOCALES,
+			'localesSri' => WS_FULLCALENDAR_LOCALES_SRI,
 			'today'  => __( 'Today', 'ws-chapters' ),
 			'none'   => __( 'No events in this period.', 'ws-chapters' ),
 			'failed' => __( 'The calendar could not be loaded. Please use the list.', 'ws-chapters' ),

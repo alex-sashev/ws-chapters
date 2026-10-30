@@ -29,19 +29,24 @@
 		}
 		return small() ? 'listMonth' : 'dayGridMonth';
 	}
+	function script( src, sri ) {
+		return new Promise( function ( resolve, reject ) {
+			var s = document.createElement( 'script' );
+			s.src = src;
+			s.integrity = sri;
+			s.crossOrigin = 'anonymous';
+			s.onload = resolve;
+			s.onerror = reject;
+			document.head.appendChild( s );
+		} );
+	}
 	function load() {
-		if ( window.FullCalendar ) {
-			return Promise.resolve();
-		}
 		if ( ! loading ) {
-			loading = new Promise( function ( resolve, reject ) {
-				var s = document.createElement( 'script' );
-				s.src = cfg.lib;
-				s.integrity = cfg.sri;
-				s.crossOrigin = 'anonymous';
-				s.onload = resolve;
-				s.onerror = reject;
-				document.head.appendChild( s );
+			loading = ( window.FullCalendar ? Promise.resolve() : script( cfg.lib, cfg.sri ) ).then( function () {
+				// Month and day names in the site's language; English if they cannot be fetched.
+				if ( cfg.locale && 'en' !== cfg.locale && cfg.locales ) {
+					return script( cfg.locales, cfg.localesSri ).catch( function () {} );
+				}
 			} );
 		}
 		return loading;

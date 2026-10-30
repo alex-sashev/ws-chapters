@@ -1,0 +1,2837 @@
+msgid ""
+msgstr ""
+"Language: fr_FR\\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\\n"
+
+#: plugins/ws-chapters/includes/access.php:228
+msgid "Widows Sons access"
+msgstr "Accès Widows Sons"
+
+#: plugins/ws-chapters/includes/access.php:229
+msgid "Widows Sons access — assign allowed countries to Country Admins and allowed chapters to Chapter Editors."
+msgstr "Accès Widows Sons — attribuez les pays autorisés aux Country Admins et les Chapters autorisés aux Chapter Editors."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/access.php:263 plugins/ws-chapters/includes/access.php:263
+msgid "Country: %s"
+msgstr "Pays : %s"
+
+#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:16
+msgid "Country Admin"
+msgstr "Country Admin"
+
+#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:16
+msgid "Chapter Editor"
+msgstr "Chapter Editor"
+
+#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:309 plugins/ws-chapters/includes/member-management.php:376 plugins/ws-chapters/includes/member-management.php:401
+msgid "Road name"
+msgstr "Road name"
+
+#: plugins/ws-chapters/includes/accounts.php:72
+msgid "<strong>Error:</strong> Please log in with your email address, not your road name."
+msgstr "<strong>Erreur :</strong> veuillez vous connecter avec votre adresse e-mail, et non avec votre road name."
+
+#: plugins/ws-chapters/includes/app.php:102
+msgid "No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code)."
+msgstr "Aucune passkey n'a été utilisée. Si vous n'en avez pas encore ajouté, connectez-vous d'abord avec un code par e-mail, puis ajoutez une passkey dans Mon profil. Une passkey fonctionne sur l'appareil où vous l'avez ajoutée (ou avec ce téléphone, en scannant le QR code)."
+
+#: plugins/ws-chapters/includes/app.php:103
+msgid "No passkey was added."
+msgstr "Aucune passkey n'a été ajoutée."
+
+#: plugins/ws-chapters/includes/app.php:104
+msgid "That did not work. Please try again, or use an email code."
+msgstr "Cela n'a pas fonctionné. Veuillez réessayer ou utiliser un code par e-mail."
+
+#: plugins/ws-chapters/includes/app.php:105
+msgid "No passkey for this site was found on this device. Sign in with an email code, then add a passkey on My profile."
+msgstr "Aucune passkey pour ce site n'a été trouvée sur cet appareil. Connectez-vous avec un code par e-mail, puis ajoutez une passkey dans Mon profil."
+
+#: plugins/ws-chapters/includes/app.php:106
+msgid "This device already has a passkey for your account."
+msgstr "Cet appareil a déjà une passkey pour votre compte."
+
+#: plugins/ws-chapters/includes/app.php:107
+msgid "This browser cannot add passkeys. Please update it, or use Safari or Chrome."
+msgstr "Ce navigateur ne peut pas ajouter de passkeys. Veuillez le mettre à jour, ou utiliser Safari ou Chrome."
+
+#: plugins/ws-chapters/includes/app.php:108 plugins/ws-chapters/includes/sign-in.php:380
+msgid "Passkey"
+msgstr "Passkey"
+
+#: plugins/ws-chapters/includes/app.php:109
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr ?"
+
+#: plugins/ws-chapters/includes/app.php:116
+msgid "Add to home screen"
+msgstr "Ajouter à l'écran d'accueil"
+
+#: plugins/ws-chapters/includes/app.php:117
+msgid "On iPhone or iPad: open this site in Safari, tap the Share button (the square with an arrow), then \"Add to Home Screen\"."
+msgstr "Sur iPhone ou iPad : ouvrez ce site dans Safari, touchez le bouton Partager (le carré avec une flèche), puis « Sur l'écran d'accueil »."
+
+#: plugins/ws-chapters/includes/app.php:118
+msgid "In your browser's menu, choose \"Install app\" or \"Add to Home screen\"."
+msgstr "Dans le menu de votre navigateur, choisissez « Installer l'application » ou « Ajouter à l'écran d'accueil »."
+
+#: plugins/ws-chapters/includes/app.php:119
+msgid "You are using the app. ✓"
+msgstr "Vous utilisez l'application. ✓"
+
+#: plugins/ws-chapters/includes/app.php:124
+msgid "Widows Sons Europe on your home screen"
+msgstr "Widows Sons Europe sur votre écran d'accueil"
+
+#: plugins/ws-chapters/includes/app.php:125
+msgid "Add the site to your phone's home screen: it opens full screen with our emblem, like an app, and you stay signed in."
+msgstr "Ajoutez le site à l'écran d'accueil de votre téléphone : il s'ouvre en plein écran avec notre emblème, comme une application, et vous restez connecté."
+
+#: plugins/ws-chapters/includes/app.php:135
+msgid "Get the app"
+msgstr "Obtenir l'application"
+
+#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:308
+msgid "Close"
+msgstr "Fermer"
+
+#: plugins/ws-chapters/includes/app.php:45
+msgid "Widows Sons Europe: chapters, events, news and the members' area."
+msgstr "Widows Sons Europe : Chapters, événements, actualités et espace membres."
+
+#: plugins/ws-chapters/includes/app.php:78
+msgid "You are offline"
+msgstr "Vous êtes hors ligne"
+
+#: plugins/ws-chapters/includes/app.php:79
+msgid "Widows Sons Europe needs an internet connection. Please check it and try again."
+msgstr "Widows Sons Europe nécessite une connexion Internet. Veuillez la vérifier et réessayer."
+
+#: plugins/ws-chapters/includes/app.php:80
+msgid "Try again"
+msgstr "Réessayer"
+
+#. translators: %d: number of images allowed
+#: plugins/ws-chapters/includes/content-edit.php:103
+msgid "At most %d images in total. Remove some first."
+msgstr "%d images au maximum au total. Supprimez-en d'abord quelques-unes."
+
+#: plugins/ws-chapters/includes/content-edit.php:111 plugins/ws-chapters/includes/front-edit.php:185
+msgid "The image \"%s\" is too large or could not be uploaded (8 MB each at most)."
+msgstr "L'image « %s » est trop volumineuse ou n'a pas pu être téléversée (8 Mo maximum chacune)."
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/content-edit.php:115 plugins/ws-chapters/includes/forms.php:304 plugins/ws-chapters/includes/front-edit.php:189
+msgid "\"%s\" is not an image. Please use JPG, PNG, WebP or GIF."
+msgstr "« %s » n'est pas une image. Veuillez utiliser JPG, PNG, WebP ou GIF."
+
+#: plugins/ws-chapters/includes/content-edit.php:166
+msgid "Images (up to 5: the first is the main image, the rest are the gallery)"
+msgstr "Images (jusqu'à 5 : la première est l'image principale, les autres forment la galerie)"
+
+#: plugins/ws-chapters/includes/content-edit.php:169
+msgid "Position"
+msgstr "Position"
+
+#: plugins/ws-chapters/includes/content-edit.php:172
+msgid "Add images"
+msgstr "Ajouter des images"
+
+#: plugins/ws-chapters/includes/content-edit.php:187
+msgid "You cannot change this item, or the form has expired."
+msgstr "Vous ne pouvez pas modifier cet élément, ou le formulaire a expiré."
+
+#: plugins/ws-chapters/includes/content-edit.php:193
+msgid "The item has been deleted. It can be restored from the Trash in the WordPress admin."
+msgstr "L'élément a été supprimé. Il peut être restauré depuis la corbeille dans l'administration WordPress."
+
+#: plugins/ws-chapters/includes/content-edit.php:199
+msgid "Please add a title."
+msgstr "Veuillez ajouter un titre."
+
+#: plugins/ws-chapters/includes/content-edit.php:204
+msgid "Please add the text."
+msgstr "Veuillez ajouter le texte."
+
+#: plugins/ws-chapters/includes/content-edit.php:213
+msgid "Please add the start date."
+msgstr "Veuillez ajouter la date de début."
+
+#: plugins/ws-chapters/includes/content-edit.php:215 plugins/ws-chapters/includes/forms.php:205 plugins/ws-chapters/includes/forms.php:383
+msgid "The end date is before the start date."
+msgstr "La date de fin est antérieure à la date de début."
+
+#: plugins/ws-chapters/includes/content-edit.php:234
+msgid "Please choose a type and a date."
+msgstr "Veuillez choisir un type et une date."
+
+#: plugins/ws-chapters/includes/content-edit.php:236
+msgid "Please add a web address starting with https://"
+msgstr "Veuillez ajouter une adresse web commençant par https://"
+
+#: plugins/ws-chapters/includes/content-edit.php:272
+msgid "Your changes are saved."
+msgstr "Vos modifications sont enregistrées."
+
+#: plugins/ws-chapters/includes/content-edit.php:283
+msgid "Please sign in to edit."
+msgstr "Veuillez vous connecter pour modifier."
+
+#: plugins/ws-chapters/includes/content-edit.php:290
+msgid "You cannot edit this item."
+msgstr "Vous ne pouvez pas modifier cet élément."
+
+#: plugins/ws-chapters/includes/content-edit.php:310 plugins/ws-chapters/includes/content-edit.php:334 plugins/ws-chapters/includes/front-edit.php:424 plugins/ws-chapters/includes/front-edit.php:439 plugins/ws-chapters/includes/front-edit.php:468
+msgid "Title"
+msgstr "Titre"
+
+#: plugins/ws-chapters/includes/content-edit.php:311 plugins/ws-chapters/includes/members.php:257 plugins/ws-chapters/includes/members.php:376 plugins/ws-chapters/includes/members.php:395
+msgid "Date"
+msgstr "Date"
+
+#: plugins/ws-chapters/includes/content-edit.php:312 plugins/ws-chapters/includes/front-edit.php:425
+msgid "The news"
+msgstr "L'actualité"
+
+#: plugins/ws-chapters/includes/content-edit.php:315 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:380
+msgid "Event name"
+msgstr "Nom de l'événement"
+
+#: plugins/ws-chapters/includes/content-edit.php:317 plugins/ws-chapters/includes/events.php:265 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:382
+msgid "Start date"
+msgstr "Date de début"
+
+#: plugins/ws-chapters/includes/content-edit.php:318 plugins/ws-chapters/includes/forms.php:383
+msgid "End date"
+msgstr "Date de fin"
+
+#: plugins/ws-chapters/includes/content-edit.php:319 plugins/ws-chapters/includes/forms.php:384
+msgid "Start time"
+msgstr "Heure de début"
+
+#: plugins/ws-chapters/includes/content-edit.php:321 plugins/ws-chapters/includes/forms.php:389
+msgid "Venue or meeting point"
+msgstr "Lieu ou point de rendez-vous"
+
+#: plugins/ws-chapters/includes/content-edit.php:322 plugins/ws-chapters/includes/forms.php:391
+msgid "Organising chapter"
+msgstr "Chapter organisateur"
+
+#: plugins/ws-chapters/includes/content-edit.php:322 plugins/ws-chapters/includes/forms.php:391
+msgid "— Not a listed chapter —"
+msgstr "— Chapter non répertorié —"
+
+#: plugins/ws-chapters/includes/content-edit.php:323 plugins/ws-chapters/includes/forms.php:392
+msgid "Or organiser name"
+msgstr "Ou nom de l'organisateur"
+
+#: plugins/ws-chapters/includes/content-edit.php:325 plugins/ws-chapters/includes/content-edit.php:339 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:394 plugins/ws-chapters/includes/links.php:59
+msgid "Description"
+msgstr "Description"
+
+#: plugins/ws-chapters/includes/content-edit.php:326 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:395
+msgid "Contact details for riders"
+msgstr "Coordonnées pour les motards"
+
+#: plugins/ws-chapters/includes/content-edit.php:336 plugins/ws-chapters/includes/members.php:254 plugins/ws-chapters/includes/members.php:317 plugins/ws-chapters/includes/members.php:370 plugins/ws-chapters/includes/members.php:376
+msgid "Type"
+msgstr "Type"
+
+#: plugins/ws-chapters/includes/content-edit.php:337 plugins/ws-chapters/includes/members.php:415
+msgid "Document date"
+msgstr "Date du document"
+
+#: plugins/ws-chapters/includes/content-edit.php:340
+msgid "Web address (for the Link type)"
+msgstr "Adresse web (pour le type Lien)"
+
+#: plugins/ws-chapters/includes/content-edit.php:341
+msgid "Replace the file (optional)"
+msgstr "Remplacer le fichier (facultatif)"
+
+#: plugins/ws-chapters/includes/content-edit.php:344
+msgid "Edit news"
+msgstr "Modifier l'actualité"
+
+#: plugins/ws-chapters/includes/content-edit.php:344 plugins/ws-chapters/includes/events.php:22
+msgid "Edit event"
+msgstr "Modifier l'événement"
+
+#: plugins/ws-chapters/includes/content-edit.php:344
+msgid "Edit document"
+msgstr "Modifier le document"
+
+#: plugins/ws-chapters/includes/content-edit.php:350 plugins/ws-chapters/includes/links.php:133
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+#: plugins/ws-chapters/includes/content-edit.php:351
+msgid "Go back"
+msgstr "Retour"
+
+#: plugins/ws-chapters/includes/content-edit.php:352
+msgid "Delete"
+msgstr "Supprimer"
+
+#: plugins/ws-chapters/includes/content-edit.php:355
+msgid "Delete this for everyone? It moves to the Trash and can be restored from the WordPress admin."
+msgstr "Supprimer ceci pour tout le monde ? L'élément est placé dans la corbeille et peut être restauré depuis l'administration WordPress."
+
+#: plugins/ws-chapters/includes/content-edit.php:355 plugins/ws-chapters/includes/front-edit.php:350
+msgid "Deleting…"
+msgstr "Suppression…"
+
+#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:833
+msgid "Edit"
+msgstr "Modifier"
+
+#. translators: %s: Grand Chapter / country name
+#: plugins/ws-chapters/includes/display.php:108
+msgid "Flag of %s"
+msgstr "Drapeau : %s"
+
+#: plugins/ws-chapters/includes/display.php:170 plugins/ws-chapters/includes/pages.php:418
+msgid "No chapters listed yet."
+msgstr "Aucun Chapter répertorié pour le moment."
+
+#: plugins/ws-chapters/includes/display.php:188 plugins/ws-chapters/includes/members.php:28
+msgid "Other"
+msgstr "Autre"
+
+#. translators: %d: number of chapters
+#: plugins/ws-chapters/includes/display.php:269 plugins/ws-chapters/includes/pages.php:406
+msgid "%d chapter"
+msgid_plural "%d chapters"
+msgstr[0] "%d Chapter"
+msgstr[1] "%d Chapters"
+
+#: plugins/ws-chapters/includes/display.php:280
+msgid "Widows Sons founded, Illinois, USA"
+msgstr "Fondation des Widows Sons, Illinois, États-Unis"
+
+#: plugins/ws-chapters/includes/display.php:52
+msgid "+ Choose photos"
+msgstr "+ Choisir des photos"
+
+#: plugins/ws-chapters/includes/display.php:53
+msgid "+ Add more photos"
+msgstr "+ Ajouter d'autres photos"
+
+#: plugins/ws-chapters/includes/display.php:54
+msgid "or drag them here"
+msgstr "ou faites-les glisser ici"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:56
+msgid "%1$s of %2$s"
+msgstr "%1$s sur %2$s"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:57
+msgid "Main image"
+msgstr "Image principale"
+
+#. translators: 1: photos chosen, 2: most allowed
+#: plugins/ws-chapters/includes/display.php:58
+msgid "Make main"
+msgstr "Définir comme principale"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:60
+msgid "Remove %s"
+msgstr "Retirer %s"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:61
+msgid "Photo limit reached"
+msgstr "Limite de photos atteinte"
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:62
+msgid "No room for more photos: remove one first"
+msgstr "Plus de place pour d'autres photos : retirez-en une d'abord"
+
+#. translators: %s: most allowed
+#: plugins/ws-chapters/includes/display.php:64
+msgid "You can add up to %s photos here; the rest were left out."
+msgstr "Vous pouvez ajouter jusqu'à %s photos ici ; les autres n'ont pas été retenues."
+
+#. translators: %s: file name
+#: plugins/ws-chapters/includes/display.php:66
+msgid "%s is not a JPG, PNG, WebP or GIF image and was left out."
+msgstr "%s n'est pas une image JPG, PNG, WebP ou GIF et n'a pas été retenu."
+
+#. translators: 1: file name, 2: size in MB
+#: plugins/ws-chapters/includes/display.php:68
+msgid "%1$s is larger than %2$s MB and was left out."
+msgstr "%1$s dépasse %2$s Mo et n'a pas été retenu."
+
+#: plugins/ws-chapters/includes/edit-form.php:124 plugins/ws-chapters/includes/events.php:19
+msgid "Event"
+msgstr "Événement"
+
+#: plugins/ws-chapters/includes/edit-form.php:127
+msgid "View page"
+msgstr "Voir la page"
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:130 plugins/ws-chapters/includes/edit-form.php:131
+msgid "%s updated."
+msgstr "%s mis à jour."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:132
+msgid "%s published."
+msgstr "%s publié."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:133
+msgid "%s saved."
+msgstr "%s enregistré."
+
+#. translators: %s: Chapter or Event
+#: plugins/ws-chapters/includes/edit-form.php:134
+msgid "%s submitted."
+msgstr "%s soumis."
+
+#: plugins/ws-chapters/includes/edit-form.php:135
+msgid "%s draft updated."
+msgstr "Brouillon de %s mis à jour."
+
+#: plugins/ws-chapters/includes/edit-form.php:39
+msgid "Fill in the fields below. The page layout is the same for every chapter and is set by the site design, so you only need to add your text, photos, insignia and contact details."
+msgstr "Remplissez les champs ci-dessous. La mise en page est la même pour chaque Chapter et définie par le design du site : il vous suffit d'ajouter votre texte, vos photos, vos insignes et vos coordonnées."
+
+#: plugins/ws-chapters/includes/edit-form.php:40
+msgid "Fill in the fields below. The event page layout is set by the site design."
+msgstr "Remplissez les champs ci-dessous. La mise en page de l'événement est définie par le design du site."
+
+#: plugins/ws-chapters/includes/emails.php:55
+msgid "If the button does not work, copy this link into your browser:"
+msgstr "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :"
+
+#: plugins/ws-chapters/includes/emails.php:96
+msgid "You receive this email because a Widows Sons Europe admin added you to the members' area."
+msgstr "Vous recevez cet e-mail parce qu'un administrateur de Widows Sons Europe vous a ajouté à l'espace membres."
+
+#: plugins/ws-chapters/includes/event-calendar.php:147
+msgid "Add to calendar"
+msgstr "Ajouter au calendrier"
+
+#: plugins/ws-chapters/includes/event-calendar.php:148
+msgid "Google Calendar"
+msgstr "Google Agenda"
+
+#: plugins/ws-chapters/includes/event-calendar.php:149
+msgid "Outlook.com"
+msgstr "Outlook.com"
+
+#: plugins/ws-chapters/includes/event-calendar.php:150
+msgid "Office 365 / Outlook at work"
+msgstr "Office 365 / Outlook professionnel"
+
+#: plugins/ws-chapters/includes/event-calendar.php:151
+msgid "Apple Calendar"
+msgstr "Calendrier Apple"
+
+#: plugins/ws-chapters/includes/event-calendar.php:152
+msgid "Other calendar (.ics file)"
+msgstr "Autre calendrier (fichier .ics)"
+
+#. translators: %s: start time
+#: plugins/ws-chapters/includes/event-calendar.php:43
+msgid "Starts at %s (local time)."
+msgstr "Début à %s (heure locale)."
+
+#: plugins/ws-chapters/includes/event-calendar.php:79
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: plugins/ws-chapters/includes/event-calendar.php:80
+msgid "No events in this period."
+msgstr "Aucun événement sur cette période."
+
+#: plugins/ws-chapters/includes/event-calendar.php:81
+msgid "The calendar could not be loaded. Please use the list."
+msgstr "Le calendrier n'a pas pu être chargé. Veuillez utiliser la liste."
+
+#: plugins/ws-chapters/includes/event-calendar.php:92 plugins/ws-chapters/includes/front-edit.php:401
+msgid "Submit an event"
+msgstr "Proposer un événement"
+
+#: plugins/ws-chapters/includes/event-calendar.php:93 plugins/ws-chapters/includes/pages.php:331
+msgid "Past events"
+msgstr "Événements passés"
+
+#: plugins/ws-chapters/includes/event-calendar.php:96
+msgid "View"
+msgstr "Affichage"
+
+#: plugins/ws-chapters/includes/event-calendar.php:97
+msgid "List"
+msgstr "Liste"
+
+#: plugins/ws-chapters/includes/event-calendar.php:98
+msgid "Month"
+msgstr "Mois"
+
+#: plugins/ws-chapters/includes/event-calendar.php:99
+msgid "Week"
+msgstr "Semaine"
+
+#: plugins/ws-chapters/includes/events.php:135 plugins/ws-chapters/includes/events.php:243
+msgid "Organised by"
+msgstr "Organisé par"
+
+#: plugins/ws-chapters/includes/events.php:157
+msgid "Hosted by"
+msgstr "Accueilli par"
+
+#: plugins/ws-chapters/includes/events.php:18 plugins/ws-chapters/includes/pages.php:494 plugins/ws-chapters/includes/pages.php:544
+msgid "Events"
+msgstr "Événements"
+
+#: plugins/ws-chapters/includes/events.php:20 plugins/ws-chapters/includes/events.php:21
+msgid "Add event"
+msgstr "Ajouter un événement"
+
+#: plugins/ws-chapters/includes/events.php:209
+msgid "No upcoming events have been published yet. Explore past gatherings below:"
+msgstr "Aucun événement à venir n'a encore été publié. Découvrez les rassemblements passés ci-dessous :"
+
+#: plugins/ws-chapters/includes/events.php:213
+msgid "No past events are listed yet."
+msgstr "Aucun événement passé n'est encore répertorié."
+
+#: plugins/ws-chapters/includes/events.php:213
+msgid "No upcoming events have been published yet."
+msgstr "Aucun événement à venir n'a encore été publié."
+
+#: plugins/ws-chapters/includes/events.php:226
+msgid "Photos"
+msgstr "Photos"
+
+#: plugins/ws-chapters/includes/events.php:23
+msgid "View event"
+msgstr "Voir l'événement"
+
+#: plugins/ws-chapters/includes/events.php:24
+msgid "All events"
+msgstr "Tous les événements"
+
+#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:744
+msgid "When"
+msgstr "Quand"
+
+#: plugins/ws-chapters/includes/events.php:241
+msgid "from %s"
+msgstr "à partir de %s"
+
+#: plugins/ws-chapters/includes/events.php:242
+msgid "Where"
+msgstr "Où"
+
+#: plugins/ws-chapters/includes/events.php:244 plugins/ws-chapters/includes/pages.php:497 plugins/ws-chapters/includes/pages.php:547
+msgid "Contact"
+msgstr "Contact"
+
+#: plugins/ws-chapters/includes/events.php:25
+msgid "Search events"
+msgstr "Rechercher des événements"
+
+#: plugins/ws-chapters/includes/events.php:259
+msgid "Event details"
+msgstr "Détails de l'événement"
+
+#: plugins/ws-chapters/includes/events.php:26
+msgid "No events found."
+msgstr "Aucun événement trouvé."
+
+#: plugins/ws-chapters/includes/events.php:266
+msgid "End date (optional)"
+msgstr "Date de fin (facultatif)"
+
+#: plugins/ws-chapters/includes/events.php:267
+msgid "Start time (optional)"
+msgstr "Heure de début (facultatif)"
+
+#: plugins/ws-chapters/includes/events.php:268
+msgid "Organising chapter / club"
+msgstr "Chapter / club organisateur"
+
+#: plugins/ws-chapters/includes/events.php:269
+msgid "Venue (address or website)"
+msgstr "Lieu (adresse ou site web)"
+
+#: plugins/ws-chapters/includes/events.php:27
+msgid "No events in the Trash."
+msgstr "Aucun événement dans la corbeille."
+
+#: plugins/ws-chapters/includes/events.php:270
+msgid "City, country"
+msgstr "Ville, pays"
+
+#: plugins/ws-chapters/includes/events.php:272 plugins/ws-chapters/includes/profile-fields.php:168
+msgid "Contact details"
+msgstr "Coordonnées"
+
+#: plugins/ws-chapters/includes/events.php:276 plugins/ws-chapters/includes/events.php:304
+msgid "Host chapter"
+msgstr "Chapter hôte"
+
+#: plugins/ws-chapters/includes/events.php:276
+msgid "— None —"
+msgstr "— Aucun —"
+
+#: plugins/ws-chapters/includes/events.php:28
+msgid "Event photo"
+msgstr "Photo de l'événement"
+
+#: plugins/ws-chapters/includes/events.php:280
+msgid "The host chapter's official logo is shown with the event."
+msgstr "Le logo officiel du Chapter hôte est affiché avec l'événement."
+
+#: plugins/ws-chapters/includes/events.php:281
+msgid "Event photos"
+msgstr "Photos de l'événement"
+
+#: plugins/ws-chapters/includes/events.php:281
+msgid "The poster is the Featured image (right-hand column). Photos here are shown below the description."
+msgstr "L'affiche est l'image mise en avant (colonne de droite). Les photos ajoutées ici s'affichent sous la description."
+
+#: plugins/ws-chapters/includes/events.php:29
+msgid "Set event photo"
+msgstr "Définir la photo de l'événement"
+
+#: plugins/ws-chapters/includes/events.php:30
+msgid "Remove event photo"
+msgstr "Retirer la photo de l'événement"
+
+#: plugins/ws-chapters/includes/events.php:31
+msgid "Event published."
+msgstr "Événement publié."
+
+#: plugins/ws-chapters/includes/events.php:32
+msgid "Event updated."
+msgstr "Événement mis à jour."
+
+#: plugins/ws-chapters/includes/forms.php:101
+msgid "— Choose a country —"
+msgstr "— Choisissez un pays —"
+
+#: plugins/ws-chapters/includes/forms.php:113
+msgid "— Choose a chapter —"
+msgstr "— Choisissez un Chapter —"
+
+#: plugins/ws-chapters/includes/forms.php:140 plugins/ws-chapters/includes/forms.php:140
+msgid "privacy policy"
+msgstr "politique de confidentialité"
+
+#: plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:410
+msgid "Your name"
+msgstr "Votre nom"
+
+#: plugins/ws-chapters/includes/forms.php:188
+msgid "Your email (a valid address)"
+msgstr "Votre e-mail (une adresse valide)"
+
+#: plugins/ws-chapters/includes/forms.php:191 plugins/ws-chapters/includes/forms.php:543
+msgid "Agreement to the privacy policy"
+msgstr "Acceptation de la politique de confidentialité"
+
+#: plugins/ws-chapters/includes/forms.php:202 plugins/ws-chapters/includes/forms.php:546 plugins/ws-chapters/includes/members.php:263
+msgid "Please fill in:"
+msgstr "Veuillez renseigner :"
+
+#: plugins/ws-chapters/includes/forms.php:219
+msgid "Sorry, something went wrong saving your event. Please try again later."
+msgstr "Désolé, une erreur s'est produite lors de l'enregistrement de votre événement. Veuillez réessayer plus tard."
+
+#: plugins/ws-chapters/includes/forms.php:242
+msgid "Your event is published in the event calendar."
+msgstr "Votre événement est publié dans le calendrier des événements."
+
+#: plugins/ws-chapters/includes/forms.php:242
+msgid "See the event"
+msgstr "Voir l'événement"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:256
+msgid "New event to review: %s"
+msgstr "Nouvel événement à valider : %s"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:258
+msgid "A new event was submitted on the website and is waiting for review."
+msgstr "Un nouvel événement a été proposé sur le site et attend d'être validé."
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:260
+msgid "Event:"
+msgstr "Événement :"
+
+#. translators: %s: event name
+#: plugins/ws-chapters/includes/forms.php:261
+msgid "When:"
+msgstr "Quand :"
+
+#: plugins/ws-chapters/includes/forms.php:262
+msgid "Where:"
+msgstr "Où :"
+
+#: plugins/ws-chapters/includes/forms.php:263
+msgid "Organiser:"
+msgstr "Organisateur :"
+
+#: plugins/ws-chapters/includes/forms.php:264
+msgid "Submitted by:"
+msgstr "Proposé par :"
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:266
+msgid "Images: %d"
+msgstr "Images : %d"
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:268
+msgid "Review and publish it here:"
+msgstr "Validez-le et publiez-le ici :"
+
+#: plugins/ws-chapters/includes/forms.php:273
+msgid "Thank you! Your event has been sent for review. It will appear in the event calendar once an admin approves it."
+msgstr "Merci ! Votre événement a été envoyé pour validation. Il apparaîtra dans le calendrier des événements dès qu'un administrateur l'aura approuvé."
+
+#. translators: 1: file name, 2: size in MB
+#: plugins/ws-chapters/includes/forms.php:299
+msgid "The image \"%1$s\" could not be uploaded. Images can be up to %2$d MB each."
+msgstr "L'image « %1$s » n'a pas pu être téléversée. Les images peuvent faire jusqu'à %2$d Mo chacune."
+
+#. translators: %d: number of images
+#: plugins/ws-chapters/includes/forms.php:310
+msgid "Please send at most %d images."
+msgstr "Veuillez envoyer %d images au maximum."
+
+#: plugins/ws-chapters/includes/forms.php:375
+msgid "Back"
+msgstr "Retour"
+
+#: plugins/ws-chapters/includes/forms.php:379
+msgid "The event"
+msgstr "L'événement"
+
+#: plugins/ws-chapters/includes/forms.php:383
+msgid "If it runs over several days."
+msgstr "S'il se déroule sur plusieurs jours."
+
+#: plugins/ws-chapters/includes/forms.php:389
+msgid "Address, or a website for the venue."
+msgstr "Adresse, ou site web du lieu."
+
+#: plugins/ws-chapters/includes/forms.php:39
+msgid "Your submission could not be accepted."
+msgstr "Votre envoi n'a pas pu être accepté."
+
+#: plugins/ws-chapters/includes/forms.php:392
+msgid "Club, lodge or group, if not a chapter above."
+msgstr "Club, Loge ou groupe, si ce n'est pas un Chapter ci-dessus."
+
+#: plugins/ws-chapters/includes/forms.php:394
+msgid "Programme, route, costs, how to register."
+msgstr "Programme, itinéraire, coûts, modalités d'inscription."
+
+#: plugins/ws-chapters/includes/forms.php:395
+msgid "Shown on the event page: who to contact, email and/or phone."
+msgstr "Affiché sur la page de l'événement : qui contacter, e-mail et/ou téléphone."
+
+#: plugins/ws-chapters/includes/forms.php:396
+msgid "Poster and photos"
+msgstr "Affiche et photos"
+
+#. translators: 1: number of images, 2: size in MB
+#: plugins/ws-chapters/includes/forms.php:399
+msgid "Optional. Up to %1$d images (JPG, PNG, WebP or GIF), %2$d MB each. The first image is shown as the event poster."
+msgstr "Facultatif. Jusqu'à %1$d images (JPG, PNG, WebP ou GIF), %2$d Mo chacune. La première image est affichée comme affiche de l'événement."
+
+#. translators: %s: the member's name
+#: plugins/ws-chapters/includes/forms.php:404
+msgid "Posting as %s. Your event is published as soon as you send it."
+msgstr "Publication en tant que %s. Votre événement est publié dès que vous l'envoyez."
+
+#: plugins/ws-chapters/includes/forms.php:405
+msgid "I acknowledge that this event and its contact details will be shared on the website."
+msgstr "Je reconnais que cet événement et ses coordonnées seront publiés sur le site."
+
+#: plugins/ws-chapters/includes/forms.php:406
+msgid "Publish the event"
+msgstr "Publier l'événement"
+
+#: plugins/ws-chapters/includes/forms.php:409
+msgid "About you (not published)"
+msgstr "À propos de vous (non publié)"
+
+#: plugins/ws-chapters/includes/forms.php:411
+msgid "Your email"
+msgstr "Votre e-mail"
+
+#: plugins/ws-chapters/includes/forms.php:411
+msgid "In case the admins have questions."
+msgstr "Au cas où les administrateurs auraient des questions."
+
+#. translators: %s: link to the privacy policy
+#: plugins/ws-chapters/includes/forms.php:414
+msgid "I agree that the details above are stored to review this event, and that the event and its contact details are published if approved. See our %s."
+msgstr "J'accepte que les informations ci-dessus soient conservées pour valider cet événement, et que l'événement et ses coordonnées soient publiés s'il est approuvé. Consultez notre %s."
+
+#: plugins/ws-chapters/includes/forms.php:415
+msgid "Send for review"
+msgstr "Envoyer pour validation"
+
+#: plugins/ws-chapters/includes/forms.php:424
+msgid "Submitted via the website"
+msgstr "Proposé via le site"
+
+#: plugins/ws-chapters/includes/forms.php:429
+msgid "Check the details, then click Publish to approve. To reject it, move it to the Trash."
+msgstr "Vérifiez les informations, puis cliquez sur Publier pour approuver. Pour le refuser, placez-le dans la corbeille."
+
+#: plugins/ws-chapters/includes/forms.php:44 plugins/ws-chapters/includes/forms.php:47 plugins/ws-chapters/includes/members.php:239
+msgid "The form expired. Please reload the page and try again."
+msgstr "Le formulaire a expiré. Veuillez recharger la page et réessayer."
+
+#: plugins/ws-chapters/includes/forms.php:467 plugins/ws-chapters/includes/forms.php:469
+msgid "Applications"
+msgstr "Candidatures"
+
+#: plugins/ws-chapters/includes/forms.php:468 plugins/ws-chapters/includes/forms.php:470 plugins/ws-chapters/includes/forms.php:684
+msgid "Application"
+msgstr "Candidature"
+
+#: plugins/ws-chapters/includes/forms.php:471
+msgid "Search applications"
+msgstr "Rechercher des candidatures"
+
+#: plugins/ws-chapters/includes/forms.php:472
+msgid "No applications yet."
+msgstr "Aucune candidature pour le moment."
+
+#: plugins/ws-chapters/includes/forms.php:497 plugins/ws-chapters/includes/forms.php:663 plugins/ws-chapters/includes/member-account.php:220
+msgid "First name"
+msgstr "Prénom"
+
+#: plugins/ws-chapters/includes/forms.php:498 plugins/ws-chapters/includes/forms.php:664 plugins/ws-chapters/includes/member-account.php:221
+msgid "Last name"
+msgstr "Nom"
+
+#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:318 plugins/ws-chapters/includes/member-management.php:381
+msgid "Phone"
+msgstr "Téléphone"
+
+#: plugins/ws-chapters/includes/forms.php:50
+msgid "That was quick! Please check the form and send it again."
+msgstr "C'était rapide ! Veuillez vérifier le formulaire et l'envoyer à nouveau."
+
+#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:317 plugins/ws-chapters/includes/member-management.php:380
+msgid "Email"
+msgstr "E-mail"
+
+#: plugins/ws-chapters/includes/forms.php:501
+msgid "Lodge (name and number)"
+msgstr "Loge (nom et numéro)"
+
+#: plugins/ws-chapters/includes/forms.php:504
+msgid "Message"
+msgstr "Message"
+
+#: plugins/ws-chapters/includes/forms.php:530
+msgid "Email (a valid address)"
+msgstr "E-mail (une adresse valide)"
+
+#: plugins/ws-chapters/includes/forms.php:540
+msgid "a chapter in the chosen country"
+msgstr "un Chapter dans le pays choisi"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:556
+msgid "New application to join %s, sent from the Widows Sons Europe website."
+msgstr "Nouvelle candidature pour rejoindre %s, envoyée depuis le site Widows Sons Europe."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:558
+msgid "Name:"
+msgstr "Nom :"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:559
+msgid "Phone:"
+msgstr "Téléphone :"
+
+#: plugins/ws-chapters/includes/forms.php:56
+msgid "Too many submissions from your connection. Please try again in an hour."
+msgstr "Trop d'envois depuis votre connexion. Veuillez réessayer dans une heure."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:560
+msgid "Email:"
+msgstr "E-mail :"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:561
+msgid "Lodge:"
+msgstr "Loge :"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:562 plugins/ws-chapters/includes/front-edit.php:704
+msgid "Country:"
+msgstr "Pays :"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:563 plugins/ws-chapters/includes/front-edit.php:611
+msgid "Chapter:"
+msgstr "Chapter :"
+
+#: plugins/ws-chapters/includes/forms.php:567
+msgid "Message:"
+msgstr "Message :"
+
+#: plugins/ws-chapters/includes/forms.php:571
+msgid "Reply to this email to answer the applicant directly."
+msgstr "Répondez à cet e-mail pour répondre directement au candidat."
+
+#. translators: 1: applicant name, 2: chapter name
+#: plugins/ws-chapters/includes/forms.php:578
+msgid "%1$s → %2$s"
+msgstr "%1$s → %2$s"
+
+#. translators: 1: applicant name, 2: chapter name
+#: plugins/ws-chapters/includes/forms.php:588
+msgid "Application to join: %1$s → %2$s"
+msgstr "Candidature : %1$s → %2$s"
+
+#: plugins/ws-chapters/includes/forms.php:593
+msgid "NOTE: this chapter has no contact email on the website yet, so it did not receive a copy. Please forward this application to the chapter."
+msgstr "REMARQUE : ce Chapter n'a pas encore d'e-mail de contact sur le site, il n'a donc pas reçu de copie. Veuillez transmettre cette candidature au Chapter."
+
+#. translators: %s: chapter email
+#: plugins/ws-chapters/includes/forms.php:597
+msgid "NOTE: sending the copy to the chapter (%s) failed. Please forward this application."
+msgstr "REMARQUE : l'envoi de la copie au Chapter (%s) a échoué. Veuillez transmettre cette candidature."
+
+#. translators: %s: chapter email
+#: plugins/ws-chapters/includes/forms.php:600
+msgid "A copy was sent to the chapter at %s."
+msgstr "Une copie a été envoyée au Chapter à l'adresse %s."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:610
+msgid "Thank you, Brother. Your application has been sent to %s. The chapter will contact you."
+msgstr "Merci, Frère. Votre candidature a été envoyée à %s. Le Chapter vous contactera."
+
+#: plugins/ws-chapters/includes/forms.php:618
+msgid "Explore the chapters"
+msgstr "Découvrir les Chapters"
+
+#: plugins/ws-chapters/includes/forms.php:619
+msgid "See upcoming events"
+msgstr "Voir les événements à venir"
+
+#: plugins/ws-chapters/includes/forms.php:620
+msgid "Back to the home page"
+msgstr "Retour à l'accueil"
+
+#: plugins/ws-chapters/includes/forms.php:629
+msgid "Application sent"
+msgstr "Candidature envoyée"
+
+#: plugins/ws-chapters/includes/forms.php:630
+msgid "Thank you, Brother"
+msgstr "Merci, Frère"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:632
+msgid "Your application has been sent to %s. The chapter will get in touch with you soon by email or phone."
+msgstr "Votre candidature a été envoyée à %s. Le Chapter vous contactera bientôt par e-mail ou par téléphone."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/forms.php:633
+msgid "A copy has also gone to the Widows Sons Europe team. While you wait, take a look around:"
+msgstr "Une copie a également été envoyée à l'équipe Widows Sons Europe. En attendant, jetez un œil au site :"
+
+#: plugins/ws-chapters/includes/forms.php:662
+msgid "About you"
+msgstr "À propos de vous"
+
+#: plugins/ws-chapters/includes/forms.php:669
+msgid "Your lodge"
+msgstr "Votre Loge"
+
+#: plugins/ws-chapters/includes/forms.php:669
+msgid "Lodge name and number, and its Grand Lodge."
+msgstr "Nom et numéro de la Loge, et sa Grande Loge."
+
+#: plugins/ws-chapters/includes/forms.php:670
+msgid "The chapter you would like to join"
+msgstr "Le Chapter que vous souhaitez rejoindre"
+
+#: plugins/ws-chapters/includes/forms.php:672
+msgid "Choose the chapter closest to you. Your application goes straight to that chapter."
+msgstr "Choisissez le Chapter le plus proche de chez vous. Votre candidature est envoyée directement à ce Chapter."
+
+#: plugins/ws-chapters/includes/forms.php:674
+msgid "Anything you would like to tell the chapter"
+msgstr "Ce que vous souhaitez dire au Chapter"
+
+#. translators: %s: link to the privacy policy
+#: plugins/ws-chapters/includes/forms.php:677
+msgid "I am a Mason in good standing with my lodge and agree that my details are sent to the chosen chapter and the Widows Sons Europe admins to handle my application. See our %s."
+msgstr "Je suis un Maçon en règle avec ma Loge et j'accepte que mes informations soient transmises au Chapter choisi et aux administrateurs de Widows Sons Europe pour traiter ma candidature. Consultez notre %s."
+
+#: plugins/ws-chapters/includes/forms.php:678
+msgid "Send application"
+msgstr "Envoyer la candidature"
+
+#: plugins/ws-chapters/includes/forms.php:703
+msgid "Sent to chapter"
+msgstr "Envoyée au Chapter"
+
+#: plugins/ws-chapters/includes/forms.php:703
+msgid "No — the chapter has no email on the website (or sending failed). Forward it manually."
+msgstr "Non — le Chapter n'a pas d'e-mail sur le site (ou l'envoi a échoué). Transmettez-la manuellement."
+
+#: plugins/ws-chapters/includes/forms.php:704
+msgid "Received"
+msgstr "Reçue"
+
+#: plugins/ws-chapters/includes/front-edit.php:108
+msgid "Choose an image (JPG, PNG, WebP or GIF, up to 8 MB)"
+msgstr "Choisissez une image (JPG, PNG, WebP ou GIF, 8 Mo maximum)"
+
+#: plugins/ws-chapters/includes/front-edit.php:116
+msgid "Choose photos (several at once is fine)"
+msgstr "Choisissez des photos (plusieurs à la fois, c'est possible)"
+
+#: plugins/ws-chapters/includes/front-edit.php:118
+msgid "Upload photos"
+msgstr "Téléverser les photos"
+
+#: plugins/ws-chapters/includes/front-edit.php:132
+msgid "Remove this photo from the gallery?"
+msgstr "Retirer cette photo de la galerie ?"
+
+#: plugins/ws-chapters/includes/front-edit.php:140
+msgid "Remove photo from gallery"
+msgstr "Retirer la photo de la galerie"
+
+#: plugins/ws-chapters/includes/front-edit.php:140
+msgid "Remove from gallery"
+msgstr "Retirer de la galerie"
+
+#: plugins/ws-chapters/includes/front-edit.php:148
+msgid "City (moves the pin on the map)"
+msgstr "Ville (déplace le repère sur la carte)"
+
+#: plugins/ws-chapters/includes/front-edit.php:156
+msgid "Edit contact details"
+msgstr "Modifier les coordonnées"
+
+#: plugins/ws-chapters/includes/front-edit.php:166 plugins/ws-chapters/includes/front-edit.php:197
+msgid "Please choose an image."
+msgstr "Veuillez choisir une image."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:221
+msgid "Contact details saved. %s could not be found on the map, so the pin is on the country's capital for now; check the spelling, or add the country after a comma (for example Plovdiv, Bulgaria)."
+msgstr "Coordonnées enregistrées. %s est introuvable sur la carte : le repère est donc placé sur la capitale du pays pour le moment. Vérifiez l'orthographe, ou ajoutez le pays après une virgule (par exemple Plovdiv, Bulgarie)."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:224
+msgid "Contact details saved. The pin is now on %s."
+msgstr "Coordonnées enregistrées. Le repère est maintenant sur %s."
+
+#. translators: %s: city
+#: plugins/ws-chapters/includes/front-edit.php:224
+msgid "Contact details saved. Without a city, the pin is on the country's capital."
+msgstr "Coordonnées enregistrées. Sans ville, le repère est placé sur la capitale du pays."
+
+#: plugins/ws-chapters/includes/front-edit.php:227
+msgid "Contact details saved."
+msgstr "Coordonnées enregistrées."
+
+#: plugins/ws-chapters/includes/front-edit.php:233
+msgid "That name cannot be changed here."
+msgstr "Ce nom ne peut pas être modifié ici."
+
+#: plugins/ws-chapters/includes/front-edit.php:236
+msgid "Please enter a chapter name (up to 80 characters)."
+msgstr "Veuillez saisir un nom de Chapter (80 caractères maximum)."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:245
+msgid "The chapter is now called %s."
+msgstr "Le Chapter s'appelle désormais %s."
+
+#: plugins/ws-chapters/includes/front-edit.php:253 plugins/ws-chapters/includes/front-edit.php:259
+msgid "The chapter is closed. It can be restored from the Trash in the WordPress admin."
+msgstr "Le Chapter est fermé. Il peut être restauré depuis la corbeille dans l'administration WordPress."
+
+#: plugins/ws-chapters/includes/front-edit.php:256
+msgid "You can only remove chapters of your own country."
+msgstr "Vous ne pouvez retirer que les Chapters de votre propre pays."
+
+#: plugins/ws-chapters/includes/front-edit.php:266 plugins/ws-chapters/includes/front-edit.php:272
+msgid "About text saved."
+msgstr "Texte de présentation enregistré."
+
+#: plugins/ws-chapters/includes/front-edit.php:269
+msgid "That text cannot be changed here."
+msgstr "Ce texte ne peut pas être modifié ici."
+
+#: plugins/ws-chapters/includes/front-edit.php:283
+msgid "Photo removed from the gallery."
+msgstr "Photo retirée de la galerie."
+
+#: plugins/ws-chapters/includes/front-edit.php:286
+msgid "That image cannot be changed here."
+msgstr "Cette image ne peut pas être modifiée ici."
+
+#: plugins/ws-chapters/includes/front-edit.php:303
+msgid "Image saved."
+msgstr "Image enregistrée."
+
+#: plugins/ws-chapters/includes/front-edit.php:316 plugins/ws-chapters/includes/front-edit.php:951
+msgid "This form has expired. Please reload the page and try again."
+msgstr "Ce formulaire a expiré. Veuillez recharger la page et réessayer."
+
+#: plugins/ws-chapters/includes/front-edit.php:319
+msgid "You do not have permission to change this."
+msgstr "Vous n'avez pas l'autorisation de modifier ceci."
+
+#: plugins/ws-chapters/includes/front-edit.php:322 plugins/ws-chapters/includes/front-edit.php:505 plugins/ws-chapters/includes/front-edit.php:665
+msgid "Country not found."
+msgstr "Pays introuvable."
+
+#: plugins/ws-chapters/includes/front-edit.php:325 plugins/ws-chapters/includes/front-edit.php:497 plugins/ws-chapters/includes/front-edit.php:569
+msgid "Chapter not found."
+msgstr "Chapter introuvable."
+
+#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:333
+msgid "Please wait…"
+msgstr "Veuillez patienter…"
+
+#: plugins/ws-chapters/includes/front-edit.php:391
+msgid "About the chapter (leave an empty line between paragraphs)"
+msgstr "À propos du Chapter (laissez une ligne vide entre les paragraphes)"
+
+#: plugins/ws-chapters/includes/front-edit.php:393 plugins/ws-chapters/includes/front-edit.php:413
+msgid "Edit the About text"
+msgstr "Modifier le texte de présentation"
+
+#: plugins/ws-chapters/includes/front-edit.php:411
+msgid "About the country (leave an empty line between paragraphs)"
+msgstr "À propos du pays (laissez une ligne vide entre les paragraphes)"
+
+#: plugins/ws-chapters/includes/front-edit.php:426 plugins/ws-chapters/includes/front-edit.php:441 plugins/ws-chapters/includes/front-edit.php:470
+msgid "Photos (up to 5, JPG, PNG, WebP or GIF, 8 MB each)"
+msgstr "Photos (jusqu'à 5, JPG, PNG, WebP ou GIF, 8 Mo chacune)"
+
+#: plugins/ws-chapters/includes/front-edit.php:427 plugins/ws-chapters/includes/front-edit.php:442 plugins/ws-chapters/includes/front-edit.php:471
+msgid "I acknowledge that this will be shared on the website."
+msgstr "Je reconnais que ceci sera publié sur le site."
+
+#: plugins/ws-chapters/includes/front-edit.php:428
+msgid "Submit news"
+msgstr "Proposer une actualité"
+
+#: plugins/ws-chapters/includes/front-edit.php:440
+msgid "What happened or what is coming up"
+msgstr "Ce qui s'est passé ou ce qui se prépare"
+
+#: plugins/ws-chapters/includes/front-edit.php:443 plugins/ws-chapters/includes/front-edit.php:472
+msgid "Submit news or activity"
+msgstr "Proposer une actualité ou une activité"
+
+#: plugins/ws-chapters/includes/front-edit.php:456 plugins/ws-chapters/includes/pages.php:269
+msgid "Widows Sons Europe"
+msgstr "Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/front-edit.php:467 plugins/ws-chapters/includes/pages.php:273 plugins/ws-chapters/includes/profile-fields.php:189
+msgid "Posted by"
+msgstr "Publié par"
+
+#: plugins/ws-chapters/includes/front-edit.php:469
+msgid "The news or activity"
+msgstr "L'actualité ou l'activité"
+
+#: plugins/ws-chapters/includes/front-edit.php:49 plugins/ws-chapters/includes/front-edit.php:56
+msgid "Add photos"
+msgstr "Ajouter des photos"
+
+#: plugins/ws-chapters/includes/front-edit.php:490 plugins/ws-chapters/includes/front-edit.php:573 plugins/ws-chapters/includes/front-edit.php:669
+msgid "Please sign in to submit news."
+msgstr "Veuillez vous connecter pour proposer une actualité."
+
+#: plugins/ws-chapters/includes/front-edit.php:492 plugins/ws-chapters/includes/front-edit.php:571 plugins/ws-chapters/includes/front-edit.php:667
+msgid "Please fill in the title, the text and the agreement."
+msgstr "Veuillez renseigner le titre, le texte et l'acceptation."
+
+#: plugins/ws-chapters/includes/front-edit.php:508
+msgid "Please choose who the news is from."
+msgstr "Veuillez choisir de qui provient l'actualité."
+
+#: plugins/ws-chapters/includes/front-edit.php:522 plugins/ws-chapters/includes/front-edit.php:588 plugins/ws-chapters/includes/front-edit.php:685 plugins/ws-chapters/includes/front-edit.php:875 plugins/ws-chapters/includes/links.php:163
+msgid "Sorry, something went wrong. Please try again later."
+msgstr "Désolé, une erreur s'est produite. Veuillez réessayer plus tard."
+
+#: plugins/ws-chapters/includes/front-edit.php:53
+msgid "Official chapter patch"
+msgstr "Patch officiel du Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:54
+msgid "Official chapter logo"
+msgstr "Logo officiel du Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:543 plugins/ws-chapters/includes/front-edit.php:619 plugins/ws-chapters/includes/front-edit.php:711
+msgid "Published."
+msgstr "Publié."
+
+#: plugins/ws-chapters/includes/front-edit.php:554
+msgid "Send"
+msgstr "Envoyer"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:608 plugins/ws-chapters/includes/front-edit.php:701
+msgid "News to review: %s"
+msgstr "Actualité à valider : %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:609
+msgid "A news item was sent from a chapter page and is waiting for review."
+msgstr "Une actualité a été envoyée depuis la page d'un Chapter et attend d'être validée."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:610 plugins/ws-chapters/includes/front-edit.php:703
+msgid "Title:"
+msgstr "Titre :"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:612 plugins/ws-chapters/includes/front-edit.php:705
+msgid "Review it here:"
+msgstr "Validez-la ici :"
+
+#: plugins/ws-chapters/includes/front-edit.php:619 plugins/ws-chapters/includes/front-edit.php:711
+msgid "Thank you. Your news has been sent for review."
+msgstr "Merci. Votre actualité a été envoyée pour validation."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/front-edit.php:702
+msgid "A news item was sent from a country page and is waiting for review."
+msgstr "Une actualité a été envoyée depuis la page d'un pays et attend d'être validée."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:764
+msgid "Close %s? It is removed from the site and goes to the Trash, where it can be restored from the WordPress admin."
+msgstr "Fermer %s ? Il est retiré du site et placé dans la corbeille, d'où il peut être restauré depuis l'administration WordPress."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:783
+msgid "Close %s"
+msgstr "Fermer %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/front-edit.php:783
+msgid "Close chapter"
+msgstr "Fermer le Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:792
+msgid "Chapter name"
+msgstr "Nom du Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:794
+msgid "Type the full name; it is shown exactly as typed."
+msgstr "Saisissez le nom complet ; il est affiché exactement tel que saisi."
+
+#: plugins/ws-chapters/includes/front-edit.php:795
+msgid "Rename the chapter"
+msgstr "Renommer le Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:833
+msgid "— Choose the country —"
+msgstr "— Choisissez le pays —"
+
+#: plugins/ws-chapters/includes/front-edit.php:834
+msgid "On the site"
+msgstr "Sur le site"
+
+#: plugins/ws-chapters/includes/front-edit.php:834
+msgid "Other countries (added with the chapter)"
+msgstr "Autres pays (ajoutés avec le Chapter)"
+
+#: plugins/ws-chapters/includes/front-edit.php:839
+msgid "Full chapter name, shown exactly as typed (for example Widows Sons Sofia)"
+msgstr "Nom complet du Chapter, affiché exactement tel que saisi (par exemple Widows Sons Sofia)"
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "+ Create new chapter"
+msgstr "+ Créer un nouveau Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "The chapter is added to this country. Its details, patch and logo can then be added from its page."
+msgstr "Le Chapter est ajouté à ce pays. Ses coordonnées, son patch et son logo pourront ensuite être ajoutés depuis sa page."
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "The chapter is added to the country you choose. Its details, patch and logo can then be added from its page."
+msgstr "Le Chapter est ajouté au pays que vous choisissez. Ses coordonnées, son patch et son logo pourront ensuite être ajoutés depuis sa page."
+
+#: plugins/ws-chapters/includes/front-edit.php:841
+msgid "Create chapter"
+msgstr "Créer le Chapter"
+
+#: plugins/ws-chapters/includes/front-edit.php:856
+msgid "Please add the chapter name and the city."
+msgstr "Veuillez ajouter le nom du Chapter et la ville."
+
+#: plugins/ws-chapters/includes/front-edit.php:862
+msgid "You can only add chapters to your own country."
+msgstr "Vous ne pouvez ajouter des Chapters qu'à votre propre pays."
+
+#: plugins/ws-chapters/includes/front-edit.php:871
+msgid "This chapter profile is being prepared. Its history, riding activities and charitable initiatives will appear when confirmed by its representatives."
+msgstr "Le profil de ce Chapter est en préparation. Son histoire, ses activités motardes et ses initiatives caritatives apparaîtront une fois confirmées par ses représentants."
+
+#: plugins/ws-chapters/includes/front-edit.php:883
+msgid "Chapter created. Its details, patch and logo can be added from its page."
+msgstr "Chapter créé. Ses coordonnées, son patch et son logo peuvent être ajoutés depuis sa page."
+
+#. translators: %s: article title
+#: plugins/ws-chapters/includes/front-edit.php:926
+msgid "Move \"%s\" to the Trash? You can restore it from the WordPress admin."
+msgstr "Placer « %s » dans la corbeille ? Vous pourrez le restaurer depuis l'administration WordPress."
+
+#: plugins/ws-chapters/includes/front-edit.php:932
+msgid "Delete %s"
+msgstr "Supprimer %s"
+
+#: plugins/ws-chapters/includes/front-edit.php:934
+msgid "Delete this article"
+msgstr "Supprimer cet article"
+
+#: plugins/ws-chapters/includes/front-edit.php:954
+msgid "You do not have permission to delete this article."
+msgstr "Vous n'avez pas l'autorisation de supprimer cet article."
+
+#: plugins/ws-chapters/includes/front-edit.php:957
+msgid "The article was moved to the Trash."
+msgstr "L'article a été placé dans la corbeille."
+
+#: plugins/ws-chapters/includes/front-edit.php:957
+msgid "Sorry, the article could not be deleted."
+msgstr "Désolé, l'article n'a pas pu être supprimé."
+
+#: plugins/ws-chapters/includes/front-edit.php:98
+msgid "Upload"
+msgstr "Téléverser"
+
+#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:704 plugins/ws-chapters/includes/member-management.php:712
+msgid "Save"
+msgstr "Enregistrer"
+
+#: plugins/ws-chapters/includes/languages.php:195
+msgid "Language"
+msgstr "Langue"
+
+#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:401
+msgid "Name"
+msgstr "Nom"
+
+#: plugins/ws-chapters/includes/links.php:119 plugins/ws-chapters/includes/links.php:132
+msgid "Description (what visitors find there)"
+msgstr "Description (ce que les visiteurs y trouvent)"
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "+ Add a link"
+msgstr "+ Ajouter un lien"
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "The link is shown on this page straight away."
+msgstr "Le lien s'affiche immédiatement sur cette page."
+
+#: plugins/ws-chapters/includes/links.php:120
+msgid "Post the link"
+msgstr "Publier le lien"
+
+#: plugins/ws-chapters/includes/links.php:133
+msgid "Change the name, web address or description. The change shows straight away."
+msgstr "Modifiez le nom, l'adresse web ou la description. La modification s'affiche immédiatement."
+
+#: plugins/ws-chapters/includes/links.php:148
+msgid "Only Super Admins and Country Admins can add or edit links."
+msgstr "Seuls les Super Admins et les Country Admins peuvent ajouter ou modifier des liens."
+
+#: plugins/ws-chapters/includes/links.php:152
+msgid "That link no longer exists."
+msgstr "Ce lien n'existe plus."
+
+#: plugins/ws-chapters/includes/links.php:154
+msgid "Please add a name and a web address starting with https://"
+msgstr "Veuillez ajouter un nom et une adresse web commençant par https://"
+
+#: plugins/ws-chapters/includes/links.php:16
+msgid "Useful links"
+msgstr "Liens utiles"
+
+#: plugins/ws-chapters/includes/links.php:17
+msgid "Useful link"
+msgstr "Lien utile"
+
+#. translators: %s: link name
+#: plugins/ws-chapters/includes/links.php:171
+msgid "The link \"%s\" is saved."
+msgstr "Le lien « %s » est enregistré."
+
+#. translators: %s: link name
+#: plugins/ws-chapters/includes/links.php:171
+msgid "The link \"%s\" is posted."
+msgstr "Le lien « %s » est publié."
+
+#: plugins/ws-chapters/includes/links.php:18
+msgid "Add link"
+msgstr "Ajouter un lien"
+
+#: plugins/ws-chapters/includes/links.php:188
+msgid "No links yet."
+msgstr "Aucun lien pour le moment."
+
+#: plugins/ws-chapters/includes/links.php:19
+msgid "Add useful link"
+msgstr "Ajouter un lien utile"
+
+#: plugins/ws-chapters/includes/links.php:20
+msgid "Edit useful link"
+msgstr "Modifier le lien utile"
+
+#: plugins/ws-chapters/includes/links.php:202
+msgid "Visit website →"
+msgstr "Visiter le site →"
+
+#: plugins/ws-chapters/includes/links.php:203
+msgid "(opens in a new tab)"
+msgstr "(s'ouvre dans un nouvel onglet)"
+
+#: plugins/ws-chapters/includes/links.php:21
+msgid "All useful links"
+msgstr "Tous les liens utiles"
+
+#: plugins/ws-chapters/includes/links.php:22
+msgid "Search useful links"
+msgstr "Rechercher des liens utiles"
+
+#: plugins/ws-chapters/includes/links.php:23
+msgid "No useful links yet."
+msgstr "Aucun lien utile pour le moment."
+
+#: plugins/ws-chapters/includes/links.php:24
+msgid "No useful links in the Trash."
+msgstr "Aucun lien utile dans la corbeille."
+
+#: plugins/ws-chapters/includes/links.php:25
+msgid "Link published."
+msgstr "Lien publié."
+
+#: plugins/ws-chapters/includes/links.php:26
+msgid "Link updated."
+msgstr "Lien mis à jour."
+
+#: plugins/ws-chapters/includes/links.php:57 plugins/ws-chapters/includes/links.php:85 plugins/ws-chapters/includes/links.php:118 plugins/ws-chapters/includes/links.php:131
+msgid "Web address"
+msgstr "Adresse web"
+
+#: plugins/ws-chapters/includes/links.php:61
+msgid "Shown on the Useful links page as a card. Use \"Order\" on the right to change the position (lower numbers first)."
+msgstr "Affiché sous forme de carte sur la page Liens utiles. Utilisez « Ordre » à droite pour changer la position (les plus petits numéros en premier)."
+
+#: plugins/ws-chapters/includes/links.php:85
+msgid "Order"
+msgstr "Ordre"
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:19
+msgid "Signed in as %s."
+msgstr "Connecté en tant que %s."
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:20
+msgid "Members area"
+msgstr "Espace membres"
+
+#. translators: %s: name
+#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:831
+msgid "My profile"
+msgstr "Mon profil"
+
+#: plugins/ws-chapters/includes/login-box.php:22 plugins/ws-chapters/includes/member-account.php:236
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: plugins/ws-chapters/includes/login-box.php:26 plugins/ws-chapters/includes/login-box.php:28 plugins/ws-chapters/includes/member-account.php:252
+msgid "Member login"
+msgstr "Connexion membres"
+
+#: plugins/ws-chapters/includes/member-account.php:109
+msgid "Your new password for Widows Sons Europe"
+msgstr "Votre nouveau mot de passe pour Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/member-account.php:110
+msgid "Choose a new password for the Widows Sons Europe members' area."
+msgstr "Choisissez un nouveau mot de passe pour l'espace membres de Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-account.php:111
+msgid "Choose a new password"
+msgstr "Choisissez un nouveau mot de passe"
+
+#: plugins/ws-chapters/includes/member-account.php:112
+msgid "Someone (hopefully you) asked for a new password for the Widows Sons Europe members' area."
+msgstr "Quelqu'un (vous, espérons-le) a demandé un nouveau mot de passe pour l'espace membres de Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-account.php:113
+msgid "Choose my new password"
+msgstr "Choisir mon nouveau mot de passe"
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-account.php:117
+msgid "This link expires in %d days."
+msgstr "Ce lien expire dans %d jours."
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-account.php:118
+msgid "If you did not ask for this, you can ignore this email: your password stays the same."
+msgstr "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail : votre mot de passe reste inchangé."
+
+#: plugins/ws-chapters/includes/member-account.php:200
+msgid "Welcome to Widows Sons Europe"
+msgstr "Bienvenue chez Widows Sons Europe"
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-account.php:202
+msgid "Choose a password for %s. You will use your email and this password to sign in."
+msgstr "Choisissez un mot de passe pour %s. Vous utiliserez votre e-mail et ce mot de passe pour vous connecter."
+
+#: plugins/ws-chapters/includes/member-account.php:204 plugins/ws-chapters/includes/member-account.php:231
+msgid "New password (at least 8 characters)"
+msgstr "Nouveau mot de passe (au moins 8 caractères)"
+
+#: plugins/ws-chapters/includes/member-account.php:205 plugins/ws-chapters/includes/member-account.php:232
+msgid "Type it again"
+msgstr "Saisissez-le à nouveau"
+
+#: plugins/ws-chapters/includes/member-account.php:206
+msgid "Set password and continue"
+msgstr "Définir le mot de passe et continuer"
+
+#: plugins/ws-chapters/includes/member-account.php:218
+msgid "This is how other members see you in the member list."
+msgstr "C'est ainsi que les autres membres vous voient dans la liste des membres."
+
+#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:702
+msgid "No title"
+msgstr "Aucun titre"
+
+#: plugins/ws-chapters/includes/member-account.php:225
+msgid "Email (to sign in)"
+msgstr "E-mail (pour se connecter)"
+
+#: plugins/ws-chapters/includes/member-account.php:228
+msgid "Photo (JPG, PNG, WebP or GIF, up to 4 MB)"
+msgstr "Photo (JPG, PNG, WebP ou GIF, 4 Mo maximum)"
+
+#: plugins/ws-chapters/includes/member-account.php:229
+msgid "Your country and chapter are set by your Country Admin. To change your email, ask them."
+msgstr "Votre pays et votre Chapter sont définis par votre Country Admin. Pour changer votre e-mail, adressez-vous à lui."
+
+#: plugins/ws-chapters/includes/member-account.php:230
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+#: plugins/ws-chapters/includes/member-account.php:234
+msgid "Save my profile"
+msgstr "Enregistrer mon profil"
+
+#: plugins/ws-chapters/includes/member-account.php:245 plugins/ws-chapters/includes/sign-in.php:241
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+#: plugins/ws-chapters/includes/member-account.php:246
+msgid "Enter the email you were invited with. We will send you a link to choose a new password."
+msgstr "Saisissez l'e-mail avec lequel vous avez été invité. Nous vous enverrons un lien pour choisir un nouveau mot de passe."
+
+#: plugins/ws-chapters/includes/member-account.php:249
+msgid "Send me a link"
+msgstr "Envoyez-moi un lien"
+
+#: plugins/ws-chapters/includes/member-account.php:250
+msgid "Back to sign in"
+msgstr "Retour à la connexion"
+
+#: plugins/ws-chapters/includes/member-account.php:28
+msgid "The email or password is not right. Please try again, or ask for a new password below."
+msgstr "L'e-mail ou le mot de passe est incorrect. Veuillez réessayer, ou demander un nouveau mot de passe ci-dessous."
+
+#: plugins/ws-chapters/includes/member-account.php:29
+msgid "Too many sign-in attempts. Please wait 15 minutes and try again, or ask for a new password below."
+msgstr "Trop de tentatives de connexion. Veuillez patienter 15 minutes et réessayer, ou demander un nouveau mot de passe ci-dessous."
+
+#: plugins/ws-chapters/includes/member-account.php:30
+msgid "This link has expired or was already used. Enter your email below and we will send you a new one."
+msgstr "Ce lien a expiré ou a déjà été utilisé. Saisissez votre e-mail ci-dessous et nous vous en enverrons un nouveau."
+
+#: plugins/ws-chapters/includes/member-account.php:31
+msgid "Please choose a password of at least 8 characters."
+msgstr "Veuillez choisir un mot de passe d'au moins 8 caractères."
+
+#: plugins/ws-chapters/includes/member-account.php:32
+msgid "The two passwords are not the same. Please type them again."
+msgstr "Les deux mots de passe ne sont pas identiques. Veuillez les saisir à nouveau."
+
+#: plugins/ws-chapters/includes/member-account.php:33
+msgid "If this email belongs to a member, a link to choose a new password is on its way. It expires in 7 days."
+msgstr "Si cet e-mail appartient à un membre, un lien pour choisir un nouveau mot de passe est en route. Il expire dans 7 jours."
+
+#: plugins/ws-chapters/includes/member-account.php:34
+msgid "Your password is set and you are signed in. Please complete your profile."
+msgstr "Votre mot de passe est défini et vous êtes connecté. Veuillez compléter votre profil."
+
+#: plugins/ws-chapters/includes/member-account.php:35
+msgid "Your profile is saved."
+msgstr "Votre profil est enregistré."
+
+#: plugins/ws-chapters/includes/member-account.php:36
+msgid "For \"Other\", please type your title."
+msgstr "Pour « Autre », veuillez saisir votre titre."
+
+#: plugins/ws-chapters/includes/member-account.php:37
+msgid "The form expired. Please try again."
+msgstr "Le formulaire a expiré. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/member-feedback.php:35 plugins/ws-chapters/includes/member-feedback.php:73
+msgid "Please sign in to send feedback."
+msgstr "Veuillez vous connecter pour envoyer un commentaire."
+
+#: plugins/ws-chapters/includes/member-feedback.php:39
+msgid "Please add a subject and your comments."
+msgstr "Veuillez ajouter un objet et vos commentaires."
+
+#: plugins/ws-chapters/includes/member-feedback.php:41
+msgid "Please check the page address (for example wseurope.org/events/), or leave it empty."
+msgstr "Veuillez vérifier l'adresse de la page (par exemple wseurope.org/events/), ou laissez le champ vide."
+
+#: plugins/ws-chapters/includes/member-feedback.php:50
+msgid "New feedback from the Widows Sons Europe website."
+msgstr "Nouveau commentaire depuis le site Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-feedback.php:52
+msgid "From:"
+msgstr "De :"
+
+#: plugins/ws-chapters/includes/member-feedback.php:53
+msgid "Date:"
+msgstr "Date :"
+
+#: plugins/ws-chapters/includes/member-feedback.php:54
+msgid "Page:"
+msgstr "Page :"
+
+#: plugins/ws-chapters/includes/member-feedback.php:56
+msgid "Comments:"
+msgstr "Commentaires :"
+
+#: plugins/ws-chapters/includes/member-feedback.php:63
+msgid "Sorry, your feedback could not be sent. Please try again in a few minutes."
+msgstr "Désolé, votre commentaire n'a pas pu être envoyé. Veuillez réessayer dans quelques minutes."
+
+#: plugins/ws-chapters/includes/member-feedback.php:66
+msgid "Thank you for your feedback! Your suggestion has been submitted successfully."
+msgstr "Merci pour votre retour ! Votre suggestion a bien été envoyée."
+
+#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:39 plugins/ws-chapters/includes/member-management.php:832
+msgid "Website feedback"
+msgstr "Retours sur le site"
+
+#: plugins/ws-chapters/includes/member-feedback.php:77
+msgid "Tell us what works, what does not, and what you would change on the website. Your message is emailed to the website team, and we read every one. Please do not include passwords or other people's private details."
+msgstr "Dites-nous ce qui fonctionne, ce qui ne fonctionne pas et ce que vous changeriez sur le site. Votre message est envoyé par e-mail à l'équipe du site, et nous les lisons tous. N'incluez ni mots de passe ni informations privées concernant d'autres personnes."
+
+#: plugins/ws-chapters/includes/member-feedback.php:81
+msgid "Subject"
+msgstr "Objet"
+
+#: plugins/ws-chapters/includes/member-feedback.php:81
+msgid "For example: Chapter page photos"
+msgstr "Par exemple : photos de la page du Chapter"
+
+#: plugins/ws-chapters/includes/member-feedback.php:82
+msgid "Your comments"
+msgstr "Vos commentaires"
+
+#: plugins/ws-chapters/includes/member-feedback.php:83
+msgid "Page address (optional)"
+msgstr "Adresse de la page (facultatif)"
+
+#: plugins/ws-chapters/includes/member-feedback.php:83
+msgid "For example wseurope.org/events/"
+msgstr "Par exemple wseurope.org/events/"
+
+#: plugins/ws-chapters/includes/member-feedback.php:84
+msgid "Send feedback"
+msgstr "Envoyer le commentaire"
+
+#: plugins/ws-chapters/includes/member-management.php:16 plugins/ws-chapters/includes/members.php:87
+msgid "Member"
+msgstr "Membre"
+
+#: plugins/ws-chapters/includes/member-management.php:220
+msgid "Other (type it)"
+msgstr "Autre (à saisir)"
+
+#: plugins/ws-chapters/includes/member-management.php:227
+msgid "e.g. Guardian of Membership"
+msgstr "ex. Gardien des adhésions"
+
+#: plugins/ws-chapters/includes/member-management.php:227
+msgid "Your own title"
+msgstr "Votre propre titre"
+
+#: plugins/ws-chapters/includes/member-management.php:32
+msgid "Library"
+msgstr "Bibliothèque"
+
+#: plugins/ws-chapters/includes/member-management.php:320
+msgid "Send email"
+msgstr "Envoyer un e-mail"
+
+#: plugins/ws-chapters/includes/member-management.php:321
+msgid "Call"
+msgstr "Appeler"
+
+#: plugins/ws-chapters/includes/member-management.php:33 plugins/ws-chapters/includes/member-management.php:40
+msgid "Members"
+msgstr "Membres"
+
+#: plugins/ws-chapters/includes/member-management.php:344
+msgid "Please sign in to see the member list."
+msgstr "Veuillez vous connecter pour voir la liste des membres."
+
+#: plugins/ws-chapters/includes/member-management.php:37 plugins/ws-chapters/includes/member-management.php:830
+msgid "Member management"
+msgstr "Gestion des membres"
+
+#: plugins/ws-chapters/includes/member-management.php:384
+msgid "All titles"
+msgstr "Tous les titres"
+
+#: plugins/ws-chapters/includes/member-management.php:393 plugins/ws-chapters/includes/members.php:369
+msgid "Search"
+msgstr "Rechercher"
+
+#: plugins/ws-chapters/includes/member-management.php:393
+msgid "Name, road name or email"
+msgstr "Nom, road name ou e-mail"
+
+#: plugins/ws-chapters/includes/member-management.php:397 plugins/ws-chapters/includes/members.php:371
+msgid "Filter"
+msgstr "Filtrer"
+
+#: plugins/ws-chapters/includes/member-management.php:398 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
+msgid "Clear"
+msgstr "Effacer"
+
+#. translators: %d: number of members
+#: plugins/ws-chapters/includes/member-management.php:400
+msgid "%d member"
+msgid_plural "%d members"
+msgstr[0] "%d membre"
+msgstr[1] "%d membres"
+
+#: plugins/ws-chapters/includes/member-management.php:402
+msgid "No members match."
+msgstr "Aucun membre ne correspond."
+
+#: plugins/ws-chapters/includes/member-management.php:413
+msgid "You do not have permission to do that."
+msgstr "Vous n'avez pas l'autorisation de faire cela."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:418
+msgid "Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use \"Resend invitation\"."
+msgstr "Invitation envoyée à %s. Si elle n'est pas arrivée d'ici quelques minutes, demandez à la personne de regarder dans ses courriers indésirables, puis utilisez « Renvoyer l'invitation »."
+
+#: plugins/ws-chapters/includes/member-management.php:422
+msgid "You cannot remove this person."
+msgstr "Vous ne pouvez pas retirer cette personne."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:436
+msgid "%s has been removed permanently. What they added to the site stays, now credited to you."
+msgstr "%s a été retiré définitivement. Ce qu'il a ajouté au site reste en ligne et vous est désormais attribué."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:436
+msgid "Sorry, this person could not be removed. Please try again."
+msgstr "Désolé, cette personne n'a pas pu être retirée. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/member-management.php:441
+msgid "You cannot resend this invitation."
+msgstr "Vous ne pouvez pas renvoyer cette invitation."
+
+#: plugins/ws-chapters/includes/member-management.php:445
+msgid "Invitation sent again."
+msgstr "Invitation renvoyée."
+
+#: plugins/ws-chapters/includes/member-management.php:453
+msgid "You cannot set this chapter."
+msgstr "Vous ne pouvez pas définir ce Chapter."
+
+#. translators: 1: person's name, 2: chapter
+#: plugins/ws-chapters/includes/member-management.php:464
+msgid "%1$s is now in %2$s."
+msgstr "%1$s fait désormais partie de %2$s."
+
+#: plugins/ws-chapters/includes/member-management.php:474
+msgid "You cannot set this title."
+msgstr "Vous ne pouvez pas définir ce titre."
+
+#: plugins/ws-chapters/includes/member-management.php:476
+msgid "For \"Other\", please type the title."
+msgstr "Pour « Autre », veuillez saisir le titre."
+
+#: plugins/ws-chapters/includes/member-management.php:481
+msgid "Title removed."
+msgstr "Titre retiré."
+
+#. translators: %s: person's name
+#: plugins/ws-chapters/includes/member-management.php:487
+msgid "Title saved for %s."
+msgstr "Titre enregistré pour %s."
+
+#: plugins/ws-chapters/includes/member-management.php:563
+msgid "Please enter a valid email address."
+msgstr "Veuillez saisir une adresse e-mail valide."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:567
+msgid "%s already has an account. No invitation was sent."
+msgstr "%s a déjà un compte. Aucune invitation n'a été envoyée."
+
+#: plugins/ws-chapters/includes/member-management.php:571
+msgid "You cannot invite that kind of member."
+msgstr "Vous ne pouvez pas inviter ce type de membre."
+
+#: plugins/ws-chapters/includes/member-management.php:574
+msgid "Please choose a country."
+msgstr "Veuillez choisir un pays."
+
+#: plugins/ws-chapters/includes/member-management.php:577
+msgid "You can only add people to your own country."
+msgstr "Vous ne pouvez ajouter des personnes qu'à votre propre pays."
+
+#: plugins/ws-chapters/includes/member-management.php:581
+msgid "That chapter is not in the chosen country."
+msgstr "Ce Chapter ne se trouve pas dans le pays choisi."
+
+#: plugins/ws-chapters/includes/member-management.php:584
+msgid "Please choose a chapter. Everyone belongs to a country and a chapter."
+msgstr "Veuillez choisir un Chapter. Chacun appartient à un pays et à un Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:593
+msgid "Sorry, the invitation could not be created. Please try again."
+msgstr "Désolé, l'invitation n'a pas pu être créée. Veuillez réessayer."
+
+#. translators: %s: email address
+#: plugins/ws-chapters/includes/member-management.php:603
+msgid "The account for %s was created, but the invitation email could not be sent. Check the mail settings, then use \"Resend invitation\" below."
+msgstr "Le compte de %s a été créé, mais l'e-mail d'invitation n'a pas pu être envoyé. Vérifiez les réglages de messagerie, puis utilisez « Renvoyer l'invitation » ci-dessous."
+
+#: plugins/ws-chapters/includes/member-management.php:611
+msgid "That person was not found."
+msgstr "Cette personne est introuvable."
+
+#: plugins/ws-chapters/includes/member-management.php:615
+msgid "The invitation could not be created. Please try again."
+msgstr "L'invitation n'a pas pu être créée. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/member-management.php:618
+msgid "Your invitation to Widows Sons Europe"
+msgstr "Votre invitation à Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/member-management.php:619
+msgid "You're invited to the Widows Sons Europe members' area."
+msgstr "Vous êtes invité dans l'espace membres de Widows Sons Europe."
+
+#: plugins/ws-chapters/includes/member-management.php:620
+msgid "Welcome, Brother"
+msgstr "Bienvenue, Frère"
+
+#: plugins/ws-chapters/includes/member-management.php:622
+msgid "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile."
+msgstr "Vous avez été invité dans l'espace membres de Widows Sons Europe : la liste des membres de tous les Chapters européens, la bibliothèque partagée et votre propre profil."
+
+#: plugins/ws-chapters/includes/member-management.php:623
+msgid "Choose your password to get started. You will sign in with this email address."
+msgstr "Choisissez votre mot de passe pour commencer. Vous vous connecterez avec cette adresse e-mail."
+
+#: plugins/ws-chapters/includes/member-management.php:625
+msgid "Set my password"
+msgstr "Définir mon mot de passe"
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-management.php:629
+msgid "This link expires in %d days. If it has expired, ask your Country Admin to send a new one."
+msgstr "Ce lien expire dans %d jours. S'il a expiré, demandez à votre Country Admin de vous en envoyer un nouveau."
+
+#. translators: %d: days
+#: plugins/ws-chapters/includes/member-management.php:630
+msgid "After that you land on your profile: add your first and last name, road name, phone and title."
+msgstr "Vous arriverez ensuite sur votre profil : ajoutez votre prénom et votre nom, votre road name, votre téléphone et votre titre."
+
+#: plugins/ws-chapters/includes/member-management.php:633
+msgid "The invitation email could not be sent. Check the mail settings, then resend."
+msgstr "L'e-mail d'invitation n'a pas pu être envoyé. Vérifiez les réglages de messagerie, puis renvoyez-le."
+
+#: plugins/ws-chapters/includes/member-management.php:666
+msgid "Choose a country"
+msgstr "Choisissez un pays"
+
+#: plugins/ws-chapters/includes/member-management.php:667
+msgid "Invite a member"
+msgstr "Inviter un membre"
+
+#: plugins/ws-chapters/includes/member-management.php:668
+msgid "Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days."
+msgstr "Saisissez l'e-mail, le rôle, le pays et le Chapter. La personne définit son propre mot de passe depuis l'e-mail d'invitation, qui expire dans 7 jours."
+
+#: plugins/ws-chapters/includes/member-management.php:671
+msgid "Role"
+msgstr "Rôle"
+
+#: plugins/ws-chapters/includes/member-management.php:673 plugins/ws-chapters/includes/member-management.php:711
+msgid "Choose a chapter"
+msgstr "Choisissez un Chapter"
+
+#: plugins/ws-chapters/includes/member-management.php:674
+msgid "Everyone belongs to a country and a chapter."
+msgstr "Chacun appartient à un pays et à un Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:675
+msgid "Send invitation"
+msgstr "Envoyer l'invitation"
+
+#: plugins/ws-chapters/includes/member-management.php:692
+msgid "Super Admin"
+msgstr "Super Admin"
+
+#: plugins/ws-chapters/includes/member-management.php:695
+msgid "you"
+msgstr "vous"
+
+#: plugins/ws-chapters/includes/member-management.php:707 plugins/ws-chapters/includes/member-management.php:724
+msgid "Missing"
+msgstr "Manquant"
+
+#: plugins/ws-chapters/includes/member-management.php:716
+msgid "Resend invitation"
+msgstr "Renvoyer l'invitation"
+
+#: plugins/ws-chapters/includes/member-management.php:719
+msgid "Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you."
+msgstr "Retirer définitivement cette personne ? Son compte, son e-mail et son profil sont supprimés et ne peuvent pas être récupérés. Ce qu'elle a ajouté au site reste en ligne et vous est attribué."
+
+#: plugins/ws-chapters/includes/member-management.php:719
+msgid "Remove member"
+msgstr "Retirer le membre"
+
+#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:730
+msgid "Status"
+msgstr "Statut"
+
+#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:736
+msgid "Invited"
+msgstr "Invité"
+
+#: plugins/ws-chapters/includes/member-management.php:726
+msgid "Active"
+msgstr "Actif"
+
+#: plugins/ws-chapters/includes/member-management.php:727 plugins/ws-chapters/includes/member-management.php:730 plugins/ws-chapters/includes/members.php:376
+msgid "Actions"
+msgstr "Actions"
+
+#: plugins/ws-chapters/includes/member-management.php:730
+msgid "Name, road name and email"
+msgstr "Nom, road name et e-mail"
+
+#: plugins/ws-chapters/includes/member-management.php:731
+msgid "People you manage"
+msgstr "Personnes que vous gérez"
+
+#: plugins/ws-chapters/includes/member-management.php:732
+msgid "Nobody yet. Invite someone above."
+msgstr "Personne pour le moment. Invitez quelqu'un ci-dessus."
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Invitation sent again"
+msgstr "Invitation renvoyée"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Removed permanently"
+msgstr "Retiré définitivement"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Own profile"
+msgstr "Propre profil"
+
+#: plugins/ws-chapters/includes/member-management.php:736
+msgid "Email NOT sent"
+msgstr "E-mail NON envoyé"
+
+#: plugins/ws-chapters/includes/member-management.php:740
+msgid "removed"
+msgstr "retiré"
+
+#: plugins/ws-chapters/includes/member-management.php:741
+msgid "(deleted)"
+msgstr "(supprimé)"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Recent activity"
+msgstr "Activité récente"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "By"
+msgstr "Par"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Action"
+msgstr "Action"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "Person"
+msgstr "Personne"
+
+#: plugins/ws-chapters/includes/member-management.php:744
+msgid "No activity yet."
+msgstr "Aucune activité pour le moment."
+
+#: plugins/ws-chapters/includes/member-management.php:755
+msgid "Widows Sons details"
+msgstr "Informations Widows Sons"
+
+#: plugins/ws-chapters/includes/member-management.php:779
+msgid "Photo"
+msgstr "Photo"
+
+#: plugins/ws-chapters/includes/member-management.php:781
+msgid "JPG, PNG, WebP or GIF, up to 4 MB."
+msgstr "JPG, PNG, WebP ou GIF, 4 Mo maximum."
+
+#: plugins/ws-chapters/includes/member-management.php:829
+msgid "Member directory"
+msgstr "Annuaire des membres"
+
+#: plugins/ws-chapters/includes/members.php:147
+msgid "The file is too large."
+msgstr "Le fichier est trop volumineux."
+
+#: plugins/ws-chapters/includes/members.php:147
+msgid "Please choose a file to upload."
+msgstr "Veuillez choisir un fichier à téléverser."
+
+#. translators: %s: maximum size
+#: plugins/ws-chapters/includes/members.php:151
+msgid "The file is too large (maximum %s)."
+msgstr "Le fichier est trop volumineux (maximum %s)."
+
+#: plugins/ws-chapters/includes/members.php:155
+msgid "This type of file can't be uploaded. Use PDF, Word, Excel, PowerPoint, OpenDocument, text, JPG or PNG."
+msgstr "Ce type de fichier ne peut pas être téléversé. Utilisez PDF, Word, Excel, PowerPoint, OpenDocument, texte, JPG ou PNG."
+
+#: plugins/ws-chapters/includes/members.php:161
+msgid "The file could not be saved. Please try again."
+msgstr "Le fichier n'a pas pu être enregistré. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/members.php:186
+msgid "This document link is not valid. Go back to the members page and try again."
+msgstr "Ce lien de document n'est pas valide. Revenez à la page des membres et réessayez."
+
+#: plugins/ws-chapters/includes/members.php:190
+msgid "The file is missing."
+msgstr "Le fichier est manquant."
+
+#: plugins/ws-chapters/includes/members.php:229
+msgid "That document could not be deleted."
+msgstr "Ce document n'a pas pu être supprimé."
+
+#. translators: %s: document title
+#: plugins/ws-chapters/includes/members.php:233
+msgid "Deleted \"%s\"."
+msgstr "« %s » supprimé."
+
+#: plugins/ws-chapters/includes/members.php:25 plugins/ws-chapters/includes/members.php:376
+msgid "Document"
+msgstr "Document"
+
+#: plugins/ws-chapters/includes/members.php:26
+msgid "Meeting minutes"
+msgstr "Compte rendu de réunion"
+
+#: plugins/ws-chapters/includes/members.php:260
+msgid "Link (a web address starting with https://)"
+msgstr "Lien (une adresse web commençant par https://)"
+
+#: plugins/ws-chapters/includes/members.php:27 plugins/ws-chapters/includes/members.php:402
+msgid "Link"
+msgstr "Lien"
+
+#: plugins/ws-chapters/includes/members.php:283
+msgid "The document could not be saved. Please try again."
+msgstr "Le document n'a pas pu être enregistré. Veuillez réessayer."
+
+#. translators: %s: document title
+#: plugins/ws-chapters/includes/members.php:296
+msgid "Added \"%s\". It is now visible to all members."
+msgstr "« %s » ajouté. Il est désormais visible par tous les membres."
+
+#: plugins/ws-chapters/includes/members.php:310
+msgid "LINK"
+msgstr "LIEN"
+
+#: plugins/ws-chapters/includes/members.php:318 plugins/ws-chapters/includes/members.php:376
+msgid "Added by"
+msgstr "Ajouté par"
+
+#: plugins/ws-chapters/includes/members.php:319 plugins/ws-chapters/includes/members.php:376
+msgid "Size"
+msgstr "Taille"
+
+#: plugins/ws-chapters/includes/members.php:320 plugins/ws-chapters/includes/members.php:320
+msgid "Open link"
+msgstr "Ouvrir le lien"
+
+#: plugins/ws-chapters/includes/members.php:320 plugins/ws-chapters/includes/members.php:320
+msgid "Download"
+msgstr "Télécharger"
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "Members only"
+msgstr "Réservé aux membres"
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "This area is for Widows Sons members. Please log in with your email address and password."
+msgstr "Cet espace est réservé aux membres des Widows Sons. Veuillez vous connecter avec votre adresse e-mail et votre mot de passe."
+
+#: plugins/ws-chapters/includes/members.php:331
+msgid "Log in"
+msgstr "Se connecter"
+
+#: plugins/ws-chapters/includes/members.php:363
+msgid "All types"
+msgstr "Tous les types"
+
+#: plugins/ws-chapters/includes/members.php:369
+msgid "Title or description"
+msgstr "Titre ou description"
+
+#: plugins/ws-chapters/includes/members.php:373 plugins/ws-chapters/includes/members.php:388 plugins/ws-chapters/includes/members.php:389
+msgid "Upload a document"
+msgstr "Téléverser un document"
+
+#. translators: %d: number of documents
+#: plugins/ws-chapters/includes/members.php:375
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d document"
+msgstr[1] "%d documents"
+
+#: plugins/ws-chapters/includes/members.php:377
+msgid "No documents yet."
+msgstr "Aucun document pour le moment."
+
+#: plugins/ws-chapters/includes/members.php:384
+msgid "— Choose —"
+msgstr "— Choisir —"
+
+#: plugins/ws-chapters/includes/members.php:392
+msgid "What is in the document, so members can find it."
+msgstr "Le contenu du document, pour que les membres puissent le trouver."
+
+#: plugins/ws-chapters/includes/members.php:395
+msgid "E.g. the date of the meeting or of the document."
+msgstr "Ex. la date de la réunion ou du document."
+
+#: plugins/ws-chapters/includes/members.php:397
+msgid "File"
+msgstr "Fichier"
+
+#. translators: %s: maximum size
+#: plugins/ws-chapters/includes/members.php:400
+msgid "PDF, Word, Excel, PowerPoint, OpenDocument, text, JPG or PNG, up to %s."
+msgstr "PDF, Word, Excel, PowerPoint, OpenDocument, texte, JPG ou PNG, jusqu'à %s."
+
+#: plugins/ws-chapters/includes/members.php:402
+msgid "For the Link type: the web address (e.g. a shared folder or an online document)."
+msgstr "Pour le type Lien : l'adresse web (ex. un dossier partagé ou un document en ligne)."
+
+#: plugins/ws-chapters/includes/members.php:403
+msgid "Add to the library"
+msgstr "Ajouter à la bibliothèque"
+
+#: plugins/ws-chapters/includes/members.php:415
+msgid "File or link"
+msgstr "Fichier ou lien"
+
+#: plugins/ws-chapters/includes/members.php:53 plugins/ws-chapters/includes/members.php:55
+msgid "Member documents"
+msgstr "Documents des membres"
+
+#: plugins/ws-chapters/includes/members.php:54
+msgid "Member document"
+msgstr "Document des membres"
+
+#: plugins/ws-chapters/includes/members.php:56
+msgid "Edit member document"
+msgstr "Modifier le document des membres"
+
+#: plugins/ws-chapters/includes/members.php:57
+msgid "Search member documents"
+msgstr "Rechercher des documents des membres"
+
+#: plugins/ws-chapters/includes/members.php:58
+msgid "No member documents yet."
+msgstr "Aucun document des membres pour le moment."
+
+#. translators: used as "4 chapters"
+#: plugins/ws-chapters/includes/pages.php:100
+msgid "chapter"
+msgstr "Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:110
+msgid "Map of Widows Sons in Europe"
+msgstr "Carte des Widows Sons en Europe"
+
+#: plugins/ws-chapters/includes/pages.php:158
+msgid "Contact details coming soon."
+msgstr "Coordonnées bientôt disponibles."
+
+#: plugins/ws-chapters/includes/pages.php:163
+msgid "Photos coming soon."
+msgstr "Photos bientôt disponibles."
+
+#: plugins/ws-chapters/includes/pages.php:299
+msgid "No news yet."
+msgstr "Aucune actualité pour le moment."
+
+#: plugins/ws-chapters/includes/pages.php:329
+msgid "No upcoming events announced yet."
+msgstr "Aucun événement à venir annoncé pour le moment."
+
+#: plugins/ws-chapters/includes/pages.php:338
+msgid "Page sections"
+msgstr "Sections de la page"
+
+#: plugins/ws-chapters/includes/pages.php:409
+msgid "Our Brotherhood Across Europe"
+msgstr "Notre fraternité à travers l'Europe"
+
+#: plugins/ws-chapters/includes/pages.php:410
+msgid "Explore participating countries and their chapters. Select a country to find chapter information, news and events."
+msgstr "Découvrez les pays participants et leurs Chapters. Sélectionnez un pays pour trouver les informations, actualités et événements de ses Chapters."
+
+#. translators: %s: country name
+#: plugins/ws-chapters/includes/pages.php:449
+msgid "%s brings together Masonic motorcycle brothers. We ride for brotherhood, support our communities, and take part in national and international events."
+msgstr "%s réunit des Frères motards maçonniques. Nous roulons pour la fraternité, soutenons nos communautés et participons à des événements nationaux et internationaux."
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/includes/pages.php:469
+msgid "Visit %s"
+msgstr "Visiter %s"
+
+#: plugins/ws-chapters/includes/pages.php:476
+msgid "Brotherhood · Motorcycling · Service"
+msgstr "Fraternité · Moto · Service"
+
+#. translators: 1: country name, 2: number of chapters
+#: plugins/ws-chapters/includes/pages.php:481
+msgid "Chapters in %1$s (%2$d)"
+msgstr "Chapters en %1$s (%2$d)"
+
+#: plugins/ws-chapters/includes/pages.php:482 plugins/ws-chapters/includes/pages.php:538
+msgid "About %s"
+msgstr "À propos de %s"
+
+#: plugins/ws-chapters/includes/pages.php:484
+msgid "Official contacts and links"
+msgstr "Contacts et liens officiels"
+
+#: plugins/ws-chapters/includes/pages.php:485
+msgid "Apply to join"
+msgstr "Demander à rejoindre"
+
+#: plugins/ws-chapters/includes/pages.php:492
+msgid "Overview"
+msgstr "Aperçu"
+
+#: plugins/ws-chapters/includes/pages.php:495
+msgid "News"
+msgstr "Actualités"
+
+#: plugins/ws-chapters/includes/pages.php:496 plugins/ws-chapters/includes/pages.php:546
+msgid "Gallery"
+msgstr "Galerie"
+
+#: plugins/ws-chapters/includes/pages.php:526
+msgid "Official Chapter Patch"
+msgstr "Patch officiel du Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:527
+msgid "Official Chapter Logo"
+msgstr "Logo officiel du Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:528
+msgid "Official Contact Information"
+msgstr "Coordonnées officielles"
+
+#: plugins/ws-chapters/includes/pages.php:529
+msgid "Show on map"
+msgstr "Afficher sur la carte"
+
+#: plugins/ws-chapters/includes/pages.php:530
+msgid "Apply to join this chapter"
+msgstr "Demander à rejoindre ce Chapter"
+
+#: plugins/ws-chapters/includes/pages.php:543
+msgid "About"
+msgstr "À propos"
+
+#: plugins/ws-chapters/includes/pages.php:545
+msgid "News & Activities"
+msgstr "Actualités et activités"
+
+#: plugins/ws-chapters/includes/pages.php:95
+msgid "Official logo pending"
+msgstr "Logo officiel à venir"
+
+#: plugins/ws-chapters/includes/pages.php:96 plugins/ws-chapters/includes/pages.php:429
+msgid "Explore chapter"
+msgstr "Découvrir le Chapter"
+
+#. translators: used as "4 chapters"
+#: plugins/ws-chapters/includes/pages.php:99
+msgid "chapters"
+msgstr "Chapters"
+
+#: plugins/ws-chapters/includes/private-mode.php:51
+msgid "Our new website is being prepared. Please come back soon."
+msgstr "Notre nouveau site est en préparation. Revenez bientôt."
+
+#: plugins/ws-chapters/includes/private-mode.php:52 plugins/ws-chapters/includes/sign-in.php:211
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: plugins/ws-chapters/includes/private-mode.php:58
+msgid "This site is private while it is being prepared."
+msgstr "Ce site est privé pendant sa préparation."
+
+#: plugins/ws-chapters/includes/private-mode.php:71
+msgid "Private while in development"
+msgstr "Privé pendant le développement"
+
+#: plugins/ws-chapters/includes/private-mode.php:75
+msgid "Only signed-in users can see the site"
+msgstr "Seuls les utilisateurs connectés peuvent voir le site"
+
+#: plugins/ws-chapters/includes/private-mode.php:76
+msgid "Visitors see a \"coming soon\" page. Untick this when the site opens to the public."
+msgstr "Les visiteurs voient une page « Bientôt disponible ». Décochez cette case lorsque le site s'ouvre au public."
+
+#: plugins/ws-chapters/includes/private-mode.php:84
+msgid "Private site"
+msgstr "Site privé"
+
+#: plugins/ws-chapters/includes/profile-fields.php:114
+msgid "Choose photos"
+msgstr "Choisir des photos"
+
+#: plugins/ws-chapters/includes/profile-fields.php:130
+msgid "Contact details & gallery"
+msgstr "Coordonnées et galerie"
+
+#: plugins/ws-chapters/includes/profile-fields.php:137 plugins/ws-chapters/includes/profile-fields.php:170
+msgid "Photo gallery"
+msgstr "Galerie photos"
+
+#: plugins/ws-chapters/includes/profile-fields.php:139
+msgid "Featured image: used as the chapter page header."
+msgstr "Image mise en avant : utilisée comme en-tête de la page du Chapter."
+
+#: plugins/ws-chapters/includes/profile-fields.php:16
+msgid "Address / meeting place"
+msgstr "Adresse / lieu de réunion"
+
+#: plugins/ws-chapters/includes/profile-fields.php:167
+msgid "A wide landscape photo for the top of the country page."
+msgstr "Une photo panoramique large pour le haut de la page du pays."
+
+#: plugins/ws-chapters/includes/profile-fields.php:17
+msgid "Website"
+msgstr "Site web"
+
+#: plugins/ws-chapters/includes/profile-fields.php:18
+msgid "Facebook page"
+msgstr "Page Facebook"
+
+#: plugins/ws-chapters/includes/profile-fields.php:19
+msgid "Instagram"
+msgstr "Instagram"
+
+#: plugins/ws-chapters/includes/profile-fields.php:193
+msgid "— No chapter (country or Widows Sons Europe) —"
+msgstr "— Aucun Chapter (pays ou Widows Sons Europe) —"
+
+#: plugins/ws-chapters/includes/profile-fields.php:199
+msgid "Pick a chapter to post as that chapter (it also shows on the chapter page). With no chapter, the country chosen under Countries is shown. With no chapter and no country, the news is posted by Widows Sons Europe."
+msgstr "Choisissez un Chapter pour publier au nom de ce Chapter (l'actualité apparaît aussi sur sa page). Sans Chapter, c'est le pays choisi sous Pays qui est affiché. Sans Chapter ni pays, l'actualité est publiée par Widows Sons Europe."
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/security.php:54
+msgid "Too many sign-in attempts. Please wait %d minutes, or ask for a new password."
+msgstr "Trop de tentatives de connexion. Veuillez patienter %d minutes, ou demander un nouveau mot de passe."
+
+#: plugins/ws-chapters/includes/sign-in.php:185
+msgid "If this email belongs to a member, a sign-in code is on its way. Check your inbox (and Junk/Spam)."
+msgstr "Si cet e-mail appartient à un membre, un code de connexion est en route. Consultez votre boîte de réception (et vos courriers indésirables)."
+
+#: plugins/ws-chapters/includes/sign-in.php:186
+msgid "That code is not right. Please check the email and type it again."
+msgstr "Ce code est incorrect. Veuillez vérifier l'e-mail et le saisir à nouveau."
+
+#: plugins/ws-chapters/includes/sign-in.php:187
+msgid "This code has expired or was already used. Ask for a new one below."
+msgstr "Ce code a expiré ou a déjà été utilisé. Demandez-en un nouveau ci-dessous."
+
+#: plugins/ws-chapters/includes/sign-in.php:188
+msgid "Please type your email address first."
+msgstr "Veuillez d'abord saisir votre adresse e-mail."
+
+#: plugins/ws-chapters/includes/sign-in.php:189
+msgid "Too many codes were asked for from your connection. Please try again in an hour."
+msgstr "Trop de codes ont été demandés depuis votre connexion. Veuillez réessayer dans une heure."
+
+#: plugins/ws-chapters/includes/sign-in.php:190
+msgid "Passkey added. Next time, choose \"Sign in with a passkey\" on this device."
+msgstr "Passkey ajoutée. La prochaine fois, choisissez « Se connecter avec une passkey » sur cet appareil."
+
+#: plugins/ws-chapters/includes/sign-in.php:191
+msgid "Passkey removed."
+msgstr "Passkey supprimée."
+
+#: plugins/ws-chapters/includes/sign-in.php:202
+msgid "Sign in to Widows Sons Europe"
+msgstr "Connexion à Widows Sons Europe"
+
+#: plugins/ws-chapters/includes/sign-in.php:204
+msgid "Sign me in"
+msgstr "Me connecter"
+
+#: plugins/ws-chapters/includes/sign-in.php:206
+msgid "Enter your sign-in code"
+msgstr "Saisissez votre code de connexion"
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:208
+msgid "We emailed you a 6-digit code. Type it here, or tap the button in the email. It works for %d minutes."
+msgstr "Nous vous avons envoyé un code à 6 chiffres par e-mail. Saisissez-le ici, ou touchez le bouton dans l'e-mail. Il est valable %d minutes."
+
+#: plugins/ws-chapters/includes/sign-in.php:210
+msgid "Code"
+msgstr "Code"
+
+#: plugins/ws-chapters/includes/sign-in.php:212
+msgid "Send a new code"
+msgstr "Envoyer un nouveau code"
+
+#: plugins/ws-chapters/includes/sign-in.php:232
+msgid "Next"
+msgstr "Suivant"
+
+#: plugins/ws-chapters/includes/sign-in.php:235
+msgid "Change"
+msgstr "Modifier"
+
+#: plugins/ws-chapters/includes/sign-in.php:236
+msgid "How would you like to sign in?"
+msgstr "Comment souhaitez-vous vous connecter ?"
+
+#: plugins/ws-chapters/includes/sign-in.php:237
+msgid "Password"
+msgstr "Mot de passe"
+
+#: plugins/ws-chapters/includes/sign-in.php:238
+msgid "Keep me signed in on this device"
+msgstr "Rester connecté sur cet appareil"
+
+#: plugins/ws-chapters/includes/sign-in.php:239
+msgid "Log in with password"
+msgstr "Se connecter avec un mot de passe"
+
+#: plugins/ws-chapters/includes/sign-in.php:248
+msgid "or, without a password"
+msgstr "ou, sans mot de passe"
+
+#: plugins/ws-chapters/includes/sign-in.php:249
+msgid "Email me a sign-in code"
+msgstr "M'envoyer un code de connexion par e-mail"
+
+#: plugins/ws-chapters/includes/sign-in.php:250
+msgid "Sign in with a passkey"
+msgstr "Se connecter avec une passkey"
+
+#: plugins/ws-chapters/includes/sign-in.php:251
+msgid "Passkeys work after you add one: sign in with an email code, then go to My profile and tap \"Add a passkey on this device\"."
+msgstr "Les passkeys fonctionnent une fois que vous en avez ajouté une : connectez-vous avec un code par e-mail, puis allez dans Mon profil et touchez « Ajouter une passkey sur cet appareil »."
+
+#: plugins/ws-chapters/includes/sign-in.php:336
+msgid "This passkey answer is not for this site. Please try again."
+msgstr "Cette réponse de passkey ne correspond pas à ce site. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/sign-in.php:340
+msgid "This passkey is not for this site."
+msgstr "Cette passkey ne correspond pas à ce site."
+
+#: plugins/ws-chapters/includes/sign-in.php:346
+msgid "This passkey is not known here (it may have been removed). Sign in with an email code and add it again on My profile."
+msgstr "Cette passkey n'est pas reconnue ici (elle a peut-être été supprimée). Connectez-vous avec un code par e-mail et ajoutez-la à nouveau dans Mon profil."
+
+#: plugins/ws-chapters/includes/sign-in.php:350
+msgid "The passkey could not be checked. Please try again."
+msgstr "La passkey n'a pas pu être vérifiée. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/sign-in.php:353
+msgid "This passkey looks copied, so it was refused. Please sign in with an email code."
+msgstr "Cette passkey semble copiée, elle a donc été refusée. Veuillez vous connecter avec un code par e-mail."
+
+#: plugins/ws-chapters/includes/sign-in.php:364
+msgid "This passkey could not be checked for this site. Please try again."
+msgstr "Cette passkey n'a pas pu être vérifiée pour ce site. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/sign-in.php:367
+msgid "This device offers a kind of passkey the site cannot use."
+msgstr "Cet appareil propose un type de passkey que le site ne peut pas utiliser."
+
+#: plugins/ws-chapters/includes/sign-in.php:371
+msgid "This passkey could not be read. Please try again."
+msgstr "Cette passkey n'a pas pu être lue. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/sign-in.php:375
+msgid "You already have 10 passkeys. Remove one first."
+msgstr "Vous avez déjà 10 passkeys. Supprimez-en une d'abord."
+
+#: plugins/ws-chapters/includes/sign-in.php:403 plugins/ws-chapters/includes/sign-in.php:437
+msgid "This took too long. Please try again."
+msgstr "Cela a pris trop de temps. Veuillez réessayer."
+
+#: plugins/ws-chapters/includes/sign-in.php:413
+msgid "Please reload the page and try again."
+msgstr "Veuillez recharger la page et réessayer."
+
+#. translators: 1: date added, 2: date last used
+#: plugins/ws-chapters/includes/sign-in.php:458
+msgid "added %1$s · last used %2$s"
+msgstr "ajoutée le %1$s · dernière utilisation %2$s"
+
+#. translators: 1: date added, 2: date last used
+#: plugins/ws-chapters/includes/sign-in.php:458
+msgid "never"
+msgstr "jamais"
+
+#: plugins/ws-chapters/includes/sign-in.php:460
+msgid "Remove this passkey? That device will need an email code or password next time."
+msgstr "Supprimer cette passkey ? Cet appareil aura besoin d'un code par e-mail ou d'un mot de passe la prochaine fois."
+
+#: plugins/ws-chapters/includes/sign-in.php:462
+msgid "Sign in without a password"
+msgstr "Se connecter sans mot de passe"
+
+#: plugins/ws-chapters/includes/sign-in.php:463
+msgid "Add a passkey on each phone or computer you use. Next time, choose \"Sign in with a passkey\" and confirm with Face ID, your fingerprint or the screen lock. No password to remember, and nothing anyone can guess."
+msgstr "Ajoutez une passkey sur chaque téléphone ou ordinateur que vous utilisez. La prochaine fois, choisissez « Se connecter avec une passkey » et confirmez avec Face ID, votre empreinte digitale ou le verrouillage de l'écran. Aucun mot de passe à retenir, et rien que quiconque puisse deviner."
+
+#: plugins/ws-chapters/includes/sign-in.php:465
+msgid "Add a passkey on this device"
+msgstr "Ajouter une passkey sur cet appareil"
+
+#: plugins/ws-chapters/includes/sign-in.php:467
+msgid "This browser cannot use passkeys. You can still sign in with an email code."
+msgstr "Ce navigateur ne peut pas utiliser les passkeys. Vous pouvez toujours vous connecter avec un code par e-mail."
+
+#: plugins/ws-chapters/includes/sign-in.php:87
+msgid "Your sign-in code for Widows Sons Europe"
+msgstr "Votre code de connexion pour Widows Sons Europe"
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:89
+msgid "Your code is %s. It works once, for 15 minutes."
+msgstr "Votre code est %s. Il fonctionne une seule fois, pendant 15 minutes."
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:90
+msgid "Your sign-in code"
+msgstr "Votre code de connexion"
+
+#. translators: %s: code
+#: plugins/ws-chapters/includes/sign-in.php:91
+msgid "Type this code on the Widows Sons Europe sign-in screen (in the browser or the app on your home screen):"
+msgstr "Saisissez ce code sur l'écran de connexion de Widows Sons Europe (dans le navigateur ou l'application sur votre écran d'accueil) :"
+
+#: plugins/ws-chapters/includes/sign-in.php:93
+msgid "Or sign me in here"
+msgstr "Ou connectez-moi ici"
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:97
+msgid "The code and the button work once, for %d minutes. You do not need a password."
+msgstr "Le code et le bouton fonctionnent une seule fois, pendant %d minutes. Vous n'avez pas besoin de mot de passe."
+
+#. translators: %d: minutes
+#: plugins/ws-chapters/includes/sign-in.php:98
+msgid "If you did not ask for this, you can ignore this email: nobody can sign in without it."
+msgstr "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail : personne ne peut se connecter sans lui."
+
+#: plugins/ws-chapters/ws-chapters.php:100
+msgid "National Grand Chapters"
+msgstr "Grand Chapters nationaux"
+
+#: plugins/ws-chapters/ws-chapters.php:317
+msgid "Widows Sons emblem"
+msgstr "Emblème des Widows Sons"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/ws-chapters.php:352
+msgid "Official patch of %s"
+msgstr "Patch officiel de %s"
+
+#. translators: %s: chapter name
+#: plugins/ws-chapters/ws-chapters.php:360
+msgid "Official logo of %s"
+msgstr "Logo officiel de %s"
+
+#. translators: %s: country / national organisation name
+#: plugins/ws-chapters/ws-chapters.php:368
+msgid "National logo of %s"
+msgstr "Logo national de %s"
+
+#: plugins/ws-chapters/ws-chapters.php:369
+msgid "Official national logo pending"
+msgstr "Logo national officiel à venir"
+
+#: plugins/ws-chapters/ws-chapters.php:37
+msgid "Back patch"
+msgstr "Patch de dos"
+
+#: plugins/ws-chapters/ws-chapters.php:37
+msgid "Official chapter patch not yet provided"
+msgstr "Patch officiel du Chapter pas encore fourni"
+
+#: plugins/ws-chapters/ws-chapters.php:38
+msgid "Chapter logo"
+msgstr "Logo du Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:38
+msgid "Official chapter logo not yet provided"
+msgstr "Logo officiel du Chapter pas encore fourni"
+
+#: plugins/ws-chapters/ws-chapters.php:431
+msgid "No official file uploaded. The Widows Sons emblem will be displayed until the chapter uploads its own."
+msgstr "Aucun fichier officiel téléversé. L'emblème des Widows Sons sera affiché jusqu'à ce que le Chapter téléverse le sien."
+
+#: plugins/ws-chapters/ws-chapters.php:436
+msgid "Replace"
+msgstr "Remplacer"
+
+#: plugins/ws-chapters/ws-chapters.php:436
+msgid "Upload / select"
+msgstr "Téléverser / sélectionner"
+
+#: plugins/ws-chapters/ws-chapters.php:437 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
+msgid "Remove"
+msgstr "Retirer"
+
+#: plugins/ws-chapters/ws-chapters.php:439
+msgid "Upload the official chapter-supplied insignia at high resolution (prefer PNG or WebP with transparency). Do not edit, recolour or crop official artwork."
+msgstr "Téléversez les insignes officiels fournis par le Chapter en haute résolution (de préférence PNG ou WebP avec transparence). Ne modifiez pas, ne recolorez pas et ne recadrez pas les visuels officiels."
+
+#: plugins/ws-chapters/ws-chapters.php:441
+msgid "Only administrators with the relevant permissions may modify official insignia."
+msgstr "Seuls les administrateurs disposant des autorisations nécessaires peuvent modifier les insignes officiels."
+
+#: plugins/ws-chapters/ws-chapters.php:448
+msgid "Official insignia"
+msgstr "Insignes officiels"
+
+#: plugins/ws-chapters/ws-chapters.php:458
+msgid "Location (for the map)"
+msgstr "Emplacement (pour la carte)"
+
+#: plugins/ws-chapters/ws-chapters.php:461 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
+msgid "City"
+msgstr "Ville"
+
+#: plugins/ws-chapters/ws-chapters.php:462
+msgid "Latitude (optional)"
+msgstr "Latitude (facultatif)"
+
+#: plugins/ws-chapters/ws-chapters.php:463
+msgid "Longitude (optional)"
+msgstr "Longitude (facultatif)"
+
+#: plugins/ws-chapters/ws-chapters.php:476
+msgid "Pin is at the coordinates entered above."
+msgstr "Le repère est placé aux coordonnées saisies ci-dessus."
+
+#: plugins/ws-chapters/ws-chapters.php:477
+msgid "Pin is at the city, looked up automatically."
+msgstr "Le repère est placé sur la ville, trouvée automatiquement."
+
+#: plugins/ws-chapters/ws-chapters.php:478
+msgid "No city yet: the pin is on the capital of the chapter's country."
+msgstr "Pas encore de ville : le repère est placé sur la capitale du pays du Chapter."
+
+#: plugins/ws-chapters/ws-chapters.php:480
+msgid "Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter's country."
+msgstr "Saisissez la ville et enregistrez : la position sur la carte est trouvée automatiquement. Ne renseignez la latitude/longitude que pour placer le repère à un endroit précis (ex. clic droit sur le lieu de réunion dans Google Maps pour les copier). Sans ville, le repère est placé sur la capitale du pays du Chapter."
+
+#: plugins/ws-chapters/ws-chapters.php:49 plugins/ws-chapters/includes/access.php:234 plugins/ws-chapters/includes/display.php:279 plugins/ws-chapters/includes/front-edit.php:461 plugins/ws-chapters/includes/pages.php:493
+msgid "Chapters"
+msgstr "Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:50 plugins/ws-chapters/includes/edit-form.php:124 plugins/ws-chapters/includes/forms.php:503 plugins/ws-chapters/includes/forms.php:538 plugins/ws-chapters/includes/forms.php:672
+msgid "Chapter"
+msgstr "Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:51 plugins/ws-chapters/ws-chapters.php:52
+msgid "Add chapter"
+msgstr "Ajouter un Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:528 plugins/ws-chapters/ws-chapters.php:536 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/includes/front-edit.php:48
+msgid "National logo"
+msgstr "Logo national"
+
+#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:540
+msgid "Flag (country code)"
+msgstr "Drapeau (code pays)"
+
+#: plugins/ws-chapters/ws-chapters.php:53
+msgid "Edit chapter"
+msgstr "Modifier le Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:531 plugins/ws-chapters/ws-chapters.php:542
+msgid "Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag."
+msgstr "Code pays à deux lettres, ex. bg, de, gb (gb-sct pour l'Écosse, gb-eng l'Angleterre, gb-wls le pays de Galles). Utilisé pour afficher le drapeau."
+
+#: plugins/ws-chapters/ws-chapters.php:54
+msgid "New chapter"
+msgstr "Nouveau Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:55
+msgid "View chapter"
+msgstr "Voir le Chapter"
+
+#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:395
+msgid "All chapters"
+msgstr "Tous les Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:57
+msgid "Search chapters"
+msgstr "Rechercher des Chapters"
+
+#: plugins/ws-chapters/ws-chapters.php:58
+msgid "No chapters found."
+msgstr "Aucun Chapter trouvé."
+
+#: plugins/ws-chapters/ws-chapters.php:59
+msgid "No chapters in the Trash."
+msgstr "Aucun Chapter dans la corbeille."
+
+#: plugins/ws-chapters/ws-chapters.php:60 plugins/ws-chapters/includes/front-edit.php:47 plugins/ws-chapters/includes/front-edit.php:55 plugins/ws-chapters/includes/profile-fields.php:165 plugins/ws-chapters/includes/profile-fields.php:166
+msgid "Header photo"
+msgstr "Photo d'en-tête"
+
+#: plugins/ws-chapters/ws-chapters.php:61
+msgid "Set header photo"
+msgstr "Définir la photo d'en-tête"
+
+#: plugins/ws-chapters/ws-chapters.php:62
+msgid "Remove header photo"
+msgstr "Retirer la photo d'en-tête"
+
+#: plugins/ws-chapters/ws-chapters.php:63
+msgid "Use as header photo"
+msgstr "Utiliser comme photo d'en-tête"
+
+#: plugins/ws-chapters/ws-chapters.php:64
+msgid "Chapter published."
+msgstr "Chapter publié."
+
+#: plugins/ws-chapters/ws-chapters.php:65
+msgid "Chapter updated."
+msgstr "Chapter mis à jour."
+
+#: plugins/ws-chapters/ws-chapters.php:85 plugins/ws-chapters/ws-chapters.php:87 plugins/ws-chapters/includes/access.php:230 plugins/ws-chapters/includes/display.php:278 plugins/ws-chapters/includes/front-edit.php:457
+msgid "Countries"
+msgstr "Pays"
+
+#: plugins/ws-chapters/ws-chapters.php:86 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:199 plugins/ws-chapters/includes/forms.php:386 plugins/ws-chapters/includes/forms.php:502
+msgid "Country"
+msgstr "Pays"
+
+#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:394
+msgid "All countries"
+msgstr "Tous les pays"
+
+#: plugins/ws-chapters/ws-chapters.php:89
+msgid "Edit country"
+msgstr "Modifier le pays"
+
+#: plugins/ws-chapters/ws-chapters.php:90 plugins/ws-chapters/includes/pages.php:97
+msgid "View country"
+msgstr "Voir le pays"
+
+#: plugins/ws-chapters/ws-chapters.php:91
+msgid "Update country"
+msgstr "Mettre à jour le pays"
+
+#: plugins/ws-chapters/ws-chapters.php:92
+msgid "Add country"
+msgstr "Ajouter un pays"
+
+#: plugins/ws-chapters/ws-chapters.php:93
+msgid "New country name"
+msgstr "Nom du nouveau pays"
+
+#: plugins/ws-chapters/ws-chapters.php:94
+msgid "Search countries"
+msgstr "Rechercher des pays"
+
+#: plugins/ws-chapters/ws-chapters.php:95
+msgid "Parent country"
+msgstr "Pays parent"
+
+#: plugins/ws-chapters/ws-chapters.php:96
+msgid "Parent country:"
+msgstr "Pays parent :"
+
+#: plugins/ws-chapters/ws-chapters.php:97
+msgid "No countries found."
+msgstr "Aucun pays trouvé."
+
+#: plugins/ws-chapters/ws-chapters.php:98
+msgid "&larr; Go to countries"
+msgstr "&larr; Aller aux pays"

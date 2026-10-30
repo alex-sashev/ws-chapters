@@ -347,7 +347,7 @@ add_action( 'wp_footer', function () {
 	if ( ! is_user_logged_in() ) {
 		return;
 	}
-	echo '<script>(function(){document.addEventListener("submit",function(e){if(e.defaultPrevented){return;}var f=e.target;if(!f.classList||!f.classList.contains("ws-fedit__form")&&!f.classList.contains("ws-fe-remove")&&!f.classList.contains("ws-fe-trash--news")&&!f.closest(".ws-fe-news")){return;}if(f.getAttribute("data-busy")){e.preventDefault();return;}f.setAttribute("data-busy","1");var b=f.querySelector("button[type=submit]");if(b){var isRemove=f.classList.contains("ws-fe-remove"),isNews=f.classList.contains("ws-fe-trash--news");b.disabled=true;b.textContent=isNews?"Deleting…":(isRemove?"…":"Please wait…");}f.classList.add("is-busy");});})();</script>';
+	echo '<script>(function(){document.addEventListener("submit",function(e){if(e.defaultPrevented){return;}var f=e.target;if(!f.classList||!f.classList.contains("ws-fedit__form")&&!f.classList.contains("ws-fe-remove")&&!f.classList.contains("ws-fe-trash--news")&&!f.closest(".ws-fe-news")){return;}if(f.getAttribute("data-busy")){e.preventDefault();return;}f.setAttribute("data-busy","1");var b=f.querySelector("button[type=submit]");if(b){var isRemove=f.classList.contains("ws-fe-remove"),isNews=f.classList.contains("ws-fe-trash--news");b.disabled=true;b.textContent=isNews?"' . esc_js( __( 'Deleting…', 'ws-chapters' ) ) . '":(isRemove?"…":"' . esc_js( __( 'Please wait…', 'ws-chapters' ) ) . '");}f.classList.add("is-busy");});})();</script>';
 } );
 
 /* A page showing a saved message must not be kept in the page cache, or the message comes back on refresh.

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Widows Sons Chapters
  * Description: Widows Sons Europe: chapters and countries with official insignia, map of Europe, events, news, front-end editing, members' area (library, member list, profiles, member management) and branded emails.
- * Version:     1.0.16
+ * Version:     1.0.17
  * Text Domain: ws-chapters
  * License:     GPL-2.0-or-later
  *
@@ -387,6 +387,7 @@ add_action( 'rest_api_init', function () {
 	) );
 } );
 
+require __DIR__ . '/includes/languages.php';
 require __DIR__ . '/includes/security.php';
 require __DIR__ . '/includes/access.php';
 require __DIR__ . '/includes/accounts.php';
