@@ -33,6 +33,42 @@ msgstr "Road name"
 msgid "<strong>Error:</strong> Please log in with your email address, not your road name."
 msgstr "<strong>Σφάλμα:</strong> Συνδέσου με τη διεύθυνση email σου, όχι με το road name σου."
 
+#: plugins/ws-chapters/includes/analytics.php:37
+msgid "The Google Analytics Measurement ID starts with G- (for example G-AB12CD34EF). It was not saved."
+msgstr "Το αναγνωριστικό μέτρησης του Google Analytics ξεκινά με G- (για παράδειγμα G-AB12CD34EF). Δεν αποθηκεύτηκε."
+
+#: plugins/ws-chapters/includes/analytics.php:43
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: plugins/ws-chapters/includes/analytics.php:47
+msgid "The Measurement ID of the site's Google Analytics data stream. Visitors are asked first, and only those who accept are counted. Leave empty to turn analytics off."
+msgstr "Το αναγνωριστικό μέτρησης της ροής δεδομένων Google Analytics του ιστότοπου. Οι επισκέπτες ερωτώνται πρώτα και καταμετρώνται μόνο όσοι αποδεχτούν. Αφήστε το κενό για να απενεργοποιηθεί."
+
+#: plugins/ws-chapters/includes/analytics.php:63
+msgid "Cookie settings"
+msgstr "Ρυθμίσεις cookies"
+
+#: plugins/ws-chapters/includes/analytics.php:76
+msgid "Cookies"
+msgstr "Cookies"
+
+#: plugins/ws-chapters/includes/analytics.php:77
+msgid "May we count your visit with Google Analytics? It helps us see which pages brothers use. It sets cookies and sends your visit to Google."
+msgstr "Μπορούμε να καταμετρήσουμε την επίσκεψή σου με το Google Analytics; Μας βοηθά να βλέπουμε ποιες σελίδες χρησιμοποιούν οι αδελφοί. Ορίζει cookies και στέλνει την επίσκεψή σου στην Google."
+
+#: plugins/ws-chapters/includes/analytics.php:78
+msgid "Privacy policy"
+msgstr "Πολιτική απορρήτου"
+
+#: plugins/ws-chapters/includes/analytics.php:79
+msgid "Accept"
+msgstr "Αποδέχομαι"
+
+#: plugins/ws-chapters/includes/analytics.php:80
+msgid "Decline"
+msgstr "Απορρίπτω"
+
 #: plugins/ws-chapters/includes/app.php:102
 msgid "No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code)."
 msgstr "Δεν χρησιμοποιήθηκε passkey. Αν δεν έχεις προσθέσει ακόμη, συνδέσου πρώτα με κωδικό μέσω email και μετά πρόσθεσε ένα passkey στο «Το προφίλ μου». Ένα passkey λειτουργεί στη συσκευή όπου το πρόσθεσες (ή με εκείνο το τηλέφωνο, σαρώνοντας τον κωδικό QR)."
@@ -2648,63 +2684,63 @@ msgstr "Λογότυπο Chapter"
 msgid "Official chapter logo not yet provided"
 msgstr "Το επίσημο λογότυπο του Chapter δεν έχει δοθεί ακόμη"
 
-#: plugins/ws-chapters/ws-chapters.php:431
+#: plugins/ws-chapters/ws-chapters.php:432
 msgid "No official file uploaded. The Widows Sons emblem will be displayed until the chapter uploads its own."
 msgstr "Δεν έχει μεταφορτωθεί επίσημο αρχείο. Θα εμφανίζεται το έμβλημα των Widows Sons μέχρι το Chapter να μεταφορτώσει το δικό του."
 
-#: plugins/ws-chapters/ws-chapters.php:436
+#: plugins/ws-chapters/ws-chapters.php:437
 msgid "Replace"
 msgstr "Αντικατάσταση"
 
-#: plugins/ws-chapters/ws-chapters.php:436
+#: plugins/ws-chapters/ws-chapters.php:437
 msgid "Upload / select"
 msgstr "Μεταφόρτωση / επιλογή"
 
-#: plugins/ws-chapters/ws-chapters.php:437 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
+#: plugins/ws-chapters/ws-chapters.php:438 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: plugins/ws-chapters/ws-chapters.php:439
+#: plugins/ws-chapters/ws-chapters.php:440
 msgid "Upload the official chapter-supplied insignia at high resolution (prefer PNG or WebP with transparency). Do not edit, recolour or crop official artwork."
 msgstr "Μεταφόρτωσε τα επίσημα διακριτικά που παρέχει το Chapter σε υψηλή ανάλυση (κατά προτίμηση PNG ή WebP με διαφάνεια). Μην επεξεργάζεσαι, αλλάζεις χρώματα ή περικόπτεις επίσημα γραφικά."
 
-#: plugins/ws-chapters/ws-chapters.php:441
+#: plugins/ws-chapters/ws-chapters.php:442
 msgid "Only administrators with the relevant permissions may modify official insignia."
 msgstr "Μόνο διαχειριστές με τα σχετικά δικαιώματα μπορούν να τροποποιούν τα επίσημα διακριτικά."
 
-#: plugins/ws-chapters/ws-chapters.php:448
+#: plugins/ws-chapters/ws-chapters.php:449
 msgid "Official insignia"
 msgstr "Επίσημα διακριτικά"
 
-#: plugins/ws-chapters/ws-chapters.php:458
+#: plugins/ws-chapters/ws-chapters.php:459
 msgid "Location (for the map)"
 msgstr "Τοποθεσία (για τον χάρτη)"
 
-#: plugins/ws-chapters/ws-chapters.php:461 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
+#: plugins/ws-chapters/ws-chapters.php:462 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
 msgid "City"
 msgstr "Πόλη"
 
-#: plugins/ws-chapters/ws-chapters.php:462
+#: plugins/ws-chapters/ws-chapters.php:463
 msgid "Latitude (optional)"
 msgstr "Γεωγραφικό πλάτος (προαιρετικό)"
 
-#: plugins/ws-chapters/ws-chapters.php:463
+#: plugins/ws-chapters/ws-chapters.php:464
 msgid "Longitude (optional)"
 msgstr "Γεωγραφικό μήκος (προαιρετικό)"
 
-#: plugins/ws-chapters/ws-chapters.php:476
+#: plugins/ws-chapters/ws-chapters.php:477
 msgid "Pin is at the coordinates entered above."
 msgstr "Η καρφίτσα είναι στις συντεταγμένες που καταχωρίστηκαν παραπάνω."
 
-#: plugins/ws-chapters/ws-chapters.php:477
+#: plugins/ws-chapters/ws-chapters.php:478
 msgid "Pin is at the city, looked up automatically."
 msgstr "Η καρφίτσα είναι στην πόλη, που εντοπίστηκε αυτόματα."
 
-#: plugins/ws-chapters/ws-chapters.php:478
+#: plugins/ws-chapters/ws-chapters.php:479
 msgid "No city yet: the pin is on the capital of the chapter's country."
 msgstr "Δεν υπάρχει ακόμη πόλη: η καρφίτσα είναι στην πρωτεύουσα της χώρας του Chapter."
 
-#: plugins/ws-chapters/ws-chapters.php:480
+#: plugins/ws-chapters/ws-chapters.php:481
 msgid "Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter's country."
 msgstr "Εισήγαγε την πόλη και αποθήκευσε: η θέση στον χάρτη βρίσκεται αυτόματα. Συμπλήρωσε γεωγραφικό πλάτος/μήκος μόνο για να τοποθετήσεις την καρφίτσα σε ακριβές σημείο (π.χ. κάνε δεξί κλικ στον τόπο συνάντησης στο Google Maps για να τα αντιγράψεις). Χωρίς πόλη, η καρφίτσα μπαίνει στην πρωτεύουσα της χώρας του Chapter."
 
@@ -2720,19 +2756,19 @@ msgstr "Chapter"
 msgid "Add chapter"
 msgstr "Προσθήκη Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:528 plugins/ws-chapters/ws-chapters.php:536 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/includes/front-edit.php:48
+#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/ws-chapters.php:538 plugins/ws-chapters/includes/front-edit.php:48
 msgid "National logo"
 msgstr "Εθνικό λογότυπο"
-
-#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:540
-msgid "Flag (country code)"
-msgstr "Σημαία (κωδικός χώρας)"
 
 #: plugins/ws-chapters/ws-chapters.php:53
 msgid "Edit chapter"
 msgstr "Επεξεργασία Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:531 plugins/ws-chapters/ws-chapters.php:542
+#: plugins/ws-chapters/ws-chapters.php:530 plugins/ws-chapters/ws-chapters.php:541
+msgid "Flag (country code)"
+msgstr "Σημαία (κωδικός χώρας)"
+
+#: plugins/ws-chapters/ws-chapters.php:532 plugins/ws-chapters/ws-chapters.php:543
 msgid "Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag."
 msgstr "Διψήφιος κωδικός χώρας, π.χ. bg, de, gb (gb-sct για Σκωτία, gb-eng Αγγλία, gb-wls Ουαλία). Χρησιμοποιείται για την εμφάνιση της σημαίας."
 

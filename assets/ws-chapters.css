@@ -547,6 +547,19 @@ a.ws-doc__title:hover { text-decoration: underline; }
 .ws-app-bar .ws-mm__btn { margin-top: .4rem; padding: .45rem .9rem; }
 .ws-app-bar__close { position: absolute; top: .3rem; right: .4rem; background: none; border: 0; color: #efe9dc; font-size: 1.6rem; line-height: 1; cursor: pointer; padding: .2rem .4rem; }
 
+/* Google Analytics consent bar (analytics.php). Above the "Get the app" bar, which waits until it is answered. */
+.ws-consent { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 9999; max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; padding: .9rem 1.1rem; background: #0e0d0b; color: #efe9dc; border: 1px solid #c9a64b; border-radius: 10px; box-shadow: 0 8px 28px rgba(0, 0, 0, .35); font-size: .92rem; line-height: 1.45; }
+.ws-consent[hidden] { display: none; }
+.ws-consent p { margin: 0; flex: 1 1 22rem; }
+.ws-consent a { color: #c9a64b; }
+.ws-consent__buttons { display: flex; gap: .6rem; }
+.ws-consent .ws-consent__no { background: transparent; color: #efe9dc; border-color: #efe9dc; }
+.ws-consent .ws-consent__no:hover, .ws-consent .ws-consent__no:focus-visible { background: #efe9dc; color: #0e0d0b; }
+body:has(.ws-consent:not([hidden])) .ws-app-bar { display: none; }
+.ws-consent-link { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+.ws-footer .ws-consent-link { color: var(--ws-on-dark, #efe9dc); text-decoration: none; }
+.ws-footer .ws-consent-link:hover, .ws-footer .ws-consent-link:focus-visible { color: var(--ws-gold-light, #e3c77a); }
+
 /* Sign in, email first (1.0.15). */
 .ws-si-form .ws-si-step { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; }
 .ws-si-form .ws-si-step[hidden] { display: none; }

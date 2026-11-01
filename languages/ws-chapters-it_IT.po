@@ -33,6 +33,42 @@ msgstr "Road name"
 msgid "<strong>Error:</strong> Please log in with your email address, not your road name."
 msgstr "<strong>Errore:</strong> accedi con il tuo indirizzo email, non con il tuo road name."
 
+#: plugins/ws-chapters/includes/analytics.php:37
+msgid "The Google Analytics Measurement ID starts with G- (for example G-AB12CD34EF). It was not saved."
+msgstr "L'ID di misurazione di Google Analytics inizia con G- (per esempio G-AB12CD34EF). Non è stato salvato."
+
+#: plugins/ws-chapters/includes/analytics.php:43
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: plugins/ws-chapters/includes/analytics.php:47
+msgid "The Measurement ID of the site's Google Analytics data stream. Visitors are asked first, and only those who accept are counted. Leave empty to turn analytics off."
+msgstr "L'ID di misurazione dello stream di dati Google Analytics del sito. Ai visitatori viene chiesto prima, e vengono contati solo quelli che accettano. Lascia vuoto per disattivare Analytics."
+
+#: plugins/ws-chapters/includes/analytics.php:63
+msgid "Cookie settings"
+msgstr "Impostazioni cookie"
+
+#: plugins/ws-chapters/includes/analytics.php:76
+msgid "Cookies"
+msgstr "Cookie"
+
+#: plugins/ws-chapters/includes/analytics.php:77
+msgid "May we count your visit with Google Analytics? It helps us see which pages brothers use. It sets cookies and sends your visit to Google."
+msgstr "Possiamo contare la tua visita con Google Analytics? Ci aiuta a capire quali pagine usano i fratelli. Imposta dei cookie e invia la tua visita a Google."
+
+#: plugins/ws-chapters/includes/analytics.php:78
+msgid "Privacy policy"
+msgstr "Informativa sulla privacy"
+
+#: plugins/ws-chapters/includes/analytics.php:79
+msgid "Accept"
+msgstr "Accetto"
+
+#: plugins/ws-chapters/includes/analytics.php:80
+msgid "Decline"
+msgstr "Rifiuto"
+
 #: plugins/ws-chapters/includes/app.php:102
 msgid "No passkey was used. If you have not added one yet, sign in with an email code first, then add a passkey on My profile. A passkey works on the device where you added it (or with that phone, by scanning the QR code)."
 msgstr "Non è stata usata alcuna passkey. Se non ne hai ancora aggiunta una, accedi prima con un codice via email, poi aggiungi una passkey in Il mio profilo. Una passkey funziona sul dispositivo dove l'hai aggiunta (o con quel telefono, scansionando il codice QR)."
@@ -2648,63 +2684,63 @@ msgstr "Logo del Chapter"
 msgid "Official chapter logo not yet provided"
 msgstr "Logo ufficiale del Chapter non ancora fornito"
 
-#: plugins/ws-chapters/ws-chapters.php:431
+#: plugins/ws-chapters/ws-chapters.php:432
 msgid "No official file uploaded. The Widows Sons emblem will be displayed until the chapter uploads its own."
 msgstr "Nessun file ufficiale caricato. Verrà mostrato l'emblema dei Widows Sons finché il Chapter non caricherà il proprio."
 
-#: plugins/ws-chapters/ws-chapters.php:436
+#: plugins/ws-chapters/ws-chapters.php:437
 msgid "Replace"
 msgstr "Sostituisci"
 
-#: plugins/ws-chapters/ws-chapters.php:436
+#: plugins/ws-chapters/ws-chapters.php:437
 msgid "Upload / select"
 msgstr "Carica / seleziona"
 
-#: plugins/ws-chapters/ws-chapters.php:437 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
+#: plugins/ws-chapters/ws-chapters.php:438 plugins/ws-chapters/includes/content-edit.php:170 plugins/ws-chapters/includes/sign-in.php:460
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: plugins/ws-chapters/ws-chapters.php:439
+#: plugins/ws-chapters/ws-chapters.php:440
 msgid "Upload the official chapter-supplied insignia at high resolution (prefer PNG or WebP with transparency). Do not edit, recolour or crop official artwork."
 msgstr "Carica le insegne ufficiali fornite dal Chapter in alta risoluzione (preferibilmente PNG o WebP con trasparenza). Non modificare, ricolorare o ritagliare la grafica ufficiale."
 
-#: plugins/ws-chapters/ws-chapters.php:441
+#: plugins/ws-chapters/ws-chapters.php:442
 msgid "Only administrators with the relevant permissions may modify official insignia."
 msgstr "Solo gli amministratori con i permessi adeguati possono modificare le insegne ufficiali."
 
-#: plugins/ws-chapters/ws-chapters.php:448
+#: plugins/ws-chapters/ws-chapters.php:449
 msgid "Official insignia"
 msgstr "Insegne ufficiali"
 
-#: plugins/ws-chapters/ws-chapters.php:458
+#: plugins/ws-chapters/ws-chapters.php:459
 msgid "Location (for the map)"
 msgstr "Posizione (per la mappa)"
 
-#: plugins/ws-chapters/ws-chapters.php:461 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
+#: plugins/ws-chapters/ws-chapters.php:462 plugins/ws-chapters/includes/content-edit.php:320 plugins/ws-chapters/includes/forms.php:182 plugins/ws-chapters/includes/forms.php:387 plugins/ws-chapters/includes/front-edit.php:840
 msgid "City"
 msgstr "Città"
 
-#: plugins/ws-chapters/ws-chapters.php:462
+#: plugins/ws-chapters/ws-chapters.php:463
 msgid "Latitude (optional)"
 msgstr "Latitudine (facoltativa)"
 
-#: plugins/ws-chapters/ws-chapters.php:463
+#: plugins/ws-chapters/ws-chapters.php:464
 msgid "Longitude (optional)"
 msgstr "Longitudine (facoltativa)"
 
-#: plugins/ws-chapters/ws-chapters.php:476
+#: plugins/ws-chapters/ws-chapters.php:477
 msgid "Pin is at the coordinates entered above."
 msgstr "Il segnaposto è alle coordinate inserite qui sopra."
 
-#: plugins/ws-chapters/ws-chapters.php:477
+#: plugins/ws-chapters/ws-chapters.php:478
 msgid "Pin is at the city, looked up automatically."
 msgstr "Il segnaposto è sulla città, trovata automaticamente."
 
-#: plugins/ws-chapters/ws-chapters.php:478
+#: plugins/ws-chapters/ws-chapters.php:479
 msgid "No city yet: the pin is on the capital of the chapter's country."
 msgstr "Nessuna città ancora: il segnaposto è sulla capitale del paese del Chapter."
 
-#: plugins/ws-chapters/ws-chapters.php:480
+#: plugins/ws-chapters/ws-chapters.php:481
 msgid "Enter the city and save: the map position is found automatically. Only fill in latitude/longitude to place the pin somewhere exact (e.g. right-click the meeting place in Google Maps to copy them). Without a city, the pin goes on the capital of the chapter's country."
 msgstr "Inserisci la città e salva: la posizione sulla mappa viene trovata automaticamente. Compila latitudine/longitudine solo per posizionare il segnaposto in un punto preciso (es. fai clic destro sul luogo di ritrovo in Google Maps per copiarle). Senza città, il segnaposto va sulla capitale del paese del Chapter."
 
@@ -2720,19 +2756,19 @@ msgstr "Chapter"
 msgid "Add chapter"
 msgstr "Aggiungi Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:528 plugins/ws-chapters/ws-chapters.php:536 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/includes/front-edit.php:48
+#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:537 plugins/ws-chapters/ws-chapters.php:538 plugins/ws-chapters/includes/front-edit.php:48
 msgid "National logo"
 msgstr "Logo nazionale"
-
-#: plugins/ws-chapters/ws-chapters.php:529 plugins/ws-chapters/ws-chapters.php:540
-msgid "Flag (country code)"
-msgstr "Bandiera (codice del paese)"
 
 #: plugins/ws-chapters/ws-chapters.php:53
 msgid "Edit chapter"
 msgstr "Modifica Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:531 plugins/ws-chapters/ws-chapters.php:542
+#: plugins/ws-chapters/ws-chapters.php:530 plugins/ws-chapters/ws-chapters.php:541
+msgid "Flag (country code)"
+msgstr "Bandiera (codice del paese)"
+
+#: plugins/ws-chapters/ws-chapters.php:532 plugins/ws-chapters/ws-chapters.php:543
 msgid "Two-letter country code, e.g. bg, de, gb (gb-sct for Scotland, gb-eng England, gb-wls Wales). Used to show the flag."
 msgstr "Codice del paese di due lettere, es. bg, de, gb (gb-sct per la Scozia, gb-eng Inghilterra, gb-wls Galles). Usato per mostrare la bandiera."
 
