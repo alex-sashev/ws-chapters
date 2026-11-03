@@ -1,7 +1,7 @@
 <?php
 /**
  * Languages (decided 19 October 2026, started 30 October): the site's own text (menus, buttons, forms and the
- * theme's fixed pages) in English, German, Italian, French, Bulgarian, Romanian and Greek. What members write
+ * theme's fixed pages) in English, German, Italian, French, Spanish, Portuguese, Bulgarian, Romanian and Greek. What members write
  * (news, events, chapter and country text, the About page) stays in English in every language.
  *
  * English is at the plain address; every other language under its code: /de/chapters/, /bg/events/ ...
@@ -23,6 +23,8 @@ function ws_languages() {
 		'de' => array( 'de_DE', 'Deutsch' ),
 		'it' => array( 'it_IT', 'Italiano' ),
 		'fr' => array( 'fr_FR', 'Français' ),
+		'es' => array( 'es_ES', 'Español' ),
+		'pt' => array( 'pt_PT', 'Português' ),
 		'bg' => array( 'bg_BG', 'Български' ),
 		'ro' => array( 'ro_RO', 'Română' ),
 		'el' => array( 'el', 'Ελληνικά' ),
