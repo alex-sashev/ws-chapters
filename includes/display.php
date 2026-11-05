@@ -44,7 +44,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_register_script( 'leaflet', $cdn . 'leaflet.min.js', array(), null, true );
 	wp_register_script( 'topojson-client', WS_TOPOJSON_URL, array(), null, true );
 	wp_register_script( 'ws-chapter-map', $url . 'assets/ws-map.js', array( 'leaflet', 'topojson-client' ), filemtime( $dir . 'assets/ws-map.js' ), true );
-	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI, 'pin' => $url . 'assets/ws-pin.png' ) );
+	wp_localize_script( 'ws-chapter-map', 'wsMapConfig', array( 'atlas' => WS_WORLD_ATLAS_URL, 'atlasIntegrity' => WS_WORLD_ATLAS_SRI, 'pin' => $url . 'assets/ws-pin.png', 'shapes' => $url . 'assets/shapes/' ) );
 
 	// Photo picker for the "several photos" fields (small; only acts where such a field is on the page).
 	wp_enqueue_script( 'ws-images', $url . 'assets/ws-images.js', array(), filemtime( $dir . 'assets/ws-images.js' ), true );
@@ -241,13 +241,17 @@ function ws_chapter_map_data( $country = '' ) {
 /** Chapter map, with the chapters' countries highlighted in gold. */
 function ws_chapter_map( $country = '', $height = 560 ) {
 	$points = ws_chapter_map_data( $country );
+	$focus = null;
 	if ( $country ) {
 		$term   = get_term_by( 'slug', $country, 'ws_country' );
 		$shapes = array( ws_iso_numeric( ws_country_code( $term ) ) );
+		if ( ! $points ) {
+			$focus = ws_capital_coords( ws_country_code( $term ) ); // No chapters yet: show the country itself.
+		}
 	} else {
 		$shapes = ws_member_shapes();
 	}
-	return ws_map_element( 'chapters', $points, $shapes, $height );
+	return ws_map_element( 'chapters', $points, $shapes, $height, $focus );
 }
 
 /** Country cards: flag, name, national logo (or placeholder) and number of chapters. */

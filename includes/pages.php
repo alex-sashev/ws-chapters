@@ -26,8 +26,12 @@ function ws_iso_numeric( $alpha2 ) {
 		'md' => '498', 'me' => '499', 'mk' => '807', 'al' => '008', 'ba' => '070', 'tr' => '792',
 	);
 	$code = strtolower( (string) $alpha2 );
-	// The UK nations (gb-sct, gb-eng, …) have no outline of their own on the map: the UK is highlighted.
-	return $map[ 0 === strpos( $code, 'gb-' ) ? 'gb' : $code ] ?? '';
+	// The UK nations have no outline of their own in world-atlas. Those with a shape in assets/shapes/
+	// (gb-sct: Scotland) are drawn from it; the others highlight the whole UK.
+	if ( 0 === strpos( $code, 'gb-' ) ) {
+		return preg_match( '/^gb-[a-z]{3}$/', $code ) && file_exists( dirname( __DIR__ ) . '/assets/shapes/' . $code . '.json' ) ? $code : $map['gb'];
+	}
+	return $map[ $code ] ?? '';
 }
 
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
@@ -43,11 +47,11 @@ function ws_chapter_count( $term ) {
 	return count( ws_get_chapters( $term->slug ) );
 }
 
-/** Countries that have chapters: name, flag, shape id, chapter count, national logo, marker position. */
+/** Countries on the map: name, flag, shape id, chapter count, national logo, marker position. A country without chapters yet is shown too (on its capital). */
 function ws_country_map_data() {
 	$out           = array();
 	$capital_taken = array();
-	foreach ( get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => true, 'orderby' => 'name' ) ) as $term ) {
+	foreach ( get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false, 'orderby' => 'name' ) ) as $term ) {
 		$logo   = (int) get_term_meta( $term->term_id, 'national_logo', true );
 		$code   = ws_country_code( $term );
 		// The country's pin stands on its capital: it represents the country and does not move when chapters are
@@ -70,8 +74,8 @@ function ws_country_map_data() {
 			}
 		}
 		$count  = ws_chapter_count( $term );
-		if ( ! $count ) {
-			continue;
+		if ( ! $count && ! $lat ) {
+			continue; // No chapters and no known capital: nowhere to put it.
 		}
 		$out[]  = array(
 			'name'  => $term->name,

@@ -18,6 +18,19 @@
 		return atlasPromise;
 	}
 
+	/* Regions that world-atlas has no outline for (gb-sct: Scotland) come from assets/shapes/ and are drawn
+	 * on top of their country. Ids of world-atlas shapes are numeric. */
+	function loadShapes(ids) {
+		var own = ids.filter(function (id) { return /^[a-z]{2}-[a-z]{3}$/.test(id); });
+		return loadAtlas().then(function (geo) {
+			return Promise.all(own.map(function (id) {
+				return fetch(cfg.shapes + id + '.json').then(function (r) { return r.json(); }).catch(function () { return null; });
+			})).then(function (extra) {
+				return { type: 'FeatureCollection', features: geo.features.concat(extra.filter(Boolean)) };
+			});
+		});
+	}
+
 	function el(tag, cls, text) {
 		var n = document.createElement(tag);
 		if (cls) n.className = cls;
@@ -45,7 +58,7 @@
 	function countryTooltip(p, labels) {
 		var tag = el('span', 'ws-map-country__label');
 		tag.appendChild(el('strong', '', p.name));
-		tag.appendChild(el('span', '', countLabel(p, labels)));
+		if (p.count) tag.appendChild(el('span', '', countLabel(p, labels)));
 		return tag;
 	}
 
@@ -141,7 +154,7 @@
 		// Country shapes under the markers; members in gold, clickable in "countries" mode.
 		var byShape = {};
 		points.forEach(function (p) { if (p.shape) byShape[p.shape] = p; });
-		loadAtlas().then(function (geo) {
+		loadShapes(highlight).then(function (geo) {
 			L.geoJSON(geo, {
 				style: function (f) {
 					var on = highlight.indexOf(String(f.id)) !== -1;
