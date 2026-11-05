@@ -17,15 +17,15 @@ msgstr "Accès Widows Sons — attribuez les pays autorisés aux Country Admins 
 msgid "Country: %s"
 msgstr "Pays : %s"
 
-#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:17
 msgid "Country Admin"
 msgstr "Country Admin"
 
-#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:17
 msgid "Chapter Editor"
 msgstr "Chapter Editor"
 
-#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:309 plugins/ws-chapters/includes/member-management.php:376 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:336 plugins/ws-chapters/includes/member-management.php:403 plugins/ws-chapters/includes/member-management.php:428
 msgid "Road name"
 msgstr "Road name"
 
@@ -129,7 +129,7 @@ msgstr "Ajoutez le site à l'écran d'accueil de votre téléphone : il s'ouvre 
 msgid "Get the app"
 msgstr "Obtenir l'application"
 
-#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:308
+#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:335
 msgid "Close"
 msgstr "Fermer"
 
@@ -319,7 +319,7 @@ msgstr "Supprimer ceci pour tout le monde ? L'élément est placé dans la corbe
 msgid "Deleting…"
 msgstr "Suppression…"
 
-#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:833
+#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:871
 msgid "Edit"
 msgstr "Modifier"
 
@@ -557,7 +557,7 @@ msgstr "Voir l'événement"
 msgid "All events"
 msgstr "Tous les événements"
 
-#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:782
 msgid "When"
 msgstr "Quand"
 
@@ -860,7 +860,7 @@ msgstr "Prénom"
 msgid "Last name"
 msgstr "Nom"
 
-#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:318 plugins/ws-chapters/includes/member-management.php:381
+#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:345 plugins/ws-chapters/includes/member-management.php:408
 msgid "Phone"
 msgstr "Téléphone"
 
@@ -868,7 +868,7 @@ msgstr "Téléphone"
 msgid "That was quick! Please check the form and send it again."
 msgstr "C'était rapide ! Veuillez vérifier le formulaire et l'envoyer à nouveau."
 
-#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:317 plugins/ws-chapters/includes/member-management.php:380
+#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:344 plugins/ws-chapters/includes/member-management.php:407
 msgid "Email"
 msgstr "E-mail"
 
@@ -1151,7 +1151,7 @@ msgstr "Pays introuvable."
 msgid "Chapter not found."
 msgstr "Chapter introuvable."
 
-#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:333
+#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:360
 msgid "Please wait…"
 msgstr "Veuillez patienter…"
 
@@ -1368,15 +1368,15 @@ msgstr "Désolé, l'article n'a pas pu être supprimé."
 msgid "Upload"
 msgstr "Téléverser"
 
-#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:704 plugins/ws-chapters/includes/member-management.php:712
+#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:742 plugins/ws-chapters/includes/member-management.php:750
 msgid "Save"
 msgstr "Enregistrer"
 
-#: plugins/ws-chapters/includes/languages.php:195
+#: plugins/ws-chapters/includes/languages.php:197
 msgid "Language"
 msgstr "Langue"
 
-#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:428
 msgid "Name"
 msgstr "Nom"
 
@@ -1501,7 +1501,7 @@ msgid "Members area"
 msgstr "Espace membres"
 
 #. translators: %s: name
-#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:831
+#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:35 plugins/ws-chapters/includes/member-management.php:869
 msgid "My profile"
 msgstr "Mon profil"
 
@@ -1568,7 +1568,7 @@ msgstr "Définir le mot de passe et continuer"
 msgid "This is how other members see you in the member list."
 msgstr "C'est ainsi que les autres membres vous voient dans la liste des membres."
 
-#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:702
+#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:740
 msgid "No title"
 msgstr "Aucun titre"
 
@@ -1688,7 +1688,7 @@ msgstr "Désolé, votre commentaire n'a pas pu être envoyé. Veuillez réessaye
 msgid "Thank you for your feedback! Your suggestion has been submitted successfully."
 msgstr "Merci pour votre retour ! Votre suggestion a bien été envoyée."
 
-#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:39 plugins/ws-chapters/includes/member-management.php:832
+#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:40 plugins/ws-chapters/includes/member-management.php:870
 msgid "Website feedback"
 msgstr "Retours sur le site"
 
@@ -1720,355 +1720,363 @@ msgstr "Par exemple wseurope.org/events/"
 msgid "Send feedback"
 msgstr "Envoyer le commentaire"
 
-#: plugins/ws-chapters/includes/member-management.php:16 plugins/ws-chapters/includes/members.php:87
+#: plugins/ws-chapters/includes/member-management.php:17 plugins/ws-chapters/includes/members.php:87
 msgid "Member"
 msgstr "Membre"
 
-#: plugins/ws-chapters/includes/member-management.php:220
+#: plugins/ws-chapters/includes/member-management.php:247
 msgid "Other (type it)"
 msgstr "Autre (à saisir)"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "e.g. Guardian of Membership"
 msgstr "ex. Gardien des adhésions"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "Your own title"
 msgstr "Votre propre titre"
 
-#: plugins/ws-chapters/includes/member-management.php:32
+#: plugins/ws-chapters/includes/member-management.php:33
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: plugins/ws-chapters/includes/member-management.php:320
-msgid "Send email"
-msgstr "Envoyer un e-mail"
-
-#: plugins/ws-chapters/includes/member-management.php:321
-msgid "Call"
-msgstr "Appeler"
-
-#: plugins/ws-chapters/includes/member-management.php:33 plugins/ws-chapters/includes/member-management.php:40
+#: plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:41
 msgid "Members"
 msgstr "Membres"
 
-#: plugins/ws-chapters/includes/member-management.php:344
+#: plugins/ws-chapters/includes/member-management.php:347
+msgid "Send email"
+msgstr "Envoyer un e-mail"
+
+#: plugins/ws-chapters/includes/member-management.php:348
+msgid "Call"
+msgstr "Appeler"
+
+#: plugins/ws-chapters/includes/member-management.php:371
 msgid "Please sign in to see the member list."
 msgstr "Veuillez vous connecter pour voir la liste des membres."
 
-#: plugins/ws-chapters/includes/member-management.php:37 plugins/ws-chapters/includes/member-management.php:830
+#: plugins/ws-chapters/includes/member-management.php:38 plugins/ws-chapters/includes/member-management.php:868
 msgid "Member management"
 msgstr "Gestion des membres"
 
-#: plugins/ws-chapters/includes/member-management.php:384
+#: plugins/ws-chapters/includes/member-management.php:411
 msgid "All titles"
 msgstr "Tous les titres"
 
-#: plugins/ws-chapters/includes/member-management.php:393 plugins/ws-chapters/includes/members.php:369
+#: plugins/ws-chapters/includes/member-management.php:420 plugins/ws-chapters/includes/members.php:369
 msgid "Search"
 msgstr "Rechercher"
 
-#: plugins/ws-chapters/includes/member-management.php:393
+#: plugins/ws-chapters/includes/member-management.php:420
 msgid "Name, road name or email"
 msgstr "Nom, road name ou e-mail"
 
-#: plugins/ws-chapters/includes/member-management.php:397 plugins/ws-chapters/includes/members.php:371
+#: plugins/ws-chapters/includes/member-management.php:424 plugins/ws-chapters/includes/members.php:371
 msgid "Filter"
 msgstr "Filtrer"
 
-#: plugins/ws-chapters/includes/member-management.php:398 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
+#: plugins/ws-chapters/includes/member-management.php:425 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
 msgid "Clear"
 msgstr "Effacer"
 
 #. translators: %d: number of members
-#: plugins/ws-chapters/includes/member-management.php:400
+#: plugins/ws-chapters/includes/member-management.php:427
 msgid "%d member"
 msgid_plural "%d members"
 msgstr[0] "%d membre"
 msgstr[1] "%d membres"
 
-#: plugins/ws-chapters/includes/member-management.php:402
+#: plugins/ws-chapters/includes/member-management.php:429
 msgid "No members match."
 msgstr "Aucun membre ne correspond."
 
-#: plugins/ws-chapters/includes/member-management.php:413
+#: plugins/ws-chapters/includes/member-management.php:440
 msgid "You do not have permission to do that."
 msgstr "Vous n'avez pas l'autorisation de faire cela."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:418
+#: plugins/ws-chapters/includes/member-management.php:445
 msgid "Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use \"Resend invitation\"."
 msgstr "Invitation envoyée à %s. Si elle n'est pas arrivée d'ici quelques minutes, demandez à la personne de regarder dans ses courriers indésirables, puis utilisez « Renvoyer l'invitation »."
 
-#: plugins/ws-chapters/includes/member-management.php:422
+#: plugins/ws-chapters/includes/member-management.php:449
 msgid "You cannot remove this person."
 msgstr "Vous ne pouvez pas retirer cette personne."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "%s has been removed permanently. What they added to the site stays, now credited to you."
 msgstr "%s a été retiré définitivement. Ce qu'il a ajouté au site reste en ligne et vous est désormais attribué."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "Sorry, this person could not be removed. Please try again."
 msgstr "Désolé, cette personne n'a pas pu être retirée. Veuillez réessayer."
 
-#: plugins/ws-chapters/includes/member-management.php:441
+#: plugins/ws-chapters/includes/member-management.php:468
 msgid "You cannot resend this invitation."
 msgstr "Vous ne pouvez pas renvoyer cette invitation."
 
-#: plugins/ws-chapters/includes/member-management.php:445
+#: plugins/ws-chapters/includes/member-management.php:472
 msgid "Invitation sent again."
 msgstr "Invitation renvoyée."
 
-#: plugins/ws-chapters/includes/member-management.php:453
+#: plugins/ws-chapters/includes/member-management.php:480
 msgid "You cannot set this chapter."
 msgstr "Vous ne pouvez pas définir ce Chapter."
 
 #. translators: 1: person's name, 2: chapter
-#: plugins/ws-chapters/includes/member-management.php:464
+#: plugins/ws-chapters/includes/member-management.php:491
 msgid "%1$s is now in %2$s."
 msgstr "%1$s fait désormais partie de %2$s."
 
-#: plugins/ws-chapters/includes/member-management.php:474
+#: plugins/ws-chapters/includes/member-management.php:501
 msgid "You cannot set this title."
 msgstr "Vous ne pouvez pas définir ce titre."
 
-#: plugins/ws-chapters/includes/member-management.php:476
+#: plugins/ws-chapters/includes/member-management.php:503
 msgid "For \"Other\", please type the title."
 msgstr "Pour « Autre », veuillez saisir le titre."
 
-#: plugins/ws-chapters/includes/member-management.php:481
+#: plugins/ws-chapters/includes/member-management.php:508
 msgid "Title removed."
 msgstr "Titre retiré."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:487
+#: plugins/ws-chapters/includes/member-management.php:514
 msgid "Title saved for %s."
 msgstr "Titre enregistré pour %s."
 
-#: plugins/ws-chapters/includes/member-management.php:563
+#: plugins/ws-chapters/includes/member-management.php:590
 msgid "Please enter a valid email address."
 msgstr "Veuillez saisir une adresse e-mail valide."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:567
+#: plugins/ws-chapters/includes/member-management.php:594
 msgid "%s already has an account. No invitation was sent."
 msgstr "%s a déjà un compte. Aucune invitation n'a été envoyée."
 
-#: plugins/ws-chapters/includes/member-management.php:571
+#: plugins/ws-chapters/includes/member-management.php:598
 msgid "You cannot invite that kind of member."
 msgstr "Vous ne pouvez pas inviter ce type de membre."
 
-#: plugins/ws-chapters/includes/member-management.php:574
+#: plugins/ws-chapters/includes/member-management.php:601
 msgid "Please choose a country."
 msgstr "Veuillez choisir un pays."
 
-#: plugins/ws-chapters/includes/member-management.php:577
+#: plugins/ws-chapters/includes/member-management.php:604
 msgid "You can only add people to your own country."
 msgstr "Vous ne pouvez ajouter des personnes qu'à votre propre pays."
 
-#: plugins/ws-chapters/includes/member-management.php:581
+#: plugins/ws-chapters/includes/member-management.php:608
 msgid "That chapter is not in the chosen country."
 msgstr "Ce Chapter ne se trouve pas dans le pays choisi."
 
-#: plugins/ws-chapters/includes/member-management.php:584
+#: plugins/ws-chapters/includes/member-management.php:611
+msgid "You can only add people to your own chapter."
+msgstr "Tu ne peux ajouter des personnes qu'à ton propre Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:614
 msgid "Please choose a chapter. Everyone belongs to a country and a chapter."
 msgstr "Veuillez choisir un Chapter. Chacun appartient à un pays et à un Chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:593
+#: plugins/ws-chapters/includes/member-management.php:623
 msgid "Sorry, the invitation could not be created. Please try again."
 msgstr "Désolé, l'invitation n'a pas pu être créée. Veuillez réessayer."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:603
+#: plugins/ws-chapters/includes/member-management.php:633
 msgid "The account for %s was created, but the invitation email could not be sent. Check the mail settings, then use \"Resend invitation\" below."
 msgstr "Le compte de %s a été créé, mais l'e-mail d'invitation n'a pas pu être envoyé. Vérifiez les réglages de messagerie, puis utilisez « Renvoyer l'invitation » ci-dessous."
 
-#: plugins/ws-chapters/includes/member-management.php:611
+#: plugins/ws-chapters/includes/member-management.php:641
 msgid "That person was not found."
 msgstr "Cette personne est introuvable."
 
-#: plugins/ws-chapters/includes/member-management.php:615
+#: plugins/ws-chapters/includes/member-management.php:645
 msgid "The invitation could not be created. Please try again."
 msgstr "L'invitation n'a pas pu être créée. Veuillez réessayer."
 
-#: plugins/ws-chapters/includes/member-management.php:618
+#: plugins/ws-chapters/includes/member-management.php:648
 msgid "Your invitation to Widows Sons Europe"
 msgstr "Votre invitation à Widows Sons Europe"
 
-#: plugins/ws-chapters/includes/member-management.php:619
+#: plugins/ws-chapters/includes/member-management.php:649
 msgid "You're invited to the Widows Sons Europe members' area."
 msgstr "Vous êtes invité dans l'espace membres de Widows Sons Europe."
 
-#: plugins/ws-chapters/includes/member-management.php:620
+#: plugins/ws-chapters/includes/member-management.php:650
 msgid "Welcome, Brother"
 msgstr "Bienvenue, Frère"
 
-#: plugins/ws-chapters/includes/member-management.php:622
+#: plugins/ws-chapters/includes/member-management.php:652
 msgid "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile."
 msgstr "Vous avez été invité dans l'espace membres de Widows Sons Europe : la liste des membres de tous les Chapters européens, la bibliothèque partagée et votre propre profil."
 
-#: plugins/ws-chapters/includes/member-management.php:623
+#: plugins/ws-chapters/includes/member-management.php:653
 msgid "Choose your password to get started. You will sign in with this email address."
 msgstr "Choisissez votre mot de passe pour commencer. Vous vous connecterez avec cette adresse e-mail."
 
-#: plugins/ws-chapters/includes/member-management.php:625
+#: plugins/ws-chapters/includes/member-management.php:655
 msgid "Set my password"
 msgstr "Définir mon mot de passe"
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:629
-msgid "This link expires in %d days. If it has expired, ask your Country Admin to send a new one."
-msgstr "Ce lien expire dans %d jours. S'il a expiré, demandez à votre Country Admin de vous en envoyer un nouveau."
+#: plugins/ws-chapters/includes/member-management.php:659
+msgid "This link expires in %d days. If it has expired, ask the person who invited you to send a new one."
+msgstr "Ce lien expire dans %d jours. S'il a expiré, demande à la personne qui t'a invité de t'en envoyer un nouveau."
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:630
+#: plugins/ws-chapters/includes/member-management.php:660
 msgid "After that you land on your profile: add your first and last name, road name, phone and title."
 msgstr "Vous arriverez ensuite sur votre profil : ajoutez votre prénom et votre nom, votre road name, votre téléphone et votre titre."
 
-#: plugins/ws-chapters/includes/member-management.php:633
+#: plugins/ws-chapters/includes/member-management.php:663
 msgid "The invitation email could not be sent. Check the mail settings, then resend."
 msgstr "L'e-mail d'invitation n'a pas pu être envoyé. Vérifiez les réglages de messagerie, puis renvoyez-le."
 
-#: plugins/ws-chapters/includes/member-management.php:666
+#: plugins/ws-chapters/includes/member-management.php:704
 msgid "Choose a country"
 msgstr "Choisissez un pays"
 
-#: plugins/ws-chapters/includes/member-management.php:667
+#: plugins/ws-chapters/includes/member-management.php:705
 msgid "Invite a member"
 msgstr "Inviter un membre"
 
-#: plugins/ws-chapters/includes/member-management.php:668
+#: plugins/ws-chapters/includes/member-management.php:706
+msgid "You can invite Members and Chapter Editors to your own chapter. The person sets their own password from the invitation email, which expires in 7 days."
+msgstr "Tu peux inviter des membres et des Chapter Editors dans ton propre Chapter. La personne choisit son mot de passe depuis l'e-mail d'invitation, qui expire dans 7 jours."
+
+#: plugins/ws-chapters/includes/member-management.php:706
 msgid "Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days."
 msgstr "Saisissez l'e-mail, le rôle, le pays et le Chapter. La personne définit son propre mot de passe depuis l'e-mail d'invitation, qui expire dans 7 jours."
 
-#: plugins/ws-chapters/includes/member-management.php:671
+#: plugins/ws-chapters/includes/member-management.php:709
 msgid "Role"
 msgstr "Rôle"
 
-#: plugins/ws-chapters/includes/member-management.php:673 plugins/ws-chapters/includes/member-management.php:711
+#: plugins/ws-chapters/includes/member-management.php:711 plugins/ws-chapters/includes/member-management.php:749
 msgid "Choose a chapter"
 msgstr "Choisissez un Chapter"
 
-#: plugins/ws-chapters/includes/member-management.php:674
+#: plugins/ws-chapters/includes/member-management.php:712
 msgid "Everyone belongs to a country and a chapter."
 msgstr "Chacun appartient à un pays et à un Chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:675
+#: plugins/ws-chapters/includes/member-management.php:713
 msgid "Send invitation"
 msgstr "Envoyer l'invitation"
 
-#: plugins/ws-chapters/includes/member-management.php:692
+#: plugins/ws-chapters/includes/member-management.php:730
 msgid "Super Admin"
 msgstr "Super Admin"
 
-#: plugins/ws-chapters/includes/member-management.php:695
+#: plugins/ws-chapters/includes/member-management.php:733
 msgid "you"
 msgstr "vous"
 
-#: plugins/ws-chapters/includes/member-management.php:707 plugins/ws-chapters/includes/member-management.php:724
+#: plugins/ws-chapters/includes/member-management.php:745 plugins/ws-chapters/includes/member-management.php:762
 msgid "Missing"
 msgstr "Manquant"
 
-#: plugins/ws-chapters/includes/member-management.php:716
+#: plugins/ws-chapters/includes/member-management.php:754
 msgid "Resend invitation"
 msgstr "Renvoyer l'invitation"
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you."
 msgstr "Retirer définitivement cette personne ? Son compte, son e-mail et son profil sont supprimés et ne peuvent pas être récupérés. Ce qu'elle a ajouté au site reste en ligne et vous est attribué."
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove member"
 msgstr "Retirer le membre"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:768
 msgid "Status"
 msgstr "Statut"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:774
 msgid "Invited"
 msgstr "Invité"
 
-#: plugins/ws-chapters/includes/member-management.php:726
+#: plugins/ws-chapters/includes/member-management.php:764
 msgid "Active"
 msgstr "Actif"
 
-#: plugins/ws-chapters/includes/member-management.php:727 plugins/ws-chapters/includes/member-management.php:730 plugins/ws-chapters/includes/members.php:376
+#: plugins/ws-chapters/includes/member-management.php:765 plugins/ws-chapters/includes/member-management.php:768 plugins/ws-chapters/includes/members.php:376
 msgid "Actions"
 msgstr "Actions"
 
-#: plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:768
 msgid "Name, road name and email"
 msgstr "Nom, road name et e-mail"
 
-#: plugins/ws-chapters/includes/member-management.php:731
+#: plugins/ws-chapters/includes/member-management.php:769
 msgid "People you manage"
 msgstr "Personnes que vous gérez"
 
-#: plugins/ws-chapters/includes/member-management.php:732
+#: plugins/ws-chapters/includes/member-management.php:770
 msgid "Nobody yet. Invite someone above."
 msgstr "Personne pour le moment. Invitez quelqu'un ci-dessus."
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Invitation sent again"
 msgstr "Invitation renvoyée"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Removed permanently"
 msgstr "Retiré définitivement"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Own profile"
 msgstr "Propre profil"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Email NOT sent"
 msgstr "E-mail NON envoyé"
 
-#: plugins/ws-chapters/includes/member-management.php:740
+#: plugins/ws-chapters/includes/member-management.php:778
 msgid "removed"
 msgstr "retiré"
 
-#: plugins/ws-chapters/includes/member-management.php:741
+#: plugins/ws-chapters/includes/member-management.php:779
 msgid "(deleted)"
 msgstr "(supprimé)"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Recent activity"
 msgstr "Activité récente"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "By"
 msgstr "Par"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Action"
 msgstr "Action"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Person"
 msgstr "Personne"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "No activity yet."
 msgstr "Aucune activité pour le moment."
 
-#: plugins/ws-chapters/includes/member-management.php:755
+#: plugins/ws-chapters/includes/member-management.php:793
 msgid "Widows Sons details"
 msgstr "Informations Widows Sons"
 
-#: plugins/ws-chapters/includes/member-management.php:779
+#: plugins/ws-chapters/includes/member-management.php:817
 msgid "Photo"
 msgstr "Photo"
 
-#: plugins/ws-chapters/includes/member-management.php:781
+#: plugins/ws-chapters/includes/member-management.php:819
 msgid "JPG, PNG, WebP or GIF, up to 4 MB."
 msgstr "JPG, PNG, WebP ou GIF, 4 Mo maximum."
 
-#: plugins/ws-chapters/includes/member-management.php:829
+#: plugins/ws-chapters/includes/member-management.php:867
 msgid "Member directory"
 msgstr "Annuaire des membres"
 
@@ -2780,7 +2788,7 @@ msgstr "Nouveau Chapter"
 msgid "View chapter"
 msgstr "Voir le Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:395
+#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:422
 msgid "All chapters"
 msgstr "Tous les Chapters"
 
@@ -2828,7 +2836,7 @@ msgstr "Pays"
 msgid "Country"
 msgstr "Pays"
 
-#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:394
+#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:421
 msgid "All countries"
 msgstr "Tous les pays"
 

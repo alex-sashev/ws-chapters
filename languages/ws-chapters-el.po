@@ -17,15 +17,15 @@ msgstr "Πρόσβαση Widows Sons — ανάθεσε επιτρεπόμενε
 msgid "Country: %s"
 msgstr "Χώρα: %s"
 
-#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:17
 msgid "Country Admin"
 msgstr "Country Admin"
 
-#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:17
 msgid "Chapter Editor"
 msgstr "Chapter Editor"
 
-#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:309 plugins/ws-chapters/includes/member-management.php:376 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:336 plugins/ws-chapters/includes/member-management.php:403 plugins/ws-chapters/includes/member-management.php:428
 msgid "Road name"
 msgstr "Road name"
 
@@ -129,7 +129,7 @@ msgstr "Πρόσθεσε τον ιστότοπο στην αρχική οθόν�
 msgid "Get the app"
 msgstr "Απόκτησε την εφαρμογή"
 
-#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:308
+#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:335
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -319,7 +319,7 @@ msgstr "Διαγραφή για όλους; Μεταφέρεται στον Κά
 msgid "Deleting…"
 msgstr "Διαγραφή…"
 
-#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:833
+#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:871
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -557,7 +557,7 @@ msgstr "Προβολή εκδήλωσης"
 msgid "All events"
 msgstr "Όλες οι εκδηλώσεις"
 
-#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:782
 msgid "When"
 msgstr "Πότε"
 
@@ -860,7 +860,7 @@ msgstr "Όνομα"
 msgid "Last name"
 msgstr "Επώνυμο"
 
-#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:318 plugins/ws-chapters/includes/member-management.php:381
+#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:345 plugins/ws-chapters/includes/member-management.php:408
 msgid "Phone"
 msgstr "Τηλέφωνο"
 
@@ -868,7 +868,7 @@ msgstr "Τηλέφωνο"
 msgid "That was quick! Please check the form and send it again."
 msgstr "Πολύ γρήγορα! Έλεγξε τη φόρμα και στείλε την ξανά."
 
-#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:317 plugins/ws-chapters/includes/member-management.php:380
+#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:344 plugins/ws-chapters/includes/member-management.php:407
 msgid "Email"
 msgstr "Email"
 
@@ -1151,7 +1151,7 @@ msgstr "Η χώρα δεν βρέθηκε."
 msgid "Chapter not found."
 msgstr "Το Chapter δεν βρέθηκε."
 
-#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:333
+#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:360
 msgid "Please wait…"
 msgstr "Περίμενε…"
 
@@ -1368,15 +1368,15 @@ msgstr "Δυστυχώς, δεν ήταν δυνατή η διαγραφή το�
 msgid "Upload"
 msgstr "Μεταφόρτωση"
 
-#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:704 plugins/ws-chapters/includes/member-management.php:712
+#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:742 plugins/ws-chapters/includes/member-management.php:750
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: plugins/ws-chapters/includes/languages.php:195
+#: plugins/ws-chapters/includes/languages.php:197
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:428
 msgid "Name"
 msgstr "Όνομα"
 
@@ -1501,7 +1501,7 @@ msgid "Members area"
 msgstr "Περιοχή μελών"
 
 #. translators: %s: name
-#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:831
+#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:35 plugins/ws-chapters/includes/member-management.php:869
 msgid "My profile"
 msgstr "Το προφίλ μου"
 
@@ -1568,7 +1568,7 @@ msgstr "Ορισμός κωδικού και συνέχεια"
 msgid "This is how other members see you in the member list."
 msgstr "Έτσι σε βλέπουν τα άλλα μέλη στη λίστα μελών."
 
-#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:702
+#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:740
 msgid "No title"
 msgstr "Χωρίς τίτλο"
 
@@ -1688,7 +1688,7 @@ msgstr "Δυστυχώς, δεν ήταν δυνατή η αποστολή τω�
 msgid "Thank you for your feedback! Your suggestion has been submitted successfully."
 msgstr "Ευχαριστούμε για τα σχόλιά σου! Η πρότασή σου υποβλήθηκε με επιτυχία."
 
-#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:39 plugins/ws-chapters/includes/member-management.php:832
+#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:40 plugins/ws-chapters/includes/member-management.php:870
 msgid "Website feedback"
 msgstr "Σχόλια για τον ιστότοπο"
 
@@ -1720,355 +1720,363 @@ msgstr "Για παράδειγμα wseurope.org/events/"
 msgid "Send feedback"
 msgstr "Αποστολή σχολίων"
 
-#: plugins/ws-chapters/includes/member-management.php:16 plugins/ws-chapters/includes/members.php:87
+#: plugins/ws-chapters/includes/member-management.php:17 plugins/ws-chapters/includes/members.php:87
 msgid "Member"
 msgstr "Μέλος"
 
-#: plugins/ws-chapters/includes/member-management.php:220
+#: plugins/ws-chapters/includes/member-management.php:247
 msgid "Other (type it)"
 msgstr "Άλλο (πληκτρολόγησέ το)"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "e.g. Guardian of Membership"
 msgstr "π.χ. Φύλακας Μελών"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "Your own title"
 msgstr "Ο δικός σου τίτλος"
 
-#: plugins/ws-chapters/includes/member-management.php:32
+#: plugins/ws-chapters/includes/member-management.php:33
 msgid "Library"
 msgstr "Βιβλιοθήκη"
 
-#: plugins/ws-chapters/includes/member-management.php:320
-msgid "Send email"
-msgstr "Αποστολή email"
-
-#: plugins/ws-chapters/includes/member-management.php:321
-msgid "Call"
-msgstr "Κλήση"
-
-#: plugins/ws-chapters/includes/member-management.php:33 plugins/ws-chapters/includes/member-management.php:40
+#: plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:41
 msgid "Members"
 msgstr "Μέλη"
 
-#: plugins/ws-chapters/includes/member-management.php:344
+#: plugins/ws-chapters/includes/member-management.php:347
+msgid "Send email"
+msgstr "Αποστολή email"
+
+#: plugins/ws-chapters/includes/member-management.php:348
+msgid "Call"
+msgstr "Κλήση"
+
+#: plugins/ws-chapters/includes/member-management.php:371
 msgid "Please sign in to see the member list."
 msgstr "Συνδέσου για να δεις τη λίστα μελών."
 
-#: plugins/ws-chapters/includes/member-management.php:37 plugins/ws-chapters/includes/member-management.php:830
+#: plugins/ws-chapters/includes/member-management.php:38 plugins/ws-chapters/includes/member-management.php:868
 msgid "Member management"
 msgstr "Διαχείριση μελών"
 
-#: plugins/ws-chapters/includes/member-management.php:384
+#: plugins/ws-chapters/includes/member-management.php:411
 msgid "All titles"
 msgstr "Όλοι οι τίτλοι"
 
-#: plugins/ws-chapters/includes/member-management.php:393 plugins/ws-chapters/includes/members.php:369
+#: plugins/ws-chapters/includes/member-management.php:420 plugins/ws-chapters/includes/members.php:369
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: plugins/ws-chapters/includes/member-management.php:393
+#: plugins/ws-chapters/includes/member-management.php:420
 msgid "Name, road name or email"
 msgstr "Όνομα, road name ή email"
 
-#: plugins/ws-chapters/includes/member-management.php:397 plugins/ws-chapters/includes/members.php:371
+#: plugins/ws-chapters/includes/member-management.php:424 plugins/ws-chapters/includes/members.php:371
 msgid "Filter"
 msgstr "Φίλτρο"
 
-#: plugins/ws-chapters/includes/member-management.php:398 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
+#: plugins/ws-chapters/includes/member-management.php:425 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
 msgid "Clear"
 msgstr "Καθαρισμός"
 
 #. translators: %d: number of members
-#: plugins/ws-chapters/includes/member-management.php:400
+#: plugins/ws-chapters/includes/member-management.php:427
 msgid "%d member"
 msgid_plural "%d members"
 msgstr[0] "%d μέλος"
 msgstr[1] "%d μέλη"
 
-#: plugins/ws-chapters/includes/member-management.php:402
+#: plugins/ws-chapters/includes/member-management.php:429
 msgid "No members match."
 msgstr "Κανένα μέλος δεν ταιριάζει."
 
-#: plugins/ws-chapters/includes/member-management.php:413
+#: plugins/ws-chapters/includes/member-management.php:440
 msgid "You do not have permission to do that."
 msgstr "Δεν έχεις δικαίωμα να το κάνεις αυτό."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:418
+#: plugins/ws-chapters/includes/member-management.php:445
 msgid "Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use \"Resend invitation\"."
 msgstr "Η πρόσκληση στάλθηκε στο %s. Αν δεν έχει φτάσει μέσα σε λίγα λεπτά, ζήτησε από τον παραλήπτη να κοιτάξει στα Ανεπιθύμητα/Spam και μετά χρησιμοποίησε την «Επαναποστολή πρόσκλησης»."
 
-#: plugins/ws-chapters/includes/member-management.php:422
+#: plugins/ws-chapters/includes/member-management.php:449
 msgid "You cannot remove this person."
 msgstr "Δεν μπορείς να αφαιρέσεις αυτό το άτομο."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "%s has been removed permanently. What they added to the site stays, now credited to you."
 msgstr "%s αφαιρέθηκε οριστικά. Ό,τι πρόσθεσε στον ιστότοπο παραμένει και πλέον αποδίδεται σε σένα."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "Sorry, this person could not be removed. Please try again."
 msgstr "Δυστυχώς, δεν ήταν δυνατή η αφαίρεση αυτού του ατόμου. Δοκίμασε ξανά."
 
-#: plugins/ws-chapters/includes/member-management.php:441
+#: plugins/ws-chapters/includes/member-management.php:468
 msgid "You cannot resend this invitation."
 msgstr "Δεν μπορείς να στείλεις ξανά αυτή την πρόσκληση."
 
-#: plugins/ws-chapters/includes/member-management.php:445
+#: plugins/ws-chapters/includes/member-management.php:472
 msgid "Invitation sent again."
 msgstr "Η πρόσκληση στάλθηκε ξανά."
 
-#: plugins/ws-chapters/includes/member-management.php:453
+#: plugins/ws-chapters/includes/member-management.php:480
 msgid "You cannot set this chapter."
 msgstr "Δεν μπορείς να ορίσεις αυτό το Chapter."
 
 #. translators: 1: person's name, 2: chapter
-#: plugins/ws-chapters/includes/member-management.php:464
+#: plugins/ws-chapters/includes/member-management.php:491
 msgid "%1$s is now in %2$s."
 msgstr "%1$s ανήκει τώρα στο %2$s."
 
-#: plugins/ws-chapters/includes/member-management.php:474
+#: plugins/ws-chapters/includes/member-management.php:501
 msgid "You cannot set this title."
 msgstr "Δεν μπορείς να ορίσεις αυτόν τον τίτλο."
 
-#: plugins/ws-chapters/includes/member-management.php:476
+#: plugins/ws-chapters/includes/member-management.php:503
 msgid "For \"Other\", please type the title."
 msgstr "Για «Άλλο», πληκτρολόγησε τον τίτλο."
 
-#: plugins/ws-chapters/includes/member-management.php:481
+#: plugins/ws-chapters/includes/member-management.php:508
 msgid "Title removed."
 msgstr "Ο τίτλος αφαιρέθηκε."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:487
+#: plugins/ws-chapters/includes/member-management.php:514
 msgid "Title saved for %s."
 msgstr "Ο τίτλος αποθηκεύτηκε για: %s."
 
-#: plugins/ws-chapters/includes/member-management.php:563
+#: plugins/ws-chapters/includes/member-management.php:590
 msgid "Please enter a valid email address."
 msgstr "Εισήγαγε μια έγκυρη διεύθυνση email."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:567
+#: plugins/ws-chapters/includes/member-management.php:594
 msgid "%s already has an account. No invitation was sent."
 msgstr "Το %s έχει ήδη λογαριασμό. Δεν στάλθηκε πρόσκληση."
 
-#: plugins/ws-chapters/includes/member-management.php:571
+#: plugins/ws-chapters/includes/member-management.php:598
 msgid "You cannot invite that kind of member."
 msgstr "Δεν μπορείς να προσκαλέσεις αυτό το είδος μέλους."
 
-#: plugins/ws-chapters/includes/member-management.php:574
+#: plugins/ws-chapters/includes/member-management.php:601
 msgid "Please choose a country."
 msgstr "Επίλεξε χώρα."
 
-#: plugins/ws-chapters/includes/member-management.php:577
+#: plugins/ws-chapters/includes/member-management.php:604
 msgid "You can only add people to your own country."
 msgstr "Μπορείς να προσθέσεις άτομα μόνο στη δική σου χώρα."
 
-#: plugins/ws-chapters/includes/member-management.php:581
+#: plugins/ws-chapters/includes/member-management.php:608
 msgid "That chapter is not in the chosen country."
 msgstr "Αυτό το Chapter δεν ανήκει στη χώρα που επέλεξες."
 
-#: plugins/ws-chapters/includes/member-management.php:584
+#: plugins/ws-chapters/includes/member-management.php:611
+msgid "You can only add people to your own chapter."
+msgstr "Μπορείς να προσθέσεις άτομα μόνο στο δικό σου Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:614
 msgid "Please choose a chapter. Everyone belongs to a country and a chapter."
 msgstr "Επίλεξε Chapter. Όλοι ανήκουν σε μια χώρα και σε ένα Chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:593
+#: plugins/ws-chapters/includes/member-management.php:623
 msgid "Sorry, the invitation could not be created. Please try again."
 msgstr "Δυστυχώς, δεν ήταν δυνατή η δημιουργία της πρόσκλησης. Δοκίμασε ξανά."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:603
+#: plugins/ws-chapters/includes/member-management.php:633
 msgid "The account for %s was created, but the invitation email could not be sent. Check the mail settings, then use \"Resend invitation\" below."
 msgstr "Ο λογαριασμός για το %s δημιουργήθηκε, αλλά δεν ήταν δυνατή η αποστολή του email πρόσκλησης. Έλεγξε τις ρυθμίσεις αλληλογραφίας και μετά χρησιμοποίησε την «Επαναποστολή πρόσκλησης» παρακάτω."
 
-#: plugins/ws-chapters/includes/member-management.php:611
+#: plugins/ws-chapters/includes/member-management.php:641
 msgid "That person was not found."
 msgstr "Αυτό το άτομο δεν βρέθηκε."
 
-#: plugins/ws-chapters/includes/member-management.php:615
+#: plugins/ws-chapters/includes/member-management.php:645
 msgid "The invitation could not be created. Please try again."
 msgstr "Δεν ήταν δυνατή η δημιουργία της πρόσκλησης. Δοκίμασε ξανά."
 
-#: plugins/ws-chapters/includes/member-management.php:618
+#: plugins/ws-chapters/includes/member-management.php:648
 msgid "Your invitation to Widows Sons Europe"
 msgstr "Η πρόσκλησή σου στο Widows Sons Europe"
 
-#: plugins/ws-chapters/includes/member-management.php:619
+#: plugins/ws-chapters/includes/member-management.php:649
 msgid "You're invited to the Widows Sons Europe members' area."
 msgstr "Έχεις πρόσκληση για την περιοχή μελών του Widows Sons Europe."
 
-#: plugins/ws-chapters/includes/member-management.php:620
+#: plugins/ws-chapters/includes/member-management.php:650
 msgid "Welcome, Brother"
 msgstr "Καλώς ήρθες, Αδελφέ"
 
-#: plugins/ws-chapters/includes/member-management.php:622
+#: plugins/ws-chapters/includes/member-management.php:652
 msgid "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile."
 msgstr "Έχεις προσκληθεί στην περιοχή μελών του Widows Sons Europe: τη λίστα μελών όλων των ευρωπαϊκών Chapters, την κοινή βιβλιοθήκη και το δικό σου προφίλ."
 
-#: plugins/ws-chapters/includes/member-management.php:623
+#: plugins/ws-chapters/includes/member-management.php:653
 msgid "Choose your password to get started. You will sign in with this email address."
 msgstr "Επίλεξε τον κωδικό πρόσβασής σου για να ξεκινήσεις. Θα συνδέεσαι με αυτή τη διεύθυνση email."
 
-#: plugins/ws-chapters/includes/member-management.php:625
+#: plugins/ws-chapters/includes/member-management.php:655
 msgid "Set my password"
 msgstr "Ορισμός κωδικού πρόσβασης"
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:629
-msgid "This link expires in %d days. If it has expired, ask your Country Admin to send a new one."
-msgstr "Αυτός ο σύνδεσμος λήγει σε %d ημέρες. Αν έχει λήξει, ζήτησε από τον Country Admin σου να σου στείλει νέο."
+#: plugins/ws-chapters/includes/member-management.php:659
+msgid "This link expires in %d days. If it has expired, ask the person who invited you to send a new one."
+msgstr "Αυτός ο σύνδεσμος λήγει σε %d ημέρες. Αν έχει λήξει, ζήτησε από το άτομο που σε προσκάλεσε να σου στείλει νέο."
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:630
+#: plugins/ws-chapters/includes/member-management.php:660
 msgid "After that you land on your profile: add your first and last name, road name, phone and title."
 msgstr "Μετά θα μεταφερθείς στο προφίλ σου: πρόσθεσε όνομα και επώνυμο, road name, τηλέφωνο και τίτλο."
 
-#: plugins/ws-chapters/includes/member-management.php:633
+#: plugins/ws-chapters/includes/member-management.php:663
 msgid "The invitation email could not be sent. Check the mail settings, then resend."
 msgstr "Δεν ήταν δυνατή η αποστολή του email πρόσκλησης. Έλεγξε τις ρυθμίσεις αλληλογραφίας και στείλε το ξανά."
 
-#: plugins/ws-chapters/includes/member-management.php:666
+#: plugins/ws-chapters/includes/member-management.php:704
 msgid "Choose a country"
 msgstr "Επίλεξε χώρα"
 
-#: plugins/ws-chapters/includes/member-management.php:667
+#: plugins/ws-chapters/includes/member-management.php:705
 msgid "Invite a member"
 msgstr "Πρόσκληση μέλους"
 
-#: plugins/ws-chapters/includes/member-management.php:668
+#: plugins/ws-chapters/includes/member-management.php:706
+msgid "You can invite Members and Chapter Editors to your own chapter. The person sets their own password from the invitation email, which expires in 7 days."
+msgstr "Μπορείς να προσκαλέσεις μέλη και Chapter Editors στο δικό σου Chapter. Το άτομο ορίζει μόνο του τον κωδικό του από το email πρόσκλησης, που λήγει σε 7 ημέρες."
+
+#: plugins/ws-chapters/includes/member-management.php:706
 msgid "Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days."
 msgstr "Εισήγαγε το email, τον ρόλο, τη χώρα και το Chapter. Το άτομο ορίζει τον δικό του κωδικό πρόσβασης από το email πρόσκλησης, το οποίο λήγει σε 7 ημέρες."
 
-#: plugins/ws-chapters/includes/member-management.php:671
+#: plugins/ws-chapters/includes/member-management.php:709
 msgid "Role"
 msgstr "Ρόλος"
 
-#: plugins/ws-chapters/includes/member-management.php:673 plugins/ws-chapters/includes/member-management.php:711
+#: plugins/ws-chapters/includes/member-management.php:711 plugins/ws-chapters/includes/member-management.php:749
 msgid "Choose a chapter"
 msgstr "Επίλεξε Chapter"
 
-#: plugins/ws-chapters/includes/member-management.php:674
+#: plugins/ws-chapters/includes/member-management.php:712
 msgid "Everyone belongs to a country and a chapter."
 msgstr "Όλοι ανήκουν σε μια χώρα και σε ένα Chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:675
+#: plugins/ws-chapters/includes/member-management.php:713
 msgid "Send invitation"
 msgstr "Αποστολή πρόσκλησης"
 
-#: plugins/ws-chapters/includes/member-management.php:692
+#: plugins/ws-chapters/includes/member-management.php:730
 msgid "Super Admin"
 msgstr "Super Admin"
 
-#: plugins/ws-chapters/includes/member-management.php:695
+#: plugins/ws-chapters/includes/member-management.php:733
 msgid "you"
 msgstr "εσύ"
 
-#: plugins/ws-chapters/includes/member-management.php:707 plugins/ws-chapters/includes/member-management.php:724
+#: plugins/ws-chapters/includes/member-management.php:745 plugins/ws-chapters/includes/member-management.php:762
 msgid "Missing"
 msgstr "Λείπει"
 
-#: plugins/ws-chapters/includes/member-management.php:716
+#: plugins/ws-chapters/includes/member-management.php:754
 msgid "Resend invitation"
 msgstr "Επαναποστολή πρόσκλησης"
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you."
 msgstr "Οριστική αφαίρεση αυτού του ατόμου; Ο λογαριασμός, το email και το προφίλ του διαγράφονται και δεν μπορούν να επανέλθουν. Ό,τι πρόσθεσε στον ιστότοπο παραμένει και αποδίδεται σε σένα."
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove member"
 msgstr "Αφαίρεση μέλους"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:768
 msgid "Status"
 msgstr "Κατάσταση"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:774
 msgid "Invited"
 msgstr "Προσκεκλημένος"
 
-#: plugins/ws-chapters/includes/member-management.php:726
+#: plugins/ws-chapters/includes/member-management.php:764
 msgid "Active"
 msgstr "Ενεργός"
 
-#: plugins/ws-chapters/includes/member-management.php:727 plugins/ws-chapters/includes/member-management.php:730 plugins/ws-chapters/includes/members.php:376
+#: plugins/ws-chapters/includes/member-management.php:765 plugins/ws-chapters/includes/member-management.php:768 plugins/ws-chapters/includes/members.php:376
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:768
 msgid "Name, road name and email"
 msgstr "Όνομα, road name και email"
 
-#: plugins/ws-chapters/includes/member-management.php:731
+#: plugins/ws-chapters/includes/member-management.php:769
 msgid "People you manage"
 msgstr "Άτομα που διαχειρίζεσαι"
 
-#: plugins/ws-chapters/includes/member-management.php:732
+#: plugins/ws-chapters/includes/member-management.php:770
 msgid "Nobody yet. Invite someone above."
 msgstr "Κανείς ακόμη. Προσκάλεσε κάποιον παραπάνω."
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Invitation sent again"
 msgstr "Η πρόσκληση στάλθηκε ξανά"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Removed permanently"
 msgstr "Αφαιρέθηκε οριστικά"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Own profile"
 msgstr "Δικό του προφίλ"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Email NOT sent"
 msgstr "Το email ΔΕΝ στάλθηκε"
 
-#: plugins/ws-chapters/includes/member-management.php:740
+#: plugins/ws-chapters/includes/member-management.php:778
 msgid "removed"
 msgstr "αφαιρέθηκε"
 
-#: plugins/ws-chapters/includes/member-management.php:741
+#: plugins/ws-chapters/includes/member-management.php:779
 msgid "(deleted)"
 msgstr "(διαγράφηκε)"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Recent activity"
 msgstr "Πρόσφατη δραστηριότητα"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "By"
 msgstr "Από"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Action"
 msgstr "Ενέργεια"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Person"
 msgstr "Άτομο"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "No activity yet."
 msgstr "Δεν υπάρχει ακόμη δραστηριότητα."
 
-#: plugins/ws-chapters/includes/member-management.php:755
+#: plugins/ws-chapters/includes/member-management.php:793
 msgid "Widows Sons details"
 msgstr "Στοιχεία Widows Sons"
 
-#: plugins/ws-chapters/includes/member-management.php:779
+#: plugins/ws-chapters/includes/member-management.php:817
 msgid "Photo"
 msgstr "Φωτογραφία"
 
-#: plugins/ws-chapters/includes/member-management.php:781
+#: plugins/ws-chapters/includes/member-management.php:819
 msgid "JPG, PNG, WebP or GIF, up to 4 MB."
 msgstr "JPG, PNG, WebP ή GIF, έως 4 MB."
 
-#: plugins/ws-chapters/includes/member-management.php:829
+#: plugins/ws-chapters/includes/member-management.php:867
 msgid "Member directory"
 msgstr "Κατάλογος μελών"
 
@@ -2780,7 +2788,7 @@ msgstr "Νέο Chapter"
 msgid "View chapter"
 msgstr "Προβολή Chapter"
 
-#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:395
+#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:422
 msgid "All chapters"
 msgstr "Όλα τα Chapters"
 
@@ -2828,7 +2836,7 @@ msgstr "Χώρες"
 msgid "Country"
 msgstr "Χώρα"
 
-#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:394
+#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:421
 msgid "All countries"
 msgstr "Όλες οι χώρες"
 

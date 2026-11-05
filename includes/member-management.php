@@ -1,7 +1,8 @@
 <?php
 /**
  * Member management: the member directory (for all signed-in members) and the management page
- * (Super Admin and Country Admin). Invitations are sent by email; people set their own password.
+ * (Super Admin, Country Admin, and since 1.0.20 Chapter Editor for their own chapter: invite Members and
+ * Chapter Editors to it, resend, remove). Invitations are sent by email; people set their own password.
  *
  * Shortcodes: [ws_member_directory] (contact book), [ws_member_manage] (invite, remove, titles).
  *
@@ -51,13 +52,34 @@ function ws_mm_is_super() {
 	return is_super_admin() || current_user_can( 'manage_options' );
 }
 
-/** Super Admins and Country Admins manage people. */
+/** Super Admins and Country Admins manage people; Chapter Editors the people of their chapter. */
 function ws_mm_can_manage() {
-	return ws_mm_is_super() || ws_mm_is_country_admin();
+	return ws_mm_is_super() || ws_mm_is_country_admin() || ( ws_mm_is_chapter_editor() && ws_mm_editor_chapters() );
 }
 
 function ws_mm_is_country_admin() {
 	return in_array( 'ws_country_admin', (array) wp_get_current_user()->roles, true );
+}
+
+/** A Chapter Editor and nothing more: their management stops at their own chapter. */
+function ws_mm_is_chapter_editor() {
+	return ! ws_mm_is_super() && ! ws_mm_is_country_admin() && in_array( 'ws_chapter_editor', (array) wp_get_current_user()->roles, true );
+}
+
+/** The chapters (IDs) a Chapter Editor looks after. */
+function ws_mm_editor_chapters() {
+	$scope = ws_user_scope( get_current_user_id() );
+	return $scope ? array_values( array_filter( $scope['chapters'], function ( $id ) {
+		return 'ws_chapter' === get_post_type( $id );
+	} ) ) : array();
+}
+
+/** Chapters (posts) the current user may invite to: their own for a Chapter Editor, their countries' otherwise. */
+function ws_mm_manageable_chapters() {
+	if ( ws_mm_is_chapter_editor() ) {
+		return array_intersect_key( ws_mm_chapters_in( ws_mm_manageable_countries() ), array_flip( ws_mm_editor_chapters() ) );
+	}
+	return ws_mm_chapters_in( ws_mm_manageable_countries() );
 }
 
 /** Country IDs the current user may manage: all for a Super Admin, their own for a Country Admin. */
@@ -97,19 +119,24 @@ function ws_mm_may_manage_user( $target_id ) {
 	if ( ws_mm_is_super() ) {
 		return true;
 	}
+	$roles = (array) $target->roles;
+	if ( ws_mm_is_chapter_editor() ) {
+		// Members and Chapter Editors whose chapter is all theirs.
+		$chaps = array_filter( array_map( 'intval', (array) get_user_meta( $target_id, 'ws_scope_chapters', true ) ) );
+		return ! array_diff( $roles, array( 'ws_member', 'ws_chapter_editor' ) ) && $chaps && ! array_diff( $chaps, ws_mm_editor_chapters() );
+	}
 	if ( ! ws_mm_is_country_admin() ) {
 		return false;
 	}
-	$roles = (array) $target->roles;
 	if ( array_intersect( $roles, array( 'ws_country_admin', 'administrator' ) ) ) {
 		return false; // Country Admins cannot touch other Country Admins or Super Admins.
 	}
 	return (bool) array_intersect( ws_mm_user_ids( $target_id ), ws_mm_manageable_countries() );
 }
 
-/** Who may set someone's chapter (and so country): a Super Admin for anyone, themselves included; a Country Admin for their people. */
+/** Who may set someone's chapter (and so country): a Super Admin for anyone, themselves included; a Country Admin for their people. Not Chapter Editors. */
 function ws_mm_may_place( $target_id ) {
-	return ( ws_mm_is_super() && get_userdata( $target_id ) ) || ws_mm_may_manage_user( $target_id );
+	return ( ws_mm_is_super() && get_userdata( $target_id ) ) || ( ! ws_mm_is_chapter_editor() && ws_mm_may_manage_user( $target_id ) );
 }
 
 /** Who may set a title: Super Admin (anyone, themselves included), Country Admin of the person's country, Chapter Editor of the person's chapter. */
@@ -580,6 +607,9 @@ function ws_mm_invite() {
 	if ( array_diff( $chaps, $chapters_ok ) ) {
 		return __( 'That chapter is not in the chosen country.', 'ws-chapters' );
 	}
+	if ( array_diff( $chaps, array_keys( ws_mm_manageable_chapters() ) ) ) {
+		return __( 'You can only add people to your own chapter.', 'ws-chapters' );
+	}
 	if ( ! $chaps ) {
 		return __( 'Please choose a chapter. Everyone belongs to a country and a chapter.', 'ws-chapters' );
 	}
@@ -626,7 +656,7 @@ function ws_mm_send_invite( $user ) {
 		'url'       => $link,
 		'after'     => array(
 			/* translators: %d: days */
-			sprintf( __( 'This link expires in %d days. If it has expired, ask your Country Admin to send a new one.', 'ws-chapters' ), WS_MM_INVITE_DAYS ),
+			sprintf( __( 'This link expires in %d days. If it has expired, ask the person who invited you to send a new one.', 'ws-chapters' ), WS_MM_INVITE_DAYS ),
 			__( 'After that you land on your profile: add your first and last name, road name, phone and title.', 'ws-chapters' ),
 		),
 	) );
@@ -656,6 +686,14 @@ add_shortcode( 'ws_member_manage', function () {
 	$super = ws_mm_is_super();
 	$mine  = ws_mm_manageable_countries();
 	$roles = $super ? ws_mm_role_labels() : array_intersect_key( ws_mm_role_labels(), array( 'ws_member' => 1, 'ws_chapter_editor' => 1 ) );
+	$invite_chapters = ws_mm_manageable_chapters();
+	if ( ws_mm_is_chapter_editor() ) {
+		// Only the countries of their chapters.
+		$mine = array_values( array_unique( array_filter( array_map( function ( $c ) {
+			$t = ws_chapter_country( $c->ID );
+			return $t ? (int) $t->term_id : 0;
+		}, $invite_chapters ) ) ) );
+	}
 	$terms = $mine ? (array) get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false, 'include' => $mine ) ) : array();
 	$rhtml = '<select name="ws_mm_role" class="ws-mm__input">';
 	foreach ( $roles as $k => $label ) {
@@ -665,12 +703,12 @@ add_shortcode( 'ws_member_manage', function () {
 	// One country: chosen already. Several: the person must pick one.
 	$country_first = count( $terms ) > 1 ? __( 'Choose a country', 'ws-chapters' ) : '';
 	$out .= '<section class="ws-mm__card"><h3 class="ws-mm__heading">' . esc_html__( 'Invite a member', 'ws-chapters' ) . '</h3>'
-		. '<p class="ws-muted">' . esc_html__( 'Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days.', 'ws-chapters' ) . '</p>'
+		. '<p class="ws-muted">' . esc_html( ws_mm_is_chapter_editor() ? __( 'You can invite Members and Chapter Editors to your own chapter. The person sets their own password from the invitation email, which expires in 7 days.', 'ws-chapters' ) : __( 'Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days.', 'ws-chapters' ) ) . '</p>'
 		. '<form method="post" class="ws-mm__grid">' . $nonce . '<input type="hidden" name="ws_mm_action" value="invite">'
 		. ws_mm_field( __( 'Email', 'ws-chapters' ), '<input type="email" name="ws_mm_email" class="ws-mm__input" required placeholder="name@example.com">' )
 		. ws_mm_field( __( 'Role', 'ws-chapters' ), $rhtml )
 		. ws_mm_field( __( 'Country', 'ws-chapters' ), str_replace( '<select ', '<select required ', ws_mm_country_select( 'ws_mm_country', $terms, 0, $country_first ) ) )
-		. ws_mm_field( __( 'Chapter', 'ws-chapters' ), str_replace( '<select ', '<select required ', ws_mm_chapter_select( 'ws_mm_chapter', ws_mm_chapters_in( $mine ), 0, __( 'Choose a chapter', 'ws-chapters' ) ) ) )
+		. ws_mm_field( __( 'Chapter', 'ws-chapters' ), str_replace( '<select ', '<select required ', ws_mm_chapter_select( 'ws_mm_chapter', $invite_chapters, 1 === count( $invite_chapters ) ? key( $invite_chapters ) : 0, __( 'Choose a chapter', 'ws-chapters' ) ) ) )
 		. '<p class="ws-mm__hint ws-muted">' . esc_html__( 'Everyone belongs to a country and a chapter.', 'ws-chapters' ) . '</p>'
 		. '<div class="ws-mm__actions"><button type="submit" class="ws-mm__btn">' . esc_html__( 'Send invitation', 'ws-chapters' ) . '</button></div></form></section>';
 

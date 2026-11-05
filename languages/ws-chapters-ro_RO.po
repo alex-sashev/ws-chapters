@@ -17,15 +17,15 @@ msgstr "Acces Widows Sons — atribuie țările permise pentru Country Admin și
 msgid "Country: %s"
 msgstr "Țara: %s"
 
-#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:42 plugins/ws-chapters/includes/member-management.php:17
 msgid "Country Admin"
 msgstr "Country Admin"
 
-#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:16
+#: plugins/ws-chapters/includes/access.php:43 plugins/ws-chapters/includes/member-management.php:17
 msgid "Chapter Editor"
 msgstr "Chapter Editor"
 
-#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:309 plugins/ws-chapters/includes/member-management.php:376 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/accounts.php:50 plugins/ws-chapters/includes/member-account.php:222 plugins/ws-chapters/includes/member-management.php:336 plugins/ws-chapters/includes/member-management.php:403 plugins/ws-chapters/includes/member-management.php:428
 msgid "Road name"
 msgstr "Road name"
 
@@ -129,7 +129,7 @@ msgstr "Adaugă site-ul pe ecranul principal al telefonului: se deschide pe tot 
 msgid "Get the app"
 msgstr "Obține aplicația"
 
-#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:308
+#: plugins/ws-chapters/includes/app.php:136 plugins/ws-chapters/includes/front-edit.php:96 plugins/ws-chapters/includes/front-edit.php:552 plugins/ws-chapters/includes/login-box.php:27 plugins/ws-chapters/includes/member-management.php:335
 msgid "Close"
 msgstr "Închide"
 
@@ -319,7 +319,7 @@ msgstr "Ștergi acest element pentru toată lumea? Va fi mutat în Coșul de gun
 msgid "Deleting…"
 msgstr "Se șterge…"
 
-#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:833
+#: plugins/ws-chapters/includes/content-edit.php:53 plugins/ws-chapters/includes/links.php:133 plugins/ws-chapters/includes/member-management.php:871
 msgid "Edit"
 msgstr "Editează"
 
@@ -558,7 +558,7 @@ msgstr "Vezi evenimentul"
 msgid "All events"
 msgstr "Toate evenimentele"
 
-#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/events.php:241 plugins/ws-chapters/includes/events.php:304 plugins/ws-chapters/includes/member-management.php:782
 msgid "When"
 msgstr "Când"
 
@@ -861,7 +861,7 @@ msgstr "Prenume"
 msgid "Last name"
 msgstr "Nume"
 
-#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:318 plugins/ws-chapters/includes/member-management.php:381
+#: plugins/ws-chapters/includes/forms.php:499 plugins/ws-chapters/includes/forms.php:666 plugins/ws-chapters/includes/member-account.php:223 plugins/ws-chapters/includes/member-management.php:345 plugins/ws-chapters/includes/member-management.php:408
 msgid "Phone"
 msgstr "Telefon"
 
@@ -869,7 +869,7 @@ msgstr "Telefon"
 msgid "That was quick! Please check the form and send it again."
 msgstr "Ai fost prea rapid! Verifică formularul și trimite-l din nou."
 
-#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:317 plugins/ws-chapters/includes/member-management.php:380
+#: plugins/ws-chapters/includes/forms.php:500 plugins/ws-chapters/includes/forms.php:667 plugins/ws-chapters/includes/member-account.php:248 plugins/ws-chapters/includes/member-management.php:344 plugins/ws-chapters/includes/member-management.php:407
 msgid "Email"
 msgstr "Email"
 
@@ -1152,7 +1152,7 @@ msgstr "Țara nu a fost găsită."
 msgid "Chapter not found."
 msgstr "Chapterul nu a fost găsit."
 
-#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:333
+#: plugins/ws-chapters/includes/front-edit.php:350 plugins/ws-chapters/includes/member-management.php:360
 msgid "Please wait…"
 msgstr "Te rugăm să aștepți…"
 
@@ -1369,15 +1369,15 @@ msgstr "Ne pare rău, articolul nu a putut fi șters."
 msgid "Upload"
 msgstr "Încarcă"
 
-#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:704 plugins/ws-chapters/includes/member-management.php:712
+#: plugins/ws-chapters/includes/front-edit.php:98 plugins/ws-chapters/includes/member-management.php:742 plugins/ws-chapters/includes/member-management.php:750
 msgid "Save"
 msgstr "Salvează"
 
-#: plugins/ws-chapters/includes/languages.php:195
+#: plugins/ws-chapters/includes/languages.php:197
 msgid "Language"
 msgstr "Limbă"
 
-#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:401
+#: plugins/ws-chapters/includes/links.php:117 plugins/ws-chapters/includes/links.php:130 plugins/ws-chapters/includes/member-management.php:428
 msgid "Name"
 msgstr "Nume"
 
@@ -1502,7 +1502,7 @@ msgid "Members area"
 msgstr "Zona membrilor"
 
 #. translators: %s: name
-#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:831
+#: plugins/ws-chapters/includes/login-box.php:21 plugins/ws-chapters/includes/member-account.php:217 plugins/ws-chapters/includes/member-management.php:35 plugins/ws-chapters/includes/member-management.php:869
 msgid "My profile"
 msgstr "Profilul meu"
 
@@ -1569,7 +1569,7 @@ msgstr "Setează parola și continuă"
 msgid "This is how other members see you in the member list."
 msgstr "Așa te văd ceilalți membri în lista de membri."
 
-#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:702
+#: plugins/ws-chapters/includes/member-account.php:224 plugins/ws-chapters/includes/member-management.php:740
 msgid "No title"
 msgstr "Fără titlu"
 
@@ -1689,7 +1689,7 @@ msgstr "Ne pare rău, feedbackul tău nu a putut fi trimis. Încearcă din nou p
 msgid "Thank you for your feedback! Your suggestion has been submitted successfully."
 msgstr "Mulțumim pentru feedback! Sugestia ta a fost trimisă cu succes."
 
-#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:39 plugins/ws-chapters/includes/member-management.php:832
+#: plugins/ws-chapters/includes/member-feedback.php:76 plugins/ws-chapters/includes/member-management.php:40 plugins/ws-chapters/includes/member-management.php:870
 msgid "Website feedback"
 msgstr "Feedback despre website"
 
@@ -1721,356 +1721,364 @@ msgstr "De exemplu wseurope.org/events/"
 msgid "Send feedback"
 msgstr "Trimite feedback"
 
-#: plugins/ws-chapters/includes/member-management.php:16 plugins/ws-chapters/includes/members.php:87
+#: plugins/ws-chapters/includes/member-management.php:17 plugins/ws-chapters/includes/members.php:87
 msgid "Member"
 msgstr "Membru"
 
-#: plugins/ws-chapters/includes/member-management.php:220
+#: plugins/ws-chapters/includes/member-management.php:247
 msgid "Other (type it)"
 msgstr "Altul (scrie-l)"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "e.g. Guardian of Membership"
 msgstr "de ex. Gardianul membrilor"
 
-#: plugins/ws-chapters/includes/member-management.php:227
+#: plugins/ws-chapters/includes/member-management.php:254
 msgid "Your own title"
 msgstr "Titlul tău"
 
-#: plugins/ws-chapters/includes/member-management.php:32
+#: plugins/ws-chapters/includes/member-management.php:33
 msgid "Library"
 msgstr "Bibliotecă"
 
-#: plugins/ws-chapters/includes/member-management.php:320
-msgid "Send email"
-msgstr "Trimite email"
-
-#: plugins/ws-chapters/includes/member-management.php:321
-msgid "Call"
-msgstr "Sună"
-
-#: plugins/ws-chapters/includes/member-management.php:33 plugins/ws-chapters/includes/member-management.php:40
+#: plugins/ws-chapters/includes/member-management.php:34 plugins/ws-chapters/includes/member-management.php:41
 msgid "Members"
 msgstr "Membri"
 
-#: plugins/ws-chapters/includes/member-management.php:344
+#: plugins/ws-chapters/includes/member-management.php:347
+msgid "Send email"
+msgstr "Trimite email"
+
+#: plugins/ws-chapters/includes/member-management.php:348
+msgid "Call"
+msgstr "Sună"
+
+#: plugins/ws-chapters/includes/member-management.php:371
 msgid "Please sign in to see the member list."
 msgstr "Conectează-te pentru a vedea lista de membri."
 
-#: plugins/ws-chapters/includes/member-management.php:37 plugins/ws-chapters/includes/member-management.php:830
+#: plugins/ws-chapters/includes/member-management.php:38 plugins/ws-chapters/includes/member-management.php:868
 msgid "Member management"
 msgstr "Gestionarea membrilor"
 
-#: plugins/ws-chapters/includes/member-management.php:384
+#: plugins/ws-chapters/includes/member-management.php:411
 msgid "All titles"
 msgstr "Toate titlurile"
 
-#: plugins/ws-chapters/includes/member-management.php:393 plugins/ws-chapters/includes/members.php:369
+#: plugins/ws-chapters/includes/member-management.php:420 plugins/ws-chapters/includes/members.php:369
 msgid "Search"
 msgstr "Caută"
 
-#: plugins/ws-chapters/includes/member-management.php:393
+#: plugins/ws-chapters/includes/member-management.php:420
 msgid "Name, road name or email"
 msgstr "Nume, road name sau email"
 
-#: plugins/ws-chapters/includes/member-management.php:397 plugins/ws-chapters/includes/members.php:371
+#: plugins/ws-chapters/includes/member-management.php:424 plugins/ws-chapters/includes/members.php:371
 msgid "Filter"
 msgstr "Filtrează"
 
-#: plugins/ws-chapters/includes/member-management.php:398 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
+#: plugins/ws-chapters/includes/member-management.php:425 plugins/ws-chapters/includes/members.php:372 plugins/ws-chapters/includes/profile-fields.php:114
 msgid "Clear"
 msgstr "Șterge filtrele"
 
 #. translators: %d: number of members
-#: plugins/ws-chapters/includes/member-management.php:400
+#: plugins/ws-chapters/includes/member-management.php:427
 msgid "%d member"
 msgid_plural "%d members"
 msgstr[0] "%d membru"
 msgstr[1] "%d membri"
 msgstr[2] "%d de membri"
 
-#: plugins/ws-chapters/includes/member-management.php:402
+#: plugins/ws-chapters/includes/member-management.php:429
 msgid "No members match."
 msgstr "Niciun membru nu corespunde."
 
-#: plugins/ws-chapters/includes/member-management.php:413
+#: plugins/ws-chapters/includes/member-management.php:440
 msgid "You do not have permission to do that."
 msgstr "Nu ai permisiunea să faci asta."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:418
+#: plugins/ws-chapters/includes/member-management.php:445
 msgid "Invitation sent to %s. If it has not arrived within a few minutes, ask them to look in Junk/Spam, then use \"Resend invitation\"."
 msgstr "Invitația a fost trimisă la %s. Dacă nu a ajuns în câteva minute, roagă persoana să verifice Junk/Spam, apoi folosește „Retrimite invitația”."
 
-#: plugins/ws-chapters/includes/member-management.php:422
+#: plugins/ws-chapters/includes/member-management.php:449
 msgid "You cannot remove this person."
 msgstr "Nu poți elimina această persoană."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "%s has been removed permanently. What they added to the site stays, now credited to you."
 msgstr "%s a fost eliminat definitiv. Ce a adăugat pe site rămâne, acum atribuit ție."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:436
+#: plugins/ws-chapters/includes/member-management.php:463
 msgid "Sorry, this person could not be removed. Please try again."
 msgstr "Ne pare rău, această persoană nu a putut fi eliminată. Încearcă din nou."
 
-#: plugins/ws-chapters/includes/member-management.php:441
+#: plugins/ws-chapters/includes/member-management.php:468
 msgid "You cannot resend this invitation."
 msgstr "Nu poți retrimite această invitație."
 
-#: plugins/ws-chapters/includes/member-management.php:445
+#: plugins/ws-chapters/includes/member-management.php:472
 msgid "Invitation sent again."
 msgstr "Invitația a fost trimisă din nou."
 
-#: plugins/ws-chapters/includes/member-management.php:453
+#: plugins/ws-chapters/includes/member-management.php:480
 msgid "You cannot set this chapter."
 msgstr "Nu poți seta acest chapter."
 
 #. translators: 1: person's name, 2: chapter
-#: plugins/ws-chapters/includes/member-management.php:464
+#: plugins/ws-chapters/includes/member-management.php:491
 msgid "%1$s is now in %2$s."
 msgstr "%1$s este acum în %2$s."
 
-#: plugins/ws-chapters/includes/member-management.php:474
+#: plugins/ws-chapters/includes/member-management.php:501
 msgid "You cannot set this title."
 msgstr "Nu poți seta acest titlu."
 
-#: plugins/ws-chapters/includes/member-management.php:476
+#: plugins/ws-chapters/includes/member-management.php:503
 msgid "For \"Other\", please type the title."
 msgstr "Pentru „Altul”, scrie titlul."
 
-#: plugins/ws-chapters/includes/member-management.php:481
+#: plugins/ws-chapters/includes/member-management.php:508
 msgid "Title removed."
 msgstr "Titlul a fost eliminat."
 
 #. translators: %s: person's name
-#: plugins/ws-chapters/includes/member-management.php:487
+#: plugins/ws-chapters/includes/member-management.php:514
 msgid "Title saved for %s."
 msgstr "Titlul a fost salvat pentru %s."
 
-#: plugins/ws-chapters/includes/member-management.php:563
+#: plugins/ws-chapters/includes/member-management.php:590
 msgid "Please enter a valid email address."
 msgstr "Introdu o adresă de email validă."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:567
+#: plugins/ws-chapters/includes/member-management.php:594
 msgid "%s already has an account. No invitation was sent."
 msgstr "%s are deja un cont. Nu a fost trimisă nicio invitație."
 
-#: plugins/ws-chapters/includes/member-management.php:571
+#: plugins/ws-chapters/includes/member-management.php:598
 msgid "You cannot invite that kind of member."
 msgstr "Nu poți invita acest tip de membru."
 
-#: plugins/ws-chapters/includes/member-management.php:574
+#: plugins/ws-chapters/includes/member-management.php:601
 msgid "Please choose a country."
 msgstr "Alege o țară."
 
-#: plugins/ws-chapters/includes/member-management.php:577
+#: plugins/ws-chapters/includes/member-management.php:604
 msgid "You can only add people to your own country."
 msgstr "Poți adăuga persoane doar în țara ta."
 
-#: plugins/ws-chapters/includes/member-management.php:581
+#: plugins/ws-chapters/includes/member-management.php:608
 msgid "That chapter is not in the chosen country."
 msgstr "Acest chapter nu este în țara aleasă."
 
-#: plugins/ws-chapters/includes/member-management.php:584
+#: plugins/ws-chapters/includes/member-management.php:611
+msgid "You can only add people to your own chapter."
+msgstr "Poți adăuga persoane doar în propriul tău Chapter."
+
+#: plugins/ws-chapters/includes/member-management.php:614
 msgid "Please choose a chapter. Everyone belongs to a country and a chapter."
 msgstr "Alege un chapter. Fiecare aparține unei țări și unui chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:593
+#: plugins/ws-chapters/includes/member-management.php:623
 msgid "Sorry, the invitation could not be created. Please try again."
 msgstr "Ne pare rău, invitația nu a putut fi creată. Încearcă din nou."
 
 #. translators: %s: email address
-#: plugins/ws-chapters/includes/member-management.php:603
+#: plugins/ws-chapters/includes/member-management.php:633
 msgid "The account for %s was created, but the invitation email could not be sent. Check the mail settings, then use \"Resend invitation\" below."
 msgstr "Contul pentru %s a fost creat, dar emailul de invitație nu a putut fi trimis. Verifică setările de email, apoi folosește „Retrimite invitația” mai jos."
 
-#: plugins/ws-chapters/includes/member-management.php:611
+#: plugins/ws-chapters/includes/member-management.php:641
 msgid "That person was not found."
 msgstr "Persoana nu a fost găsită."
 
-#: plugins/ws-chapters/includes/member-management.php:615
+#: plugins/ws-chapters/includes/member-management.php:645
 msgid "The invitation could not be created. Please try again."
 msgstr "Invitația nu a putut fi creată. Încearcă din nou."
 
-#: plugins/ws-chapters/includes/member-management.php:618
+#: plugins/ws-chapters/includes/member-management.php:648
 msgid "Your invitation to Widows Sons Europe"
 msgstr "Invitația ta în Widows Sons Europe"
 
-#: plugins/ws-chapters/includes/member-management.php:619
+#: plugins/ws-chapters/includes/member-management.php:649
 msgid "You're invited to the Widows Sons Europe members' area."
 msgstr "Ești invitat în zona membrilor Widows Sons Europe."
 
-#: plugins/ws-chapters/includes/member-management.php:620
+#: plugins/ws-chapters/includes/member-management.php:650
 msgid "Welcome, Brother"
 msgstr "Bine ai venit, frate"
 
-#: plugins/ws-chapters/includes/member-management.php:622
+#: plugins/ws-chapters/includes/member-management.php:652
 msgid "You have been invited to the Widows Sons Europe members' area: the member list of all European chapters, the shared library and your own profile."
 msgstr "Ai fost invitat în zona membrilor Widows Sons Europe: lista de membri a tuturor chapterelor europene, biblioteca comună și propriul tău profil."
 
-#: plugins/ws-chapters/includes/member-management.php:623
+#: plugins/ws-chapters/includes/member-management.php:653
 msgid "Choose your password to get started. You will sign in with this email address."
 msgstr "Alege-ți parola pentru a începe. Te vei conecta cu această adresă de email."
 
-#: plugins/ws-chapters/includes/member-management.php:625
+#: plugins/ws-chapters/includes/member-management.php:655
 msgid "Set my password"
 msgstr "Setează-mi parola"
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:629
-msgid "This link expires in %d days. If it has expired, ask your Country Admin to send a new one."
-msgstr "Acest link expiră în %d zile. Dacă a expirat, roagă-l pe Country Admin să-ți trimită unul nou."
+#: plugins/ws-chapters/includes/member-management.php:659
+msgid "This link expires in %d days. If it has expired, ask the person who invited you to send a new one."
+msgstr "Acest link expiră în %d zile. Dacă a expirat, roagă persoana care te-a invitat să-ți trimită unul nou."
 
 #. translators: %d: days
-#: plugins/ws-chapters/includes/member-management.php:630
+#: plugins/ws-chapters/includes/member-management.php:660
 msgid "After that you land on your profile: add your first and last name, road name, phone and title."
 msgstr "După aceea ajungi pe profilul tău: adaugă prenumele și numele, road name-ul, telefonul și titlul."
 
-#: plugins/ws-chapters/includes/member-management.php:633
+#: plugins/ws-chapters/includes/member-management.php:663
 msgid "The invitation email could not be sent. Check the mail settings, then resend."
 msgstr "Emailul de invitație nu a putut fi trimis. Verifică setările de email, apoi retrimite."
 
-#: plugins/ws-chapters/includes/member-management.php:666
+#: plugins/ws-chapters/includes/member-management.php:704
 msgid "Choose a country"
 msgstr "Alege o țară"
 
-#: plugins/ws-chapters/includes/member-management.php:667
+#: plugins/ws-chapters/includes/member-management.php:705
 msgid "Invite a member"
 msgstr "Invită un membru"
 
-#: plugins/ws-chapters/includes/member-management.php:668
+#: plugins/ws-chapters/includes/member-management.php:706
+msgid "You can invite Members and Chapter Editors to your own chapter. The person sets their own password from the invitation email, which expires in 7 days."
+msgstr "Poți invita membri și Chapter Editors în propriul tău Chapter. Persoana își alege singură parola din emailul de invitație, care expiră în 7 zile."
+
+#: plugins/ws-chapters/includes/member-management.php:706
 msgid "Enter the email, role, country and chapter. The person sets their own password from the invitation email, which expires in 7 days."
 msgstr "Introdu emailul, rolul, țara și chapterul. Persoana își setează singură parola din emailul de invitație, care expiră în 7 zile."
 
-#: plugins/ws-chapters/includes/member-management.php:671
+#: plugins/ws-chapters/includes/member-management.php:709
 msgid "Role"
 msgstr "Rol"
 
-#: plugins/ws-chapters/includes/member-management.php:673 plugins/ws-chapters/includes/member-management.php:711
+#: plugins/ws-chapters/includes/member-management.php:711 plugins/ws-chapters/includes/member-management.php:749
 msgid "Choose a chapter"
 msgstr "Alege un chapter"
 
-#: plugins/ws-chapters/includes/member-management.php:674
+#: plugins/ws-chapters/includes/member-management.php:712
 msgid "Everyone belongs to a country and a chapter."
 msgstr "Fiecare aparține unei țări și unui chapter."
 
-#: plugins/ws-chapters/includes/member-management.php:675
+#: plugins/ws-chapters/includes/member-management.php:713
 msgid "Send invitation"
 msgstr "Trimite invitația"
 
-#: plugins/ws-chapters/includes/member-management.php:692
+#: plugins/ws-chapters/includes/member-management.php:730
 msgid "Super Admin"
 msgstr "Super Admin"
 
-#: plugins/ws-chapters/includes/member-management.php:695
+#: plugins/ws-chapters/includes/member-management.php:733
 msgid "you"
 msgstr "tu"
 
-#: plugins/ws-chapters/includes/member-management.php:707 plugins/ws-chapters/includes/member-management.php:724
+#: plugins/ws-chapters/includes/member-management.php:745 plugins/ws-chapters/includes/member-management.php:762
 msgid "Missing"
 msgstr "Lipsă"
 
-#: plugins/ws-chapters/includes/member-management.php:716
+#: plugins/ws-chapters/includes/member-management.php:754
 msgid "Resend invitation"
 msgstr "Retrimite invitația"
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove this person permanently? Their account, email and profile are deleted and cannot be brought back. What they added to the site stays, credited to you."
 msgstr "Elimini definitiv această persoană? Contul, emailul și profilul său sunt șterse și nu mai pot fi recuperate. Ce a adăugat pe site rămâne, atribuit ție."
 
-#: plugins/ws-chapters/includes/member-management.php:719
+#: plugins/ws-chapters/includes/member-management.php:757
 msgid "Remove member"
 msgstr "Elimină membrul"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:768
 msgid "Status"
 msgstr "Stare"
 
-#: plugins/ws-chapters/includes/member-management.php:726 plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:764 plugins/ws-chapters/includes/member-management.php:774
 msgid "Invited"
 msgstr "Invitat"
 
-#: plugins/ws-chapters/includes/member-management.php:726
+#: plugins/ws-chapters/includes/member-management.php:764
 msgid "Active"
 msgstr "Activ"
 
-#: plugins/ws-chapters/includes/member-management.php:727 plugins/ws-chapters/includes/member-management.php:730 plugins/ws-chapters/includes/members.php:376
+#: plugins/ws-chapters/includes/member-management.php:765 plugins/ws-chapters/includes/member-management.php:768 plugins/ws-chapters/includes/members.php:376
 msgid "Actions"
 msgstr "Acțiuni"
 
-#: plugins/ws-chapters/includes/member-management.php:730
+#: plugins/ws-chapters/includes/member-management.php:768
 msgid "Name, road name and email"
 msgstr "Nume, road name și email"
 
-#: plugins/ws-chapters/includes/member-management.php:731
+#: plugins/ws-chapters/includes/member-management.php:769
 msgid "People you manage"
 msgstr "Persoanele pe care le gestionezi"
 
-#: plugins/ws-chapters/includes/member-management.php:732
+#: plugins/ws-chapters/includes/member-management.php:770
 msgid "Nobody yet. Invite someone above."
 msgstr "Încă nimeni. Invită pe cineva mai sus."
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Invitation sent again"
 msgstr "Invitație trimisă din nou"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Removed permanently"
 msgstr "Eliminat definitiv"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Own profile"
 msgstr "Profil propriu"
 
-#: plugins/ws-chapters/includes/member-management.php:736
+#: plugins/ws-chapters/includes/member-management.php:774
 msgid "Email NOT sent"
 msgstr "Emailul NU a fost trimis"
 
-#: plugins/ws-chapters/includes/member-management.php:740
+#: plugins/ws-chapters/includes/member-management.php:778
 msgid "removed"
 msgstr "eliminat"
 
-#: plugins/ws-chapters/includes/member-management.php:741
+#: plugins/ws-chapters/includes/member-management.php:779
 msgid "(deleted)"
 msgstr "(șters)"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Recent activity"
 msgstr "Activitate recentă"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "By"
 msgstr "De către"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Action"
 msgstr "Acțiune"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "Person"
 msgstr "Persoană"
 
-#: plugins/ws-chapters/includes/member-management.php:744
+#: plugins/ws-chapters/includes/member-management.php:782
 msgid "No activity yet."
 msgstr "Încă nu există activitate."
 
-#: plugins/ws-chapters/includes/member-management.php:755
+#: plugins/ws-chapters/includes/member-management.php:793
 msgid "Widows Sons details"
 msgstr "Detalii Widows Sons"
 
-#: plugins/ws-chapters/includes/member-management.php:779
+#: plugins/ws-chapters/includes/member-management.php:817
 msgid "Photo"
 msgstr "Fotografie"
 
-#: plugins/ws-chapters/includes/member-management.php:781
+#: plugins/ws-chapters/includes/member-management.php:819
 msgid "JPG, PNG, WebP or GIF, up to 4 MB."
 msgstr "JPG, PNG, WebP sau GIF, până la 4 MB."
 
-#: plugins/ws-chapters/includes/member-management.php:829
+#: plugins/ws-chapters/includes/member-management.php:867
 msgid "Member directory"
 msgstr "Lista membrilor"
 
@@ -2783,7 +2791,7 @@ msgstr "Chapter nou"
 msgid "View chapter"
 msgstr "Vezi chapterul"
 
-#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:395
+#: plugins/ws-chapters/ws-chapters.php:56 plugins/ws-chapters/includes/member-management.php:422
 msgid "All chapters"
 msgstr "Toate chapterele"
 
@@ -2831,7 +2839,7 @@ msgstr "Țări"
 msgid "Country"
 msgstr "Țară"
 
-#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:394
+#: plugins/ws-chapters/ws-chapters.php:88 plugins/ws-chapters/includes/member-management.php:421
 msgid "All countries"
 msgstr "Toate țările"
 
