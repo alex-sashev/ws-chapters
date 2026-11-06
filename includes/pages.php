@@ -47,7 +47,7 @@ function ws_chapter_count( $term ) {
 	return count( ws_get_chapters( $term->slug ) );
 }
 
-/** Countries on the map: name, flag, shape id, chapter count, national logo, marker position. A country without chapters yet is shown too (on its capital). */
+/** Countries that have chapters: name, flag, shape id, chapter count, national logo, marker position. */
 function ws_country_map_data() {
 	$out           = array();
 	$capital_taken = array();
@@ -74,8 +74,8 @@ function ws_country_map_data() {
 			}
 		}
 		$count  = ws_chapter_count( $term );
-		if ( ! $count && ! $lat ) {
-			continue; // No chapters and no known capital: nowhere to put it.
+		if ( ! $count ) {
+			continue; // A country without chapters (Scotland now) shows like any country without Widows Sons.
 		}
 		$out[]  = array(
 			'name'  => $term->name,
@@ -99,14 +99,16 @@ function ws_uk_nations() {
 }
 
 /**
- * When a UK nation is a country of its own on the map (Scotland), a country coded for the whole UK
- * (gb, e.g. "England and Wales") covers only the other nations, so each shows with its own border.
+ * When a UK nation is a country of its own on the site (Scotland: code gb-sct, with or without chapters), a
+ * country coded for the whole UK (gb, e.g. "England and Wales") covers only the other nations, so Scotland
+ * is not painted as part of it.
  */
 function ws_uk_split( array $countries ) {
 	$claimed = array();
-	foreach ( $countries as $c ) {
-		if ( is_string( $c['shape'] ) && 0 === strpos( $c['shape'], 'gb-' ) ) {
-			$claimed[] = $c['shape'];
+	foreach ( get_terms( array( 'taxonomy' => 'ws_country', 'hide_empty' => false ) ) as $term ) {
+		$shape = ws_iso_numeric( ws_country_code( $term ) );
+		if ( 0 === strpos( $shape, 'gb-' ) ) {
+			$claimed[] = $shape;
 		}
 	}
 	if ( ! $claimed ) {

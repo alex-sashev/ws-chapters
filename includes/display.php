@@ -263,6 +263,9 @@ function ws_grand_chapter_directory() {
 	$out = '<div class="ws-chapter-grid ws-gc-grid">';
 	foreach ( $terms as $term ) {
 		$count = ws_chapter_count( $term );
+		if ( ! $count ) {
+			continue; // Like the map: countries without chapters are not listed.
+		}
 		$out  .= sprintf(
 			'<article class="ws-chapter-card ws-gc-card"><a class="ws-chapter-card__link" href="%1$s"><div class="ws-chapter-card__logo">%2$s</div><h3 class="ws-chapter-card__name">%3$s %4$s</h3></a><p class="ws-chapter-meta">%5$s</p></article>',
 			esc_url( get_term_link( $term ) ),
