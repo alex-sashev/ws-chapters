@@ -88,7 +88,46 @@ function ws_country_map_data() {
 			'lng'   => $lng ? array_sum( $lng ) / count( $lng ) : null,
 		);
 	}
-	return $out;
+	return ws_uk_split( $out );
+}
+
+/** UK nations with an outline of their own (assets/shapes/gb-*.json). */
+function ws_uk_nations() {
+	return array_values( array_filter( array( 'gb-eng', 'gb-wls', 'gb-sct', 'gb-nir' ), function ( $c ) {
+		return file_exists( dirname( __DIR__ ) . '/assets/shapes/' . $c . '.json' );
+	} ) );
+}
+
+/**
+ * When a UK nation is a country of its own on the map (Scotland), a country coded for the whole UK
+ * (gb, e.g. "England and Wales") covers only the other nations, so each shows with its own border.
+ */
+function ws_uk_split( array $countries ) {
+	$claimed = array();
+	foreach ( $countries as $c ) {
+		if ( is_string( $c['shape'] ) && 0 === strpos( $c['shape'], 'gb-' ) ) {
+			$claimed[] = $c['shape'];
+		}
+	}
+	if ( ! $claimed ) {
+		return $countries;
+	}
+	$rest = array_values( array_diff( ws_uk_nations(), $claimed ) );
+	foreach ( $countries as $i => $c ) {
+		if ( ws_iso_numeric( 'gb' ) === $c['shape'] && $rest ) {
+			$countries[ $i ]['shape'] = $rest;
+		}
+	}
+	return $countries;
+}
+
+/** All shape ids of a country list (a country can cover several, e.g. England and Wales). */
+function ws_shape_ids( array $countries ) {
+	$ids = array();
+	foreach ( $countries as $c ) {
+		$ids = array_merge( $ids, (array) $c['shape'] );
+	}
+	return $ids;
 }
 
 /** Map element. mode=countries (Europe) or chapters (one country / one chapter). */
@@ -117,7 +156,7 @@ function ws_map_element( $mode, $points, $highlight, $height = 560, $focus = nul
 
 /** Shape IDs of every country that has chapters. */
 function ws_member_shapes() {
-	return array_column( ws_country_map_data(), 'shape' );
+	return ws_shape_ids( ws_country_map_data() );
 }
 
 /* -------------------------------------------------------------------------
@@ -413,7 +452,7 @@ function ws_europe_map_panel() {
 	return '<div class="ws-europe-map"><div class="ws-europe-map__side"><h2 class="ws-europe-map__title">' . esc_html__( 'Our Brotherhood Across Europe', 'ws-chapters' ) . '</h2>'
 		. '<p>' . esc_html__( 'Explore participating countries and their chapters. Select a country to find chapter information, news and events.', 'ws-chapters' ) . '</p>'
 		. '<ul class="ws-country-list">' . $list . '</ul></div>'
-		. '<div class="ws-europe-map__map">' . ws_map_element( 'countries', $countries, array_column( $countries, 'shape' ), 620 ) . '</div></div>';
+		. '<div class="ws-europe-map__map">' . ws_map_element( 'countries', $countries, ws_shape_ids( $countries ), 620 ) . '</div></div>';
 }
 
 /** Chapter cards with photo, as on the country page. */

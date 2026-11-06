@@ -55,7 +55,7 @@
 }
 /* Country shapes (no tiles). Members are gold. */
 .ws-map-land { fill: #26262a; stroke: #3d3d42; fill-opacity: 1; }
-.ws-map-land--member { fill: var(--ws-gold, #C9A24A); stroke: var(--ws-gold-dark, #8a6d2c); fill-opacity: .92; }
+.ws-map-land--member { fill: var(--ws-gold, #C9A24A); stroke: #4a3a18; fill-opacity: .92; } /* A dark border, so neighbours (Scotland and England) read as separate countries. */
 .ws-chapter-map--countries .ws-map-land--member { cursor: pointer; }
 .ws-chapter-map--countries .ws-map-land--member:hover { fill: var(--ws-gold-light, #E3C77A); }
 .ws-map-land:hover { fill: #34353a; }

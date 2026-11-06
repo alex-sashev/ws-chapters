@@ -18,15 +18,19 @@
 		return atlasPromise;
 	}
 
-	/* Regions that world-atlas has no outline for (gb-sct: Scotland) come from assets/shapes/ and are drawn
-	 * on top of their country. Ids of world-atlas shapes are numeric. */
+	/* World-atlas has the UK as one shape (826). When a UK nation is on the map on its own (gb-sct: Scotland),
+	 * the UK is drawn as its four nations from assets/shapes/ instead, each with its own border. */
+	var UK = '826', NATIONS = ['gb-eng', 'gb-wls', 'gb-sct', 'gb-nir'];
 	function loadShapes(ids) {
-		var own = ids.filter(function (id) { return /^[a-z]{2}-[a-z]{3}$/.test(id); });
+		var split = ids.some(function (id) { return /^gb-[a-z]{3}$/.test(id); });
 		return loadAtlas().then(function (geo) {
-			return Promise.all(own.map(function (id) {
+			if (!split) return geo;
+			return Promise.all(NATIONS.map(function (id) {
 				return fetch(cfg.shapes + id + '.json').then(function (r) { return r.json(); }).catch(function () { return null; });
-			})).then(function (extra) {
-				return { type: 'FeatureCollection', features: geo.features.concat(extra.filter(Boolean)) };
+			})).then(function (nations) {
+				nations = nations.filter(Boolean);
+				var base = nations.length === NATIONS.length ? geo.features.filter(function (f) { return String(f.id) !== UK; }) : geo.features;
+				return { type: 'FeatureCollection', features: base.concat(nations) };
 			});
 		});
 	}
@@ -153,12 +157,12 @@
 
 		// Country shapes under the markers; members in gold, clickable in "countries" mode.
 		var byShape = {};
-		points.forEach(function (p) { if (p.shape) byShape[p.shape] = p; });
+		points.forEach(function (p) { [].concat(p.shape || []).forEach(function (s) { byShape[s] = p; }); });
 		loadShapes(highlight).then(function (geo) {
 			L.geoJSON(geo, {
 				style: function (f) {
 					var on = highlight.indexOf(String(f.id)) !== -1;
-					return { className: on ? 'ws-map-land ws-map-land--member' : 'ws-map-land', weight: on ? 1 : 0.6 };
+					return { className: on ? 'ws-map-land ws-map-land--member' : 'ws-map-land', weight: on ? 1.4 : 0.6 };
 				},
 				onEachFeature: function (f, l) {
 					var p = byShape[String(f.id)];
