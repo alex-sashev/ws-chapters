@@ -97,6 +97,27 @@ function ws_country_code( $term ) {
 	return $term ? (string) get_term_meta( $term->term_id, 'country_code', true ) : '';
 }
 
+/*
+ * Country lists are alphabetical, except that a country with the term meta "sort_after" (another country's
+ * slug) comes right after that country: Armed Services Chapter (Naples) after Italy. Applies to every list
+ * of countries (map list, forms, member pages, admin), as long as both countries are in the list.
+ */
+add_filter( 'get_terms', function ( $terms, $taxonomies, $args ) {
+	if ( ! in_array( 'ws_country', (array) $taxonomies, true ) || ! is_array( $terms ) || count( $terms ) < 2 || ! ( reset( $terms ) instanceof WP_Term ) || ! in_array( $args['orderby'] ?? 'name', array( 'name', '' ), true ) ) {
+		return $terms;
+	}
+	$names = wp_list_pluck( $terms, 'name', 'slug' );
+	$keys  = array();
+	foreach ( $terms as $t ) {
+		$after               = (string) get_term_meta( $t->term_id, 'sort_after', true );
+		$keys[ $t->term_id ] = isset( $names[ $after ] ) && $after !== $t->slug ? $names[ $after ] . "\x01" . $t->name : $t->name;
+	}
+	usort( $terms, function ( $a, $b ) use ( $keys ) {
+		return strnatcasecmp( $keys[ $a->term_id ], $keys[ $b->term_id ] );
+	} );
+	return $terms;
+}, 10, 3 );
+
 /** Flag of a Grand Chapter, or '' if it has no country code. Decorative next to the name, labelled when alone. */
 function ws_flag( $term, $labelled = false ) {
 	$code = ws_country_code( $term );
