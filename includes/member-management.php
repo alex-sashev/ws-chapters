@@ -27,7 +27,7 @@ function ws_mm_page( $slug ) {
 	return $found ? $found[0] : null;
 }
 
-/** The row of links between the member pages. $current is 'library', 'directory', 'account' or 'manage'; $wide matches the wide member pages. */
+/** The row of links between the member pages. $current is 'library', 'directory', 'account', 'manage' or 'applications'; $wide matches the wide member pages. */
 function ws_mm_subnav( $current, $wide = false ) {
 	$items = array(
 		'library'   => array( __( 'Library', 'ws-chapters' ), ws_mm_page( 'members' ) ),
@@ -36,6 +36,9 @@ function ws_mm_subnav( $current, $wide = false ) {
 	);
 	if ( ws_mm_can_manage() ) {
 		$items['manage'] = array( __( 'Member management', 'ws-chapters' ), ws_mm_page( 'member-management' ) );
+		$waiting         = function_exists( 'ws_app_pending_count' ) ? ws_app_pending_count() : 0;
+		/* translators: %d: applications waiting for an answer */
+		$items['applications'] = array( $waiting ? sprintf( __( 'Applications (%d)', 'ws-chapters' ), $waiting ) : __( 'Applications', 'ws-chapters' ), ws_mm_page( 'member-applications' ) );
 	}
 	$items['feedback'] = array( __( 'Website feedback', 'ws-chapters' ), ws_mm_page( 'member-feedback' ) ); // Last, on the right, for everyone.
 	$out = '<nav class="ws-subnav' . ( $wide ? ' alignwide' : '' ) . '" aria-label="' . esc_attr__( 'Members', 'ws-chapters' ) . '">';
@@ -546,7 +549,7 @@ function ws_mm_flash_notice() {
 
 /* The member pages are never served from a page cache: they differ per person and carry fresh form keys. */
 function ws_mm_is_member_page() {
-	foreach ( array( 'members', 'member-directory', 'member-management', 'member-account', 'member-feedback', 'edit-content' ) as $slug ) {
+	foreach ( array( 'members', 'member-directory', 'member-management', 'member-applications', 'member-account', 'member-feedback', 'edit-content' ) as $slug ) {
 		$p = ws_mm_page( $slug );
 		if ( $p && is_page( $p->ID ) ) {
 			return true;
@@ -771,7 +774,7 @@ add_shortcode( 'ws_member_manage', function () {
 	if ( $super ) {
 		$log  = array_reverse( array_slice( (array) get_option( 'ws_mm_log', array() ), -50 ) );
 		$lrow = '';
-		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Removed permanently', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ), 'mail_failed' => __( 'Email NOT sent', 'ws-chapters' ) );
+		$acts = array( 'invited' => __( 'Invited', 'ws-chapters' ), 'resent' => __( 'Invitation sent again', 'ws-chapters' ), 'removed' => __( 'Removed permanently', 'ws-chapters' ), 'title' => __( 'Title', 'ws-chapters' ), 'chapter' => __( 'Chapter', 'ws-chapters' ), 'profile' => __( 'Own profile', 'ws-chapters' ), 'mail_failed' => __( 'Email NOT sent', 'ws-chapters' ), 'app_invited' => __( 'Invited from an application', 'ws-chapters' ), 'app_rejected' => __( 'Application rejected', 'ws-chapters' ) );
 		foreach ( $log as $e ) {
 			$by     = get_userdata( (int) $e['by'] );
 			$target = get_userdata( (int) $e['target'] );
@@ -853,7 +856,7 @@ add_action( 'edit_user_profile_update', 'ws_mm_save_profile_fields' );
  * The member pages under Members: member list, member management and My profile. Added on install and whenever
  * one is missing after a WS_MM_PAGES change; an existing page is never changed.
  */
-const WS_MM_PAGES = '1.2';
+const WS_MM_PAGES = '1.3';
 add_action( 'init', function () {
 	if ( WS_MM_PAGES === get_option( 'ws_mm_pages' ) || ! post_type_exists( 'page' ) ) {
 		return;
@@ -866,6 +869,7 @@ add_action( 'init', function () {
 	$pages = array(
 		'member-directory'  => array( __( 'Member directory', 'ws-chapters' ), '[ws_member_directory]' ),
 		'member-management' => array( __( 'Member management', 'ws-chapters' ), '[ws_member_manage]' ),
+		'member-applications' => array( __( 'Applications', 'ws-chapters' ), '[ws_member_applications]' ),
 		'member-account'    => array( __( 'My profile', 'ws-chapters' ), '[ws_member_account]' ),
 		'member-feedback'   => array( __( 'Website feedback', 'ws-chapters' ), '[ws_member_feedback]' ),
 		'edit-content'      => array( __( 'Edit', 'ws-chapters' ), '[ws_content_edit]' ),
